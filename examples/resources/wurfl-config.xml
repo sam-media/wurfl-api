@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Document: wurfl-config.xml
+Created on: May 17, 2011 11:01AM
+Description: Sample PHP WURFL API XML configuration. ALL the paths are absolute or relative
+  to the WURFL dir (e.g absolute path: /wurfl/resources/wurfl.xml)
+
+## MAIN CONFIGURATION ##
+<wurfl>
+	<main-file> The WURFL filename, normally "wurfl.zip" or "wurfl.xml"
+	<patches> If you use WURFL Patch files, you can include them here
+		<patch> Each patch file is listed seperately in the order they should be loaded
+
+## PERSISTENCE CONFIGURATION ##
+Persistence is used to store all the devices from the WURFL file.  It is NOT RECOMMENDED
+to use APC or Memcache for persistence since you may run out of space and WURFL devices
+will be pushed out, resulting in an Exception if the purged device is needed.
+
+<persistence> Caching configuration
+  <provider> The type of persistence to use, (e.g. <provider>file</provider>)
+    Possible values:
+      - file: file system (specify the location with <params>dir=/some/directory</params>)
+      - memcache: use memcache.  Specify host(s), port and namespace inside a <params> element:
+          <params>host=127.0.0.1;192.168.2.7,port=11211,namespace=wurfl</params>
+      - apc: use APC user variables
+      - mysql: use MySQL.  Specify parameters in the <params> element.  Paramerters example:
+          <params>host=localhost,port=3306,db=wurfl_db,user=wurfluser,pass=wurfl,table=persistence</params>
+          Note: the mysql tables will be created automatically
+  <params> Specify parameters for the provider in a comma-delimited "key=value" list.
+
+## CACHING CONFIGURATION ##
+Caching is used to store requested devices so subsequent lookups are very fast
+
+<cache> Caching configuration
+  <provider> The type of caching to use, (e.g. <provider>memcache</provider>)
+    Possible values:
+      - null: no caching will be used 
+      - file: file system (specify the location with <params>dir=/some/directory</params>)
+      - memcache: use memcache.  Specify host(s), port and namespace inside a <params> element:
+                  <params>host=127.0.0.1;192.168.2.7,port=11211,namespace=wurfl</params>
+      - apc: use APC user variables
+      - mysql: use MySQL.  Specify parameters in the <params> element.  Paramerters example:
+          <params>host=localhost,port=3306,db=wurfl_db,user=wurfluser,pass=wurfl,table=cache</params>
+          Note: the mysql tables will be created automatically
+  <params> Specify parameters for the provider in a comma-delimited "key=value" list.
+-->
+
+<wurfl-config>
+	<wurfl>
+		<main-file>wurfl.zip</main-file>
+	</wurfl>
+	<allow-reload>true</allow-reload>
+	<match-mode>performance</match-mode>
+	<capability-filter>
+ 		<capability>is_wireless_device</capability>
+ 		<capability>preferred_markup</capability>
+ 		<capability>xhtml_support_level</capability>
+ 		<capability>xhtmlmp_preferred_mime_type</capability>
+ 		<capability>device_os</capability>
+ 		<capability>device_os_version</capability>
+ 		<capability>is_tablet</capability>
+ 		<capability>mobile_browser_version</capability>
+ 		<capability>pointing_method</capability>
+ 		<capability>mobile_browser</capability>
+ 		<capability>resolution_width</capability>
+	</capability-filter>
+	<persistence>
+		<provider>file</provider>
+		<params>dir=storage/persistence</params>
+	</persistence>
+	<cache>
+		<provider>file</provider>
+		<params>dir=storage/cache</params>
+	</cache>
+</wurfl-config>

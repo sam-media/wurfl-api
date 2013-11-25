@@ -1,0 +1,154 @@
+WURFL-PHP API
+=======================================
+
+Scope
+=====
+
+The scope of this document is to describe the design of the WURFL PHP API in order to make
+it easy to integrate or extend the API.
+
+Design overview
+===============
+Because of the variety of Mobile Devices and formats that a modern Mobile application
+should handle, this API provides an abstraction/layer on top of the wurfl.xml that provides:
+	- device detection
+	- capability quering
+
+Layers
+======
+
+The API is divided into 2 layers:
+
+The API Initialization layer that is represented by the
+	- All Classes in WURFL/Xml/ package 
+
+The Classes in the WURFL/Xml/ package are responsible for parsing the main wurfl.xml and 
+patch files and creating the appropriate data structures:
+
+	- $devicesMap 
+		Associative array of <deviceID, device>
+		where device is a snapshot of the xml device element
+	- $groupIDCapabilitiesMap 
+		Associative array of <groupID, capabilitiesName>
+	- $userAgentsWithDeviceIDMap
+		Associative array of <userAgent, deviceID>
+
+Classes
+=======
+
+WURFL_Xml_Interface
+-------------------
+
+The WURFL_Xml_Interface interface must be implemented by classes that will
+parse a wurfl.xml or patch files and create a WURFL_Xml_ParsingResult object.
+
+Methods::
+	/**
+	 * Parses the given file and returns a WURFL_Xml_ParsingResult 
+	 * object
+	 *
+	 * @param string $fileName
+	 * @return WURFL_Xml_ParsingResult
+	 */	
+	public function parse($fileName);
+	
+	
+WURFL_Xml_ParsingResult
+------------------------
+An instance of this class encapsulates the result of the parsing phase
+	
+	- $devicesMap
+	- $groupIDCapabilitiesMap;
+	
+
+WURFL_Xml_XMLResourceManager
+----------------------------------
+This Class is responsible for coordinating the parsing and patching of the xml file
+containing devices and persisting the resulting data structures.
+i.e
+	- every device will be persisted(Serialized) on file system using the device id
+	- $groupIDCapabilitiesMap
+	- $userAgentsWithDeviceIDMap
+	
+Methods::
+	
+	
+	/**
+	 * Returns an associative array containing <userAgent, deviceID> 
+	 *
+	 * @return array
+	 */
+	public function getUserAgentsWithDeviceID();
+	
+	
+	/**
+	 * Returns an associative array containing <groupID, capabilities>
+	 *
+	 * @return array
+	 */
+	public function getGroupIDCapabilitiesMap() {
+		
+ 
+WURFL_Xml_ModelDevice
+============================
+ This class encapsulates a single device found in the WURFL file.
+ 
+ 
+
+WURFL_Handlers_Handler
+===============================================
+
+This class gives a base implementation of the two interfaces WURFL_Handlers_Filter and WURFL_Handlers_Matcher
+
+The main idea behind the Handler class is to create many classes that can each
+handle a specific task.
+
+i.e There are NokiaUserAgentHandler, VodafoneUserAgentHandlre,....
+    thare are specialized handled for each specific brand.
+    
+    If a request comes in (can be classification, or matching request) the first thing to
+    decide is if that specified instance can handle it.
+    If this is not the case, the request will be passed to the next available handler.
+		
+WURFL_Handlers_Filters
+----------------------------------------------
+This interface must be implemented by classes that can handle
+	- devices classification process. i.e the process of grouping the devices
+	  based on some patterns. In this case we use some patterns found in the user agent of
+	  the devices
+	- persisting the output of the classification process
+
+Methods::
+
+	/**
+	 * The filter() method is used to classify devices based on patterns
+	 * in their user agents.
+	 *  
+	 * @param string $userAgent User Agent of the device
+	 * @param string $deviceID  id of the the device
+	 * 
+	 */
+	public function filter($userAgent, $deviceID);
+
+	/**
+	 * The persistData() method is resposible to 
+	 * saving the classification output(associative arrays that holds <userAgent, deviceID> pair))  
+	 *
+	 */
+	public function persistData();
+	
+
+WURFL_Handlers_Matcher
+----------------------------------------------
+This interface must be implemented by classes that can find(match) an apropriate device id for
+the given request
+
+Methods::
+	/**
+	 * Returns a matching device id for the given request
+	 * 
+	 * If no matching device is foud will return "generic"
+	 * 
+	 * @param WURFL_Request_GenericRequest $request
+	 */
+	public function match(WURFL_Request_GenericRequest $request);
