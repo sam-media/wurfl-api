@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2012 ScientiaMobile, Inc.
+ * Copyright (c) 2014 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -41,7 +41,7 @@ class WURFL_VirtualCapability_DeviceBrowserGroup extends WURFL_VirtualCapability
 		}
 
 		// Run the UserAgentTool to get the relevant details
-		$device = self::$ua_tool->getDevice($this->request->userAgent);
+		$device = self::$ua_tool->getDevice($this->request);
 
 		$this->storage['DeviceOs'] 			= new WURFL_VirtualCapability_ManualGroupChild($this->device, $this->request, $this, $device->os->name);
 		$this->storage['DeviceOsVersion'] 	= new WURFL_VirtualCapability_ManualGroupChild($this->device, $this->request, $this, $device->os->version);

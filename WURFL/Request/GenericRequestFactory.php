@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2012 ScientiaMobile, Inc.
+ * Copyright (c) 2014 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -33,7 +33,7 @@ class WURFL_Request_GenericRequestFactory {
 		$userAgentProfile = WURFL_WURFLUtils::getUserAgentProfile($request);
 		$isXhtmlDevice = WURFL_WURFLUtils::isXhtmlRequester($request);
 
-		return new WURFL_Request_GenericRequest($userAgent, $userAgentProfile, $isXhtmlDevice);
+		return new WURFL_Request_GenericRequest($request, $userAgent, $userAgentProfile, $isXhtmlDevice);
 	}
 	
 	/**
@@ -42,7 +42,8 @@ class WURFL_Request_GenericRequestFactory {
 	 * @return WURFL_Request_GenericRequest
 	 */
 	public function createRequestForUserAgent($userAgent) {
-		return new WURFL_Request_GenericRequest($userAgent, null, false);
+		$request = array('HTTP_USER_AGENT' => $userAgent);
+		return new WURFL_Request_GenericRequest($request, $userAgent, null, false);
 	}
 
 	

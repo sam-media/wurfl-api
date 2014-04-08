@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2012 ScientiaMobile, Inc.
+ * Copyright (c) 2014 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -35,6 +35,7 @@ class WURFL_Handlers_WindowsPhoneHandler extends WURFL_Handlers_Handler {
 		'generic_ms_winmo6_5',
 		'generic_ms_phone_os7',
 		'generic_ms_phone_os7_5',
+		'generic_ms_phone_os7_8',
 		'generic_ms_phone_os8',
 	);
 	
@@ -59,6 +60,8 @@ class WURFL_Handlers_WindowsPhoneHandler extends WURFL_Handlers_Handler {
 	public function applyRecoveryMatch($userAgent){
 		// "Windows Phone OS 8" is for MS Ad SDK issues
 		if (WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array('Windows Phone 8', 'Windows Phone OS 8'))) return 'generic_ms_phone_os8';
+		
+		if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Windows Phone OS 7.8')) return 'generic_ms_phone_os7_8';
 		
 		// WP OS 7.10 = Windows Phone 7.5 or 7.8
 		if (WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array('Windows Phone OS 7.5', 'Windows Phone OS 7.10'))) return 'generic_ms_phone_os7_5';

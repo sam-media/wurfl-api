@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2012 ScientiaMobile, Inc.
+ * Copyright (c) 2014 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -65,7 +65,6 @@ class WURFL_Handlers_AndroidHandler extends WURFL_Handlers_Handler {
 	);
 	
 	public function canHandle($userAgent) {
-		if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) return false;
 		return WURFL_Handlers_Utils::checkIfContains($userAgent, 'Android');
 	}
 	
@@ -75,7 +74,10 @@ class WURFL_Handlers_AndroidHandler extends WURFL_Handlers_Handler {
 			return $this->getDeviceIDFromRIS($userAgent, $tolerance);
 		}
 		
-		return WURFL_Constants::NO_MATCH;
+		// Standard RIS Matching
+		$tolerance = WURFL_Handlers_Utils::indexOfAnyOrLength($userAgent, array(' Build/', ' AppleWebKit'));
+		return $this->getDeviceIDFromRIS($userAgent, $tolerance);	
+		
 	}
 
 	public function applyRecoveryMatch($userAgent) {
@@ -130,11 +132,20 @@ class WURFL_Handlers_AndroidHandler extends WURFL_Handlers_Handler {
 		// Replace Android version names with their numbers
 		// ex: Froyo => 2.2
 		$ua = str_replace(array_keys(self::$androidReleaseMap), array_values(self::$androidReleaseMap), $ua);
-		if (preg_match('/Android (\d\.\d)/', $ua, $matches)) {
+		
+		// Initializing $version
+		$version = null;
+		
+		// Look for "Android <Version>" first and then for "Android/<Version>"
+		if (preg_match('#Android (\d\.\d)#', $ua, $matches)) {
 			$version = $matches[1];
-			if (in_array($version, self::$validAndroidVersions)) {
-				return $version;
-			}
+		} else if (preg_match('#Android/(\d\.\d)#', $ua, $matches)) {
+			$version = $matches[1];
+		}
+		
+		// Now check extracted Android version for validity
+		if (in_array($version, self::$validAndroidVersions)) {
+			return $version;
 		}
 		return $use_default? self::ANDROID_DEFAULT_VERSION: null;
 	}
@@ -148,47 +159,77 @@ class WURFL_Handlers_AndroidHandler extends WURFL_Handlers_Handler {
 	public static function getAndroidModel($ua, $use_default=true) {
 		// Normalize spaces in UA before capturing parts
 		$ua = preg_replace('|;(?! )|', '; ', $ua);
-		
+
+		// Different logic for Mozillite and non-Mozillite UAs to isolate model name
+		// Non-Mozillite UAs get first preference
+		if (preg_match('#(^[A-Za-z0-9_\-\+ ]+)[/ ]?(?:[A-Za-z0-9_\-\+\.]+)? +Linux/[0-9\.]+ +Android[ /][0-9\.]+ +Release/[0-9\.]+#', $ua, $matches)) {
+			// Trim off spaces and semicolons
+			$model = rtrim($matches[1], ' ;');
+
 		// Locales are optional for matching model name since UAs like Chrome Mobile do not contain them
-		if (!preg_match('#Android [^;]+;(?>(?: xx-xx ?;)?) (.+?)(?: Build/|\))#', $ua, $matches)) {
+		} else if (preg_match('#Android [^;]+;(?>(?: xx-xx[ ;]+)?)(.+?)(?:Build/|\))#', $ua, $matches)) {
+			// Trim off spaces and semicolons
+			$model = rtrim($matches[1], ' ;');
+
+		} else {
 			return null;
 		}
-		
-		// Trim off spaces and semicolons
-		$model = rtrim($matches[1], ' ;');
-		
+
 		// The previous RegEx may return just "Build/.*" for UAs like:
 		// HTC_Dream Mozilla/5.0 (Linux; U; Android 1.5; xx-xx; Build/CUPCAKE) AppleWebKit/528.5+ (KHTML, like Gecko) Version/3.1.2 Mobile Safari/525.20.1
 		if (strpos($model, 'Build/') === 0) {
 			return null;
 		}
-		
+
+		// Normalize Chinese UAs
+		$model = preg_replace('#(?:_CMCC_TD|_CMCC|_TD)\b#', '', $model);
+
+		// Normalize models with resolution
+		if (strpos($model, '*') !== false) {
+			if (($pos = strpos($model, '/')) !== false) {
+				$model = substr($model, 0, $pos);
+			}
+		}
+
+		// Normalize Huawei UAs
+		$model = str_replace('HW-HUAWEI_', 'HUAWEI ', $model);
+
+		// Normalize Coolpad UAs
+		if (strpos($model, 'YL-Coolpad') !== false) {
+			$model = preg_replace('#YL-Coolpad[ _]#', 'Coolpad ', $model);
+		}
+
 		// HTC
 		if (strpos($model, 'HTC') !== false) {
 			// Normalize "HTC/"
 			$model = preg_replace('#HTC[ _\-/]#', 'HTC~', $model);
+
 			// Remove the version
-			$model = preg_replace('#(/| +V?\d)[\.\d]+$#', '', $model);
-			$model = preg_replace('#/.*$#', '', $model);
+			if (($pos = strpos($model, '/')) !== false) {
+				$model = substr($model, 0, $pos);
+			}
+			$model = preg_replace('#( V| )\d+?\.[\d\.]+$#', '', $model);
+
 		}
+
 		// Samsung
 		$model = preg_replace('#(SAMSUNG[^/]+)/.*$#', '$1', $model);
-		
+
 		// Orange
 		$model = preg_replace('#ORANGE/.*$#', 'ORANGE', $model);
-		
+
 		// LG
 		$model = preg_replace('#(LG-[A-Za-z0-9\-]+).*$#', '$1', $model);
-		
+
 		// Serial Number
 		$model = preg_replace('#\[[\d]{10}\]#', '', $model);
-		
+
 		// Remove whitespace
 		$model = trim($model);
-		
+
 		// Normalize Samsung and Sony/SonyEricsson model name changes due to Chrome Mobile
-		$model = preg_replace('#^(?:SAMSUNG|SonyEricsson|Sony) ?#', '', $model);
-		
+		$model = preg_replace('#^(?:SAMSUNG|SonyEricsson|Sony)[ \-]?#', '', $model);
+
 		return (strlen($model) === 0)? null: $model;
 	}
 	

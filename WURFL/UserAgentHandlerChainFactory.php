@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2012 ScientiaMobile, Inc.
+ * Copyright (c) 2014 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -63,16 +63,12 @@ class WURFL_UserAgentHandlerChainFactory {
 		/**** Mobile devices ****/
 		$kindleNormalizer = $genericNormalizers->addUserAgentNormalizer(new WURFL_Request_UserAgentNormalizer_Specific_Kindle());
 		self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_KindleHandler($context, $kindleNormalizer));
-		self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_LGUPLUSHandler($context, $genericNormalizers));
 		
 		/**** UCWEB ****/
 		$ucwebu2Normalizer = $genericNormalizers->addUserAgentNormalizer(new WURFL_Request_UserAgentNormalizer_Specific_UcwebU2());
 		self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_UcwebU2Handler($context, $ucwebu2Normalizer));
 		$ucwebu3Normalizer = $genericNormalizers->addUserAgentNormalizer(new WURFL_Request_UserAgentNormalizer_Specific_UcwebU3());
 		self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_UcwebU3Handler($context, $ucwebu3Normalizer));
-		
-		/**** Java Midlets ****/
-		self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_JavaMidletHandler($context, $genericNormalizers));
 		
 		/**** Mobile platforms ****/
 		// Android Matcher Chain
@@ -85,7 +81,8 @@ class WURFL_UserAgentHandlerChainFactory {
 		$androidNormalizer = $genericNormalizers->addUserAgentNormalizer(new WURFL_Request_UserAgentNormalizer_Specific_Android());
 		self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_AndroidHandler($context, $androidNormalizer));
 		
-		self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_AppleHandler($context, $genericNormalizers));
+		$appleNormalizer = $genericNormalizers->addUserAgentNormalizer(new WURFL_Request_UserAgentNormalizer_Specific_Apple());
+		self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_AppleHandler($context, $appleNormalizer));
 		self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_WindowsPhoneDesktopHandler($context, $genericNormalizers));
 		$winPhoneNormalizer = $genericNormalizers->addUserAgentNormalizer(new WURFL_Request_UserAgentNormalizer_Specific_WindowsPhone());
 		self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_WindowsPhoneHandler($context, $winPhoneNormalizer));
@@ -110,6 +107,7 @@ class WURFL_UserAgentHandlerChainFactory {
 		self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_KyoceraHandler($context, $genericNormalizers));
 		$lgNormalizer = $genericNormalizers->addUserAgentNormalizer(new WURFL_Request_UserAgentNormalizer_Specific_LG());
 		self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_LGHandler($context, $lgNormalizer));
+		self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_LGUPLUSHandler($context, $genericNormalizers));
 		$maemoNormalizer = $genericNormalizers->addUserAgentNormalizer(new WURFL_Request_UserAgentNormalizer_Specific_Maemo());
 		self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_MaemoHandler($context, $maemoNormalizer));
 		self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_MitsubishiHandler($context, $genericNormalizers));
@@ -134,7 +132,10 @@ class WURFL_UserAgentHandlerChainFactory {
 		self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_FirefoxOSHandler($context, $genericNormalizers));
 		self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_OperaMiniHandler($context, $genericNormalizers));
 		
-		/**** Tablet Browsers ****/
+		/**** Java Midlets ****/
+		self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_JavaMidletHandler($context, $genericNormalizers));
+		
+				/**** Tablet Browsers ****/
 		self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_WindowsRTHandler($context, $genericNormalizers));
 		
 		/**** Robots / Crawlers ****/
@@ -143,9 +144,13 @@ class WURFL_UserAgentHandlerChainFactory {
 		/**** Game Consoles ****/
 		self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_XboxHandler($context, $genericNormalizers));
 		
-		/**** Desktop Browsers ****/
+		/**** DesktopApplications ****/
 		$chromeNormalizer = $genericNormalizers->addUserAgentNormalizer(new WURFL_Request_UserAgentNormalizer_Specific_Chrome());
-		self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_ChromeHandler($context, $chromeNormalizer));
+		self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_ChromeHandler($context, $chromeNormalizer));		
+		
+		/**** Desktop Browsers ****/
+		$desktopApplicationNormalizer = $genericNormalizers->addUserAgentNormalizer(new WURFL_Request_UserAgentNormalizer_Specific_DesktopApplication());
+		self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_DesktopApplicationHandler($context, $desktopApplicationNormalizer));
 		
 		$firefoxNormalizer = $genericNormalizers->addUserAgentNormalizer(new WURFL_Request_UserAgentNormalizer_Specific_Firefox());
 		self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_FirefoxHandler($context, $firefoxNormalizer));

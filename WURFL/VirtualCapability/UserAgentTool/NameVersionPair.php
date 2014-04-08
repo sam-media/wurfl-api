@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2012 ScientiaMobile, Inc.
+ * Copyright (c) 2014 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -31,17 +31,17 @@ class WURFL_VirtualCapability_UserAgentTool_NameVersionPair extends WURFL_Virtua
 		return true;
 	}
 
-	public function setRegex($regex, $name=null, $version=null) {
+	public function setRegex($ua, $regex, $name=null, $version=null) {
 		// No need to capture the matches if we're not going to use them
 		if (!is_int($name) && !is_int($version)) {
-			if (preg_match($regex, $this->device->ua)) {
+			if (preg_match($regex, $ua)) {
 				$this->name = trim($name);
 				$this->version = trim($version);
 				return true;
 			} else {
 				return false;
 			}
-		} else if (preg_match($regex, $this->device->ua, $this->regex_matches)) {
+		} else if (preg_match($regex, $ua, $this->regex_matches)) {
 			if ($name !== null) {
 				$this->name = is_int($name)? $this->regex_matches[$name]: $name;
 				$this->name = trim($this->name);
@@ -56,8 +56,8 @@ class WURFL_VirtualCapability_UserAgentTool_NameVersionPair extends WURFL_Virtua
 		return false;
 	}
 
-	public function setContains($needle, $name, $version=null) {
-		if (strpos($this->device->ua, $needle) !== false) {
+	public function setContains($ua, $needle, $name, $version=null) {
+		if (strpos($ua, $needle) !== false) {
 			if ($name !== null) $this->name = trim($name);
 			if ($version !== null) $this->version = trim($version);
 			return true;

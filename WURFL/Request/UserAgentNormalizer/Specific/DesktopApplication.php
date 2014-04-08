@@ -10,25 +10,23 @@
  * Refer to the COPYING.txt file distributed with this package.
  *
  * @category   WURFL
- * @package	WURFL_Logger
+ * @package	WURFL_Request_UserAgentNormalizer_Specific
  * @copyright  ScientiaMobile, Inc.
  * @license	GNU Affero General Public License
- * @version	$id$
+  * @version	$id$
  */
 /**
- * Class that is used to supress logging
- * @package	WURFL_Logger
+ * User Agent Normalizer - Returns the Thunderbird/{Version} sub-string
+ * @package	WURFL_Request_UserAgentNormalizer_Specific
  */
-class WURFL_Logger_NullLogger implements WURFL_Logger_Interface  {
+class WURFL_Request_UserAgentNormalizer_Specific_DesktopApplication implements WURFL_Request_UserAgentNormalizer_Interface {
 	
-	public function log($message, $type="") {
-		//echo $message . "\n";
+	public function normalize($userAgent) {
+		$idx = strpos($userAgent, "Thunderbird");
+		if ($idx !== false) {
+			return substr($userAgent, $idx);
+		}
+		return $userAgent;
 	}
 	
-	public function debug($message) {
-		//echo $message . "\n";		
-	}
-	
-	public function info($message){}
-}
-
+}	

@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2012 ScientiaMobile, Inc.
+ * Copyright (c) 2014 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -52,8 +52,9 @@ class WURFL_Handlers_SafariHandler extends WURFL_Handlers_Handler {
 	
 	public static function getSafariVersion($ua) {
 		$search = 'Version/';
-		$idx = strpos($ua, $search) + strlen($search);
+		$idx = strpos($ua, $search);
 		if ($idx === false) return null;
+		$idx += strlen($search);
 		$end_idx = strpos($ua, '.', $idx);
 		if ($end_idx === false) return null;
 		return substr($ua, $idx, $end_idx - $idx);

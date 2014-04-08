@@ -10,25 +10,21 @@
  * Refer to the COPYING.txt file distributed with this package.
  *
  * @category   WURFL
- * @package	WURFL_Logger
+ * @package	WURFL_Request_UserAgentNormalizer_Specific
  * @copyright  ScientiaMobile, Inc.
  * @license	GNU Affero General Public License
  * @version	$id$
  */
 /**
- * Class that is used to supress logging
- * @package	WURFL_Logger
+ * User Agent Normalizer
+ * @package	WURFL_Request_UserAgentNormalizer_Specific
  */
-class WURFL_Logger_NullLogger implements WURFL_Logger_Interface  {
-	
-	public function log($message, $type="") {
-		//echo $message . "\n";
+class WURFL_Request_UserAgentNormalizer_Specific_Apple implements WURFL_Request_UserAgentNormalizer_Interface {
+	public function normalize($userAgent) {
+		// Normalize Skype SDK UAs
+		if (preg_match('#^iOSClientSDK/\d+\.+[0-9\.]+ +?\((Mozilla.+)\)$#', $userAgent, $matches)) {
+			return $matches[1];
+		}
+		return $userAgent;
 	}
-	
-	public function debug($message) {
-		//echo $message . "\n";		
-	}
-	
-	public function info($message){}
 }
-

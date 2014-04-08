@@ -1,5 +1,18 @@
 ScientiaMobile WURFL PHP API change log:
 
+[2014.01.07] 1.5.1.0
+- Added support in Virtual Capabilities for:
+	- Internet Explorer 11
+	- Windows 8.1
+	- OS extraction for Opera Mini User-Agents
+- Improved detection of:
+	- Android
+	- Apple iOS
+	- Xbox One
+	- Pantech feature phones
+- Added new matcher for Desktop Applications
+- Optimized matcher order
+
 [2013.10.09] 1.5.0.2
 - Bugfix: using an old WURFL with MySQL persistence causes infinte loop
 
