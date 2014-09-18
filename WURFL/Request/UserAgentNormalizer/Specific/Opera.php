@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2012 ScientiaMobile, Inc.
+ * Copyright (c) 2014 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -29,14 +29,21 @@
 class WURFL_Request_UserAgentNormalizer_Specific_Opera implements WURFL_Request_UserAgentNormalizer_Interface {
 	
 	public function normalize($userAgent) {
-		// Repair Opera user agents using fake version 9.80
-		// Normalize: Opera/9.80 (X11; Linux x86_64; U; sv) Presto/2.9.168 Version/11.50
-		// Into:	  Opera/11.50 (X11; Linux x86_64; U; sv) Presto/2.9.168 Version/11.50
-		if (WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'Opera/9.80')) {
-			if (preg_match('#Version/(\d+\.\d+)#', $userAgent, $matches)) {
-				$userAgent = str_replace('Opera/9.80', 'Opera/'.$matches[1], $userAgent);
-			}
-		}
-		return $userAgent;
+        // Repair Opera user agents using fake version 9.80
+        // Normalize: Opera/9.80 (X11; Linux x86_64; U; sv) Presto/2.9.168 Version/11.50
+        // Into: Opera/11.50 (X11; Linux x86_64; U; sv) Presto/2.9.168 Version/11.50
+        if (WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'Opera/9.80')) {
+            if (preg_match('#Version/(\d+\.\d+)#', $userAgent, $matches)) {
+                $userAgent = str_replace('Opera/9.80', 'Opera/'.$matches[1], $userAgent);
+            }
+            //Match to the '.' in the Opera version number
+            return $userAgent;
+        }
+        //Normalize Opera v15 and above UAs, that say OPR, into "Opera/version UA" format used above
+        if (preg_match('#OPR/(\d+\.\d+)#', $userAgent, $matches)) {
+            $prefix = "Opera/".$matches[1]." ";
+            $userAgent = $prefix.$userAgent;
+        }
+        return $userAgent;
 	}
 }

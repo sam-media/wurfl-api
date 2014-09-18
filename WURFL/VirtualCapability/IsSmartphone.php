@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2012 ScientiaMobile, Inc.
+ * Copyright (c) 2014 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -32,11 +32,13 @@ class WURFL_VirtualCapability_IsSmartphone extends WURFL_VirtualCapability {
 		'resolution_width',
 		'device_os_version',
 		'device_os',
+        'can_assign_phone_number',
 	);
 
 	protected function compute() {
 		if ($this->device->is_wireless_device != "true") return false;
 		if ($this->device->is_tablet == "true") return false;
+        if ($this->device->can_assign_phone_number == "false") return false;
 		if ($this->device->pointing_method != 'touchscreen') return false;
 		if ($this->device->resolution_width < 320) return false;
 		$os_ver = (float)$this->device->device_os_version;

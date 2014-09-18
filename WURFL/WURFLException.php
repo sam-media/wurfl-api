@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2012 ScientiaMobile, Inc.
+ * Copyright (c) 2014 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -21,3 +21,4 @@
  * @package	WURFL
  */
 class WURFL_WURFLException extends Exception { }
+class WURFL_WURFLCLIInvalidArgumentException extends WURFL_WURFLException { }

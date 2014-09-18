@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2012 ScientiaMobile, Inc.
+ * Copyright (c) 2014 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -46,25 +46,27 @@ class WURFL_VirtualCapabilityProvider {
 	 * Map of WURFL names to WURFL_VirtualCapability classes.
 	 * @var array
 	 */
-	public static $virtual_capabilities = array(
-		'is_android' => 'IsAndroid',
-		'is_ios' => 'IsIos',
-		'is_windows_phone' => 'IsWindowsPhone',
-		'is_app' => 'IsApp',
-		'is_full_desktop' => 'IsFullDesktop',
-		'is_largescreen' => 'IsLargescreen',
-		'is_mobile' => 'IsMobile',
-		'is_robot' => 'IsRobot',
-		'is_smartphone' => 'IsSmartphone',
-		'is_touchscreen' => 'IsTouchscreen',
-		'is_wml_preferred' => 'IsWmlPreferred',
-		'is_xhtmlmp_preferred' => 'IsXhtmlmpPreferred',
-		'is_html_preferred' => 'IsHtmlPreferred',
-		'advertised_device_os' => 'DeviceBrowser.DeviceOs',
-		'advertised_device_os_version' => 'DeviceBrowser.DeviceOsVersion',
-		'advertised_browser' => 'DeviceBrowser.Browser',
-		'advertised_browser_version' => 'DeviceBrowser.BrowserVersion',
-	);
+    public static $virtual_capabilities = array(
+        'is_android' => 'IsAndroid',
+        'is_ios' => 'IsIos',
+        'is_windows_phone' => 'IsWindowsPhone',
+        'is_app' => 'IsApp',
+        'is_full_desktop' => 'IsFullDesktop',
+        'is_largescreen' => 'IsLargescreen',
+        'is_mobile' => 'IsMobile',
+        'is_robot' => 'IsRobot',
+        'is_smartphone' => 'IsSmartphone',
+        'is_touchscreen' => 'IsTouchscreen',
+        'is_wml_preferred' => 'IsWmlPreferred',
+        'is_xhtmlmp_preferred' => 'IsXhtmlmpPreferred',
+        'is_html_preferred' => 'IsHtmlPreferred',
+        'advertised_device_os' => 'DeviceBrowser.DeviceOs',
+        'advertised_device_os_version' => 'DeviceBrowser.DeviceOsVersion',
+        'advertised_browser' => 'DeviceBrowser.Browser',
+        'advertised_browser_version' => 'DeviceBrowser.BrowserVersion',
+        'complete_device_name' => 'CompleteDeviceName',
+        'form_factor' => 'FormFactor',
+    );
 	
 	/**
 	 * Storage for the WURFL_VirtualCapability objects
