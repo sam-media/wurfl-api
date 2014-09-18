@@ -92,6 +92,9 @@ class WURFL_CustomDevice {
 				return $this->modelDevices[0]->$name;
 				break;
 			default :
+				if ($this->virtualCapabilityProvider->exists($name)) {
+					return $this->virtualCapabilityProvider->get($name);
+				}
 				return $this->getCapability($name);
 				break;
 		}

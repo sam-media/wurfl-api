@@ -16,7 +16,7 @@ class WURFL_Configuration_XmlConfigTest extends PHPUnit_Framework_TestCase {
 
         $this->assertEquals(dirname(__FILE__) . DIRECTORY_SEPARATOR . "wurfl.xml", $config->wurflFile);
         $this->assertEquals(array(dirname(__FILE__) . DIRECTORY_SEPARATOR . "browsers.xml"), $config->wurflPatches);
-
+		
         $this->assertEquals(true, $config->allowReload);
 
         $cacheDir = dirname(__FILE__) . DIRECTORY_SEPARATOR . "cache";

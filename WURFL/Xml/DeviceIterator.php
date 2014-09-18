@@ -27,7 +27,7 @@ class WURFL_Xml_DeviceIterator extends WURFL_Xml_AbstractIterator {
 	
 	/**
 	 * @param string $inputFile XML file to be processed
-	 * @param array $capabilityFilter Capabiities to process
+	 * @param array $capabilityFilter Capabilities to process
 	 */
 	public function __construct($inputFile, $capabilityFilter = array()) {
 		parent::__construct($inputFile);
@@ -62,11 +62,15 @@ class WURFL_Xml_DeviceIterator extends WURFL_Xml_AbstractIterator {
 						
 						case WURFL_Xml_Interface::GROUP:
 							$groupId = $this->xmlReader->getAttribute(WURFL_Xml_Interface::GROUP_ID);
-							$groupIDCapabilitiesMap[$groupId] = array();
+							if ($groupId !== 'virtual_capabilities') {
+								$groupIDCapabilitiesMap[$groupId] = array();
+							}
 							break;
 						
 						case WURFL_Xml_Interface::CAPABILITY:
-							
+							if ($groupId === 'virtual_capabilities') {
+								break;
+							}
 							$capabilityName = $this->xmlReader->getAttribute(WURFL_Xml_Interface::CAPABILITY_NAME);
 							if ($this->needToReadCapability($capabilityName)) {
 								$capabilityValue = $this->xmlReader->getAttribute(WURFL_Xml_Interface::CAPABILITY_VALUE);

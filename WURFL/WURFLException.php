@@ -21,3 +21,4 @@
  * @package	WURFL
  */
 class WURFL_WURFLException extends Exception { }
+class WURFL_WURFLCLIInvalidArgumentException extends WURFL_WURFLException { }

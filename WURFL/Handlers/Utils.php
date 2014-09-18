@@ -96,6 +96,7 @@ class WURFL_Handlers_Utils {
 		'konfabulator',
 		'sony bravia',
 		'crkey',
+        'sonycebrowser',
 	);
 	
 	private static $desktopBrowsers = array(
@@ -351,10 +352,14 @@ class WURFL_Handlers_Utils {
 		if (WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'Opera/9.80 (Windows NT', 'Opera/9.80 (Macintosh')) return true;
 		// Check desktop keywords
 		if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) return true;
-		// Internet Explorer 9
-		if (preg_match('/^Mozilla\/5\.0 \(compatible; MSIE 9\.0; Windows NT \d\.\d/', $userAgent)) return true;
+
+		// Internet Explorer 11
+		if (preg_match('/^Mozilla\/5\.0 \(Windows NT.+?Trident.+?; rv:\d\d\.\d+\)/', $userAgent)) return true;
+		// Internet Explorer 9 or 10
+		if (preg_match('/^Mozilla\/5\.0 \(compatible; MSIE (9|10)\.0; Windows NT \d\.\d/', $userAgent)) return true;
 		// Internet Explorer <9
 		if (preg_match('/^Mozilla\/4\.0 \(compatible; MSIE \d\.\d; Windows NT \d\.\d/', $userAgent)) return true;
+
 		return false;
 	}
 	

@@ -1,5 +1,29 @@
 ScientiaMobile WURFL PHP API change log:
 
+[2014.09.02] 1.5.2.0
+- Improved detection of:
+    - Android
+    - Apple
+    - Firefox OS
+    - Internet Explorer
+    - Opera
+    - Smart TVs
+    - Tizen
+    - Ubuntu OS
+    - Windows Phone
+    - Windows RT
+- Improved existing virtual capabilities
+- Added virtual capabilities:
+    - complete_device_name : The brand_name, model_name and marketing name (if applicable)
+    - form_factor : Tablet, Smartphone, Feature Phone, Robot, Desktop, Smart-TV, Other Non-Mobile
+- Added support for iOS 8
+- Added the ability to detect sideloaded browser instead of the device with its stock browser
+
+
+[2014.04.23] 1.5.1.1
+- Improved accuracy of is_robot
+- Bugfix: auto-reload is not thread safe when lockfile is on a filesystem without flock support
+
 [2014.01.07] 1.5.1.0
 - Added support in Virtual Capabilities for:
 	- Internet Explorer 11

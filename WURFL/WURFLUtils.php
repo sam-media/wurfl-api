@@ -33,8 +33,13 @@ class WURFL_WURFLUtils {
 	 * @param array $request HTTP Request array (normally $_SERVER)
 	 * @return string
 	 */
-	public static function getUserAgent($request) {
-		if (isset($request[WURFL_Constants::UA])) {
+	public static function getUserAgent($request, $override_sideloaded_browser_ua = true) {
+
+        if (!$override_sideloaded_browser_ua) {
+            return $request['HTTP_USER_AGENT'];
+        }
+
+        if (isset($request[WURFL_Constants::UA])) {
 			return $request[WURFL_Constants::UA];
 		}		
 		

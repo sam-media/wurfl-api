@@ -82,7 +82,7 @@ class WURFL_Configuration_XmlConfig extends WURFL_Configuration_Config {
 	 */
 	private function allowReload($allowReloadElement) {
 		if (!empty($allowReloadElement)) {
-			return (bool)$allowReloadElement[0];
+			return ($allowReloadElement[0] == 'true')? true: false;
 		}
 		return false;
 	}

@@ -22,20 +22,20 @@
  */
 class WURFL_Request_GenericRequestFactory {
 
-
 	/**
 	 * Creates Generic Request from the given HTTP Request (normally $_SERVER)
 	 * @param array $request HTTP Request
+     * @param bool $override_sideloaded_browser_ua
 	 * @return WURFL_Request_GenericRequest
 	 */
-	public function createRequest($request) {
-		$userAgent = WURFL_WURFLUtils::getUserAgent($request);
+	public function createRequest($request, $override_sideloaded_browser_ua = true) {
+		$userAgent = WURFL_WURFLUtils::getUserAgent($request, $override_sideloaded_browser_ua);
 		$userAgentProfile = WURFL_WURFLUtils::getUserAgentProfile($request);
 		$isXhtmlDevice = WURFL_WURFLUtils::isXhtmlRequester($request);
 
 		return new WURFL_Request_GenericRequest($request, $userAgent, $userAgentProfile, $isXhtmlDevice);
 	}
-	
+
 	/**
 	 * Create a Generic Request from the given $userAgent
 	 * @param string $userAgent
@@ -46,7 +46,7 @@ class WURFL_Request_GenericRequestFactory {
 		return new WURFL_Request_GenericRequest($request, $userAgent, null, false);
 	}
 
-	
+
 }
 
 

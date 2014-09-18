@@ -44,6 +44,7 @@ class WURFL_Handlers_AndroidHandler extends WURFL_Handlers_Handler {
 		'generic_android_ver4_2',
 		'generic_android_ver4_3',
 		'generic_android_ver4_4',
+        'generic_android_ver4_5',
 		'generic_android_ver5_0',
 		
 		'generic_android_ver1_5_tablet',
@@ -61,11 +62,12 @@ class WURFL_Handlers_AndroidHandler extends WURFL_Handlers_Handler {
 		'generic_android_ver4_2_tablet',
 		'generic_android_ver4_3_tablet',
 		'generic_android_ver4_4_tablet',
+        'generic_android_ver4_5_tablet',
 		'generic_android_ver5_0_tablet',
 	);
 	
 	public function canHandle($userAgent) {
-		return WURFL_Handlers_Utils::checkIfContains($userAgent, 'Android');
+        return !WURFL_Handlers_Utils::checkIfContains($userAgent, 'like Android') && WURFL_Handlers_Utils::checkIfContains($userAgent, 'Android');
 	}
 	
 	public function applyConclusiveMatch($userAgent) {
@@ -108,7 +110,7 @@ class WURFL_Handlers_AndroidHandler extends WURFL_Handlers_Handler {
 	/********* Android Utility Functions ***********/
 	const ANDROID_DEFAULT_VERSION = 2.0;
 	
-	public static $validAndroidVersions = array('1.0', '1.5', '1.6', '2.0', '2.1', '2.2', '2.3', '2.4', '3.0', '3.1', '3.2', '3.3', '4.0', '4.1', '4.2', '4.3', '4.4', '5.0');
+	public static $validAndroidVersions = array('1.0', '1.5', '1.6', '2.0', '2.1', '2.2', '2.3', '2.4', '3.0', '3.1', '3.2', '3.3', '4.0', '4.1', '4.2', '4.3', '4.4', '4.5', '5.0');
 	public static $androidReleaseMap = array(
 		'Cupcake' => '1.5',
 		'Donut' => '1.6',
@@ -219,7 +221,7 @@ class WURFL_Handlers_AndroidHandler extends WURFL_Handlers_Handler {
 		$model = preg_replace('#ORANGE/.*$#', 'ORANGE', $model);
 
 		// LG
-		$model = preg_replace('#(LG-[A-Za-z0-9\-]+).*$#', '$1', $model);
+        $model = preg_replace('#(LG-?[A-Za-z0-9\-]+).*$#', '$1', $model);
 
 		// Serial Number
 		$model = preg_replace('#\[[\d]{10}\]#', '', $model);

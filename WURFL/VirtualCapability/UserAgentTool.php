@@ -39,7 +39,20 @@ class WURFL_VirtualCapability_UserAgentTool {
 	 * @return WURFL_VirtualCapability_UserAgentTool_Device
 	 */
 	protected function assignProperties($device) {
-		//Is UA Android?
+
+        //Is UA Windows Mobile? - WP before Android
+        if ($device->os->setContains($device->device_ua, 'Windows CE', 'Windows Mobile') && $device->browser->set('IE Mobile')) return $device;
+
+        if (strpos($device->device_ua, 'Windows Phone') !== false) {
+            // Is UA Windows Phone OS?
+            if ($device->os->setRegex($device->device_ua, '/Windows Phone(?: OS)? ([0-9]\.[0-9])/', 'Windows Phone', 1)) {
+                $device->browser->set('IE Mobile');
+                $device->browser->setRegex($device->device_ua, '/IEMobile\/(\d+\.\d+)/', 'IE Mobile', 1);
+                return $device;
+            }
+        }
+
+        //Is UA Android?
 		if (strpos($device->device_ua, 'Android') !== false) {
 			$device->os->setRegex($device->device_ua, '#Android(?: |/)([0-9]\.[0-9]).+#', 'Android', 1);
 			
@@ -111,22 +124,6 @@ class WURFL_VirtualCapability_UserAgentTool {
 			$device->browser->set('Mobile Safari', $device->os->version);	
 
 			return $device;
-		}
-		
-		//Is UA Windows Mobile?
-		if ($device->os->setContains($device->device_ua, 'Windows CE', 'Windows Mobile') && $device->browser->set('IE Mobile')) return $device;
-		
-		if (strpos($device->device_ua, 'Windows Phone') !== false) {
-			// Is UA Windows Phone OS?
-			if ($device->os->setRegex($device->device_ua, '/^Mozilla\/[45].0 \(compatible; MSIE ([0-9]+\.[0-9]);.+?Windows Phone(?: OS)? ([0-9]\.[0-9])/', 'Windows Phone', 2)) {
-				$device->browser->set('IE Mobile', $device->os->getLastRegexMatch(1));
-				return $device;
-			}
-			if ($device->os->setRegex($device->device_ua, '#Windows Phone(?: OS)? ([0-9]\.[0-9])#', 'Windows Phone', 1)) {
-				$device->browser->set('IE Mobile');
-				return $device;
-			}
-			
 		}
 		
 		//Is UA S40 Ovi Browser?

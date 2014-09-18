@@ -98,14 +98,15 @@ class WURFL_WURFLManager {
 	 * Return a device for the given http request(user-agent..)
 	 *
 	 * @param array $httpRequest HTTP Request array (normally $_SERVER)
+     * @param bool $override_sideloaded_browser_ua
 	 * @return WURFL_CustomDevice device
 	 * @throws Exception if $httpRequest is not set
 	 */
-	public function getDeviceForHttpRequest($httpRequest) {
+	public function getDeviceForHttpRequest($httpRequest, $override_sideloaded_browser_ua = true) {
 		if (!isset($httpRequest)) {
 			throw new Exception("The $httpRequest parameter must be set.");
 		}
-		$request = $this->_requestFactory->createRequest($httpRequest);
+		$request = $this->_requestFactory->createRequest($httpRequest, $override_sideloaded_browser_ua);
 		return $this->getDeviceForRequest($request);
 	}
 	

@@ -38,6 +38,10 @@ class WURFL_Handlers_FirefoxOSHandler extends WURFL_Handlers_Handler {
 		'firefox_os_ver1_2',
 		'firefox_os_ver1_3',
 		'firefox_os_ver1_3_tablet',
+        'firefox_os_ver1_4',
+        'firefox_os_ver1_4_tablet',
+        'firefox_os_ver2_0',
+        'firefox_os_ver2_0_tablet',
 	);
 	
 	public static $firefoxOSMap = array(
@@ -45,6 +49,8 @@ class WURFL_Handlers_FirefoxOSHandler extends WURFL_Handlers_Handler {
 		'18.1' => '1.1',
 		'26.0' => '1.2',
 		'28.0' => '1.3',
+        '30.0' => '1.4',
+        '32.0' => '2.0',
 	);
 	
 	public function canHandle($userAgent) {
