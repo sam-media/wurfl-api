@@ -4,34 +4,24 @@
  */
 require_once 'TestUtils.php';
 
-class WURFL_WURFLManagerTest
+class WURFL_WURFLServiceTest
     extends PHPUnit_Framework_TestCase
 {
     /**
-     * @var WURFL_WURFLManager
+     * @var WURFL_WURFLService
      */
-    protected static $wurflManager;
+    protected $object = null;
 
     const RESOURCES_DIR = "../../resources";
     const WURFL_CONFIG_FILE = "../../resources/wurfl-config.xml";
     const CACHE_DIR = "../../resources/cache";
-
-    private static $wurflManagerFactory;
-
-    private static $persistenceStorage;
 
     public static function setUpBeforeClass()
     {
         self::createWurflManger();
     }
 
-    public static function tearDownAfterClass()
-    {
-        // FIXME: tear down is happening before tests are finished
-        //self::$persistenceStorage->clear();
-    }
-
-    public static function createWurflManger()
+    public function setUp()
     {
         $resourcesDir = dirname(__FILE__) . DIRECTORY_SEPARATOR . self::RESOURCES_DIR;
         $cacheDir     = dirname(__FILE__) . DIRECTORY_SEPARATOR . self::CACHE_DIR;
@@ -48,34 +38,39 @@ class WURFL_WURFLManagerTest
             WURFL_Configuration_Config::EXPIRATION => 0
         );
         $config->persistence("file", $params);
-        self::$persistenceStorage  = new WURFL_Storage_Memory($params);
-        self::$wurflManagerFactory = new WURFL_WURFLManagerFactory ($config, self::$persistenceStorage);
-        self::$wurflManager        = self::$wurflManagerFactory->create();
-    }
+        $logger = null;
 
-    public function testShouldReturnGenericForEmptyUserAgent()
-    {
-        $deviceFound = self::$wurflManager->getDeviceForUserAgent('');
-        $this->assertEquals('generic', $deviceFound->id);
-    }
+        $cacheStorage = new WURFL_Storage_Memory($params);
 
-    public function testShouldReturnGenericForNullUserAgent()
-    {
-        $deviceFound = self::$wurflManager->getDeviceForUserAgent(null);
-        $this->assertEquals('generic', $deviceFound->id);
+        $context               = new WURFL_Context($cacheStorage, $cacheStorage, $logger);
+        $userAgentHandlerChain = WURFL_UserAgentHandlerChainFactory::createFrom($context);
+
+        $devicePatcher           = new WURFL_Xml_DevicePatcher();
+        $deviceRepositoryBuilder = new WURFL_DeviceRepositoryBuilder(
+            $cacheStorage,
+            $userAgentHandlerChain,
+            $devicePatcher
+        );
+        $deviceRepository        = $deviceRepositoryBuilder->build(
+            $config->wurflFile,
+            $config->wurflPatches,
+            $config->capabilityFilter
+        );
+
+        $this->object = new WURFL_WURFLService($deviceRepository, $userAgentHandlerChain, $cacheStorage);
     }
 
     public function testShouldReturnAllDevicesId()
     {
-        $devicesId = self::$wurflManager->getAllDevicesID();
-        $this->assertContains("generic", $devicesId);
+        $devicesId = $this->object->getAllDevicesID();
+        self::assertContains("generic", $devicesId);
     }
 
     public function testShouldReturnWurflVersionInfo()
     {
-        $wurflInfo = self::$wurflManager->getWURFLInfo();
-        $this->assertEquals("Wireless Universal Resource File v_2.1.0.1", $wurflInfo->version);
-        $this->assertEquals("July 30, 2007", $wurflInfo->lastUpdated);
+        $wurflInfo = $this->object->getWURFLInfo();
+        self::assertEquals("Wireless Universal Resource File v_2.1.0.1", $wurflInfo->version);
+        self::assertEquals("July 30, 2007", $wurflInfo->lastUpdated);
     }
 
     public function testGetListOfGroups()
@@ -90,9 +85,9 @@ class WURFL_WURFLManagerTest
             "display",
             "image_format"
         );
-        $listOfGroups = self::$wurflManager->getListOfGroups();
+        $listOfGroups = $this->object->getListOfGroups();
         foreach ($actualGroups as $groupId) {
-            $this->assertContains($groupId, $listOfGroups);
+            self::assertContains($groupId, $listOfGroups);
         }
     }
 
@@ -102,8 +97,8 @@ class WURFL_WURFLManagerTest
      */
     public function testGetCapabilitiesNameForGroup($groupId, $capabilitiesName)
     {
-        $capabilities = self::$wurflManager->getCapabilitiesNameForGroup($groupId);
-        $this->assertEquals($capabilitiesName, $capabilities);
+        $capabilities = $this->object->getCapabilitiesNameForGroup($groupId);
+        self::assertEquals($capabilitiesName, $capabilities);
     }
 
     /**
@@ -112,7 +107,7 @@ class WURFL_WURFLManagerTest
      */
     public function testGetFallBackDevices($deviceId, $fallBacksId)
     {
-        $fallBackDevices = self::$wurflManager->getFallBackDevices($deviceId);
+        $fallBackDevices = $this->object->getFallBackDevices($deviceId);
 
         return array_map(array($this, 'deviceId'), $fallBackDevices);
     }
@@ -151,12 +146,16 @@ class WURFL_WURFLManagerTest
      */
     public function testDeviceIdForRequest($userAgent, $expectedDeviceId)
     {
+        $class  = new ReflectionClass('WURFL_WURFLService');
+        $method = $class->getMethod('deviceIdForRequest');
+        $method->setAccessible(true);
+
         $header  = array(
             'HTTP_USER_AGENT' => $userAgent
         );
         $request = new WURFL_Request_GenericRequest($header, $userAgent, null, false);
 
-        $deviceId = self::$wurflManager->getDeviceForRequest($request);
+        $deviceId = $method->invoke($this->object, $request);
 
         self::assertSame($expectedDeviceId, $deviceId);
     }
