@@ -27,7 +27,7 @@ class WURFL_WURFLServiceTest
         $cacheDir     = dirname(__FILE__) . DIRECTORY_SEPARATOR . self::CACHE_DIR;
         $config       = new WURFL_Configuration_InMemoryConfig();
 
-        $config->wurflFile($resourcesDir . "/wurfl-regression.xml")
+        $config->wurflFile($resourcesDir . "/wurfl.xml")
             ->wurflPatch($resourcesDir . "/web_browsers_patch.xml")
             ->wurflPatch($resourcesDir . "/spv_patch.xml")
             ->wurflPatch($resourcesDir . "/android_patch.xml")
