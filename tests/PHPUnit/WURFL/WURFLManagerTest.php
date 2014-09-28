@@ -156,9 +156,9 @@ class WURFL_WURFLManagerTest
         );
         $request = new WURFL_Request_GenericRequest($header, $userAgent, null, false);
 
-        $deviceId = self::$wurflManager->getDeviceForRequest($request);
+        $device = self::$wurflManager->getDeviceForRequest($request);
 
-        self::assertSame($expectedDeviceId, $deviceId);
+        self::assertSame($expectedDeviceId, $device->id);
     }
 
     public function deviceIdAgentProvider()
