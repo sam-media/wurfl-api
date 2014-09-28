@@ -177,7 +177,7 @@ class WURFL_WURFLManagerTest
             array('Mozilla/5.0 (X11; FreeBSD amd64; rv:23.0) Gecko/20100101 Firefox/23.0', 'firefox_23_0'),
             array(
                 'Mozilla/5.0 (X11; U; FreeBSD i386; pl; rv:1.8.1.12) Gecko/20080213 Epiphany/2.20 Firefox/2.0.0.12',
-                'firefox_2_0'
+                'firefox_2'
             ),
             array(
                 'Mozilla/5.0 (Randomized by FreeSafeIP.com/upgrade-to-remove; compatible; MSIE 8.0; Windows NT 5.0) Chrome/21.0.1229.79',
