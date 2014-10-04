@@ -9,14 +9,14 @@
 	<!--
 		<persistence> <provider>memcache</provider> </persistence>
 	-->
-    <allow-reload>true</allow-reload>
+    <allow-reload>true</allow-reload>    
 	<persistence>
 		<provider>file</provider>
-		<params>dir=tests/resources/cache</params>
+		<params>dir=cache</params>
 	</persistence>
 
 	<cache>
 		<provider>file</provider>
-		<params>dir=tests/resources/cache, expiration=36000</params>
+		<params>dir=cache, expiration=36000</params>
 	</cache>
 </wurfl-config>

@@ -9,13 +9,11 @@
 class WURFL_Configuration_XmlConfigTest
     extends PHPUnit_Framework_TestCase
 {
-    const CACHE_DIR = '../../../resources/cache';
 
     public function testShouldCreateAConfiguration()
     {
         $configPath = dirname(__FILE__) . DIRECTORY_SEPARATOR . "wurfl-config.xml";
         $config     = new WURFL_Configuration_XmlConfig($configPath);
-
         self::assertNotNull($config->persistence);
 
         self::assertEquals(dirname(__FILE__) . DIRECTORY_SEPARATOR . "wurfl.xml", $config->wurflFile);
@@ -23,7 +21,7 @@ class WURFL_Configuration_XmlConfigTest
 
         self::assertEquals(true, $config->allowReload);
 
-        $cacheDir    = dirname(__FILE__) . DIRECTORY_SEPARATOR . self::CACHE_DIR;
+        $cacheDir    = dirname(__FILE__) . DIRECTORY_SEPARATOR . "cache";
         $persistence = $config->persistence;
         self::assertEquals("file", $persistence ["provider"]);
         self::assertEquals(array(WURFL_Configuration_Config::DIR => $cacheDir), $persistence ["params"]);
