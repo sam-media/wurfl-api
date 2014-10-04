@@ -34,7 +34,7 @@ class WURFL_VirtualCapability_UserAgentTool_Device {
 	 * @var WURFL_Request_GenericRequest
 	 */
 	public $http_request;
-	
+
 	/**
 	 * Device user agent string
 	 * @var string
@@ -49,7 +49,7 @@ class WURFL_VirtualCapability_UserAgentTool_Device {
 
 	public function __construct(WURFL_Request_GenericRequest $request) {
 		$this->http_request = $request;
-		
+
 		// Use the original headers for OperaMini
 		if ($this->http_request->originalHeaderExists('HTTP_DEVICE_STOCK_UA')) {
 			$this->device_ua = $this->http_request->getOriginalHeader('HTTP_DEVICE_STOCK_UA');
@@ -58,20 +58,23 @@ class WURFL_VirtualCapability_UserAgentTool_Device {
 			$this->device_ua = $this->http_request->getOriginalHeader('HTTP_USER_AGENT');
 			$this->browser_ua = $this->device_ua;
 		}
-		
+
 		$this->browser = new WURFL_VirtualCapability_UserAgentTool_NameVersionPair($this);
 		$this->os = new WURFL_VirtualCapability_UserAgentTool_NameVersionPair($this);
 	}
 
 	protected static $windows_map = array(
-			'4.0' => 'NT 4.0',
-			'5.0' => '2000',
-			'5.1' => 'XP',
-			'5.2' => 'XP',
-			'6.0' => 'Vista',
-			'6.1' => '7',
-			'6.2' => '8',
-			'6.3' => '8.1',
+        '3.1' => 'NT 3.1',
+        '3.5' => 'NT 3.5',
+        '4.0' => 'NT 4.0',
+        '5.0' => '2000',
+        '5.1' => 'XP',
+        '5.2' => 'XP',
+        '6.0' => 'Vista',
+        '6.1' => '7',
+        '6.2' => '8',
+        '6.3' => '8.1',
+        '6.4' => '10',
 	);
 
 	public function normalize() {
@@ -84,7 +87,7 @@ class WURFL_VirtualCapability_UserAgentTool_Device {
 				$this->os->version = array_key_exists($matches[1], self::$windows_map)? self::$windows_map[$matches[1]]: $matches[1];
 				return;
 			}
-				
+
 			if (preg_match('/Windows [0-9\.]+/', $this->os->name)) {
 				return;
 			}
@@ -104,6 +107,16 @@ class WURFL_VirtualCapability_UserAgentTool_Device {
 		if ($this->os->name != '') {
 			return;
 		}
+        if (strpos($this->device_ua, 'FreeBSD') !== false) {
+            $this->os->name = 'FreeBSD';
+
+            return;
+        }
+        if (strpos($this->device_ua, 'NetBSD') !== false) {
+            $this->os->name = 'NetBSD';
+
+            return;
+        }
 		// Last ditch efforts
 		if (strpos($this->device_ua, 'Linux') !== false || strpos($this->device_ua, 'X11') !== false) {
 			$this->os->name = 'Linux';
