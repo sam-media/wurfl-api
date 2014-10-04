@@ -17,10 +17,10 @@ class WURFL_Configuration_InMemoryConfigTest
             ->wurflPatch("new_web_browsers_patch.xml")
             ->wurflPatch("spv_patch.xml")
             ->allowReload(true)
-            ->persistence("file", array("dir" => "./cache"))
+            ->persistence("file", array("dir" => "tests/resources/cache"))
             ->cache(
                 "file",
-                array(WURFL_Configuration_Config::DIR => "./cache", WURFL_Configuration_Config::EXPIRATION => 3600)
+                array(WURFL_Configuration_Config::DIR => "tests/resources/cache", WURFL_Configuration_Config::EXPIRATION => 3600)
             );
 
         self::assertNotNull($config->persistence);
@@ -44,7 +44,7 @@ class WURFL_Configuration_InMemoryConfigTest
             ->persistence("memcache", $params)
             ->cache(
                 "file",
-                array(WURFL_Configuration_Config::DIR => "./cache", WURFL_Configuration_Config::EXPIRATION => 3600)
+                array(WURFL_Configuration_Config::DIR => "tests/resources/cache", WURFL_Configuration_Config::EXPIRATION => 3600)
             );
 
         self::assertNotNull($config->persistence);
@@ -59,7 +59,7 @@ class WURFL_Configuration_InMemoryConfigTest
         $cache = $config->cache;
         self::assertEquals("file", $cache ["provider"]);
         self::assertEquals(
-            array(WURFL_Configuration_Config::DIR => "./cache", WURFL_Configuration_Config::EXPIRATION => 3600),
+            array(WURFL_Configuration_Config::DIR => "tests/resources/cache", WURFL_Configuration_Config::EXPIRATION => 3600),
             $cache ["params"]
         );
     }
