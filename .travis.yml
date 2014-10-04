@@ -22,7 +22,7 @@ script:
   - phpunit --no-configuration --coverage-text --coverage-clover=coverage.clover --colors --verbose --bootstrap tests/PHPUnit/bootstrap.php tests/PHPUnit/WURFLTestsSuite.php
 
 after_script:
-  - rm -R -f -d tests/PHPUnit/WURFL/Configuration/cache/
+  - rm -R -f tests/PHPUnit/WURFL/Configuration/cache/
   - rmdir tests/PHPUnit/WURFL/Configuration/cache/
   - wget https://scrutinizer-ci.com/ocular.phar
   - php ocular.phar code-coverage:upload --format=php-clover coverage.clover
