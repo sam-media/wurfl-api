@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2012 ScientiaMobile, Inc.
+ * Copyright (c) 2014 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -29,7 +29,7 @@
 class WURFL_Handlers_OperaHandler extends WURFL_Handlers_Handler {
 	
 	protected $prefix = "OPERA";
-	
+
 	public static $constantIDs = array(
 		'opera',
 		'opera_7',
@@ -38,13 +38,25 @@ class WURFL_Handlers_OperaHandler extends WURFL_Handlers_Handler {
 		'opera_10',
 		'opera_11',
 		'opera_12',
+        'opera_15',
+        'opera_16',
+        'opera_17',
+        'opera_18',
+        'opera_19',
+        'opera_20',
+        'opera_21',
+        'opera_22',
+        'opera_23',
+        'opera_24',
+        'opera_25',
 	);
 	
 	public function canHandle($userAgent) {
 		if (WURFL_Handlers_Utils::isMobileBrowser($userAgent)) return false;
-		return WURFL_Handlers_Utils::checkIfContains($userAgent, 'Opera');
+		return WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array('Opera', 'OPR/'));
 	}
-	
+
+
 	public function applyConclusiveMatch($userAgent) {
 		$opera_idx = strpos($userAgent, 'Opera');
 		$tolerance = WURFL_Handlers_Utils::indexOfOrLength($userAgent, '.', $opera_idx);
@@ -61,11 +73,11 @@ class WURFL_Handlers_OperaHandler extends WURFL_Handlers_Handler {
 		if (in_array($id, self::$constantIDs)) return $id;
 		return 'opera';
 	}
-	
-	public static function getOperaVersion($userAgent) {
-		if (preg_match('#Opera[ /]?(\d+\.\d+)#', $userAgent, $matches)) {
-			return($matches[1]);
-		}
-		return null;
-	}
+
+    public static function getOperaVersion($userAgent) {
+        if (preg_match('#Opera[ /]?(\d+\.\d+)#', $userAgent, $matches)) {
+            return($matches[1]);
+        }
+        return null;
+    }
 }

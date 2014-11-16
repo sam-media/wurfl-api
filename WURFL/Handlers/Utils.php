@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2012 ScientiaMobile, Inc.
+ * Copyright (c) 2014 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -95,6 +95,8 @@ class WURFL_Handlers_Utils {
 		'viera',
 		'konfabulator',
 		'sony bravia',
+		'crkey',
+        'sonycebrowser',
 	);
 	
 	private static $desktopBrowsers = array(
@@ -205,37 +207,46 @@ class WURFL_Handlers_Utils {
 	}
 	
 	/**
-	 * Char index of the first instance of $string found in $target, starting at $startingIndex;
-	 * if no match is found, the length of the string is returned
-	 * @param string $string haystack
-	 * @param string $target needle
-	 * @param int $startingIndex Char index for start of search
-	 * @return int Char index of match or length of string
-	 */
-	public static function indexOfOrLength($string, $target, $startingIndex = 0) {
-		$length = strlen ( $string );
-		$pos = strpos ( $string, $target, $startingIndex );
-		return $pos === false ? $length : $pos;
+     * Returns the character position (index) of the $target in $string, starting from a given index.  If target is not found, returns length of user agent.
+     * @param string $haystack Haystack to be searched in
+     * @param string $needle Target string to search for
+     * @param int $startingIndex Character postition to start looking for the target
+     * @return int Character position (index) or full length
+     */
+	public static function indexOfOrLength($haystack, $needle, $startingIndex=0) {
+		$length = strlen($haystack);
+		
+		if ($startingIndex === false || $startingIndex > $length) {
+			return $length;
+		}
+
+		$pos = strpos($haystack, $needle, $startingIndex);
+		return ($pos === false)? $length : $pos;
 	}
+	
 	
 	/**
 	 * Lowest char index of the first instance of any of the $needles found in $userAgent, starting at $startIndex;
 	 * if no match is found, the length of the string is returned
 	 * @param string $userAgent haystack
 	 * @param array $needles Array of (string)needles to search for in $userAgent
-	 * @param int $startIndex Char index for start of search
+	 * @param int $startingIndex Char index for start of search
 	 * @return int Char index of left-most match or length of string
 	 */
-	public static function indexOfAnyOrLength($userAgent, $needles = array(), $startIndex) {
-		$positions = array ();
-		foreach ( $needles as $needle ) {
-			$pos = strpos ( $userAgent, $needle, $startIndex );
-			if ($pos !== false) {
-				$positions [] = $pos;
+	public static function indexOfAnyOrLength($userAgent, $needles = array(), $startingIndex=0) {
+		if (count($needles) === 0) {
+			return strlen($userAgent);
+		}
+		
+		$min = strlen($userAgent);
+		foreach ($needles as $needle) {
+			$index = WURFL_Handlers_Utils::indexOfOrLength($userAgent, $needle, $startingIndex);
+			if ($index < $min) {
+				$min = $index;
 			}
 		}
-		sort ( $positions );		
-		return count ( $positions ) > 0 ? $positions [0] : strlen ( $userAgent );
+		
+		return $min;
 	}
 	
 	/**
@@ -341,10 +352,14 @@ class WURFL_Handlers_Utils {
 		if (WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'Opera/9.80 (Windows NT', 'Opera/9.80 (Macintosh')) return true;
 		// Check desktop keywords
 		if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) return true;
-		// Internet Explorer 9
-		if (preg_match('/^Mozilla\/5\.0 \(compatible; MSIE 9\.0; Windows NT \d\.\d/', $userAgent)) return true;
+
+		// Internet Explorer 11
+		if (preg_match('/^Mozilla\/5\.0 \(Windows NT.+?Trident.+?; rv:\d\d\.\d+\)/', $userAgent)) return true;
+		// Internet Explorer 9 or 10
+		if (preg_match('/^Mozilla\/5\.0 \(compatible; MSIE (9|10)\.0; Windows NT \d\.\d/', $userAgent)) return true;
 		// Internet Explorer <9
 		if (preg_match('/^Mozilla\/4\.0 \(compatible; MSIE \d\.\d; Windows NT \d\.\d/', $userAgent)) return true;
+
 		return false;
 	}
 	
@@ -571,6 +586,6 @@ class WURFL_Handlers_Utils {
 	 * @return string User agent without language string
 	 */
 	public static function removeLocale($userAgent) {
-		return preg_replace('/; ?[a-z]{2}(?:-[a-zA-Z]{2})?(?:\.utf8|\.big5)?\b-?(?!:)/', '; xx-xx', $userAgent);
+		return preg_replace('/; ?[a-z]{2}(?:-r?[a-zA-Z]{2})?(?:\.utf8|\.big5)?\b-?(?!:)/', '; xx-xx', $userAgent);
 	}
 }

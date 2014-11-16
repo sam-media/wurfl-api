@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2012 ScientiaMobile, Inc.
+ * Copyright (c) 2014 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -32,6 +32,7 @@ class WURFL_Handlers_NokiaOviBrowserHandler extends WURFL_Handlers_Handler {
 	protected $prefix = "NOKIAOVIBROWSER";
 	
 	public static $constantIDs = array(
+		'nokia_generic_series30plus',
 		'nokia_generic_series40_ovibrosr',
 	);
 	
@@ -48,6 +49,10 @@ class WURFL_Handlers_NokiaOviBrowserHandler extends WURFL_Handlers_Handler {
 	}
 	
 	public function applyRecoveryMatch($userAgent){
-		return 'nokia_generic_series40_ovibrosr';
+	if (WURFL_Handlers_Utils::checkIfContains($userAgent, "Series30Plus")) {
+			return 'nokia_generic_series30plus';	
+		} else {
+			return 'nokia_generic_series40_ovibrosr';	
+		}
 	}
 }

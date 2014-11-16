@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2012 ScientiaMobile, Inc.
+ * Copyright (c) 2014 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -24,7 +24,7 @@ class WURFL_Constants {
 
 	private function __construct(){}
 	
-	const API_VERSION = "1.5.0.2";
+	const API_VERSION = "1.5.2.0";
 	
 	const GENERIC = "generic";
 	const GENERIC_XHTML = "generic_xhtml";

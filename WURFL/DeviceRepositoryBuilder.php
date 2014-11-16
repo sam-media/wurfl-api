@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2012 ScientiaMobile, Inc.
+ * Copyright (c) 2014 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -40,10 +40,15 @@ class WURFL_DeviceRepositoryBuilder {
 	 */
 	private $lockFile;
 	/**
-	 * Determines the fopen() mode that is used on the lockfile 
+	 * True if the repository builder is currently locked
 	 * @var string
 	 */
-	private $lockStyle = 'r';
+	private $isLocked = false;
+	/**
+	 * If a lock is in place for this long it is assumed to be orphaned and the lock is released
+	 * @var int
+	 */
+	private $maxLockAge = 86400;
 	
 	/**
 	 * @param WURFL_Storage_Base $persistenceProvider
@@ -54,6 +59,7 @@ class WURFL_DeviceRepositoryBuilder {
 		$this->persistenceProvider = $persistenceProvider;
 		$this->userAgentHandlerChain = $userAgentHandlerChain;
 		$this->devicePatcher = $devicePatcher;
+		$this->lockFile = WURFL_FileUtils::getTempDir().'/wurfl_builder.lock';
 	}
 	
 	/**
@@ -64,31 +70,60 @@ class WURFL_DeviceRepositoryBuilder {
 	 * @return WURFL_CustomDeviceRepository
 	 */
 	public function build($wurflFile, $wurflPatches = array(), $capabilityFilter = array()) {
-		// TODO: Create a better locking solution
 		if (!$this->isRepositoryBuilt()) {
-			// Determine Lockfile location
-			if (strpos(PHP_OS, 'SunOS') === false) {
-				$this->lockFile = dirname(__FILE__)."/DeviceRepositoryBuilder.php";
-			} else {
-				// Solaris can't handle exclusive file locks on files unless they are opened for RW
-				$this->lockStyle = 'w+';
-				$this->lockFile = WURFL_FileUtils::getTempDir().'/wurfl.lock';
-			}
-			// Update Data
-			set_time_limit(300);
-			$fp = fopen($this->lockFile, $this->lockStyle);
-			if (flock($fp, LOCK_EX | LOCK_NB)) {
+			// If acquireLock() is false, the WURFL is being reloaded in another thread
+			if ($this->acquireLock()) {
 				$infoIterator = new WURFL_Xml_VersionIterator($wurflFile);
 				$deviceIterator = new WURFL_Xml_DeviceIterator($wurflFile, $capabilityFilter);
 				$patchIterators = $this->toPatchIterators($wurflPatches , $capabilityFilter);
-			
+				
 				$this->buildRepository($infoIterator, $deviceIterator, $patchIterators);
 				$this->setRepositoryBuilt();
-				flock($fp, LOCK_UN);
+				$this->releaseLock();
 			}
+			
 		}
+		
 		$deviceClassificationNames = $this->deviceClassificationNames();
 		return new WURFL_CustomDeviceRepository($this->persistenceProvider, $deviceClassificationNames);
+	}
+	
+	public function __destruct() {
+		$this->releaseLock();
+	}
+	
+	/**
+	 * Acquires a lock so only this thread reloads the WURFL data, returns false if it cannot be acquired
+	 * @return boolean
+	 */
+	private function acquireLock() {
+		 
+		if (file_exists($this->lockFile)) {
+			$stale_after = filemtime($this->lockFile) + $this->maxLockAge;
+			if (time() > $stale_after) {
+				// The lockfile is stale, delete it and reacquire a lock
+				@rmdir($this->lockFile);
+			} else {
+				// The lockfile is valid, WURFL is probably being reloaded in another thread
+				return false;
+			}
+		}
+		
+		// Using mkdir instead of touch since mkdir is atomic
+		$this->isLocked = @mkdir($this->lockFile, 0775);
+		return $this->isLocked;
+	}
+	
+	/**
+	 * Releases the lock if one was acquired
+	 */
+	private function releaseLock() {
+		if (!$this->isLocked) {
+			return;
+		}
+		
+		@rmdir($this->lockFile);
+		$this->isLocked = false;
 	}
 	
 	/**

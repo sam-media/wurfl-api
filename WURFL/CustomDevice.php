@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2012 ScientiaMobile, Inc.
+ * Copyright (c) 2014 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -92,6 +92,9 @@ class WURFL_CustomDevice {
 				return $this->modelDevices[0]->$name;
 				break;
 			default :
+				if ($this->virtualCapabilityProvider->exists($name)) {
+					return $this->virtualCapabilityProvider->get($name);
+				}
 				return $this->getCapability($name);
 				break;
 		}
