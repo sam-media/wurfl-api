@@ -1,7 +1,6 @@
 language: php
 
 php:
-  - 5.2
   - 5.3
   - 5.4
   - 5.5
@@ -19,7 +18,7 @@ before_script:
   - chmod -R 777 tests/PHPUnit/WURFL/Configuration/cache/
 
 script:
-  - phpunit --no-configuration --coverage-text --coverage-clover=coverage.clover --colors --verbose --bootstrap tests/PHPUnit/bootstrap.php tests/PHPUnit/WURFLTestsSuite.php
+  - vendor/bin/phpunit --no-configuration --coverage-text --coverage-clover=coverage.clover --colors --verbose --bootstrap tests/PHPUnit/bootstrap.php tests/PHPUnit/WURFLTestsSuite.php
 
 after_script:
   - rm -R -f tests/PHPUnit/WURFL/Configuration/cache/
