@@ -76,7 +76,7 @@ class WURFL_Storage_File extends WURFL_Storage_Base {
 
 	private function unwrap($value, $path) {
 		if ($value->isExpired()) {
-			unlink($path);
+			@unlink($path);
 			return null;
 		}
 		return $value->value();
