@@ -1,2 +1,3 @@
 #Ensure the markdown uses lf
 *.markdown text eol=lf 
+*.xml text eol=lf

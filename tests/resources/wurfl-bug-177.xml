@@ -4,7 +4,7 @@
 		<ver>www.wurflpro.com - 2010-06-03 11:55:51</ver>
 		<last_updated>Thu Jun 03 12:01:14 -0500 2010</last_updated>
 		<official_url>http://wurfl.sourceforge.net/</official_url>
-		<maintainers>
+		<maintainers> 
 			<maintainer name="Luca Passani" email="luca.passani at gmail point com"
 				home_page="http://www.wurfl.com" />
 		</maintainers>
