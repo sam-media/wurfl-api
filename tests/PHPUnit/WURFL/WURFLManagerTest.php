@@ -269,7 +269,7 @@ class WURFL_WURFLManagerTest
             ),
             array(
                 'Mozilla/5.0 (X11; U; FreeBSD i386; de-DE; rv:1.9.0.5) Gecko/2009012218 Firefox/3.0.5',
-                'firefox_3_0'
+                'firefox_3'
             ),
             array(
                 'Mozilla/5.0 (Windows NT 6.4; Trident/8.0; rv:550) AppleWebKit/537.36 (KHTML, like Gecko) Version/7.0 Safari/550.1.3',

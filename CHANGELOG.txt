@@ -1,5 +1,10 @@
 ScientiaMobile WURFL PHP API change log:
 
+[2014.09.22] 1.5.2.1
+- Improved form_factor capability
+- Improved support for Apple devices
+- Bugfix: File-based cache gave unlink warnings under high contention
+
 [2014.09.02] 1.5.2.0
 - Improved detection of:
     - Android

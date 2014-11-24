@@ -9,7 +9,7 @@
 class WURFL_Handlers_MSIEHandlerTest
     extends PHPUnit_Framework_TestCase
 {
-
+    /** @var WURFL_Handlers_MSIEHandler */
     private $msieHandler;
 
     function setUp()
