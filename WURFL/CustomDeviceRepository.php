@@ -94,14 +94,14 @@ class WURFL_CustomDeviceRepository implements WURFL_DeviceRepository {
 	 * Returns a device for the given device ID
 	 *
 	 * @param string $deviceId
-	 * @return WURFL_CustomDevice
-	 * @throws WURFL_Exception if $deviceID is not defined in wurfl devices repository
+	 * @return WURFL_Xml_ModelDevice
+	 * @throws WURFL_WURFLException if $deviceID is not defined in wurfl devices repository
 	 */
 	public function getDevice($deviceId) {
 		if (!isset($this->_deviceCache[$deviceId])) {
 			$device = $this->persistenceStorage->load($deviceId);
 			if (!$device) {
-				throw new WURFL_Exception("There is no device with ID [$deviceId] in the loaded WURFL Data");
+				throw new WURFL_WURFLException("There is no device with ID [$deviceId] in the loaded WURFL Data");
 			}
 			$this->_deviceCache[$deviceId] = $device;
 		}
@@ -110,7 +110,7 @@ class WURFL_CustomDeviceRepository implements WURFL_DeviceRepository {
 	
 	/**
 	 * Returns all devices in the repository
-	 * @return array
+	 * @return WURFL_Xml_ModelDevice[]
 	 */
 	public function getAllDevices() {
 		$devices = array();
@@ -199,15 +199,15 @@ class WURFL_CustomDeviceRepository implements WURFL_DeviceRepository {
 	 * device to the device of the given $deviceId
 	 *
 	 * @param string $deviceId
-	 * @return array All WURFL_Device objects in the fallback tree
+	 * @return WURFL_Xml_ModelDevice[] All WURFL_Device objects in the fallback tree
 	 */
 	public function getDeviceHierarchy($deviceId) {
 		$devices = array();
 		while (strcmp($deviceId, "root")) {
 			$device = $this->getDevice($deviceId);
             
-            if (!($device instanceof WURFL_CustomDevice)) {
-                throw new WURFL_Exception('one of the parent devices is missing for deviceId ' . $deviceId);
+            if (!($device instanceof WURFL_Xml_ModelDevice)) {
+                throw new WURFL_WURFLException('one of the parent devices is missing for deviceId ' . $deviceId);
             }
             
 			$devices[] = $device;
