@@ -101,7 +101,7 @@ class WURFL_CustomDeviceRepository implements WURFL_DeviceRepository {
 		if (!isset($this->_deviceCache[$deviceId])) {
 			$device = $this->persistenceStorage->load($deviceId);
 			if (!$device) {
-				throw new Exception("There is no device with ID [$deviceId] in the loaded WURFL Data");
+				throw new WURFL_Exception("There is no device with ID [$deviceId] in the loaded WURFL Data");
 			}
 			$this->_deviceCache[$deviceId] = $device;
 		}
@@ -205,6 +205,11 @@ class WURFL_CustomDeviceRepository implements WURFL_DeviceRepository {
 		$devices = array();
 		while (strcmp($deviceId, "root")) {
 			$device = $this->getDevice($deviceId);
+            
+            if (!($device instanceof WURFL_CustomDevice)) {
+                throw new WURFL_Exception('one of the parent devices is missing for deviceId ' . $deviceId);
+            }
+            
 			$devices[] = $device;
 			$deviceId = $device->fallBack;
 		}
