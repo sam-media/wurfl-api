@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <wurfl_patch>
     <devices>
-        <!-- Web browsers --> 
+        <!-- Web browsers -->
         <device user_agent="Mozilla/4.0" fall_back="generic" id="generic_web_browser">
             <group id="display">
                 <capability name="columns" value="770"/>

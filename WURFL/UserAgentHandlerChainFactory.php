@@ -17,7 +17,8 @@
  */
 
 /**
- * Manages the creation and instatiation of all User Agent Handlers and Normalizers and provides a factory for creating User Agent Handler Chains
+ * Manages the creation and instatiation of all User Agent Handlers and Normalizers and provides a factory for creating
+ * User Agent Handler Chains
  *
  * @package    WURFL
  * @see        WURFL_UserAgentHandlerChain
@@ -334,7 +335,10 @@ class WURFL_UserAgentHandlerChainFactory
 
         /**** All other requests ****/
         self::$_userAgentHandlerChain->addUserAgentHandler(
-            new WURFL_Handlers_CatchAllHandler($context, $genericNormalizers)
+            new WURFL_Handlers_CatchAllMozillaHandler($context, $genericNormalizers)
+        );
+        self::$_userAgentHandlerChain->addUserAgentHandler(
+            new WURFL_Handlers_CatchAllRisHandler($context, $genericNormalizers)
         );
     }
 

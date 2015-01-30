@@ -44,14 +44,8 @@ class WURFL_Handlers_MSIEHandler extends WURFL_Handlers_Handler {
 	);
 	
 	public function canHandle($userAgent) {
-        WURFL_Handlers_Utils::reset();
-        
-		if (WURFL_Handlers_Utils::isMobileBrowser($userAgent)) {
-            return false;
-        }
-		if (WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array('Opera', 'armv', 'MOTO', 'BREW'))) {
-            return false;
-        }
+		if (WURFL_Handlers_Utils::isMobileBrowser($userAgent)) return false;
+		if (WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array('Opera', 'armv', 'MOTO', 'BREW'))) return false;
 		
 		// IE 11 signature
 		$has_trident_rv = (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Trident') && WURFL_Handlers_Utils::checkIfContains($userAgent, 'rv:'));

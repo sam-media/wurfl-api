@@ -49,6 +49,6 @@ class WURFL_VirtualCapability_FormFactor extends WURFL_VirtualCapability
             }
         }
 
-        return 'Feature Phone';
+        return 'Other Mobile';
     }
 }

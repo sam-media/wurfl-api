@@ -29,18 +29,28 @@ class WURFL_Request_UserAgentNormalizer_Specific_UcwebU3 implements WURFL_Reques
 			return $userAgent;
 		}
 
-		//Android U3K Mobile + Tablet
-		if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Android')) {
+		// Windows Phone goes before Android
+		if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Windows Phone')) {
 			// Apply Version+Model--- matching normalization
-	
+			$model = WURFL_Handlers_WindowsPhoneHandler::getWindowsPhoneModel($userAgent);
+			$version = WURFL_Handlers_WindowsPhoneHandler::getWindowsPhoneVersion($userAgent);
+			if ($model !== null && $version !== null) {
+				$prefix = "$version U3WP $ucb_version $model" . WURFL_Constants::RIS_DELIMITER;
+				return $prefix . $userAgent;
+			}
+		}
+
+		// Android U3K Mobile + Tablet
+		else if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Android')) {
+			// Apply Version+Model--- matching normalization
 			$model = WURFL_Handlers_AndroidHandler::getAndroidModel($userAgent, false);
 			$version = WURFL_Handlers_AndroidHandler::getAndroidVersion($userAgent, false);
 			if ($model !== null && $version !== null) {
-				$prefix = "$version U3Android $ucb_version $model".WURFL_Constants::RIS_DELIMITER;
+				$prefix = "$version U3Android $ucb_version $model" . WURFL_Constants::RIS_DELIMITER;
 				return $prefix.$userAgent;
 			}
 		}
-	
+
 		//iPhone U3K
 		else if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'iPhone;')) {
 	

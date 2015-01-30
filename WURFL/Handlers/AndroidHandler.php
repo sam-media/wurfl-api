@@ -75,7 +75,12 @@ class WURFL_Handlers_AndroidHandler extends WURFL_Handlers_Handler {
 		if ($tolerance !== false) {
 			return $this->getDeviceIDFromRIS($userAgent, $tolerance);
 		}
-		
+
+		//Return no match for UAs with no extractable Android version, model and that do not start with either Mozilla or Dalvik
+		if (!WURFL_Handlers_Utils::checkIfStartsWithAnyOf($userAgent, array('Mozilla','Dalvik'))) {
+			return WURFL_Constants::NO_MATCH;
+		}
+
 		// Standard RIS Matching
 		$tolerance = WURFL_Handlers_Utils::indexOfAnyOrLength($userAgent, array(' Build/', ' AppleWebKit'));
 		return $this->getDeviceIDFromRIS($userAgent, $tolerance);	

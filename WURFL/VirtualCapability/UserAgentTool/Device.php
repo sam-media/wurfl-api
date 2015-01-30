@@ -64,17 +64,16 @@ class WURFL_VirtualCapability_UserAgentTool_Device {
 	}
 
 	protected static $windows_map = array(
-        '3.1' => 'NT 3.1',
-        '3.5' => 'NT 3.5',
-        '4.0' => 'NT 4.0',
-        '5.0' => '2000',
-        '5.1' => 'XP',
-        '5.2' => 'XP',
-        '6.0' => 'Vista',
-        '6.1' => '7',
-        '6.2' => '8',
-        '6.3' => '8.1',
-        '6.4' => '10',
+			'4.0' => 'NT 4.0',
+			'5.0' => '2000',
+			'5.1' => 'XP',
+			'5.2' => 'XP',
+			'6.0' => 'Vista',
+			'6.1' => '7',
+			'6.2' => '8',
+			'6.3' => '8.1',
+        	'6.4' => '10',
+            '10.0' => '10',
 	);
 
 	public function normalize() {
@@ -82,7 +81,7 @@ class WURFL_VirtualCapability_UserAgentTool_Device {
 	}
 	protected function normalizeOS() {
 		if (strpos($this->device_ua, 'Windows') !== false) {
-			if (preg_match('/Windows NT ([0-9]\.[0-9])/', $this->os->name, $matches)) {
+			if (preg_match('/Windows NT ([0-9]+?\.[0-9])/', $this->os->name, $matches)) {
 				$this->os->name = "Windows";
 				$this->os->version = array_key_exists($matches[1], self::$windows_map)? self::$windows_map[$matches[1]]: $matches[1];
 				return;
@@ -107,16 +106,16 @@ class WURFL_VirtualCapability_UserAgentTool_Device {
 		if ($this->os->name != '') {
 			return;
 		}
-        if (strpos($this->device_ua, 'FreeBSD') !== false) {
-            $this->os->name = 'FreeBSD';
+		if (strpos($this->device_ua, 'FreeBSD') !== false) {
+			$this->os->name = 'FreeBSD';
 
-            return;
-        }
-        if (strpos($this->device_ua, 'NetBSD') !== false) {
-            $this->os->name = 'NetBSD';
+			return;
+		}
+		if (strpos($this->device_ua, 'NetBSD') !== false) {
+			$this->os->name = 'NetBSD';
 
-            return;
-        }
+			return;
+		}
 		// Last ditch efforts
 		if (strpos($this->device_ua, 'Linux') !== false || strpos($this->device_ua, 'X11') !== false) {
 			$this->os->name = 'Linux';

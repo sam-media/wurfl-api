@@ -48,10 +48,24 @@ class WURFL_Handlers_Matcher_LDMatcher implements WURFL_Handlers_Matcher_Interfa
 	public function match(&$collection, $needle, $tolerance) {
 		$best = $tolerance;
 		$match = '';
+        $needle_chars = count_chars($needle);
 		foreach ( $collection as $userAgent ) {
-			if (abs ( strlen ( $needle ) - strlen ( $userAgent ) ) <= $tolerance) {
-				$current = levenshtein($needle, $userAgent);
-				if ($current <= $best) {
+            $ua_chars = count_chars($userAgent);
+            $sum = 0;
+            $can_apply_ld = true;
+
+            //Check from 32 (space) to 122 ('z')
+            for ($i = 32; $i < 122; $i++) {
+                $sum += abs($needle_chars[$i] - $ua_chars[$i]);
+                if ($sum > 2 * $tolerance) {
+                    $can_apply_ld = false;
+                    break;
+                }
+            }
+
+            if ($can_apply_ld === true) {
+                $current = levenshtein($needle, $userAgent);
+                if ($current <= $best) {
 					$best = $current - 1;
 					$match = $userAgent;
 				}
