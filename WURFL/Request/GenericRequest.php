@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2014 ScientiaMobile, Inc.
+ * Copyright (c) 2015 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -23,19 +23,22 @@
  * 
  * @property string $userAgent
  * @property string $userAgentProfile
+ * @property string $userAgentNormalized
  * @property boolean $xhtmlDevice true if the device is known to be XHTML-MP compatible
  * @property string $id Unique ID used for caching: MD5($userAgent)
  * @property WURFL_Request_MatchInfo $matchInfo Information about the match (available after matching)
  */
 class WURFL_Request_GenericRequest {
-	
+
+    const MAX_HTTP_HEADER_LENGTH = 512;
+
 	private $_request;
 	private $_userAgent;
 	private $_userAgentProfile;
 	private $_xhtmlDevice;
 	private $_id;
 	private $_matchInfo;
-	
+
 	/**
 	 * @param array $request Original HTTP headers
 	 * @param string $userAgent
@@ -43,9 +46,9 @@ class WURFL_Request_GenericRequest {
 	 * @param string $xhtmlDevice
 	 */
 	public function __construct(array $request, $userAgent, $userAgentProfile=null, $xhtmlDevice=null) {
-		$this->_request = $request;
-		$this->_userAgent = $userAgent;
-		$this->_userAgentProfile = $userAgentProfile;
+		$this->_request = $this->sanitizeHeaders($request);
+		$this->_userAgent = $this->sanitizeHeaders($userAgent);
+		$this->_userAgentProfile = $this->sanitizeHeaders($userAgentProfile);
 		$this->_xhtmlDevice = $xhtmlDevice;
 		$this->_id = md5($userAgent);
 		$this->_matchInfo = new WURFL_Request_MatchInfo();
@@ -55,7 +58,24 @@ class WURFL_Request_GenericRequest {
 		$name = '_'.$name;
 		return $this->$name;
 	}
-	
+
+    protected function sanitizeHeaders($headers) {
+        if (!is_array($headers)) {
+            return $this->truncateHeader($headers);
+        }
+        foreach($headers as $header => $value) {
+            $headers[$header] = $this->truncateHeader($value);
+        }
+        return $headers;
+    }
+
+    private function truncateHeader($header) {
+        if (strpos($header, 'HTTP_') !== 0 || strlen($header) <= self::MAX_HTTP_HEADER_LENGTH) {
+            return $header;
+        }
+        return substr($header, 0, self::MAX_HTTP_HEADER_LENGTH);
+    }
+
 	/**
 	 * Get the original HTTP header value from the request
 	 * @param string $name

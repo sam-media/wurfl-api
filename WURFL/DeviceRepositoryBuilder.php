@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2014 ScientiaMobile, Inc.
+ * Copyright (c) 2015 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -73,6 +73,7 @@ class WURFL_DeviceRepositoryBuilder {
 		if (!$this->isRepositoryBuilt()) {
 			// If acquireLock() is false, the WURFL is being reloaded in another thread
 			if ($this->acquireLock()) {
+				set_time_limit(600);
 				$infoIterator = new WURFL_Xml_VersionIterator($wurflFile);
 				$deviceIterator = new WURFL_Xml_DeviceIterator($wurflFile, $capabilityFilter);
 				$patchIterators = $this->toPatchIterators($wurflPatches , $capabilityFilter);

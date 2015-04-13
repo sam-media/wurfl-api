@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2014 ScientiaMobile, Inc.
+ * Copyright (c) 2015 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -59,6 +59,8 @@ class WURFL_UserAgentHandlerChain {
 	 */
 	public function filter($userAgent, $deviceID) {
 		WURFL_Handlers_Utils::reset();
+        $generic_normalizer = WURFL_UserAgentHandlerChainFactory::createGenericNormalizers();
+        $userAgent = $generic_normalizer->normalize($userAgent);
 		$this->_userAgentHandlers[0]->filter($userAgent, $deviceID);
 	}
 	

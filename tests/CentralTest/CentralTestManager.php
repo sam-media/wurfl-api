@@ -13,6 +13,7 @@ class CentralTestManager {
 	
 	public $num_success = 0;
 	public $num_failure = 0;
+    public $num_skipped = 0;
 	
 	protected $introspector;
 
@@ -94,6 +95,9 @@ class CentralTestManager {
 		$total_tests = count($this->test_list);
 		$total_time = time() - $time_start;
 		echo "\nTesting completed in $total_time seconds\nTotal Tests: $total_tests\nSuccess: {$this->num_success}\nFailures:  {$this->num_failure}\n";
+        if ($this->num_skipped > 0) {
+            echo "Skipped:  {$this->num_skipped}\n";
+        }
 	}
 	
 	public function loadTestList ($url) {
@@ -104,11 +108,15 @@ class CentralTestManager {
 		if (!$xml) {
 			$errors = array();
 			$i = 1;
-			foreach(libxml_get_errors() as $error) {
-				$errors[] = "Error #$i: ".$error->message.";";
-				$i++;
-			}
-			throw new Exception("Unable to process XML data:\n".implode("\n",$errors));
+            if (!empty($xml_errors)) {
+                foreach(libxml_get_errors() as $error) {
+                    $errors[] = "Error #$i: ".$error->message.";";
+                    $i++;
+                }
+                throw new Exception("Unable to process XML data:\n".implode("\n",$errors));
+            } else {
+                $this->num_skipped++;
+            }
 		}
 		foreach ($xml->test as $testxml) {
 			$test = new CentralTest();
