@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2014 ScientiaMobile, Inc.
+ * Copyright (c) 2015 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -49,12 +49,7 @@ class WURFL_Handlers_SamsungHandler extends WURFL_Handlers_Handler {
 	}
 	
 	public function applyRecoveryMatch($userAgent) {
-		if (WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'SAMSUNG')) {
-			$tolerance = 8;
-			return $this->getDeviceIDFromLD($userAgent, $tolerance);
-		} else {
-			$tolerance = WURFL_Handlers_Utils::indexOfOrLength($userAgent, '/', strpos($userAgent, 'Samsung'));
-			return $this->getDeviceIDFromRIS($userAgent, $tolerance);
-		}
+        $tolerance = WURFL_Handlers_Utils::indexOfOrLength($userAgent, '/', strpos($userAgent, 'Samsung'));
+        return $this->getDeviceIDFromRIS($userAgent, $tolerance);
 	}
 }

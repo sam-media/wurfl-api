@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2014 ScientiaMobile, Inc.
+ * Copyright (c) 2015 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -46,7 +46,11 @@ class WURFL_Handlers_AndroidHandler extends WURFL_Handlers_Handler {
 		'generic_android_ver4_4',
         'generic_android_ver4_5',
 		'generic_android_ver5_0',
-		
+		'generic_android_ver5_1',
+		'generic_android_ver5_2',
+		'generic_android_ver5_3',
+		'generic_android_ver6_0',
+
 		'generic_android_ver1_5_tablet',
 		'generic_android_ver1_6_tablet',
 		'generic_android_ver2_tablet',
@@ -64,6 +68,10 @@ class WURFL_Handlers_AndroidHandler extends WURFL_Handlers_Handler {
 		'generic_android_ver4_4_tablet',
         'generic_android_ver4_5_tablet',
 		'generic_android_ver5_0_tablet',
+		'generic_android_ver5_1_tablet',
+		'generic_android_ver5_2_tablet',
+		'generic_android_ver5_3_tablet',
+		'generic_android_ver6_0_tablet',
 	);
 	
 	public function canHandle($userAgent) {
@@ -75,7 +83,12 @@ class WURFL_Handlers_AndroidHandler extends WURFL_Handlers_Handler {
 		if ($tolerance !== false) {
 			return $this->getDeviceIDFromRIS($userAgent, $tolerance);
 		}
-		
+
+		//Return no match for UAs with no extractable Android version, model and that do not start with either Mozilla or Dalvik
+		if (!WURFL_Handlers_Utils::checkIfStartsWithAnyOf($userAgent, array('Mozilla','Dalvik'))) {
+			return WURFL_Constants::NO_MATCH;
+		}
+
 		// Standard RIS Matching
 		$tolerance = WURFL_Handlers_Utils::indexOfAnyOrLength($userAgent, array(' Build/', ' AppleWebKit'));
 		return $this->getDeviceIDFromRIS($userAgent, $tolerance);	
@@ -110,7 +123,7 @@ class WURFL_Handlers_AndroidHandler extends WURFL_Handlers_Handler {
 	/********* Android Utility Functions ***********/
 	const ANDROID_DEFAULT_VERSION = 2.0;
 	
-	public static $validAndroidVersions = array('1.0', '1.5', '1.6', '2.0', '2.1', '2.2', '2.3', '2.4', '3.0', '3.1', '3.2', '3.3', '4.0', '4.1', '4.2', '4.3', '4.4', '4.5', '5.0');
+	public static $validAndroidVersions = array('1.0', '1.5', '1.6', '2.0', '2.1', '2.2', '2.3', '2.4', '3.0', '3.1', '3.2', '3.3', '4.0', '4.1', '4.2', '4.3', '4.4', '4.5', '5.0', '5.1', '5.2', '5.3', '6.0');
 	public static $androidReleaseMap = array(
 		'Cupcake' => '1.5',
 		'Donut' => '1.6',
@@ -172,7 +185,9 @@ class WURFL_Handlers_AndroidHandler extends WURFL_Handlers_Handler {
 		} else if (preg_match('#Android [^;]+;(?>(?: xx-xx[ ;]+)?)(.+?)(?:Build/|\))#', $ua, $matches)) {
 			// Trim off spaces and semicolons
 			$model = rtrim($matches[1], ' ;');
-
+        // Additional logic to capture model names in Amazon webview/appstore UAs
+        } else if (preg_match('#^(?:AmazonWebView|Appstore|Amazon\.com)/.+Android[/ ][\d\.]+/(?:[\d]+/)?([A-Za-z0-9_\- ]+)\b#', $ua, $matches)) {
+            $model = $matches[1];
 		} else {
 			return null;
 		}

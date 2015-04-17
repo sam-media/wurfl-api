@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2014 ScientiaMobile, Inc.
+ * Copyright (c) 2015 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -40,6 +40,7 @@ class WURFL_Handlers_AppleHandler extends WURFL_Handlers_Handler {
 		'apple_ipod_touch_ver6',
 		'apple_ipod_touch_ver7',
         'apple_ipod_touch_ver8',
+        'apple_ipod_touch_ver9',
 
 		'apple_ipad_ver1',
 		'apple_ipad_ver1_subua32',
@@ -48,6 +49,7 @@ class WURFL_Handlers_AppleHandler extends WURFL_Handlers_Handler {
 		'apple_ipad_ver1_sub6',
 		'apple_ipad_ver1_sub7',
         'apple_ipad_ver1_sub8',
+        'apple_ipad_ver1_sub9',
 
 		'apple_iphone_ver1',
 		'apple_iphone_ver2',
@@ -57,6 +59,7 @@ class WURFL_Handlers_AppleHandler extends WURFL_Handlers_Handler {
 		'apple_iphone_ver6',
 		'apple_iphone_ver7',
         'apple_iphone_ver8',
+        'apple_iphone_ver9',
 
 		//iOS HW IDs
 		'apple_ipad_ver1_subhw1',
@@ -91,8 +94,34 @@ class WURFL_Handlers_AppleHandler extends WURFL_Handlers_Handler {
         'apple_ipad_ver1_sub8_subhw2',
         'apple_ipad_ver1_sub8_subhw3',
         'apple_ipad_ver1_sub8_subhw4',
+        'apple_ipad_ver1_sub8_subhwair',
         'apple_ipad_ver1_sub8_subhwmini1',
         'apple_ipad_ver1_sub8_subhwmini2',
+        'apple_ipad_ver1_sub8_1_subhw2',
+        'apple_ipad_ver1_sub8_1_subhw3',
+        'apple_ipad_ver1_sub8_1_subhw4',
+        'apple_ipad_ver1_sub8_1_subhwair',
+        'apple_ipad_ver1_sub8_1_subhwair2',
+        'apple_ipad_ver1_sub8_1_subhwmini1',
+        'apple_ipad_ver1_sub8_1_subhwmini2',
+        'apple_ipad_ver1_sub8_1_subhwmini3',
+        'apple_ipad_ver1_sub8_2_subhw2',
+        'apple_ipad_ver1_sub8_2_subhw3',
+        'apple_ipad_ver1_sub8_2_subhw4',
+        'apple_ipad_ver1_sub8_2_subhwair',
+        'apple_ipad_ver1_sub8_2_subhwair2',
+        'apple_ipad_ver1_sub8_2_subhwmini1',
+        'apple_ipad_ver1_sub8_2_subhwmini2',
+        'apple_ipad_ver1_sub8_2_subhwmini3',
+        'apple_ipad_ver1_sub8_2_subhwmini3',
+        'apple_ipad_ver1_sub8_3_subhw2',
+        'apple_ipad_ver1_sub8_3_subhw3',
+        'apple_ipad_ver1_sub8_3_subhw4',
+        'apple_ipad_ver1_sub8_3_subhwair',
+        'apple_ipad_ver1_sub8_3_subhwair2',
+        'apple_ipad_ver1_sub8_3_subhwmini1',
+        'apple_ipad_ver1_sub8_3_subhwmini2',
+        'apple_ipad_ver1_sub8_3_subhwmini3',
 
 		'apple_iphone_ver1_subhw2g',
 		'apple_iphone_ver2_subhw2g',
@@ -148,6 +177,30 @@ class WURFL_Handlers_AppleHandler extends WURFL_Handlers_Handler {
         'apple_iphone_ver8_subhw5s',
 		'apple_iphone_ver8_subhw6',
 		'apple_iphone_ver8_subhw6plus',
+        'apple_iphone_ver8_subua802_subhw4s',
+        'apple_iphone_ver8_subua802_subhw5',
+        'apple_iphone_ver8_subua802_subhw5c',
+        'apple_iphone_ver8_subua802_subhw5s',
+        'apple_iphone_ver8_subua802_subhw6',
+        'apple_iphone_ver8_subua802_subhw6plus',
+        'apple_iphone_ver8_1_subhw4s',
+        'apple_iphone_ver8_1_subhw5',
+        'apple_iphone_ver8_1_subhw5c',
+        'apple_iphone_ver8_1_subhw5s',
+        'apple_iphone_ver8_1_subhw6',
+        'apple_iphone_ver8_1_subhw6plus',
+        'apple_iphone_ver8_2_subhw4s',
+        'apple_iphone_ver8_2_subhw5',
+        'apple_iphone_ver8_2_subhw5c',
+        'apple_iphone_ver8_2_subhw5s',
+        'apple_iphone_ver8_2_subhw6',
+        'apple_iphone_ver8_2_subhw6plus',
+        'apple_iphone_ver8_3_subhw4s',
+        'apple_iphone_ver8_3_subhw5',
+        'apple_iphone_ver8_3_subhw5c',
+        'apple_iphone_ver8_3_subhw5s',
+        'apple_iphone_ver8_3_subhw6',
+        'apple_iphone_ver8_3_subhw6plus',
 
 		'apple_ipod_touch_ver1_subhw1',
 		'apple_ipod_touch_ver2_subhw1',
@@ -182,7 +235,10 @@ class WURFL_Handlers_AppleHandler extends WURFL_Handlers_Handler {
 		'apple_ipod_touch_ver7_subhw5',
 		'apple_ipod_touch_ver7_1_subhw5',
         'apple_ipod_touch_ver8_subhw5',
-	);
+        'apple_ipod_touch_ver8_1_subhw5',
+        'apple_ipod_touch_ver8_2_subhw5',
+        'apple_ipod_touch_ver8_3_subhw5',
+    );
 	
 	// iOS hardware mappings
 	public static $iphoneDeviceMap = array(
@@ -199,6 +255,8 @@ class WURFL_Handlers_AppleHandler extends WURFL_Handlers_Handler {
 			'5,4' => '5c',
 			'6,1' => '5s',
 			'6,2' => '5s',
+			'7,1' => '6plus',
+			'7,2' => '6',
 	);
 	
 	public static $ipadDeviceMap = array(
@@ -218,10 +276,16 @@ class WURFL_Handlers_AppleHandler extends WURFL_Handlers_Handler {
 			'3,6' => '4',
 			'4,1' => 'air',
 			'4,2' => 'air',
-			'4,2' => 'air',
+			'4,3' => 'air',
 			'4,4' => 'mini2',
 			'4,5' => 'mini2',
-	);
+            '4,6' => 'mini2',
+            '4,7' => 'mini3',
+            '4,8' => 'mini3',
+            '4,9' => 'mini3',
+            '5,3' => 'air2',
+            '5,4' => 'air2',
+    );
 	
 	public static $ipodDeviceMap = array(
 			'1,1' => '1',

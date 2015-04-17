@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2014 ScientiaMobile, Inc.
+ * Copyright (c) 2015 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -47,12 +47,20 @@ class WURFL_Handlers_UcwebU3Handler extends WURFL_Handlers_Handler {
 		'apple_iphone_ver5_subuaucweb',
 		'apple_iphone_ver6_subuaucweb',
 		'apple_iphone_ver7_subuaucweb',
-		
+		'apple_iphone_ver8_subuaucweb',
+		'apple_iphone_ver9_subuaucweb',
+
 		'apple_ipad_ver1_subuaucweb',
 		'apple_ipad_ver1_sub4_subuaucweb',
 		'apple_ipad_ver1_sub5_subuaucweb',
 		'apple_ipad_ver1_sub6_subuaucweb',
 		'apple_ipad_ver1_sub7_subuaucweb',
+		'apple_ipad_ver1_sub8_subuaucweb',
+		'apple_ipad_ver1_sub9_subuaucweb',
+
+		'generic_ms_phone_os8_subuaucweb',
+		'generic_ms_phone_os8_1_subuaucweb',
+		'generic_ms_phone_os10_subuaucweb',
 	);
 	
 	public function canHandle($userAgent) {
@@ -61,18 +69,36 @@ class WURFL_Handlers_UcwebU3Handler extends WURFL_Handlers_Handler {
 	}
 	
 	public function applyConclusiveMatch($userAgent) {
+
 		$tolerance = WURFL_Handlers_Utils::toleranceToRisDelimeter($userAgent);
 		if ($tolerance !== false) {
 			return $this->getDeviceIDFromRIS($userAgent, $tolerance);
 		}
-		
 		return WURFL_Constants::NO_MATCH;
 	}
 	
 	public function applyRecoveryMatch($userAgent) {
-		//Android U3K Mobile + Tablet. This will also handle UCWEB7 recovery and point it to the UCWEB generic IDs.
-		if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Android')) {
-			// Apply Version+Model--- matching normalization
+		// Windows Phone
+		if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Windows Phone')) {
+			$version = WURFL_Handlers_WindowsPhoneHandler::getWindowsPhoneVersion($userAgent);
+			$significant_version = explode('.', $version);
+			if ($significant_version[0] !== null) {
+				if ($significant_version[1] === 0) {
+					$deviceID = 'generic_ms_phone_os'.$significant_version[0].'_subuaucweb';
+				}
+				else {
+					$deviceID = 'generic_ms_phone_os'.$significant_version[0].'_'.$significant_version[1].'_subuaucweb';
+				}
+
+				if (in_array($deviceID, self::$constantIDs)) {
+					return $deviceID;
+				}
+			}
+			return 'generic_ms_phone_os8_subuaucweb';
+		}
+
+		// Android U3K Mobile + Tablet. This will also handle UCWEB7 recovery and point it to the UCWEB generic IDs.
+		else if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Android')) {
 			$version = WURFL_Handlers_AndroidHandler::getAndroidVersion($userAgent, false);
 			$significant_version = explode('.', $version);
 			if ($significant_version[0] !== null) {
@@ -81,11 +107,11 @@ class WURFL_Handlers_UcwebU3Handler extends WURFL_Handlers_Handler {
 					return $deviceID;
 				}
 			}
-				
+
 			return 'generic_ucweb_android_ver1';
 		}
 
-		//iPhone U3K
+		// iPhone U3K
 		else if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'iPhone;')) {
 			if (preg_match('/iPhone OS (\d+)(?:_\d+)?.+ like/', $userAgent, $matches)) {
 				$significant_version = $matches[1];
@@ -94,14 +120,14 @@ class WURFL_Handlers_UcwebU3Handler extends WURFL_Handlers_Handler {
 					return $deviceID;
 				}
 			}
-				
+
 			return 'apple_iphone_ver1_subuaucweb';
 		}
 
 
-		//iPad U3K
+		// iPad U3K
 		else if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'iPad')) {
-				
+
 			if (preg_match('/CPU OS (\d+)(?:_\d+)?.+like Mac/', $userAgent, $matches)) {
 				$significant_version = $matches[1];
 				$deviceID = 'apple_ipad_ver1_sub'.$significant_version.'_subuaucweb';
@@ -109,10 +135,10 @@ class WURFL_Handlers_UcwebU3Handler extends WURFL_Handlers_Handler {
 					return $deviceID;
 				}
 			}
-				
+
 			return 'apple_ipad_ver1_subuaucweb';
 		}
-			
+
 		return 'generic_ucweb';
 	}
 	
@@ -131,7 +157,6 @@ class WURFL_Handlers_UcwebU3Handler extends WURFL_Handlers_Handler {
 			if (in_array($u2k_an_version, WURFL_Handlers_AndroidHandler::$validAndroidVersions)) {
 				return $u2k_an_version;
 			}
-	
 		}
 		return $use_default? WURFL_Handlers_AndroidHandler::ANDROID_DEFAULT_VERSION: null;
 	}

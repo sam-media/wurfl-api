@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2014 ScientiaMobile, Inc.
+ * Copyright (c) 2015 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -201,8 +201,7 @@ abstract class WURFL_Handlers_Handler implements WURFL_Handlers_Filter, WURFL_Ha
 	 * @return string WURFL Device ID for matching device
 	 */
 	public function match(WURFL_Request_GenericRequest $request) {
-		$userAgent = $request->userAgent;
-		if ($this->canHandle($userAgent)) {
+		if ($this->canHandle($request->userAgentNormalized)) {
 			return $this->applyMatch($request);
 		}
 		
@@ -224,7 +223,7 @@ abstract class WURFL_Handlers_Handler implements WURFL_Handlers_Filter, WURFL_Ha
 		$request->matchInfo->matcher = $class_name;
 		$start_time = microtime(true);
 		
-		$userAgent = $this->normalizeUserAgent($request->userAgent);
+		$userAgent = $this->normalizeUserAgent($request->userAgentNormalized);
 		$request->matchInfo->normalized_user_agent = $userAgent;
 		$this->logger->debug("START: Matching For  " . $userAgent);
 		
@@ -350,19 +349,37 @@ abstract class WURFL_Handlers_Handler implements WURFL_Handlers_Filter, WURFL_Ha
 		if (WURFL_Handlers_Utils::isDesktopBrowserHeavyDutyAnalysis($userAgent)) {
 			return WURFL_Constants::GENERIC_WEB_BROWSER;
 		}
-		$mobile = WURFL_Handlers_Utils::isMobileBrowser($userAgent);
-		$desktop = WURFL_Handlers_Utils::isDesktopBrowser($userAgent);
-		
-		if (!$desktop) {
-			$deviceId = WURFL_Handlers_Utils::getMobileCatchAllId($userAgent);
-			if ($deviceId !== WURFL_Constants::NO_MATCH) {
-				return $deviceId;
-			}
-		}
-		
-		if ($mobile) return WURFL_Constants::GENERIC_MOBILE;
-		if ($desktop) return WURFL_Constants::GENERIC_WEB_BROWSER;
-		return WURFL_Constants::GENERIC;
+
+        if (WURFL_Handlers_Utils::checkIfContains($userAgent,'CoreMedia')) return 'apple_iphone_coremedia_ver1';
+        if (WURFL_Handlers_Utils::checkIfContains($userAgent,'Windows CE')) return 'generic_ms_mobile';
+        if (WURFL_Handlers_Utils::checkIfContains($userAgent,'UP.Browser/7.2')) return 'opwv_v72_generic';
+        if (WURFL_Handlers_Utils::checkIfContains($userAgent,'UP.Browser/7')) return 'opwv_v7_generic';
+        if (WURFL_Handlers_Utils::checkIfContains($userAgent,'UP.Browser/6.2')) return 'opwv_v62_generic';
+        if (WURFL_Handlers_Utils::checkIfContains($userAgent,'UP.Browser/6')) return 'opwv_v6_generic';
+        if (WURFL_Handlers_Utils::checkIfContains($userAgent,'UP.Browser/5')) return 'upgui_generic';
+        if (WURFL_Handlers_Utils::checkIfContains($userAgent,'UP.Browser/4')) return 'uptext_generic';
+        if (WURFL_Handlers_Utils::checkIfContains($userAgent,'UP.Browser/3')) return 'uptext_generic';
+        // Series 60
+        if (WURFL_Handlers_Utils::checkIfContains($userAgent,'Series60')) return 'nokia_generic_series60';
+        // Access/Net Front
+        if (WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent,array('NetFront/3.0', 'ACS-NF/3.0'))) return 'generic_netfront_ver3';
+        if (WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent,array('NetFront/3.1', 'ACS-NF/3.1'))) return 'generic_netfront_ver3_1';
+        if (WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent,array('NetFront/3.2', 'ACS-NF/3.2'))) return 'generic_netfront_ver3_2';
+        if (WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent,array('NetFront/3.3', 'ACS-NF/3.3'))) return 'generic_netfront_ver3_3';
+        if (WURFL_Handlers_Utils::checkIfContains($userAgent,'NetFront/3.4')) return 'generic_netfront_ver3_4';
+        if (WURFL_Handlers_Utils::checkIfContains($userAgent,'NetFront/3.5')) return 'generic_netfront_ver3_5';
+        if (WURFL_Handlers_Utils::checkIfContains($userAgent,'NetFront/4.0')) return 'generic_netfront_ver4_0';
+        // Contains Mozilla/, but not at the beginning of the UA
+        // ie: MOTORAZR V8/R601_G_80.41.17R Mozilla/4.0 (compatible; MSIE 6.0 Linux; MOTORAZR V88.50) Profile/MIDP-2.0 Configuration/CLDC-1.1 Opera 8.50[zh]
+        if (strpos($userAgent, 'Mozilla/') > 0) return WURFL_Constants::GENERIC_XHTML;
+        if (WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent,array('Obigo','AU-MIC/2','AU-MIC-','AU-OBIGO/', 'Teleca Q03B1'))) {
+            return WURFL_Constants::GENERIC_XHTML;
+        }
+        // DoCoMo
+        if (WURFL_Handlers_Utils::checkIfStartsWithAnyOf($userAgent, array('DoCoMo', 'KDDI'))) return 'docomo_generic_jap_ver1';
+
+        if (WURFL_Handlers_Utils::isMobileBrowser($userAgent)) return WURFL_Constants::GENERIC_MOBILE;
+        return WURFL_Constants::GENERIC;
 	}
 	
 	/**

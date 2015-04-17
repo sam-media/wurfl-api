@@ -6,17 +6,16 @@
 /**
  * test case.
  */
-class WURFL_Storage_ApcTest
-    extends PHPUnit_Framework_TestCase
-{
+class WURFL_Storage_ApcTest extends PHPUnit_Framework_TestCase {
 
-    public function testNeverToExpireItems()
-    {
-        $this->checkDeps();
+
+    public function testNeverToExpireItems() {
+    	$this->checkDeps();
         $storage = new WURFL_Storage_Apc();
         $storage->save("foo", "foo");
         sleep(2);
-        self::assertEquals("foo", $storage->load("foo"));
+        $this->assertEquals("foo", $storage->load("foo"));
+
     }
 
     /*
@@ -30,34 +29,30 @@ class WURFL_Storage_ApcTest
         $storage = new WURFL_Storage_Apc($params);
         $storage->save("key", "value");
         sleep(2);
-        self::assertEquals(NULL, $storage->load("key"));
+        $this->assertEquals(NULL, $storage->load("key"));
     }
     */
 
-    public function testShouldClearAllItems()
-    {
-        $this->checkDeps();
+    public function testShouldClearAllItems() {
+    	$this->checkDeps();
         $storage = new WURFL_Storage_Apc(array());
         $storage->save("key1", "item1");
         $storage->save("key2", "item2");
         $storage->clear();
 
-        self::assertThanNoElementsAreInCache(array("key1", "key2"), $storage);
+        $this->assertThanNoElementsAreInCache(array("key1", "key2"), $storage);
+
     }
 
-    private function assertThanNoElementsAreInCache($keys = array(), WURFL_Storage_Apc $storage)
-    {
+    private function assertThanNoElementsAreInCache($keys = array(), WURFL_Storage_Apc $storage) {
         foreach ($keys as $key) {
-            self::assertNull($storage->load($key));
+            $this->assertNull($storage->load($key));
         }
     }
-
-    private function checkDeps()
-    {
-        if (!extension_loaded('apc') || @apc_cache_info() === false) {
-            $this->markTestSkipped(
-                "PHP extension 'apc' must be loaded and enabled for CLI to run this test (http://www.php.net/manual/en/apc.configuration.php#ini.apc.enable-cli)."
-            );
-        }
-    }
+	
+	private function checkDeps() {
+		if (!extension_loaded('apc') || @apc_cache_info() === false) {
+			$this->markTestSkipped("PHP extension 'apc' must be loaded and enabled for CLI to run this test (http://www.php.net/manual/en/apc.configuration.php#ini.apc.enable-cli).");
+		}
+	}
 }

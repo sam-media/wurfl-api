@@ -101,7 +101,7 @@ EOL;
             $wurflConfig = new WURFL_Configuration_InMemoryConfig();
 
             // Set location of the WURFL File
-            $wurflConfig->wurflFile(RESOURCES_DIR . '/wurfl.zip');
+            $wurflConfig->wurflFile(WURFL_DB_DIR . '/wurfl.zip');
 
             // Set the match mode for the API ('performance' or 'accuracy')
             $wurflConfig->matchMode('performance');

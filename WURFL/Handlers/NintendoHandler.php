@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2014 ScientiaMobile, Inc.
+ * Copyright (c) 2015 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -32,6 +32,7 @@ class WURFL_Handlers_NintendoHandler extends WURFL_Handlers_Handler {
 	protected $prefix = "NINTENDO";
 	
 	public static $constantIDs = array(
+		'nintendo_wii_u_ver1',
 		'nintendo_wii_ver1',
 		'nintendo_dsi_ver1',
 		'nintendo_ds_ver1',
@@ -44,15 +45,12 @@ class WURFL_Handlers_NintendoHandler extends WURFL_Handlers_Handler {
 	}
 	
 	public function applyConclusiveMatch($userAgent) {
-		return $this->getDeviceIDFromLD($userAgent);
-	}
-	
-	public function applyRecoveryMatch($userAgent) {
-		if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Nintendo Wii')) return 'nintendo_wii_ver1';
-		if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Nintendo DSi')) return 'nintendo_dsi_ver1';
-		if ((WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'Mozilla/') && WURFL_Handlers_Utils::checkIfContainsAll($userAgent, array('Nitro', 'Opera')))) {
-			return 'nintendo_ds_ver1';
-		}
-		return 'nintendo_wii_ver1';
+        if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Nintendo WiiU')) return 'nintendo_wii_u_ver1';
+        if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Nintendo Wii')) return 'nintendo_wii_ver1';
+        if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Nintendo DSi')) return 'nintendo_dsi_ver1';
+        if ((WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'Mozilla/') && WURFL_Handlers_Utils::checkIfContainsAll($userAgent, array('Nitro', 'Opera')))) {
+            return 'nintendo_ds_ver1';
+        }
+        return 'nintendo_wii_ver1';
 	}
 }
