@@ -17,6 +17,10 @@
     "require": {
         "php": ">=5.3.0"
     },
+    "suggest": {
+        "ext-redis": "phpredis extension allows to use the Redis storage",
+        "predis/predis": "predis library allows to use the Redis storage"
+    },
     "require-dev": {
         "phpunit/phpunit": "*"
     }
