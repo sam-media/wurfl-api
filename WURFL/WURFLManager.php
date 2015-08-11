@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2014 ScientiaMobile, Inc.
+ * Copyright (c) 2015 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -87,10 +87,6 @@ class WURFL_WURFLManager {
 			throw new Exception("The request parameter must be set.");
 		}
 		WURFL_Handlers_Utils::reset();
-		if (WURFL_Configuration_ConfigHolder::getWURFLConfig()->isHighPerformance() && WURFL_Handlers_Utils::isDesktopBrowserHeavyDutyAnalysis($request->userAgent)) {
-			// This device has been identified as a web browser programatically, so no call to WURFL is necessary
-			return $this->_wurflService->getDevice(WURFL_Constants::GENERIC_WEB_BROWSER, $request);
-		}
 		return $this->_wurflService->getDeviceForRequest($request);
 	}
 	

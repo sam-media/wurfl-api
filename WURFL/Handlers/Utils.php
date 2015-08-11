@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2014 ScientiaMobile, Inc.
+ * Copyright (c) 2015 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -79,25 +79,28 @@ class WURFL_Handlers_Utils {
 		' gt-',
 		'ventana',
 	);
-	
-	private static $smartTVBrowsers = array(
-		'googletv',
-		'boxee',
-		'sonydtv',
-		'appletv',
-		'smarttv',
-		'smart-tv',
-		'dlna',
-		'netcast.tv',
-		'ce-html',
-		'inettvbrowser',
-		'opera tv',
-		'viera',
-		'konfabulator',
-		'sony bravia',
-		'crkey',
+
+    private static $smartTVBrowsers = array(
+        'googletv',
+        'boxee',
+        'sonydtv',
+        'appletv',
+        'smarttv',
+        'smart-tv',
+        'dlna',
+        'ce-html',
+        'inettvbrowser',
+        'opera tv',
+        'viera',
+        'konfabulator',
+        'sony bravia',
+        'crkey',
         'sonycebrowser',
-	);
+        'hbbtv',
+        'large screen',
+        'netcast',
+        'philipstv',
+    );
 	
 	private static $desktopBrowsers = array(
 		'wow64',
@@ -123,7 +126,8 @@ class WURFL_Handlers_Utils {
 		'yahoo! searchmonkey',
 		'yahoo! slurp',
 		'feedfetcher-google',
-		'mowser'
+		'mowser',
+		'trove',
 	);
 	
 

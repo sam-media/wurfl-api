@@ -1,3 +1,6 @@
-*.sw?
 vendor/
 .idea/
+.buildpath
+.settings
+.project
+composer.phar

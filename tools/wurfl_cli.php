@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2014 ScientiaMobile, Inc.
+ * Copyright (c) 2015 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -21,6 +21,7 @@
  */
 
 define("WURFL_DIR", dirname(__FILE__) . '/../WURFL/');
+define("WURFL_DB_DIR", dirname(__FILE__) . '/../examples/resources/');
 define("RESOURCES_DIR", WURFL_DIR . "../tests/resources/");
 
 require_once WURFL_DIR.'/Application.php';

@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2014 ScientiaMobile, Inc.
+ * Copyright (c) 2015 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -40,6 +40,7 @@ class WURFL_Handlers_AppleHandler extends WURFL_Handlers_Handler {
 		'apple_ipod_touch_ver6',
 		'apple_ipod_touch_ver7',
         'apple_ipod_touch_ver8',
+        'apple_ipod_touch_ver9',
 
 		'apple_ipad_ver1',
 		'apple_ipad_ver1_subua32',
@@ -48,6 +49,7 @@ class WURFL_Handlers_AppleHandler extends WURFL_Handlers_Handler {
 		'apple_ipad_ver1_sub6',
 		'apple_ipad_ver1_sub7',
         'apple_ipad_ver1_sub8',
+        'apple_ipad_ver1_sub9',
 
 		'apple_iphone_ver1',
 		'apple_iphone_ver2',
@@ -57,6 +59,7 @@ class WURFL_Handlers_AppleHandler extends WURFL_Handlers_Handler {
 		'apple_iphone_ver6',
 		'apple_iphone_ver7',
         'apple_iphone_ver8',
+        'apple_iphone_ver9',
 
 		//iOS HW IDs
 		'apple_ipad_ver1_subhw1',
@@ -110,6 +113,15 @@ class WURFL_Handlers_AppleHandler extends WURFL_Handlers_Handler {
         'apple_ipad_ver1_sub8_2_subhwmini1',
         'apple_ipad_ver1_sub8_2_subhwmini2',
         'apple_ipad_ver1_sub8_2_subhwmini3',
+        'apple_ipad_ver1_sub8_2_subhwmini3',
+        'apple_ipad_ver1_sub8_3_subhw2',
+        'apple_ipad_ver1_sub8_3_subhw3',
+        'apple_ipad_ver1_sub8_3_subhw4',
+        'apple_ipad_ver1_sub8_3_subhwair',
+        'apple_ipad_ver1_sub8_3_subhwair2',
+        'apple_ipad_ver1_sub8_3_subhwmini1',
+        'apple_ipad_ver1_sub8_3_subhwmini2',
+        'apple_ipad_ver1_sub8_3_subhwmini3',
 
 		'apple_iphone_ver1_subhw2g',
 		'apple_iphone_ver2_subhw2g',
@@ -183,6 +195,12 @@ class WURFL_Handlers_AppleHandler extends WURFL_Handlers_Handler {
         'apple_iphone_ver8_2_subhw5s',
         'apple_iphone_ver8_2_subhw6',
         'apple_iphone_ver8_2_subhw6plus',
+        'apple_iphone_ver8_3_subhw4s',
+        'apple_iphone_ver8_3_subhw5',
+        'apple_iphone_ver8_3_subhw5c',
+        'apple_iphone_ver8_3_subhw5s',
+        'apple_iphone_ver8_3_subhw6',
+        'apple_iphone_ver8_3_subhw6plus',
 
 		'apple_ipod_touch_ver1_subhw1',
 		'apple_ipod_touch_ver2_subhw1',
@@ -219,6 +237,7 @@ class WURFL_Handlers_AppleHandler extends WURFL_Handlers_Handler {
         'apple_ipod_touch_ver8_subhw5',
         'apple_ipod_touch_ver8_1_subhw5',
         'apple_ipod_touch_ver8_2_subhw5',
+        'apple_ipod_touch_ver8_3_subhw5',
     );
 	
 	// iOS hardware mappings

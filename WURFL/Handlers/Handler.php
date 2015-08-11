@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2014 ScientiaMobile, Inc.
+ * Copyright (c) 2015 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -201,8 +201,7 @@ abstract class WURFL_Handlers_Handler implements WURFL_Handlers_Filter, WURFL_Ha
 	 * @return string WURFL Device ID for matching device
 	 */
 	public function match(WURFL_Request_GenericRequest $request) {
-		$userAgent = $request->userAgent;
-		if ($this->canHandle($userAgent)) {
+		if ($this->canHandle($request->userAgentNormalized)) {
 			return $this->applyMatch($request);
 		}
 		
@@ -224,7 +223,7 @@ abstract class WURFL_Handlers_Handler implements WURFL_Handlers_Filter, WURFL_Ha
 		$request->matchInfo->matcher = $class_name;
 		$start_time = microtime(true);
 		
-		$userAgent = $this->normalizeUserAgent($request->userAgent);
+		$userAgent = $this->normalizeUserAgent($request->userAgentNormalized);
 		$request->matchInfo->normalized_user_agent = $userAgent;
 		$this->logger->debug("START: Matching For  " . $userAgent);
 		

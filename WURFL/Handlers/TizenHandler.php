@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2014 ScientiaMobile, Inc.
+ * Copyright (c) 2015 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -39,6 +39,7 @@ class WURFL_Handlers_TizenHandler extends WURFL_Handlers_Handler {
         'generic_tizen_ver2_0',
         'generic_tizen_ver2_1',
         'generic_tizen_ver2_2',
+        'generic_tizen_ver2_3',
 	);
 	
 	public function canHandle($userAgent) {
@@ -68,7 +69,7 @@ class WURFL_Handlers_TizenHandler extends WURFL_Handlers_Handler {
         return "generic_tizen";
 	}
 
-    public static $validTizenVersions = array('1.0', '2.0', '2.1', '2.2');
+    public static $validTizenVersions = array('1.0', '2.0', '2.1', '2.2', '2.3');
 
     public static function getTizenVersion($ua) {
 

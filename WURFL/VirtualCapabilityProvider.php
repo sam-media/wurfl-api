@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2014 ScientiaMobile, Inc.
+ * Copyright (c) 2015 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -66,6 +66,8 @@ class WURFL_VirtualCapabilityProvider {
         'advertised_browser_version' => 'DeviceBrowser.BrowserVersion',
         'complete_device_name' => 'CompleteDeviceName',
         'form_factor' => 'FormFactor',
+        'is_phone' => 'IsPhone',
+        'is_app_webview' => 'IsAppWebview',
     );
 	
 	/**

@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2014 ScientiaMobile, Inc.
+ * Copyright (c) 2015 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -94,14 +94,14 @@ class WURFL_CustomDeviceRepository implements WURFL_DeviceRepository {
 	 * Returns a device for the given device ID
 	 *
 	 * @param string $deviceId
-	 * @return WURFL_Xml_ModelDevice
-	 * @throws WURFL_WURFLException if $deviceID is not defined in wurfl devices repository
+	 * @return WURFL_CustomDevice
+	 * @throws WURFL_Exception if $deviceID is not defined in wurfl devices repository
 	 */
 	public function getDevice($deviceId) {
 		if (!isset($this->_deviceCache[$deviceId])) {
 			$device = $this->persistenceStorage->load($deviceId);
 			if (!$device) {
-				throw new WURFL_WURFLException("There is no device with ID [$deviceId] in the loaded WURFL Data");
+				throw new Exception("There is no device with ID [$deviceId] in the loaded WURFL Data");
 			}
 			$this->_deviceCache[$deviceId] = $device;
 		}
@@ -110,7 +110,7 @@ class WURFL_CustomDeviceRepository implements WURFL_DeviceRepository {
 	
 	/**
 	 * Returns all devices in the repository
-	 * @return WURFL_Xml_ModelDevice[]
+	 * @return array
 	 */
 	public function getAllDevices() {
 		$devices = array();
@@ -199,17 +199,12 @@ class WURFL_CustomDeviceRepository implements WURFL_DeviceRepository {
 	 * device to the device of the given $deviceId
 	 *
 	 * @param string $deviceId
-	 * @return WURFL_Xml_ModelDevice[] All WURFL_Device objects in the fallback tree
+	 * @return array All WURFL_Device objects in the fallback tree
 	 */
 	public function getDeviceHierarchy($deviceId) {
 		$devices = array();
 		while (strcmp($deviceId, "root")) {
 			$device = $this->getDevice($deviceId);
-            
-            if (!($device instanceof WURFL_Xml_ModelDevice)) {
-                throw new WURFL_WURFLException('one of the parent devices is missing for deviceId ' . $deviceId);
-            }
-            
 			$devices[] = $device;
 			$deviceId = $device->fallBack;
 		}
