@@ -36,6 +36,7 @@ class WURFL_Handlers_SmartTVHandler extends WURFL_Handlers_Handler {
 		'generic_smarttv_googletv_browser',
 		'generic_smarttv_appletv_browser',
 		'generic_smarttv_boxeebox_browser',
+		'generic_smarttv_chromecast',
 	);
 	
 	public function canHandle($userAgent) {
@@ -53,6 +54,7 @@ class WURFL_Handlers_SmartTVHandler extends WURFL_Handlers_Handler {
 		if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'GoogleTV')) return 'generic_smarttv_googletv_browser';
 		if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'AppleTV')) return 'generic_smarttv_appletv_browser';
 		if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Boxee')) return 'generic_smarttv_boxeebox_browser';
+		if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'CrKey')) return 'generic_smarttv_chromecast';
 		return 'generic_smarttv_browser';
 	}	
 }

@@ -60,20 +60,23 @@ class WURFL_Request_GenericRequest {
 	}
 
     protected function sanitizeHeaders($headers) {
-        if (!is_array($headers)) {
-            return $this->truncateHeader($headers);
+        if (is_array($headers)) {
+            foreach($headers as $header => $value) {
+                if (strpos($header, 'HTTP_') === 0) {
+                    $value = $this->truncateHeader($value);
+                }
+                $headers[$header] = $value;
+            }
+            return $headers;
         }
-        foreach($headers as $header => $value) {
-            $headers[$header] = $this->truncateHeader($value);
-        }
-        return $headers;
+        return $this->truncateHeader($headers);
     }
 
     private function truncateHeader($header) {
-        if (strpos($header, 'HTTP_') !== 0 || strlen($header) <= self::MAX_HTTP_HEADER_LENGTH) {
-            return $header;
+        if (is_scalar($header) && strlen($header) > self::MAX_HTTP_HEADER_LENGTH) {
+            return substr($header, 0, self::MAX_HTTP_HEADER_LENGTH);
         }
-        return substr($header, 0, self::MAX_HTTP_HEADER_LENGTH);
+        return $header;
     }
 
 	/**

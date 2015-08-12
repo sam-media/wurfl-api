@@ -24,7 +24,7 @@ class WURFL_Constants {
 
 	private function __construct(){}
 	
-	const API_VERSION = "1.6.0.0";
+	const API_VERSION = "1.6.1.0";
 	
 	const GENERIC = "generic";
 	const GENERIC_XHTML = "generic_xhtml";
