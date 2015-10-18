@@ -123,13 +123,15 @@ class WURFL_WURFLManager {
 	}
 	
 	/**
-	 * Return a device for the given device id
+	 * Return a device for the given device id.  If $request is included, it will
+	 * be used to resolve virtual capabilties.
 	 *
 	 * @param string $deviceID
+	 * @param WURFL_Request_GenericRequest $request
 	 * @return WURFL_CustomDevice
 	 */
-	public function getDevice($deviceID) {
-		return $this->_wurflService->getDevice($deviceID);
+	public function getDevice($deviceID, $request=null) {
+		return $this->_wurflService->getDevice($deviceID, $request);
 	}
 	
 	/**

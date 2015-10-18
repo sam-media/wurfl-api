@@ -408,7 +408,17 @@ class WURFL_Handlers_Utils {
 		$firstSpace = strpos($string, " ");
 		return ($firstSpace === false)? strlen($string) : $firstSpace;
 	}
-	
+
+	/**
+	 * The character position of the first close parenthesis.  If there are no close parenthesis, returns string length
+	 * @param string $string Haystack
+	 * @return int Character position
+	 */
+	public static function firstCloseParen($string) {
+		$position = strpos($string, ')');
+		return ($position !== false)? $position: strlen($string);
+	}
+
 	/**
 	 * First occurance of a ; character or length
 	 * @param string $string Haystack

@@ -120,6 +120,9 @@ class WURFL_Handlers_WindowsPhoneHandler extends WURFL_Handlers_Handler {
             //   Mozilla/5.0 (compatible; MSIE 10.0; Windows Phone 8.0; Trident/6.0; IEMobile/10.0; ARM; Touch; NOKIA; RM-821_eu_sweden_235)
             $model = preg_replace('/(NOKIA; RM-.+?)_.*/', '$1', $model, 1);
 
+            //Doing the same normalization as above for Microsoft branded devices (RIP Nokia!)
+            $model = preg_replace('/(Microsoft; RM-.+?)_.*/', '$1', $model, 1);
+
             return $model;
         }
         return null;
@@ -132,6 +135,7 @@ class WURFL_Handlers_WindowsPhoneHandler extends WURFL_Handlers_Handler {
             $model = $matches[1];
             $model = str_replace('_blocked', '', $model);
             $model = preg_replace('/(NOKIA; RM-.+?)_.*/', '$1', $model, 1);
+            $model = preg_replace('/(Microsoft; RM-.+?)_.*/', '$1', $model, 1);
             return $model;
         }
         return null;
@@ -166,6 +170,7 @@ class WURFL_Handlers_WindowsPhoneHandler extends WURFL_Handlers_Handler {
             $model = $matches[1];
             $model = str_replace('_blocked', '', $model);
             $model = preg_replace('/(NOKIA; RM-.+?)_.*/', '$1', $model, 1);
+            $model = preg_replace('/(Microsoft; RM-.+?)_.*/', '$1', $model, 1);
             return $model;
         }
         return null;

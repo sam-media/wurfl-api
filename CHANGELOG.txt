@@ -1,5 +1,13 @@
 ScientiaMobile WURFL PHP API change log:
 
+[2015.08.04] 1.6.2.0
+- Improved detection in VC tool for:
+    - MSIE 12/Edge
+- Improved detection of:
+    - Windows Phone
+    - Bots
+    - CFNetwork
+
 [2015.07.01] 1.6.1.0
 - Improved detection in VC tool for:
     - MSIE 12/Edge

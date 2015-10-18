@@ -309,7 +309,7 @@ class WURFL_VirtualCapability_UserAgentTool {
 		//MSIE - If UA says Trident - This logic must stay above Chrome
 		if (strpos($device->device_ua, 'Trident') !== false || strpos($device->device_ua, ' Edge/') !== false) {
 			//MSIE 11 does not say MSIE and needs this
-			if ($device->os->setRegex($device->device_ua, '#^Mozilla/[45]\.0 \((Windows NT [0-9]+\.[0-9]);.+Trident.+; rv:([0-9]+)\.[0-9]+#', 1) || $device->os->setRegex($device->device_ua, '#^Mozilla/[45]\.0 \((Windows NT [0-9]+\.[0-9]);.+? Edge/(\d+)\.(\d+)#', 1)) {
+            if ($device->os->setRegex($device->device_ua, '#^Mozilla/[45]\.0 \((Windows NT [0-9]+\.[0-9]);.+Trident.+; rv:([0-9]+)\.[0-9]+#', 1) || $device->os->setRegex($device->device_ua, '#^Mozilla/[45]\.0 \((Windows NT [0-9]+\.[0-9]).+? Edge/(\d+)\.(\d+)#', 1)) {
 				$device->browser->set('IE', $device->os->getLastRegexMatch(2));
 				return $device;
 			}

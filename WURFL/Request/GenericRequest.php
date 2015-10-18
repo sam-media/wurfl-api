@@ -39,6 +39,9 @@ class WURFL_Request_GenericRequest {
 	private $_id;
 	private $_matchInfo;
 
+	// Public storage of the mutable normalized user agent
+	public $userAgentNormalized;
+
 	/**
 	 * @param array $request Original HTTP headers
 	 * @param string $userAgent
@@ -55,8 +58,11 @@ class WURFL_Request_GenericRequest {
 	}
 	
 	public function __get($name) {
-		$name = '_'.$name;
-		return $this->$name;
+		$prop_name = '_'.$name;
+		if (!property_exists($this, $prop_name)) {
+			throw new InvalidArgumentException("Property '$name' does not exist");
+		}
+		return $this->$prop_name;
 	}
 
     protected function sanitizeHeaders($headers) {
