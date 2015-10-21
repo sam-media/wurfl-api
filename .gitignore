@@ -9,4 +9,5 @@ error.log
 resources/
 build/
 composer.phar
+composer.lock
 _old/
