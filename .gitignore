@@ -1,6 +1,13 @@
-vendor/
-.idea/
-.buildpath
+*~
 .settings
+.buildpath
 .project
+.idea/
+vendor/
+data/
+error.log
+resources/
+build/
 composer.phar
+composer.lock
+_old/

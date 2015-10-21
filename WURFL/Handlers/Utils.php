@@ -273,6 +273,9 @@ class WURFL_Handlers_Utils {
 	public static function isDesktopBrowserHeavyDutyAnalysis($userAgent){
 		// Check Smart TV keywords
 		if (WURFL_Handlers_Utils::isSmartTV($userAgent)) return false;
+
+        //WP Desktop - Edge Mode
+        if (WURFL_Handlers_Utils::checkIfContainsAll($userAgent, array('Mozilla/5.0 (Windows NT ',' ARM;',' Edge/'))) return false;
 		// Chrome
 		if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Chrome') && !WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array('Android', 'Ventana'))) return true;
 		// Check mobile keywords
@@ -405,7 +408,17 @@ class WURFL_Handlers_Utils {
 		$firstSpace = strpos($string, " ");
 		return ($firstSpace === false)? strlen($string) : $firstSpace;
 	}
-	
+
+	/**
+	 * The character position of the first close parenthesis.  If there are no close parenthesis, returns string length
+	 * @param string $string Haystack
+	 * @return int Character position
+	 */
+	public static function firstCloseParen($string) {
+		$position = strpos($string, ')');
+		return ($position !== false)? $position: strlen($string);
+	}
+
 	/**
 	 * First occurance of a ; character or length
 	 * @param string $string Haystack

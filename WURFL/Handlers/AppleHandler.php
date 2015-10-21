@@ -122,6 +122,22 @@ class WURFL_Handlers_AppleHandler extends WURFL_Handlers_Handler {
         'apple_ipad_ver1_sub8_3_subhwmini1',
         'apple_ipad_ver1_sub8_3_subhwmini2',
         'apple_ipad_ver1_sub8_3_subhwmini3',
+        'apple_ipad_ver1_sub8_4_subhw2',
+        'apple_ipad_ver1_sub8_4_subhw3',
+        'apple_ipad_ver1_sub8_4_subhw4',
+        'apple_ipad_ver1_sub8_4_subhwair',
+        'apple_ipad_ver1_sub8_4_subhwair2',
+        'apple_ipad_ver1_sub8_4_subhwmini1',
+        'apple_ipad_ver1_sub8_4_subhwmini2',
+        'apple_ipad_ver1_sub8_4_subhwmini3',
+        'apple_ipad_ver1_sub9_subhw2',
+        'apple_ipad_ver1_sub9_subhw3',
+        'apple_ipad_ver1_sub9_subhw4',
+        'apple_ipad_ver1_sub9_subhwair',
+        'apple_ipad_ver1_sub9_subhwair2',
+        'apple_ipad_ver1_sub9_subhwmini1',
+        'apple_ipad_ver1_sub9_subhwmini2',
+        'apple_ipad_ver1_sub9_subhwmini3',
 
 		'apple_iphone_ver1_subhw2g',
 		'apple_iphone_ver2_subhw2g',
@@ -201,6 +217,18 @@ class WURFL_Handlers_AppleHandler extends WURFL_Handlers_Handler {
         'apple_iphone_ver8_3_subhw5s',
         'apple_iphone_ver8_3_subhw6',
         'apple_iphone_ver8_3_subhw6plus',
+        'apple_iphone_ver8_4_subhw4s',
+        'apple_iphone_ver8_4_subhw5',
+        'apple_iphone_ver8_4_subhw5c',
+        'apple_iphone_ver8_4_subhw5s',
+        'apple_iphone_ver8_4_subhw6',
+        'apple_iphone_ver8_4_subhw6plus',
+        'apple_iphone_ver9_subhw4s',
+        'apple_iphone_ver9_subhw5',
+        'apple_iphone_ver9_subhw5c',
+        'apple_iphone_ver9_subhw5s',
+        'apple_iphone_ver9_subhw6',
+        'apple_iphone_ver9_subhw6plus',
 
 		'apple_ipod_touch_ver1_subhw1',
 		'apple_ipod_touch_ver2_subhw1',
@@ -238,6 +266,8 @@ class WURFL_Handlers_AppleHandler extends WURFL_Handlers_Handler {
         'apple_ipod_touch_ver8_1_subhw5',
         'apple_ipod_touch_ver8_2_subhw5',
         'apple_ipod_touch_ver8_3_subhw5',
+        'apple_ipod_touch_ver8_4_subhw5',
+        'apple_ipod_touch_ver9_subhw5',
     );
 	
 	// iOS hardware mappings
@@ -297,11 +327,31 @@ class WURFL_Handlers_AppleHandler extends WURFL_Handlers_Handler {
 	
 	public function canHandle($userAgent) {
 		if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) return false;
-		return (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Mozilla/5') && WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array('iPhone', 'iPod', 'iPad')));
+		return (WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array('iPhone', 'iPod', 'iPad')));
 	}
 	
 	public function applyConclusiveMatch($userAgent) {
 
+        //Normalize AFNetworking and server-bag UAs
+        //Pippo/2.4.3 (iPad; iOS 8.0.2; Scale/2.00)
+        //server-bag [iPhone OS,8.2,12D508,iPhone4,1]
+        //iPhone4,1/8.2 (12D508)		
+        if (preg_match('#^[^/]+?/[\d\.]+? \(i[A-Za-z]+; iOS ([\d\.]+); Scale/[\d\.]+\)#', $userAgent, $matches)
+          || preg_match('#^server-bag \[iPhone OS,([\d\.]+),#', $userAgent, $matches)
+          || preg_match('#^i(?:Phone|Pad|Pod)\d+?,\d+?/([\d\.]+)#', $userAgent, $matches)
+        ) {
+            $matches[1] = str_replace(".", "_", $matches[1]);
+            if (WURFL_Handlers_Utils::checkIfContains($userAgent,"iPad")) {
+                $userAgent = "Mozilla/5.0 (iPad; CPU OS {$matches[1]} like Mac OS X) AppleWebKit/538.39.2 (KHTML, like Gecko) Version/7.0 Mobile/12A4297e Safari/9537.53 " . $userAgent;
+            } else if (WURFL_Handlers_Utils::checkIfContains($userAgent,"iPod touch")) {
+                $userAgent = "Mozilla/5.0 (iPod touch; CPU iPhone OS {$matches[1]} like Mac OS X) AppleWebKit/538.41 (KHTML, like Gecko) Version/7.0 Mobile/12A307 Safari/9537.53 " . $userAgent;
+            } else if (WURFL_Handlers_Utils::checkIfContains($userAgent,"iPod")) {
+                $userAgent = "Mozilla/5.0 (iPod; CPU iPhone OS {$matches[1]} like Mac OS X) AppleWebKit/538.41 (KHTML, like Gecko) Version/7.0 Mobile/12A307 Safari/9537.53 " . $userAgent;
+            } else {
+                $userAgent = "Mozilla/5.0 (iPhone; CPU iPhone OS {$matches[1]} like Mac OS X) AppleWebKit/601.1.10 (KHTML, like Gecko) Version/8.0 Mobile/12E155 Safari/600.1.4 " . $userAgent;
+            }
+        }
+        
         // Normalize Skype SDK UAs
         if (preg_match('#^iOSClientSDK/\d+\.+[0-9\.]+ +?\((Mozilla.+)\)$#', $userAgent, $matches)) {
             $userAgent = $matches[1];
@@ -377,6 +427,12 @@ class WURFL_Handlers_AppleHandler extends WURFL_Handlers_Handler {
 			$major_version = -1;
 			$minor_version = -1;
 		}
+
+        // Core-media
+        if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'CoreMedia')) {
+            return 'apple_iphone_coremedia_ver1';
+        }
+
 		// Check iPods first since they also contain 'iPhone'
 		if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'iPod')) {
 			$deviceID = 'apple_ipod_touch_ver'.$major_version;

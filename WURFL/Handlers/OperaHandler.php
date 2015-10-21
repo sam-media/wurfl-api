@@ -52,6 +52,8 @@ class WURFL_Handlers_OperaHandler extends WURFL_Handlers_Handler {
         'opera_26',
         'opera_27',
         'opera_28',
+        'opera_29',
+        'opera_30',
 	);
 	
 	public function canHandle($userAgent) {

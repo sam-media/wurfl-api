@@ -39,6 +39,9 @@ class WURFL_Request_GenericRequest {
 	private $_id;
 	private $_matchInfo;
 
+	// Public storage of the mutable normalized user agent
+	public $userAgentNormalized;
+
 	/**
 	 * @param array $request Original HTTP headers
 	 * @param string $userAgent
@@ -55,25 +58,31 @@ class WURFL_Request_GenericRequest {
 	}
 	
 	public function __get($name) {
-		$name = '_'.$name;
-		return $this->$name;
+		$prop_name = '_'.$name;
+		if (!property_exists($this, $prop_name)) {
+			throw new InvalidArgumentException("Property '$name' does not exist");
+		}
+		return $this->$prop_name;
 	}
 
     protected function sanitizeHeaders($headers) {
-        if (!is_array($headers)) {
-            return $this->truncateHeader($headers);
+        if (is_array($headers)) {
+            foreach($headers as $header => $value) {
+                if (strpos($header, 'HTTP_') === 0) {
+                    $value = $this->truncateHeader($value);
+                }
+                $headers[$header] = $value;
+            }
+            return $headers;
         }
-        foreach($headers as $header => $value) {
-            $headers[$header] = $this->truncateHeader($value);
-        }
-        return $headers;
+        return $this->truncateHeader($headers);
     }
 
     private function truncateHeader($header) {
-        if (strpos($header, 'HTTP_') !== 0 || strlen($header) <= self::MAX_HTTP_HEADER_LENGTH) {
-            return $header;
+        if (is_scalar($header) && strlen($header) > self::MAX_HTTP_HEADER_LENGTH) {
+            return substr($header, 0, self::MAX_HTTP_HEADER_LENGTH);
         }
-        return substr($header, 0, self::MAX_HTTP_HEADER_LENGTH);
+        return $header;
     }
 
 	/**

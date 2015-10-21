@@ -48,6 +48,7 @@ class WURFL_VirtualCapability_UserAgentTool {
             if ($device->os->setRegex($device->device_ua, '/Windows Phone(?: OS)? ([0-9]+\.[0-9])/', 'Windows Phone', 1) || $device->os->setRegex($device->device_ua, '#UCWEB/\d\.\d \(Windows;.+?; wds ?([\d\.]+?);.+UCBrowser#', 'Windows Phone', 1)) {
 				if ($device->browser->setRegex($device->browser_ua, '/UCBrowser\/([0-9]+)\./', 'UC Browser', 1)) return $device;
 				if ($device->browser->setRegex($device->browser_ua, '/IEMobile\/(\d+\.\d+)/', 'IE Mobile', 1)) return $device;
+                if ($device->browser->setRegex($device->browser_ua, '/Edge\/(\d+\.\d+)/', 'IE Edge Mobile', 1)) return $device;
 			}
 		}
 
@@ -73,12 +74,6 @@ class WURFL_VirtualCapability_UserAgentTool {
                 $device->browser->set('360 Browser', null);
                 return $device;
             }
-
-            //Is UA Chromium?
-            if ($device->browser->setRegex($device->browser_ua, '/Version\/.+?Chrome\/([0-9]?[0-9])\.?/', 'Chromium', 1)) return $device;
-
-            //Is UA Chrome Mobile?
-			if ($device->browser->setRegex($device->browser_ua, '/Chrome\/([0-9]?[0-9])\.?/', 'Chrome Mobile', 1)) return $device;
 			
 			//Is UA Fennec?
 			if ($device->browser->setRegex($device->browser_ua, '/(?:Firefox|Fennec)\/([0-9]?[0-9]\.[0-9]?)/', 'Firefox Mobile', 1)) return $device;
@@ -101,6 +96,15 @@ class WURFL_VirtualCapability_UserAgentTool {
 			//Is UA Amazon Silk browser?
 			if ($device->browser->setRegex($device->browser_ua, '/Silk\/([0-9]\.[0-9]).+?Silk\-Accelerated/', 'Amazon Silk Browser', 1)) return $device;
 
+            //Is UA Baidu browser?
+            if ($device->browser->setRegex($device->browser_ua, '/bdbrowser(?:_i18n)?\/(\d+)/', 'Baidu Browser', 1)) return $device;
+
+            //Is UA Chromium?
+            if ($device->browser->setRegex($device->browser_ua, '/Version\/.+?Chrome\/([0-9]?[0-9])\.?/', 'Chromium', 1)) return $device;
+
+            //Is UA Chrome Mobile?
+            if ($device->browser->setRegex($device->browser_ua, '/Chrome\/([0-9]?[0-9])\.?/', 'Chrome Mobile', 1)) return $device;
+
             //Is UA Android Webkit UA
             if ($device->browser->setRegex($device->browser_ua, '/Version\/\d/', 'Android Webkit', $device->os->version)) return $device;
 
@@ -117,8 +121,11 @@ class WURFL_VirtualCapability_UserAgentTool {
 		//Is UA iOS?
         if (strpos($device->device_ua_normalized, 'iPhone') !== false || strpos($device->device_ua_normalized, 'iPad') !== false || strpos($device->device_ua_normalized, 'iPod') !== false || strpos($device->device_ua_normalized, '(iOS;') !== false) {
 			$device->os->name = 'iOS';
-			
-			if ($device->os->setRegex($device->device_ua_normalized, '/Mozilla\/[45]\.[0-9] \((iPhone|iPod|iPad);(?: U;)? CPU(?: iPhone|) OS ([0-9]_[0-9](?:_[0-9])?) like Mac OS X/', 'iOS', 2)) {
+
+            if ($device->os->setRegex($device->device_ua_normalized, '/Mozilla\/[45]\.[0-9] \((iPhone|iPod|iPad);(?: U;)? CPU(?: iPhone|) OS ([0-9]_[0-9](?:_[0-9])?) like Mac OS X/', 'iOS', 2)
+                || $device->os->setRegex($device->device_ua_normalized, '#^[^/]+?/[\d\.]+? \(i[A-Za-z]+; iOS ([\d\.]+); Scale/[\d\.]+\)#', 'iOS', 1)
+                || $device->os->setRegex($device->device_ua_normalized, '#^server-bag \[iPhone OS,([\d\.]+),#', 'iOS', 1)
+                || $device->os->setRegex($device->device_ua_normalized, '#^i(?:Phone|Pad|Pod)\d+?,\d+?/([\d\.]+)#', 'iOS', 1)) {
 				$device->os->version = str_replace("_", ".", $device->os->version);
 			}
 
@@ -279,6 +286,12 @@ class WURFL_VirtualCapability_UserAgentTool {
 		
 		// Desktop Browsers
 
+        //Baidu browser?
+        if ($device->os->setRegex($device->device_ua, '/^Mozilla\/[0-9]\.0 .+?((?:Windows|Linux|PPC|Intel) [a-zA-Z0-9 _\.\-]+).+bdbrowser(?:_i18n)?\/(\d+)/', 1)) {
+            $device->browser->set('Baidu Browser', $device->os->getLastRegexMatch(2));
+            return $device;
+        }
+
         //360 Browser
         if ((strpos($device->device_ua, '360Browser') !== false || strpos($device->device_ua, ' 360SE') !== false) && $device->os->setRegex($device->device_ua, '/^Mozilla\/[0-9]\.0 .+?((?:Windows|Linux|PPC|Intel) [a-zA-Z0-9 _\.\-]+).+(?:360Browser|360SE)/', 1)) {
             $device->browser->set('360 Browser', null);
@@ -287,7 +300,7 @@ class WURFL_VirtualCapability_UserAgentTool {
 
         //MSIE - If UA says MSIE
         if (strpos($device->device_ua, 'MSIE') !== false) {
-            if ($device->os->setRegex($device->device_ua, '/^Mozilla\/[0-9]\.0 \(compatible; MSIE ([0-9][0-9]?\.[0-9][0-9]?); ((?:Windows NT [0-9]\.[0-9])|(?:Windows [0-9]\.[0-9])|(?:Windows [0-9]+)|(?:Mac_PowerPC))/', 2)) {
+            if ($device->os->setRegex($device->device_ua, '/^Mozilla\/[0-9]\.0 \(compatible; MSIE ([0-9][0-9]?\.[0-9][0-9]?); ((?:Windows NT [0-9]+\.[0-9])|(?:Windows [0-9]\.[0-9])|(?:Windows [0-9]+)|(?:Mac_PowerPC))/', 2)) {
                 $device->browser->set('IE', $device->os->getLastRegexMatch(1));
                 return $device;
             }
@@ -296,7 +309,7 @@ class WURFL_VirtualCapability_UserAgentTool {
 		//MSIE - If UA says Trident - This logic must stay above Chrome
 		if (strpos($device->device_ua, 'Trident') !== false || strpos($device->device_ua, ' Edge/') !== false) {
 			//MSIE 11 does not say MSIE and needs this
-			if ($device->os->setRegex($device->device_ua, '#^Mozilla/[45]\.0 \((Windows NT [0-9]\.[0-9]);.+Trident.+; rv:([0-9]+)\.[0-9]+#', 1) || $device->os->setRegex($device->device_ua, '#^Mozilla/[45]\.0 \((Windows NT [0-9]\.[0-9]);.+? Edge/(\d+)\.(\d+)#', 1)) {
+            if ($device->os->setRegex($device->device_ua, '#^Mozilla/[45]\.0 \((Windows NT [0-9]+\.[0-9]);.+Trident.+; rv:([0-9]+)\.[0-9]+#', 1) || $device->os->setRegex($device->device_ua, '#^Mozilla/[45]\.0 \((Windows NT [0-9]+\.[0-9]).+? Edge/(\d+)\.(\d+)#', 1)) {
 				$device->browser->set('IE', $device->os->getLastRegexMatch(2));
 				return $device;
 			}

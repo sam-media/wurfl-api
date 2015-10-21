@@ -41,6 +41,9 @@ class WURFL_Handlers_KindleHandler extends WURFL_Handlers_Handler {
 	);
 	
 	public function canHandle($userAgent) {
+        if (WURFL_Handlers_Utils::checkIfContainsAll($userAgent, array('Android', '/Kindle'))) {
+            return false;
+        }
 		return WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array('Kindle', 'Silk'));
 	}
 	

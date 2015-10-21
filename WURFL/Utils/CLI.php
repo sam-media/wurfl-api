@@ -35,6 +35,32 @@ class WURFL_Utils_CLI {
 		}
 	}
 
+    protected function actionBucketList(WURFL_Utils_CLI_Argument $arg) {
+        $wurfl_service = new ReflectionProperty('WURFL_WURFLManager', '_wurflService');
+        $wurfl_service->setAccessible(true);
+        $service = $wurfl_service->getValue($this->wurfl);
+        $wurfl_ua_chain = new ReflectionProperty('WURFL_WURFLService', '_userAgentHandlerChain');
+        $wurfl_ua_chain->setAccessible(true);
+        $ua_chain = $wurfl_ua_chain->getValue($service);
+
+        echo "Bucket\DeviceId\tNormalizedUserAgent" . PHP_EOL;
+
+        foreach ($ua_chain->getHandlers() as $userAgentHandler) {
+            /**
+             * @see WURFL_Handlers_Handler::getUserAgentsWithDeviceId()
+             */
+            $current = $userAgentHandler->getUserAgentsWithDeviceId();
+
+            if ($current) {
+                foreach ($current as $normalized_ua => $device_id) {
+                    echo $userAgentHandler->getName() . "\t" . $normalized_ua . "\t" . $device_id . PHP_EOL;
+                }
+            } else {
+                echo $userAgentHandler->getName() . "\t" . 'EMPTY' . "\t" . 'EMPTY' . PHP_EOL;
+            }
+        }
+    }
+
 	protected function actionCentralTest(WURFL_Utils_CLI_Argument $arg) {
 		$test_type = $arg->value;
 		require_once dirname(__FILE__) . '/../../tests/CentralTest/CentralTestManager.php';
@@ -71,6 +97,7 @@ Usage: php wurfl_cli.php [OPTIONS]
 
 Option                     Meaning
  --help                    Show this message
+ --bucketList              Show the bucket list in tsv format
  --centralTest=<unit|regression|all|single/<test_name>>
                            Run tests from the ScientiaMobile Central
                              testing repository.

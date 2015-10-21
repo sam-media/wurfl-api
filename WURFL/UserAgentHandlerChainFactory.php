@@ -65,18 +65,16 @@ class WURFL_UserAgentHandlerChainFactory {
 		self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_KindleHandler($context, $kindleNormalizer));
 		
 		/**** UCWEB ****/
+        $ucwebu3Normalizer = $genericNormalizers->addUserAgentNormalizer(new WURFL_Request_UserAgentNormalizer_Specific_UcwebU3());
+        self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_UcwebU3Handler($context, $ucwebu3Normalizer));
 		$ucwebu2Normalizer = $genericNormalizers->addUserAgentNormalizer(new WURFL_Request_UserAgentNormalizer_Specific_UcwebU2());
 		self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_UcwebU2Handler($context, $ucwebu2Normalizer));
-		$ucwebu3Normalizer = $genericNormalizers->addUserAgentNormalizer(new WURFL_Request_UserAgentNormalizer_Specific_UcwebU3());
-		self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_UcwebU3Handler($context, $ucwebu3Normalizer));
 		
 		/**** Mobile platforms ****/
 
         //Windows Phone must be above Android to resolve WP 8.1 and above UAs correctly
-        self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_WindowsPhoneDesktopHandler($context, $genericNormalizers));
         $winPhoneNormalizer = $genericNormalizers->addUserAgentNormalizer(new WURFL_Request_UserAgentNormalizer_Specific_WindowsPhone());
         self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_WindowsPhoneHandler($context, $winPhoneNormalizer));
-        self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_NokiaOviBrowserHandler($context, $genericNormalizers));
 
 		// Android Matcher Chain
 		self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_OperaMiniOnAndroidHandler($context, $genericNormalizers));
@@ -93,6 +91,8 @@ class WURFL_UserAgentHandlerChainFactory {
 
 		$appleNormalizer = $genericNormalizers->addUserAgentNormalizer(new WURFL_Request_UserAgentNormalizer_Specific_Apple());
 		self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_AppleHandler($context, $appleNormalizer));
+
+        self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_NokiaOviBrowserHandler($context, $genericNormalizers));
 
 		/**** High workload mobile matchers ****/
 		self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_NokiaHandler($context, $genericNormalizers));
@@ -194,9 +194,10 @@ class WURFL_UserAgentHandlerChainFactory {
 			new WURFL_Request_UserAgentNormalizer_Generic_LocaleRemover(),
 			new WURFL_Request_UserAgentNormalizer_Generic_CFNetwork(),
 			new WURFL_Request_UserAgentNormalizer_Generic_BlackBerry(),
-			new WURFL_Request_UserAgentNormalizer_Generic_YesWAP(),
-			new WURFL_Request_UserAgentNormalizer_Generic_BabelFish(),
-			new WURFL_Request_UserAgentNormalizer_Generic_NovarraGoogleTranslator(),
+			new WURFL_Request_UserAgentNormalizer_Generic_Android(),
+			//new WURFL_Request_UserAgentNormalizer_Generic_YesWAP(),
+			//new WURFL_Request_UserAgentNormalizer_Generic_BabelFish(),
+			//new WURFL_Request_UserAgentNormalizer_Generic_NovarraGoogleTranslator(),
 			new WURFL_Request_UserAgentNormalizer_Generic_TransferEncoding(),
 		));
 	}
