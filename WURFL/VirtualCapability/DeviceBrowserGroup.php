@@ -36,9 +36,8 @@ class WURFL_VirtualCapability_DeviceBrowserGroup extends WURFL_VirtualCapability
 	protected static $ua_tool;
 
 	public function compute() {
-		if (self::$ua_tool === null) {
-			self::$ua_tool = new WURFL_VirtualCapability_UserAgentTool();
-		}
+
+		self::$ua_tool = new WURFL_VirtualCapability_UserAgentTool($this->device);
 
 		// Run the UserAgentTool to get the relevant details
 		$device = self::$ua_tool->getDevice($this->request);

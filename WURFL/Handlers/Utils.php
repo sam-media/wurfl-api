@@ -128,6 +128,8 @@ class WURFL_Handlers_Utils {
 		'feedfetcher-google',
 		'mowser',
 		'trove',
+        'google web preview',
+        'googleimageproxy',
 	);
 	
 

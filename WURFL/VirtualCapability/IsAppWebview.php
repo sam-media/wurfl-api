@@ -62,6 +62,7 @@ class WURFL_VirtualCapability_IsAppWebview extends WURFL_VirtualCapability
         'MiuiBrowser',
         'MQQBrowser',
         'CriOS',
+        'Firefox',
     );
 
     protected function compute()
@@ -74,53 +75,63 @@ class WURFL_VirtualCapability_IsAppWebview extends WURFL_VirtualCapability
             return false;
         }
 
+        // Lollipop implementation of webview adds a ; wv to the UA
+        if ($this->device->device_os == "Android" && strpos($ua_original, '; wv) ') !== false) {
+            return true;
+        }
+
         // Handling Chrome separately
-        if (WURFL_Handlers_Utils::checkIfContains($ua,"Chrome") && !WURFL_Handlers_Utils::checkIfContains($ua,"Version")) {
+        if ($this->device->device_os == "Android" && WURFL_Handlers_Utils::checkIfContains($ua,"Chrome") && !WURFL_Handlers_Utils::checkIfContains($ua,"Version")) {
             return false;
         }
 
+        // iOS webview logic is pretty simple
         if ($this->device->device_os == "iOS" && !WURFL_Handlers_Utils::checkIfContains($ua,"Safari")) {
-            // iOS webview logic is pretty simple
             return true;
-        } else {
-            if ($this->device->device_os == "Android") {
-                if ($this->request->originalHeaderExists("HTTP_X_REQUESTED_WITH")) {
-                    $requested_with = $this->request->getOriginalHeader("HTTP_X_REQUESTED_WITH");
-                    // The whitelist is an array with X-Requested-With header field values sent by known apps
-                    if (in_array($requested_with, $this->whitelist)) {
-                        return true;
-                    } // The blacklist is an array with X-Requested-With header field values sent by known stock browsers
-                    else {
-                        if (in_array($requested_with, $this->blacklist)) {
+        }
+
+        // So is Mac OS X's webview logic
+        if ($this->device->advertised_device_os == "Mac OS X" && !WURFL_Handlers_Utils::checkIfContains($ua,"Safari")) {
+            return true;
+        }
+
+        if ($this->device->device_os == "Android") {
+            if ($this->request->originalHeaderExists("HTTP_X_REQUESTED_WITH")) {
+                $requested_with = $this->request->getOriginalHeader("HTTP_X_REQUESTED_WITH");
+                // The whitelist is an array with X-Requested-With header field values sent by known apps
+                if (in_array($requested_with, $this->whitelist)) {
+                    return true;
+                } // The blacklist is an array with X-Requested-With header field values sent by known stock browsers
+                else {
+                    if (in_array($requested_with, $this->blacklist)) {
+                        return false;
+                    }
+                }
+            }
+            // Now we handle Android UAs that haven't been eliminated above (No X-Requested-With header and not a third party browser)
+            // Make sure to use the original UA and not the normalized one
+            if (preg_match("#Mozilla/5.0 \(Linux;( U;)? Android.*AppleWebKit.*\(KHTML, like Gecko\)#", $ua_original)) {
+                // Among those UAs in here, we are interested in UAs from apps that contain a webview style UA and add stuff to the beginning or the end of the string(FB, Flipboard etc.)
+                // Android >= 4.4
+                if ((strpos($ua, 'Android 4.4') !== false ||
+                     strpos($ua, 'Android 5.') !== false) &&
+                     !preg_match("#^Mozilla/5.0 \(Linux; Android [45]\.[\d\.]+; .+ Build/.+\) AppleWebKit/[\d\.+]+ \(KHTML, like Gecko\) Version/[\d\.]+ Chrome/([\d]+)\.[\d\.]+? (?:Mobile )?Safari/[\d\.+]+$#", $ua_original)
+                ) {
+                    if (preg_match("#Chrome/(\d+)\.#", $ua, $matches)) {
+                        if ($matches[1] < 30) {
                             return false;
                         }
                     }
+                    return true;
                 }
-                // Now we handle Android UAs that haven't been eliminated above (No X-Requested-With header and not a third party browser)
-                // Make sure to use the original UA and not the normalized one
-                if (preg_match("#Mozilla/5.0 \(Linux;( U;)? Android.*AppleWebKit.*\(KHTML, like Gecko\)#", $ua_original)) {
-                    // Among those UAs in here, we are interested in UAs from apps that contain a webview style UA and add stuff to the beginning or the end of the string(FB, Flipboard etc.)
-                    // Android >= 4.4
-                    if ((strpos($ua, 'Android 4.4') !== false ||
-                         strpos($ua, 'Android 5.') !== false) &&
-                         !preg_match("#^Mozilla/5.0 \(Linux; Android [45]\.[\d\.]+; .+ Build/.+\) AppleWebKit/[\d\.+]+ \(KHTML, like Gecko\) Version/[\d\.]+ Chrome/([\d]+)\.[\d\.]+? (?:Mobile )?Safari/[\d\.+]+$#", $ua_original)
-                    ) {
-                        if (preg_match("#Chrome/(\d+)\.#", $ua, $matches)) {
-                            if ($matches[1] < 30) {
-                                return false;
-                            }
-                        }
-                        return true;
-                    }
-                    // Android < 4.4
-                    if (preg_match("#Android [1234]\.[123]#", $ua) &&
-                        !preg_match("#^Mozilla/5.0 \(Linux;( U;)? Android [1234]\.[\d\.]+(-update1)?; [a-zA-Z]+-[a-zA-Z]+; .+ Build/.+\) AppleWebKit/[\d\.+]+ \(KHTML, like Gecko\) Version/[\d\.]+ (Mobile )?Safari/[\d\.+]+$#", $ua_original)
-                    ) {
-                        return true;
-                    }
+                // Android < 4.4
+                if (preg_match("#Android [1234]\.[123]#", $ua) &&
+                    !preg_match("#^Mozilla/5.0 \(Linux;( U;)? Android [1234]\.[\d\.]+(-update1)?; [a-zA-Z]+-[a-zA-Z]+; .+ Build/.+\) AppleWebKit/[\d\.+]+ \(KHTML, like Gecko\) Version/[\d\.]+ (Mobile )?Safari/[\d\.+]+$#", $ua_original)
+                ) {
+                    return true;
                 }
-                return false;
             }
+            return false;
         }
         // Return is_app_webview = false for everything else
         return false;

@@ -1,5 +1,13 @@
 ScientiaMobile WURFL PHP API change log:
 
+[2015.10.19] 1.6.3.0
+- Improved detection of:
+	- CFNetwork
+	- Android webview
+	- Google Web Preview and Google Image Proxy bots
+	- New iPhone/iPad devices
+	- Certain third party Android browsers
+	
 [2015.08.04] 1.6.2.0
 - Improved detection in VC tool for:
     - MSIE 12/Edge

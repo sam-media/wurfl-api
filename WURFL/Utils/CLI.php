@@ -80,6 +80,16 @@ class WURFL_Utils_CLI {
 			$centralTest->runBatchTest($test_type);
 		}
 	}
+
+    protected function actionTestUserAgent(WURFL_Utils_CLI_Argument $arg)
+    {
+        $device = $this->wurfl->getDeviceForUserAgent($arg->value);
+        echo "Device ID: " . $device->id . PHP_EOL;
+        echo "UA: " . $device->userAgent . PHP_EOL;
+        echo "Fallback: " . $device->fallBack . PHP_EOL;
+        echo "Match Info: " . PHP_EOL;
+        var_export($device->getMatchInfo()) . PHP_EOL;
+    }
 	
 
 	protected function actionHelp(WURFL_Utils_CLI_Argument $arg) {
@@ -95,9 +105,10 @@ Last Updated: $last_updated
 ---------------------------------------
 Usage: php wurfl_cli.php [OPTIONS]
 
-Option                     Meaning
- --help                    Show this message
- --bucketList              Show the bucket list in tsv format
+Option                          Meaning
+ --help                         Show this message
+ --bucketList                   Show the bucket list in tsv format
+ --testUserAgent=<user_agent>   Run WURFL against the specified user_agent
  --centralTest=<unit|regression|all|single/<test_name>>
                            Run tests from the ScientiaMobile Central
                              testing repository.
