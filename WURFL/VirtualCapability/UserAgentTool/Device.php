@@ -133,12 +133,6 @@ class WURFL_VirtualCapability_UserAgentTool_Device {
 			return;
 		}
 		if ($this->os->setRegex($this->device_ua, '/PPC.+OS X/', 'Mac OS X')) return;
-        if (strpos($this->device_ua, 'CFNetwork') !== false) {
-            if ($this->os->setRegex($this->device_ua_normalized, '/Intel Mac OS X ([0-9\._]+)/', 'Mac OS X', 1)) {
-                $this->os->version = str_replace('_', '.', $this->os->version);
-                return;
-            }
-        }
 		if ($this->os->setRegex($this->device_ua, '/Intel Mac OS X ([0-9\._]+)/', 'Mac OS X', 1)) {
 			$this->os->version = str_replace('_', '.', $this->os->version);
 			return;

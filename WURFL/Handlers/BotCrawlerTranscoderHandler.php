@@ -37,8 +37,12 @@ class WURFL_Handlers_BotCrawlerTranscoderHandler extends WURFL_Handlers_Handler 
 
 	public function applyConclusiveMatch($userAgent) {
 
+        if (WURFL_Handlers_Utils::checkIfContains($userAgent, "GoogleImageProxy")) {
+            return 'google_image_proxy';
+        }
+
 		if (WURFL_Handlers_Utils::checkIfStartsWith($userAgent, "Mozilla")) {
-			$tolerance = WURFL_Handlers_Utils::firstCloseParen($userAgent);
+			$tolerance = WURFL_Handlers_Utils::firstCloseParen($userAgent) + 1;
 			return $this->getDeviceIDFromRIS($userAgent, $tolerance);
 		}
 

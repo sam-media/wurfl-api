@@ -47,7 +47,11 @@ class WURFL_Handlers_CatchAllRisHandler extends WURFL_Handlers_Handler {
 	 * @return string
 	 */
 	public function applyConclusiveMatch($userAgent) {
-        $tolerance = WURFL_Handlers_Utils::firstSlash($userAgent);
+        if (WURFL_Handlers_Utils::checkIfStartsWith($userAgent, "CFNetwork/")) {
+            $tolerance = WURFL_Handlers_Utils::firstSpace($userAgent);
+        } else {
+            $tolerance = WURFL_Handlers_Utils::firstSlash($userAgent);
+        }
         return $this->getDeviceIDFromRIS($userAgent, $tolerance);
 	}
 }

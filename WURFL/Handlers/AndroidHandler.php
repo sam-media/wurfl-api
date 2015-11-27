@@ -50,6 +50,7 @@ class WURFL_Handlers_AndroidHandler extends WURFL_Handlers_Handler {
 		'generic_android_ver5_2',
 		'generic_android_ver5_3',
 		'generic_android_ver6_0',
+		'generic_android_ver6_1',
 
 		'generic_android_ver1_5_tablet',
 		'generic_android_ver1_6_tablet',
@@ -72,6 +73,7 @@ class WURFL_Handlers_AndroidHandler extends WURFL_Handlers_Handler {
 		'generic_android_ver5_2_tablet',
 		'generic_android_ver5_3_tablet',
 		'generic_android_ver6_0_tablet',
+		'generic_android_ver6_1_tablet',
 	);
 	
 	public function canHandle($userAgent) {
@@ -123,7 +125,7 @@ class WURFL_Handlers_AndroidHandler extends WURFL_Handlers_Handler {
 	/********* Android Utility Functions ***********/
 	const ANDROID_DEFAULT_VERSION = 2.0;
 	
-	public static $validAndroidVersions = array('1.0', '1.5', '1.6', '2.0', '2.1', '2.2', '2.3', '2.4', '3.0', '3.1', '3.2', '3.3', '4.0', '4.1', '4.2', '4.3', '4.4', '4.5', '5.0', '5.1', '5.2', '5.3', '6.0');
+	public static $validAndroidVersions = array('1.0', '1.5', '1.6', '2.0', '2.1', '2.2', '2.3', '2.4', '3.0', '3.1', '3.2', '3.3', '4.0', '4.1', '4.2', '4.3', '4.4', '4.5', '5.0', '5.1', '5.2', '5.3', '6.0', '6.1');
 	public static $androidReleaseMap = array(
 		'Cupcake' => '1.5',
 		'Donut' => '1.6',
