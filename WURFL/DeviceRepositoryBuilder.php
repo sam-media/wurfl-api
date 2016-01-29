@@ -73,6 +73,7 @@ class WURFL_DeviceRepositoryBuilder {
 		if (!$this->isRepositoryBuilt()) {
 			// If acquireLock() is false, the WURFL is being reloaded in another thread
 			if ($this->acquireLock()) {
+				set_time_limit(600);
 				$infoIterator = new WURFL_Xml_VersionIterator($wurflFile);
 				$deviceIterator = new WURFL_Xml_DeviceIterator($wurflFile, $capabilityFilter);
 				$patchIterators = $this->toPatchIterators($wurflPatches , $capabilityFilter);

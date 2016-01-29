@@ -38,7 +38,7 @@ class WURFL_Handlers_SonyEricssonHandler extends WURFL_Handlers_Handler {
 	
 	public function applyConclusiveMatch($userAgent) {
 		if (WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'SonyEricsson')) {
-			$tolerance = WURFL_Handlers_Utils::firstSlash($userAgent) - 1;
+			$tolerance = WURFL_Handlers_Utils::firstSlash($userAgent) - 2;
 			return $this->getDeviceIDFromRIS($userAgent, $tolerance);
 		}
 		$tolerance = WURFL_Handlers_Utils::secondSlash($userAgent);

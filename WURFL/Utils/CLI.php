@@ -88,7 +88,10 @@ class WURFL_Utils_CLI {
         echo "UA: " . $device->userAgent . PHP_EOL;
         echo "Fallback: " . $device->fallBack . PHP_EOL;
         echo "Match Info: " . PHP_EOL;
-        var_export($device->getMatchInfo()) . PHP_EOL;
+        var_export($device->getMatchInfo());
+        echo PHP_EOL;
+        echo "Virtual Capabilities:" . PHP_EOL;
+        var_export($device->getAllVirtualCapabilities());
     }
 	
 
