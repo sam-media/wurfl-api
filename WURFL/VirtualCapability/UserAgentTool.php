@@ -155,6 +155,10 @@ class WURFL_VirtualCapability_UserAgentTool {
 			if ($device->browser->setRegex($device->browser_ua, '/^Mozilla\/[45]\.0.+?like Mac OS X.+?CriOS\/([0-9]+?)\.[0-9].+?Mobile\/[0-9A-Za-z]+ Safari\/[0-9A-Za-z]+\./',
                 'Chrome Mobile on iOS', 1)) return $device;
 
+            //Is UA Firefox on iOS?
+            if ($device->browser->setRegex($device->browser_ua, '/^Mozilla\/[45]\.0.+?like Mac OS X.+?FxiOS\/([0-9]+?)\.[0-9].+?Mobile\/[0-9A-Za-z]+ Safari\/[0-9A-Za-z]+\./',
+                'Firefox on iOS', 1)) return $device;
+
             //Is UA Opera Mini on iOS?
             if ($device->browser->setRegex($device->browser_ua, '/^Mozilla\/[45]\.0.+?like Mac OS X.+?OPiOS\/([0-9]+?)\.[0-9].+?Mobile\/[0-9A-Za-z]+ Safari\/[0-9A-Za-z]+\./',
                 'Opera Mini on iOS', 1)) return $device;

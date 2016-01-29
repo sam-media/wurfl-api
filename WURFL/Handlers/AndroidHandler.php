@@ -77,7 +77,7 @@ class WURFL_Handlers_AndroidHandler extends WURFL_Handlers_Handler {
 	);
 	
 	public function canHandle($userAgent) {
-        return !WURFL_Handlers_Utils::checkIfContains($userAgent, 'like Android') && WURFL_Handlers_Utils::checkIfContains($userAgent, 'Android');
+        return !WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array('like Android', 'Symbian')) && WURFL_Handlers_Utils::checkIfContains($userAgent, 'Android');
 	}
 	
 	public function applyConclusiveMatch($userAgent) {
@@ -199,6 +199,9 @@ class WURFL_Handlers_AndroidHandler extends WURFL_Handlers_Handler {
 		if (strpos($model, 'Build/') === 0) {
 			return null;
 		}
+
+        // Replace xx-xx (locale) in the model name with ''
+        $model = str_replace("xx-xx", "", $model);
 
 		// Normalize Chinese UAs
 		$model = preg_replace('#(?:_CMCC_TD|_CMCC|_TD)\b#', '', $model);

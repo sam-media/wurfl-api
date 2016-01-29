@@ -42,7 +42,8 @@ class WURFL_Handlers_MotorolaHandler extends WURFL_Handlers_Handler {
 	}
 	
 	public function applyConclusiveMatch($userAgent) {
-		return $this->getDeviceIDFromRIS($userAgent, WURFL_Handlers_Utils::firstSlash($userAgent));
+        $tolerance = WURFL_Handlers_Utils::firstSlash($userAgent);
+		return $this->getDeviceIDFromRIS($userAgent, $tolerance);
 	}
 	
 	public function applyRecoveryMatch($userAgent) {

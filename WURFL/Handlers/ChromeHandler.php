@@ -40,7 +40,7 @@ class WURFL_Handlers_ChromeHandler extends WURFL_Handlers_Handler {
 	}
 	
 	public function applyConclusiveMatch($userAgent) {
-		$tolerance = WURFL_Handlers_Utils::indexOfOrLength('.', $userAgent, strpos($userAgent, 'Chrome'));
+		$tolerance = WURFL_Handlers_Utils::indexOfOrLength($userAgent, '.');
 		return $this->getDeviceIDFromRIS($userAgent, $tolerance);
 	}
 	
