@@ -21,7 +21,11 @@
  */
 class WURFL_VirtualCapability_DeviceBrowserGroup extends WURFL_VirtualCapability_Group {
 
-	protected $required_capabilities = array();
+	protected $required_capabilities = array(
+        'device_os',
+        'device_os_version',
+        'mobile_browser_version',
+    );
 
 	protected $storage = array(
 		'DeviceOs' => null,

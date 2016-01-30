@@ -42,15 +42,15 @@ class WURFL_Handlers_BotCrawlerTranscoderHandler extends WURFL_Handlers_Handler 
         }
 
 		if (WURFL_Handlers_Utils::checkIfStartsWith($userAgent, "Mozilla")) {
-			$tolerance = WURFL_Handlers_Utils::firstCloseParen($userAgent) + 1;
-			return $this->getDeviceIDFromRIS($userAgent, $tolerance);
-		}
+			$tolerance = WURFL_Handlers_Utils::firstCloseParen($userAgent);
+		} else {
+            $tolerance = WURFL_Handlers_Utils::firstSlash($userAgent);
+        }
 
-		$tolerance = WURFL_Handlers_Utils::firstSlash($userAgent);
 		return $this->getDeviceIDFromRIS($userAgent, $tolerance);
 	}
 
 	public function applyRecoveryMatch($userAgent) {
-		return WURFL_Constants::GENERIC_WEB_BROWSER;
+		return WURFL_Constants::GENERIC_WEB_CRAWLER;
 	}
 }

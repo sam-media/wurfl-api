@@ -24,11 +24,12 @@ class WURFL_Constants {
 
 	private function __construct(){}
 	
-	const API_VERSION = "1.6.3.0";
+	const API_VERSION = "1.6.4.2";
 	
 	const GENERIC = "generic";
 	const GENERIC_XHTML = "generic_xhtml";
 	const GENERIC_WEB_BROWSER = "generic_web_browser";
+	const GENERIC_WEB_CRAWLER = "generic_web_crawler";
 	const GENERIC_MOBILE = "generic_mobile";
 
 	const ACCEPT_HEADER_VND_WAP_XHTML_XML = "application/vnd.wap.xhtml+xml";

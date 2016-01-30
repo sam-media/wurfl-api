@@ -42,11 +42,12 @@ class WURFL_Handlers_DoCoMoHandler extends WURFL_Handlers_Handler {
 	}
 	
 	public function applyConclusiveMatch($userAgent) {
-		$tolerance = WURFL_Handlers_Utils::ordinalIndexOf($userAgent, '/', 2);
-		if ($tolerance === -1) {
-			//  DoCoMo/2.0 F01A(c100;TB;W24H17)
-			$tolerance = WURFL_Handlers_Utils::indexOfOrLength('(', $userAgent);
-		}
+        if (WURFL_Handlers_Utils::numSlashes($userAgent) >= 2) {
+            $tolerance = WURFL_Handlers_Utils::secondSlash($userAgent);
+        } else {
+            //  DoCoMo/2.0 F01A(c100;TB;W24H17)
+            $tolerance = WURFL_Handlers_Utils::firstOpenParen($userAgent);
+        }
 		return $this->getDeviceIDFromRIS($userAgent, $tolerance);
 	}
 	

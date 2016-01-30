@@ -39,11 +39,14 @@ class WURFL_Handlers_NokiaHandler extends WURFL_Handlers_Handler {
 	
 	public function canHandle($userAgent) {
 		if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) return false;
-		return WURFL_Handlers_Utils::checkIfContains($userAgent, 'Nokia');
+		return WURFL_Handlers_Utils::checkIfContains($userAgent, 'Nokia') && !WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array('Android', 'iPhone'));
 	}
 	
 	public function applyConclusiveMatch($userAgent) {
 		$tolerance = WURFL_Handlers_Utils::indexOfAnyOrLength($userAgent, array('/', ' '), strpos($userAgent, 'Nokia'));
+        if (WURFL_Handlers_Utils::checkIfStartsWithAnyOf($userAgent, array('Nokia/', 'Nokia '))) {
+            $tolerance = strlen($userAgent);
+        }
 		return $this->getDeviceIDFromRIS($userAgent, $tolerance);
 	}
 	

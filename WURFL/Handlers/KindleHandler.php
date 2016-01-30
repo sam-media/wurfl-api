@@ -41,30 +41,18 @@ class WURFL_Handlers_KindleHandler extends WURFL_Handlers_Handler {
 	);
 	
 	public function canHandle($userAgent) {
-        if (WURFL_Handlers_Utils::checkIfContainsAll($userAgent, array('Android', '/Kindle'))) {
+        if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Android')
+          && WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array('/Kindle', 'Silk'))) {
             return false;
         }
 		return WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array('Kindle', 'Silk'));
 	}
 	
 	public function applyConclusiveMatch($userAgent) {
-		// Mobile-mode Kindle Fire
-		if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Android')) {
-			// UA was already restructured by the specific normalizer
-			$tolerance = WURFL_Handlers_Utils::toleranceToRisDelimeter($userAgent);
-			if ($tolerance) {
-				return $this->getDeviceIDFromRIS($userAgent, $tolerance);
-			} else {
-				$search = 'Silk/';
-				$idx = strpos($userAgent, $search);
-				if ($idx !== false) {
-					$tolerance = $idx + strlen($search) + 1;
-					return $this->getDeviceIDFromRIS($userAgent, $tolerance);
-				}
-			}
-		}
-		
-		// Desktop-mode Kindle Fire
+
+        // Desktop-mode Kindle Fire
+        // Kindle Fire 2nd Gen Desktop Mode has no android version (even though "Build/I...." tells us it's ICS):
+        // Mozilla/5.0 (Linux; U; en-us; KFOT Build/IML74K) AppleWebKit/535.19 (KHTML, like Gecko) Silk/2.0 Safari/535.19 Silk-Accelerated=false
 		$idx = strpos($userAgent, 'Build/');
 		if ($idx !== false) {
 			return $this->getDeviceIDFromRIS($userAgent, $idx);

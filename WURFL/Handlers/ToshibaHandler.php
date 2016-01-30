@@ -35,4 +35,9 @@ class WURFL_Handlers_ToshibaHandler extends WURFL_Handlers_Handler {
 		if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) return false;
 		return WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'Toshiba');
 	}
+
+    public function applyConclusiveMatch($userAgent) {
+        $tolerance = WURFL_Handlers_Utils::firstSlash($userAgent);
+        return $this->getDeviceIDFromRIS($userAgent, $tolerance);
+    }
 }

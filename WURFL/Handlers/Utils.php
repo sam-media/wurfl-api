@@ -100,6 +100,11 @@ class WURFL_Handlers_Utils {
         'large screen',
         'netcast',
         'philipstv',
+        'digital-tv',
+        ' mb90/',
+        ' mb91/',
+        ' mb95/',
+        'vizio-dtv',
     );
 	
 	private static $desktopBrowsers = array(
@@ -142,7 +147,7 @@ class WURFL_Handlers_Utils {
 	 * @see WURFL_Handlers_Matcher_RISMatcher::match()
 	 */
 	public static function risMatch($collection, $needle, $tolerance) {
-		return WURFL_Handlers_Matcher_RISMatcher::INSTANCE ()->match ( $collection, $needle, $tolerance );
+		return WURFL_Handlers_Matcher_RISMatcher::INSTANCE()->match ( $collection, $needle, $tolerance );
 	}
 	
 	/**
@@ -154,7 +159,7 @@ class WURFL_Handlers_Utils {
 	 * @see WURFL_Handlers_Matcher_LDMatcher::match()
 	 */
 	public static function ldMatch($collection, $needle, $tolerance = 7) {
-		return WURFL_Handlers_Matcher_LDMatcher::INSTANCE ()->match ( $collection, $needle, $tolerance );
+		return WURFL_Handlers_Matcher_LDMatcher::INSTANCE()->match ( $collection, $needle, $tolerance );
 	}
 	
 	/**
@@ -385,8 +390,7 @@ class WURFL_Handlers_Utils {
 	 * @return int Char index
 	 */
 	public static function firstSlash($string) {
-		$firstSlash = strpos($string, "/");
-		return ($firstSlash !== false)? $firstSlash: strlen($string);
+        return self::findCharPosition($string, '/');
 	}
 	
 	/**
@@ -395,30 +399,43 @@ class WURFL_Handlers_Utils {
 	 * @return int Char index
 	 */
 	public static function secondSlash($string) {
-		$firstSlash = strpos($string, "/");
-		if ($firstSlash === false)
-			return strlen($string);
-		return strpos(substr($string, $firstSlash + 1), "/") + $firstSlash;
+        return self::findCharPosition($string, '/', self::findCharPosition($string, '/'));
 	}
-	
+
+    /**
+     * Number of slashes ('/')
+     * @param $string
+     * @return int Count
+     */
+    public static function numSlashes($string) {
+        return substr_count($string, '/');
+    }
+
 	/**
 	 * First occurance of a space character
 	 * @param string $string Haystack
 	 * @return int Char index
 	 */
 	public static function firstSpace($string) {
-		$firstSpace = strpos($string, " ");
-		return ($firstSpace === false)? strlen($string) : $firstSpace;
+        return self::findCharPosition($string, ' ');
 	}
 
+    /**
+     * The character position of the first open parenthesis.  If there are no open parenthesis, returns null
+     * @param string $string Haystack
+     * @return int Character position
+     */
+    public static function firstOpenParen($string) {
+        return self::findCharPosition($string, '(');
+    }
+
 	/**
-	 * The character position of the first close parenthesis.  If there are no close parenthesis, returns string length
+	 * The character position of the first close parenthesis.  If there are no close parenthesis, returns null
 	 * @param string $string Haystack
 	 * @return int Character position
 	 */
 	public static function firstCloseParen($string) {
-		$position = strpos($string, ')');
-		return ($position !== false)? $position: strlen($string);
+        return self::findCharPosition($string, ')');
 	}
 
 	/**
@@ -538,4 +555,18 @@ class WURFL_Handlers_Utils {
 	public static function removeLocale($userAgent) {
 		return preg_replace('/; ?[a-z]{2}(?:-r?[a-zA-Z]{2})?(?:\.utf8|\.big5)?\b-?(?!:)/', '; xx-xx', $userAgent);
 	}
+
+    /**
+     * The character position in a string.  If not present, returns null
+     * @param $string
+     * @param $char
+     * @param $start_at
+     * @return null|int
+     */
+    public static function findCharPosition($string, $char, $start_at = 0)
+    {
+        $position = strpos($string, $char, $start_at);
+
+        return ($position !== false) ? $position + 1 : null;
+    }
 }

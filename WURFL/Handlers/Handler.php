@@ -318,6 +318,9 @@ abstract class WURFL_Handlers_Handler implements WURFL_Handlers_Filter, WURFL_Ha
 	}
 	
 	public function getDeviceIDFromRIS($userAgent, $tolerance) {
+        if ($tolerance === null) {
+            return WURFL_Constants::NO_MATCH;
+        }
 		$match = WURFL_Handlers_Utils::risMatch(array_keys($this->userAgentsWithDeviceID), $userAgent, $tolerance);
 		if (!empty($match)) {
 			return $this->userAgentsWithDeviceID[$match];

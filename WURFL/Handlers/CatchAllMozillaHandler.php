@@ -37,7 +37,7 @@ class WURFL_Handlers_CatchAllMozillaHandler extends WURFL_Handlers_Handler {
 	 * @return boolean always true
 	 */
     public function canHandle($userAgent) {
-        return WURFL_Handlers_Utils::checkIfStartsWithAnyOf($userAgent, array('Mozilla/4', 'Mozilla/5'));
+        return WURFL_Handlers_Utils::checkIfStartsWithAnyOf($userAgent, array('Mozilla/3', 'Mozilla/4', 'Mozilla/5'));
     }
 	
 	/**
@@ -49,7 +49,7 @@ class WURFL_Handlers_CatchAllMozillaHandler extends WURFL_Handlers_Handler {
 	public function applyConclusiveMatch($userAgent) {
         if (WURFL_Configuration_ConfigHolder::getWURFLConfig()->isHighPerformance()) {
             //High performance mode
-            $tolerance = WURFL_Handlers_Utils::firstCloseParen($userAgent) + 1;
+            $tolerance = WURFL_Handlers_Utils::firstCloseParen($userAgent);
             return $this->getDeviceIDFromRIS($userAgent, $tolerance);
         } else {
             //High accuracy mode

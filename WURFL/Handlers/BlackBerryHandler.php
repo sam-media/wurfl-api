@@ -56,7 +56,8 @@ class WURFL_Handlers_BlackBerryHandler extends WURFL_Handlers_Handler {
 	public function canHandle($userAgent) {
 		if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) return false;
 		return (WURFL_Handlers_Utils::checkIfContainsCaseInsensitive($userAgent, 'blackberry')
-			|| WURFL_Handlers_Utils::checkIfContains($userAgent, '(BB10;'));
+			|| WURFL_Handlers_Utils::checkIfContains($userAgent, '(BB10;')
+			|| WURFL_Handlers_Utils::checkIfContains($userAgent, '(PlayBook'));
 	}
 		
 	public function applyConclusiveMatch($userAgent) {
@@ -66,6 +67,8 @@ class WURFL_Handlers_BlackBerryHandler extends WURFL_Handlers_Handler {
 			$tolerance = WURFL_Handlers_Utils::secondSlash($userAgent);
 		} else if (WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'Mozilla/5')) {
 			$tolerance = WURFL_Handlers_Utils::ordinalIndexOf($userAgent, ';', 3);
+        } else if (WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'PlayBook')) {
+            $tolerance = WURFL_Handlers_Utils::firstCloseParen($userAgent);
 		} else {
 			$tolerance = WURFL_Handlers_Utils::firstSlash($userAgent);
 		}
@@ -80,6 +83,8 @@ class WURFL_Handlers_BlackBerryHandler extends WURFL_Handlers_Handler {
 			} else {
 				return 'blackberry_generic_ver10_tablet';
 			}
+        } elseif (WURFL_Handlers_Utils::checkIfContains($userAgent, 'PlayBook')) {
+            return "rim_playbook_ver1";
 		} else if (preg_match('#Black[Bb]erry[^/\s]+/(\d.\d)#', $userAgent, $matches)) {
 			$version = $matches[1];
 			foreach (self::$constantIDs as $vercode => $deviceID) {

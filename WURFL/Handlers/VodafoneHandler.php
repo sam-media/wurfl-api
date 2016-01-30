@@ -35,7 +35,8 @@ class WURFL_Handlers_VodafoneHandler extends WURFL_Handlers_Handler {
 		return WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'Vodafone');
 	}
 
-	public function applyConclusiveMatch($userAgent) {
-		return $this->getDeviceIDFromRIS($userAgent, WURFL_Handlers_Utils::firstSlash($userAgent));
-	}
+    public function applyConclusiveMatch($userAgent) {
+        $tolerance = WURFL_Handlers_Utils::firstSlash($userAgent);
+        return $this->getDeviceIDFromRIS($userAgent, $tolerance);
+    }
 }
