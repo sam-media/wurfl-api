@@ -36,7 +36,7 @@ class WURFL_Handlers_AlcatelHandler extends WURFL_Handlers_Handler {
 	}
 	
 	public function applyConclusiveMatch($userAgent) {
-		$tolerance = WURFL_Handlers_Utils::firstSlash($userAgent);
+        $tolerance = WURFL_Handlers_Utils::firstSlash($userAgent);
 		return $this->getDeviceIDFromRIS($userAgent, $tolerance);
 	}
 }

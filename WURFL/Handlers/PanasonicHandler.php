@@ -35,4 +35,9 @@ class WURFL_Handlers_PanasonicHandler extends WURFL_Handlers_Handler {
 		if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) return false;
 		return WURFL_Handlers_Utils::checkIfStartsWith($userAgent, "Panasonic");
 	}
+
+    public function applyConclusiveMatch($userAgent) {
+        $tolerance = WURFL_Handlers_Utils::firstSlash($userAgent);
+        return $this->getDeviceIDFromRIS($userAgent, $tolerance);
+    }
 }
