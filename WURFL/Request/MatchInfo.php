@@ -20,30 +20,34 @@
  * Information about the matching process
  * @package	WURFL_Request
  */
-class WURFL_Request_MatchInfo {
-	
-	/**
-	 * @var boolean Response was returned from cache
-	 */
-	public $from_cache = false;
-	/**
-	 * @var string The type of match that was made
-	 */
-	public $match_type;
-	/**
-	 * @var string The responsible Matcher/Handler
-	 */
-	public $matcher;
-	/**
-	 * @var string The history of Matchers/Handlers
-	 */
-	public $matcher_history = '';
-	/**
-	 * @var float The time it took to lookup the user agent
-	 */
-	public $lookup_time;
-	/**
-	 * @var string The user agent after normalization
-	 */
-	public $normalized_user_agent;
+class WURFL_Request_MatchInfo
+{
+    /**
+     * @var boolean Response was returned from cache
+     */
+    public $from_cache = false;
+    /**
+     * @var string The type of match that was made
+     */
+    public $match_type;
+    /**
+     * @var string The responsible Matcher/Handler
+     */
+    public $matcher;
+    /**
+     * @var string The history of Matchers/Handlers
+     */
+    public $matcher_history = '';
+    /**
+     * @var float The time it took to lookup the user agent
+     */
+    public $lookup_time;
+    /**
+     * @var string The user agent after runtime normalization
+     */
+    public $normalized_user_agent;
+    /**
+     * @var string The user agent after default normalization
+     */
+    public $cleaned_user_agent;
 }

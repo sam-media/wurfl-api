@@ -6,17 +6,27 @@
 /**
  *  test case.
  */
-class WURFL_Configuration_XmlConfigTest extends PHPUnit_Framework_TestCase {
+class WURFL_Configuration_XmlConfigTest extends PHPUnit_Framework_TestCase
+{
+    public function setUp()
+    {
+        mkdir(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'cache');
+    }
 
+    public function tearDown()
+    {
+        rmdir(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'cache');
+    }
 
-    public function testShouldCreateAConfiguration() {
+    public function testShouldCreateAConfiguration()
+    {
         $configPath = dirname(__FILE__) . DIRECTORY_SEPARATOR . "wurfl-config.xml";
         $config = new WURFL_Configuration_XmlConfig($configPath);
         $this->assertNotNull($config->persistence);
 
         $this->assertEquals(dirname(__FILE__) . DIRECTORY_SEPARATOR . "wurfl.xml", $config->wurflFile);
         $this->assertEquals(array(dirname(__FILE__) . DIRECTORY_SEPARATOR . "browsers.xml"), $config->wurflPatches);
-		
+        
         $this->assertEquals(true, $config->allowReload);
 
         $cacheDir = dirname(__FILE__) . DIRECTORY_SEPARATOR . "cache";
@@ -27,11 +37,11 @@ class WURFL_Configuration_XmlConfigTest extends PHPUnit_Framework_TestCase {
         $cache = $config->cache;
         $this->assertEquals("file", $cache ["provider"]);
         $this->assertEquals(array(WURFL_Configuration_Config::DIR => $cacheDir, WURFL_Configuration_Config::EXPIRATION => 36000), $cache ["params"]);
-
     }
 
 
-    public function testShouldCreateConfigurationWithAPCPersistence() {
+    public function testShouldCreateConfigurationWithAPCPersistence()
+    {
         $configPath = dirname(__FILE__) . DIRECTORY_SEPARATOR . "wurfl-config-apc-persistence.xml";
         $config = new WURFL_Configuration_XmlConfig($configPath);
         $this->assertNotNull($config->persistence);
@@ -51,11 +61,11 @@ class WURFL_Configuration_XmlConfigTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals(array(
             "namespace" => "wurfl",
             "expiration" => 86400), $cache ["params"]);
-
     }
 
 
-    public function testShouldAcceptEmptyOptionalElements() {
+    public function testShouldAcceptEmptyOptionalElements()
+    {
         $configPath = dirname(__FILE__) . DIRECTORY_SEPARATOR . "wurfl-config-no-optional.xml";
         $config = new WURFL_Configuration_XmlConfig($configPath);
 
@@ -69,9 +79,5 @@ class WURFL_Configuration_XmlConfigTest extends PHPUnit_Framework_TestCase {
 
         $cache = $config->cache;
         $this->assertTrue(empty($cache));
-
     }
-
-
 }
-

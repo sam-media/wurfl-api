@@ -19,12 +19,14 @@
  * User Agent Normalizer
  * @package	WURFL_Request_UserAgentNormalizer_Specific
  */
-class WURFL_Request_UserAgentNormalizer_Specific_Apple implements WURFL_Request_UserAgentNormalizer_Interface {
-	public function normalize($userAgent) {
-		// Normalize Skype SDK UAs
-		if (preg_match('#^iOSClientSDK/\d+\.+[0-9\.]+ +?\((Mozilla.+)\)$#', $userAgent, $matches)) {
-			return $matches[1];
-		}
-		return $userAgent;
-	}
+class WURFL_Request_UserAgentNormalizer_Specific_Apple implements WURFL_Request_UserAgentNormalizer_Interface
+{
+    public function normalize($userAgent)
+    {
+        // Normalize Skype SDK UAs
+        if (preg_match('#^iOSClientSDK/\d+\.+[0-9\.]+ +?\((Mozilla.+)\)$#', $userAgent, $matches)) {
+            return $matches[1];
+        }
+        return $userAgent;
+    }
 }

@@ -7,7 +7,7 @@ $wurfl['patches'] = array($resourcesDir . "/web_browsers_patch.xml", $resourcesD
 
 $persistence['provider'] = "memcache";
 $persistence['params'] = array(
-	"dir" => "cache"
+    "dir" => "cache"
 );
 
 $cache['provider'] = "null";
@@ -17,7 +17,3 @@ $configuration["wurfl"] = $wurfl;
 $configuration["allow-reload"] = true;
 $configuration["persistence"] = $persistence;
 $configuration["cache"] = $cache;
-
-
-
-

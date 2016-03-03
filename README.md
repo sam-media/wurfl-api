@@ -26,7 +26,7 @@ To start using the API you need to set some configuration options.
 > __IMPORTANT__: The WURFL API is closely tied to the WURFL.XML file.  New versions of the WURFL.XML are compatible with old versions of the API by nature, but the reverse is NOT true.  Old versions of the WURFL.XML are NOT guarenteed to be compatible with new versions of the API.  Let's restate that: This API is NOT compatible with old versions of the WURFL.XML.  The oldest copy of WURFL that can be used with this API is included in this distribution.
 
 ### For the impatient ones ###
-Please look sample of the configuration files in examples/demo/ directory.
+Please look at the sample of the configuration files in examples/demo/ directory.
 
 ```php
 $wurflDir = dirname(__FILE__) . '/../../../WURFL';
@@ -115,14 +115,14 @@ You have four methods for retrieving a device:
 	userAgent, ua-profile, support for xhtml of the device.
 
 2. `getDeviceForHttpRequest($_SERVER)`
-	Most of the time you will use this method, and the API will create the
-	the WURFL_Request_GenericRequest object for you	
+	Most of the time you will use this method, and the API will create
+	the WURFL_Request_GenericRequest object for you.	
 
 3. `getDeviceForUserAgent(string $userAgent)`
-    Used to query the API for a given User Agent string
+    Used to query the API for a given userAgent string.
 
 4. `getDevice(string $deviceID)`
-    Gets the device by its device ID (ex: `apple_iphone_ver1`)
+    Gets the device by its device ID (ex: `apple_iphone_ver1`).
 	
 Usage example:
 ```php

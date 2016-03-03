@@ -20,5 +20,9 @@
  * Base class for WURFL Exceptions
  * @package	WURFL
  */
-class WURFL_WURFLException extends Exception { }
-class WURFL_WURFLCLIInvalidArgumentException extends WURFL_WURFLException { }
+class WURFL_WURFLException extends Exception
+{
+}
+class WURFL_WURFLCLIInvalidArgumentException extends WURFL_WURFLException
+{
+}

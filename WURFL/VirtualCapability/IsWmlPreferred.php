@@ -21,11 +21,12 @@
  * @package	WURFL_VirtualCapability
  */
  
-class WURFL_VirtualCapability_IsWmlPreferred extends WURFL_VirtualCapability {
+class WURFL_VirtualCapability_IsWmlPreferred extends WURFL_VirtualCapability
+{
+    protected $required_capabilities = array('xhtml_support_level');
 
-	protected $required_capabilities = array('xhtml_support_level');
-
-	protected function compute() {
-		return ($this->device->xhtml_support_level <= 0);
-	}
+    protected function compute()
+    {
+        return ($this->device->xhtml_support_level <= 0);
+    }
 }

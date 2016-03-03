@@ -11,22 +11,16 @@
  *
  *
  * @category   WURFL
- * @package	WURFL_VirtualCapability
+ * @package	WURFL_Exception
  * @copyright  ScientiaMobile, Inc.
  * @license	GNU Affero General Public License
  * @version	$id$
  */
 /**
- * Virtual capability helper
- * @package	WURFL_VirtualCapability
+ * WURFL generic consistency exception.
+ *
+ * This exception is thrown when the WURFL model contains inconsistent data.
  */
- 
-class WURFL_VirtualCapability_IsPhone extends WURFL_VirtualCapability
+class WURFL_Exception_WURFLConsistencyException extends WURFL_WURFLException
 {
-    protected $required_capabilities = array('can_assign_phone_number', 'is_tablet');
-
-    protected function compute()
-    {
-        return ($this->device->can_assign_phone_number == 'true' && $this->device->is_tablet == 'false');
-    }
 }

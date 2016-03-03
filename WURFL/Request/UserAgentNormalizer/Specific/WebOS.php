@@ -20,14 +20,16 @@
  * User Agent Normalizer
  * @package	WURFL_Request_UserAgentNormalizer_Specific
  */
-class WURFL_Request_UserAgentNormalizer_Specific_WebOS implements WURFL_Request_UserAgentNormalizer_Interface {
-	public function normalize($userAgent) {
-		$model = WURFL_Handlers_WebOSHandler::getWebOSModelVersion($userAgent);
-		$os_ver = WURFL_Handlers_WebOSHandler::getWebOSVersion($userAgent);
-		if ($model !== null && $os_ver !== null) {
-			$prefix = $model.' '.$os_ver.WURFL_Constants::RIS_DELIMITER;
-			return $prefix.$userAgent;
-		}
-		return $userAgent;
-	}
+class WURFL_Request_UserAgentNormalizer_Specific_WebOS implements WURFL_Request_UserAgentNormalizer_Interface
+{
+    public function normalize($userAgent)
+    {
+        $model = WURFL_Handlers_WebOSHandler::getWebOSModelVersion($userAgent);
+        $os_ver = WURFL_Handlers_WebOSHandler::getWebOSVersion($userAgent);
+        if ($model !== null && $os_ver !== null) {
+            $prefix = $model.' '.$os_ver.WURFL_Constants::RIS_DELIMITER;
+            return $prefix.$userAgent;
+        }
+        return $userAgent;
+    }
 }

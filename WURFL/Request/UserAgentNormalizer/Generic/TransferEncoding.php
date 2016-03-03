@@ -20,10 +20,10 @@
  * User Agent Normalizer - removes locale information from user agent
  * @package	WURFL_Request_UserAgentNormalizer_Generic
  */
-class WURFL_Request_UserAgentNormalizer_Generic_TransferEncoding implements WURFL_Request_UserAgentNormalizer_Interface  {
-
-	public function normalize($userAgent) {
-		return str_replace(',gzip(gfe)', '', $userAgent);
-	}
-
+class WURFL_Request_UserAgentNormalizer_Generic_TransferEncoding implements WURFL_Request_UserAgentNormalizer_Interface
+{
+    public function normalize($userAgent)
+    {
+        return str_replace(',gzip(gfe)', '', $userAgent);
+    }
 }

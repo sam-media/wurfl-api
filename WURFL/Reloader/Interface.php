@@ -22,8 +22,7 @@
  * @package	WURFL_Reloader
  * @deprecated
  */
-interface WURFL_Reloader_Interface {
-	public function reload($wurflConfigurationPath);
+interface WURFL_Reloader_Interface
+{
+    public function reload($wurflConfigurationPath);
 }
-
-

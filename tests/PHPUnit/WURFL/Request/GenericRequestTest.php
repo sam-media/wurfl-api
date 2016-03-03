@@ -5,9 +5,8 @@
  */
 class WURFL_Request_GenericRequestTest extends PHPUnit_Framework_TestCase
 {
-    function testShouldNormalizeHeaders()
+    public function testShouldNormalizeHeaders()
     {
-
         $headers = array(
           "REQUEST_START_TIME" => 1429192614,
           "REQUEST_TIME" => 1429192614,

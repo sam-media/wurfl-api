@@ -21,11 +21,12 @@
  * @package	WURFL_VirtualCapability
  */
  
-class WURFL_VirtualCapability_IsFullDesktop extends WURFL_VirtualCapability {
+class WURFL_VirtualCapability_IsFullDesktop extends WURFL_VirtualCapability
+{
+    protected $required_capabilities = array('ux_full_desktop');
 
-	protected $required_capabilities = array('ux_full_desktop');
-
-	protected function compute() {
-		return ($this->device->ux_full_desktop == 'true');
-	}
+    protected function compute()
+    {
+        return ($this->device->ux_full_desktop == 'true');
+    }
 }

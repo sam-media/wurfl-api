@@ -21,12 +21,13 @@
  * @package	WURFL_VirtualCapability
  */
  
-class WURFL_VirtualCapability_IsTouchscreen extends WURFL_VirtualCapability {
+class WURFL_VirtualCapability_IsTouchscreen extends WURFL_VirtualCapability
+{
+    protected $required_capabilities = array('pointing_method');
 
-	protected $required_capabilities = array('pointing_method');
-
-	protected function compute() {
-		$ua = $this->request->userAgent;
-		return ($this->device->pointing_method == 'touchscreen') || (WURFL_Handlers_Utils::checkIfContains($ua, "Trident") && WURFL_Handlers_Utils::checkIfContains($ua, "Touch"));
-	}
+    protected function compute()
+    {
+        $ua = $this->request->userAgent;
+        return ($this->device->pointing_method == 'touchscreen') || (WURFL_Handlers_Utils::checkIfContains($ua, "Trident") && WURFL_Handlers_Utils::checkIfContains($ua, "Touch"));
+    }
 }

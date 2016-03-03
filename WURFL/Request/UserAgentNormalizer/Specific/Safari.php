@@ -26,14 +26,15 @@
  * 		Mozilla/5.0 (Macintosh Safari/525
  * @package	WURFL_Request_UserAgentNormalizer_Specific
  */
-class WURFL_Request_UserAgentNormalizer_Specific_Safari implements WURFL_Request_UserAgentNormalizer_Interface {
-
-	public function normalize($userAgent) {
-		$safari_version = WURFL_Handlers_SafariHandler::getSafariVersion($userAgent);
-		if (!$safari_version) {
-			return $userAgent;
-		}
-		$prefix = 'Safari '.$safari_version.WURFL_Constants::RIS_DELIMITER;
-		return $prefix.$userAgent;
-	}
+class WURFL_Request_UserAgentNormalizer_Specific_Safari implements WURFL_Request_UserAgentNormalizer_Interface
+{
+    public function normalize($userAgent)
+    {
+        $safari_version = WURFL_Handlers_SafariHandler::getSafariVersion($userAgent);
+        if (!$safari_version) {
+            return $userAgent;
+        }
+        $prefix = 'Safari '.$safari_version.WURFL_Constants::RIS_DELIMITER;
+        return $prefix.$userAgent;
+    }
 }

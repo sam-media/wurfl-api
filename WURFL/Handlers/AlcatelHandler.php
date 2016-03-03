@@ -27,16 +27,21 @@
  * @license	GNU Affero General Public License
  * @version	$id$
  */
-class WURFL_Handlers_AlcatelHandler extends WURFL_Handlers_Handler {
-	protected $prefix = "ALCATEL";
-	
-	public function canHandle($userAgent) {
-		if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) return false;
-		return WURFL_Handlers_Utils::checkIfStartsWith($userAgent, "Alcatel") || WURFL_Handlers_Utils::checkIfStartsWith($userAgent, "ALCATEL");
-	}
-	
-	public function applyConclusiveMatch($userAgent) {
+class WURFL_Handlers_AlcatelHandler extends WURFL_Handlers_Handler
+{
+    protected $prefix = "ALCATEL";
+    
+    public function canHandle($userAgent)
+    {
+        if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) {
+            return false;
+        }
+        return WURFL_Handlers_Utils::checkIfStartsWithCaseInsensitive($userAgent, "alcatel");
+    }
+    
+    public function applyConclusiveMatch($userAgent)
+    {
         $tolerance = WURFL_Handlers_Utils::firstSlash($userAgent);
-		return $this->getDeviceIDFromRIS($userAgent, $tolerance);
-	}
+        return $this->getDeviceIDFromRIS($userAgent, $tolerance);
+    }
 }

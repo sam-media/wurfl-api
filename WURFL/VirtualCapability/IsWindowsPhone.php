@@ -21,11 +21,12 @@
  * @package	WURFL_VirtualCapability
  */
  
-class WURFL_VirtualCapability_IsWindowsPhone extends WURFL_VirtualCapability {
+class WURFL_VirtualCapability_IsWindowsPhone extends WURFL_VirtualCapability
+{
+    protected $required_capabilities = array('device_os');
 
-	protected $required_capabilities = array('device_os');
-
-	protected function compute() {
-		return ($this->device->device_os == 'Windows Phone OS');
-	}
+    protected function compute()
+    {
+        return ($this->device->device_os == 'Windows Phone OS');
+    }
 }

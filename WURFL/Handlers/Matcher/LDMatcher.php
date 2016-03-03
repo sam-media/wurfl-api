@@ -26,30 +26,32 @@
  * @see match()
  * @package	WURFL_Handlers_Matcher
  */
-class WURFL_Handlers_Matcher_LDMatcher implements WURFL_Handlers_Matcher_Interface {
-	
-	/**
-	 * Instance of WURFL_Handlers_Matcher_LDMatcher
-	 * @var WURFL_Handlers_Matcher_LDMatcher
-	 */
-	private static $instance;
-	
-	/**
-	 * Returns an instance of the LDMatcher singleton
-	 * @return WURFL_Handlers_LDMatcher
-	 */
-	public static function INSTANCE() {
-		if (self::$instance === null) {
-			self::$instance = new self();
-		}
-		return self::$instance;
-	}
-	
-	public function match(&$collection, $needle, $tolerance) {
-		$best = $tolerance;
-		$match = '';
+class WURFL_Handlers_Matcher_LDMatcher implements WURFL_Handlers_Matcher_Interface
+{
+    /**
+     * Instance of WURFL_Handlers_Matcher_LDMatcher
+     * @var WURFL_Handlers_Matcher_LDMatcher
+     */
+    private static $instance;
+    
+    /**
+     * Returns an instance of the LDMatcher singleton
+     * @return WURFL_Handlers_LDMatcher
+     */
+    public static function INSTANCE()
+    {
+        if (self::$instance === null) {
+            self::$instance = new self();
+        }
+        return self::$instance;
+    }
+    
+    public function match(&$collection, $needle, $tolerance)
+    {
+        $best = $tolerance;
+        $match = '';
         $needle_chars = count_chars($needle);
-		foreach ( $collection as $userAgent ) {
+        foreach ($collection as $userAgent) {
             $ua_chars = count_chars($userAgent);
             $sum = 0;
             $can_apply_ld = true;
@@ -66,12 +68,11 @@ class WURFL_Handlers_Matcher_LDMatcher implements WURFL_Handlers_Matcher_Interfa
             if ($can_apply_ld === true) {
                 $current = levenshtein($needle, $userAgent);
                 if ($current <= $best) {
-					$best = $current - 1;
-					$match = $userAgent;
-				}
-			}
-		}
-		return $match;
-	}
+                    $best = $current - 1;
+                    $match = $userAgent;
+                }
+            }
+        }
+        return $match;
+    }
 }
-

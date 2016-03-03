@@ -23,7 +23,6 @@
  */
 class WURFL_VirtualCapability_FormFactor extends WURFL_VirtualCapability
 {
-
     protected $required_capabilities = array(
         'ux_full_desktop',
         'is_smarttv',
@@ -32,7 +31,8 @@ class WURFL_VirtualCapability_FormFactor extends WURFL_VirtualCapability
         'can_assign_phone_number',
     );
     
-    public function compute() {
+    public function compute()
+    {
         $map = array(
             'Robot' => $this->device->is_robot,
             'Desktop' => $this->device->ux_full_desktop,

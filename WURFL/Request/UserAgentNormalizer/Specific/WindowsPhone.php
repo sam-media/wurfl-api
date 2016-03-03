@@ -20,16 +20,18 @@
  * User Agent Normalizer
  * @package	WURFL_Request_UserAgentNormalizer_Specific
  */
-class WURFL_Request_UserAgentNormalizer_Specific_WindowsPhone implements WURFL_Request_UserAgentNormalizer_Interface {
-	public function normalize($userAgent) {
+class WURFL_Request_UserAgentNormalizer_Specific_WindowsPhone implements WURFL_Request_UserAgentNormalizer_Interface
+{
+    public function normalize($userAgent)
+    {
         if (WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array('WPDesktop', 'ZuneWP7'))
           || WURFL_Handlers_Utils::checkIfContainsAll($userAgent, array('Mozilla/5.0 (Windows NT ', ' ARM;', ' Edge/'))) {
             $model = WURFL_Handlers_WindowsPhoneHandler::getWindowsPhoneDesktopModel($userAgent);
             $version = WURFL_Handlers_WindowsPhoneHandler::getWindowsPhoneDesktopVersion($userAgent);
-        } else if (WURFL_Handlers_Utils::checkIfStartsWithAnyOf($userAgent, array('Windows Phone Ad Client', 'WindowsPhoneAdClient'))) {
+        } elseif (WURFL_Handlers_Utils::checkIfStartsWithAnyOf($userAgent, array('Windows Phone Ad Client', 'WindowsPhoneAdClient'))) {
             $model = WURFL_Handlers_WindowsPhoneHandler::getWindowsPhoneAdClientModel($userAgent);
             $version = WURFL_Handlers_WindowsPhoneHandler::getWindowsPhoneVersion($userAgent);
-        } else if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'NativeHost')) {
+        } elseif (WURFL_Handlers_Utils::checkIfContains($userAgent, 'NativeHost')) {
             return $userAgent;
         } else {
             $model = WURFL_Handlers_WindowsPhoneHandler::getWindowsPhoneModel($userAgent);
@@ -41,5 +43,5 @@ class WURFL_Request_UserAgentNormalizer_Specific_WindowsPhone implements WURFL_R
             return $prefix.$userAgent;
         }
         return $userAgent;
-	}
+    }
 }

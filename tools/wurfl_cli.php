@@ -22,7 +22,7 @@
 
 define("WURFL_DIR", dirname(__FILE__) . '/../WURFL/');
 define("WURFL_DB_DIR", dirname(__FILE__) . '/../examples/resources/');
-define("RESOURCES_DIR", WURFL_DIR . "../tests/resources/");
+define("RESOURCES_DIR", "/tmp/api1-cli/");
 
 require_once WURFL_DIR.'/Application.php';
 

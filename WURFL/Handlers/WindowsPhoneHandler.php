@@ -27,36 +27,40 @@
  * @license	GNU Affero General Public License
  * @version	$id$
  */
-class WURFL_Handlers_WindowsPhoneHandler extends WURFL_Handlers_Handler {
-	
-	protected $prefix = "WINDOWSPHONE";
-	
-	public static $constantIDs = array(
-		'generic_ms_winmo6_5',
-		'generic_ms_phone_os7',
-		'generic_ms_phone_os7_5',
-		'generic_ms_phone_os7_8',
-		'generic_ms_phone_os8',
+class WURFL_Handlers_WindowsPhoneHandler extends WURFL_Handlers_Handler
+{
+    protected $prefix = "WINDOWSPHONE";
+    
+    public static $constantIDs = array(
+        'generic_ms_winmo6_5',
+        'generic_ms_phone_os7',
+        'generic_ms_phone_os7_5',
+        'generic_ms_phone_os7_8',
+        'generic_ms_phone_os8',
         'generic_ms_phone_os8_1',
         'generic_ms_phone_os10',
         'generic_ms_phone_os7_desktopmode',
         'generic_ms_phone_os7_5_desktopmode',
         'generic_ms_phone_os8_desktopmode',
         'generic_ms_phone_os10_desktopmode',
-	);
-	
-	public function canHandle($userAgent) {
-		if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) return false;
+    );
+    
+    public function canHandle($userAgent)
+    {
+        if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) {
+            return false;
+        }
         // Capturing WP desktop mode UAs but not Windows RT UAs
         if (WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array('WPDesktop', 'ZuneWP7'))
           || WURFL_Handlers_Utils::checkIfContainsAll($userAgent, array('Mozilla/5.0 (Windows NT ', ' ARM;', ' Edge/'))) {
             return true;
         }
 
-		return WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array('Windows Phone', 'WindowsPhone', 'NativeHost'));
-	}
-	
-	public function applyConclusiveMatch($userAgent) {
+        return WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array('Windows Phone', 'WindowsPhone', 'NativeHost'));
+    }
+    
+    public function applyConclusiveMatch($userAgent)
+    {
         $tolerance = WURFL_Handlers_Utils::toleranceToRisDelimeter($userAgent);
         if ($tolerance !== false) {
             return $this->getDeviceIDFromRIS($userAgent, $tolerance);
@@ -65,35 +69,56 @@ class WURFL_Handlers_WindowsPhoneHandler extends WURFL_Handlers_Handler {
             return 'generic_ms_phone_os7';
         }
         return WURFL_Constants::NO_MATCH;
-	}
-	
-	public function applyRecoveryMatch($userAgent){
-
+    }
+    
+    public function applyRecoveryMatch($userAgent)
+    {
         if (WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array('WPDesktop', 'ZuneWP7'))
           || WURFL_Handlers_Utils::checkIfContainsAll($userAgent, array('Mozilla/5.0 (Windows NT ', ' ARM;', ' Edge/'))) {
-            if (WURFL_Handlers_Utils::checkIfContainsAll($userAgent, array('Mozilla/5.0 (Windows NT ', ' ARM;', ' Edge/'))) return 'generic_ms_phone_os10_desktopmode';
-            if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'WPDesktop')) return 'generic_ms_phone_os8_desktopmode';
-            if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Trident/5.0')) return 'generic_ms_phone_os7_5_desktopmode';
+            if (WURFL_Handlers_Utils::checkIfContainsAll($userAgent, array('Mozilla/5.0 (Windows NT ', ' ARM;', ' Edge/'))) {
+                return 'generic_ms_phone_os10_desktopmode';
+            }
+            if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'WPDesktop')) {
+                return 'generic_ms_phone_os8_desktopmode';
+            }
+            if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Trident/5.0')) {
+                return 'generic_ms_phone_os7_5_desktopmode';
+            }
             return 'generic_ms_phone_os7_desktopmode';
         }
 
         $version = self::getWindowsPhoneVersion($userAgent);
 
-        if ($version == "10.0")return 'generic_ms_phone_os10';
-        if ($version == "8.1") return 'generic_ms_phone_os8_1';
-        if ($version == "8.0") return 'generic_ms_phone_os8';
-        if ($version == "7.8") return 'generic_ms_phone_os7_8';
-        if ($version == "7.5") return 'generic_ms_phone_os7_5';
-        if ($version == "7.0") return 'generic_ms_phone_os7';
-        if ($version == "6.5") return 'generic_ms_winmo6_5';
+        if ($version == "10.0") {
+            return 'generic_ms_phone_os10';
+        }
+        if ($version == "8.1") {
+            return 'generic_ms_phone_os8_1';
+        }
+        if ($version == "8.0") {
+            return 'generic_ms_phone_os8';
+        }
+        if ($version == "7.8") {
+            return 'generic_ms_phone_os7_8';
+        }
+        if ($version == "7.5") {
+            return 'generic_ms_phone_os7_5';
+        }
+        if ($version == "7.0") {
+            return 'generic_ms_phone_os7';
+        }
+        if ($version == "6.5") {
+            return 'generic_ms_winmo6_5';
+        }
         //These are probably UAs of the type "Windows Phone Ad Client (Xna)/5.1.0.0 BMID/E67970D969"
         if (WURFL_Handlers_Utils::checkIfStartsWithAnyOf($userAgent, array('Windows Phone Ad Client', 'WindowsPhoneAdClient'))) {
             return 'generic_ms_phone_os7';
         }
         return WURFL_Constants::NO_MATCH;
-	}
+    }
 
-    public static function getWindowsPhoneModel($ua) {
+    public static function getWindowsPhoneModel($ua)
+    {
         // Normalize spaces in UA before capturing parts
         $ua = preg_replace('|;(?! )|', '; ', $ua);
         // This regex is relatively fast because there is not much backtracking, and almost all UAs will match
@@ -128,7 +153,8 @@ class WURFL_Handlers_WindowsPhoneHandler extends WURFL_Handlers_Handler {
         return null;
     }
 
-    public static function getWindowsPhoneAdClientModel($ua) {
+    public static function getWindowsPhoneAdClientModel($ua)
+    {
         // Normalize spaces in UA before capturing parts
         $ua = preg_replace('|;(?! )|', '; ', $ua);
         if (preg_match('|Windows ?Phone ?Ad ?Client/[0-9\.]+ ?\(.+; ?Windows ?Phone(?: ?OS)? ?[0-9\.]+; ?([^;\)]+(; ?[^;\)]+)?)|', $ua, $matches)) {
@@ -142,19 +168,20 @@ class WURFL_Handlers_WindowsPhoneHandler extends WURFL_Handlers_Handler {
     }
 
 
-    public static function getWindowsPhoneVersion($ua) {
+    public static function getWindowsPhoneVersion($ua)
+    {
         if (preg_match('|Windows ?Phone(?: ?OS)? ?(\d+\.\d+)|', $ua, $matches)) {
             if (strpos($matches[1], "10.0") !== false) {
                 return '10.0';
-            } else if (strpos($matches[1], "6.3") !== false || strpos($matches[1], "8.1") !== false) {
+            } elseif (strpos($matches[1], "6.3") !== false || strpos($matches[1], "8.1") !== false) {
                 return '8.1';
-            } else if (strpos($matches[1], "8.") !== false) {
+            } elseif (strpos($matches[1], "8.") !== false) {
                 return '8.0';
-            } else if (strpos($matches[1], "7.8") !== false) {
+            } elseif (strpos($matches[1], "7.8") !== false) {
                 return '7.8';
-            } else if (strpos($matches[1], "7.10") !== false || strpos($matches[1], "7.5") !== false) {
+            } elseif (strpos($matches[1], "7.10") !== false || strpos($matches[1], "7.5") !== false) {
                 return '7.5';
-            } else if (strpos($matches[1], "6.5") !== false) {
+            } elseif (strpos($matches[1], "6.5") !== false) {
                 return '6.5';
             } else {
                 return '7.0';
@@ -163,7 +190,8 @@ class WURFL_Handlers_WindowsPhoneHandler extends WURFL_Handlers_Handler {
         return null;
     }
 
-    public static function getWindowsPhoneDesktopModel($ua) {
+    public static function getWindowsPhoneDesktopModel($ua)
+    {
         // Normalize spaces in UA before capturing parts
         $ua = preg_replace('|;(?! )|', '; ', $ua);
         if (preg_match('|\(Windows NT [\d\.]+?; ARM; ([^;\)]+(; ?[^;\)]+)?).+?Edge/\d|', $ua, $matches) || preg_match('|\(Windows NT [\d\.]+?; ARM;.+?; WPDesktop; ([^;\)]+(; ?[^;\)]+)?)\) like Gecko|', $ua, $matches)) {
@@ -176,11 +204,12 @@ class WURFL_Handlers_WindowsPhoneHandler extends WURFL_Handlers_Handler {
         return null;
     }
 
-    public static function getWindowsPhoneDesktopVersion($ua) {
+    public static function getWindowsPhoneDesktopVersion($ua)
+    {
         if (preg_match('|Windows NT (\d+\.\d+)|', $ua, $matches)) {
             if (strpos($matches[1], "10.0") !== false) {
                 return '10.0';
-            } else if (strpos($matches[1], "6.3") !== false || strpos($matches[1], "8.1") !== false) {
+            } elseif (strpos($matches[1], "6.3") !== false || strpos($matches[1], "8.1") !== false) {
                 return '8.1';
             } else {
                 return '8.0';

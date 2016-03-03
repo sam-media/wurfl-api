@@ -20,13 +20,26 @@
  * Virtual capability helper
  * @package	WURFL_VirtualCapability
  */
- 
-class WURFL_VirtualCapability_IsPhone extends WURFL_VirtualCapability
+class WURFL_VirtualCapability_DeviceName extends WURFL_VirtualCapability
 {
-    protected $required_capabilities = array('can_assign_phone_number', 'is_tablet');
+    protected $required_capabilities = array(
+      'brand_name',
+      'model_name',
+      'marketing_name',
+    );
 
     protected function compute()
     {
-        return ($this->device->can_assign_phone_number == 'true' && $this->device->is_tablet == 'false');
+        $parts = array($this->device->brand_name);
+        if (strlen($this->device->marketing_name)) {
+            $parts[] = $this->device->marketing_name;
+
+            return implode(' ', $parts);
+        }
+        if (strlen($this->device->model_name)) {
+            $parts[] = $this->device->model_name;
+        }
+
+        return implode(' ', $parts);
     }
 }

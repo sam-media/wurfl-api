@@ -21,11 +21,12 @@
  * @package	WURFL_VirtualCapability
  */
  
-class WURFL_VirtualCapability_IsHtmlPreferred extends WURFL_VirtualCapability {
+class WURFL_VirtualCapability_IsHtmlPreferred extends WURFL_VirtualCapability
+{
+    protected $required_capabilities = array('preferred_markup');
 
-	protected $required_capabilities = array('preferred_markup');
-
-	protected function compute() {
-		return (strpos($this->device->preferred_markup, 'html_web') === 0);
-	}
+    protected function compute()
+    {
+        return (strpos($this->device->preferred_markup, 'html_web') === 0);
+    }
 }

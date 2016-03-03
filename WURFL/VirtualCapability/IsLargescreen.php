@@ -21,14 +21,15 @@
  * @package	WURFL_VirtualCapability
  */
  
-class WURFL_VirtualCapability_IsLargescreen extends WURFL_VirtualCapability {
+class WURFL_VirtualCapability_IsLargescreen extends WURFL_VirtualCapability
+{
+    protected $required_capabilities = array(
+        'resolution_width',
+        'resolution_height',
+    );
 
-	protected $required_capabilities = array(
-		'resolution_width',
-		'resolution_height',
-	);
-
-	protected function compute() {
-		return ($this->device->resolution_width >= 480 && $this->device->resolution_height >= 480);
-	}
+    protected function compute()
+    {
+        return ($this->device->resolution_width >= 480 && $this->device->resolution_height >= 480);
+    }
 }

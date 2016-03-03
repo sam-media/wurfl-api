@@ -20,8 +20,16 @@
  * WURFL Storage
  * @package	WURFL_Storage
  */
-class WURFL_Storage_Null extends WURFL_Storage_Base  {
-	public function load($key) { return null; }
-	public function save($key, $value, $expire=0) {}
-	public function clear() {}
+class WURFL_Storage_Null extends WURFL_Storage_Base
+{
+    public function load($key)
+    {
+        return null;
+    }
+    public function save($key, $value, $expire=0)
+    {
+    }
+    public function clear()
+    {
+    }
 }

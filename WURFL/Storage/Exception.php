@@ -20,4 +20,6 @@
  * WURFL Storage
  * @package	WURFL_Storage
  */
-class WURFL_Storage_Exception extends Exception {}
+class WURFL_Storage_Exception extends Exception
+{
+}

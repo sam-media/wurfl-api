@@ -27,26 +27,29 @@
  * @version	$id$
  */
 
-class WURFL_Handlers_CatchAllRisHandler extends WURFL_Handlers_Handler {
+class WURFL_Handlers_CatchAllRisHandler extends WURFL_Handlers_Handler
+{
     protected $prefix = "CATCH_ALL_RIS";
-	/**
-	 * Final Interceptor: Intercept
-	 * Everything that has not been trapped by a previous handler
-	 *
-	 * @param string $userAgent
-	 * @return boolean always true
-	 */
-	public function canHandle($userAgent) {
-		return true;
-	}
-	
-	/**
-	 * Apply RIS on Firts slash
-	 *
-	 * @param string $userAgent
-	 * @return string
-	 */
-    public function applyConclusiveMatch($userAgent) {
+    /**
+     * Final Interceptor: Intercept
+     * Everything that has not been trapped by a previous handler
+     *
+     * @param string $userAgent
+     * @return boolean always true
+     */
+    public function canHandle($userAgent)
+    {
+        return true;
+    }
+    
+    /**
+     * Apply RIS on Firts slash
+     *
+     * @param string $userAgent
+     * @return string
+     */
+    public function applyConclusiveMatch($userAgent)
+    {
         if (WURFL_Handlers_Utils::checkIfStartsWith($userAgent, "CFNetwork/")) {
             $tolerance = WURFL_Handlers_Utils::firstSpace($userAgent);
         } else {

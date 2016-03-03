@@ -81,17 +81,17 @@ class WURFL_VirtualCapability_IsAppWebview extends WURFL_VirtualCapability
         }
 
         // Handling Chrome separately
-        if ($this->device->device_os == "Android" && WURFL_Handlers_Utils::checkIfContains($ua,"Chrome") && !WURFL_Handlers_Utils::checkIfContains($ua,"Version")) {
+        if ($this->device->device_os == "Android" && WURFL_Handlers_Utils::checkIfContains($ua, "Chrome") && !WURFL_Handlers_Utils::checkIfContains($ua, "Version")) {
             return false;
         }
 
         // iOS webview logic is pretty simple
-        if ($this->device->device_os == "iOS" && !WURFL_Handlers_Utils::checkIfContains($ua,"Safari")) {
+        if ($this->device->device_os == "iOS" && !WURFL_Handlers_Utils::checkIfContains($ua, "Safari")) {
             return true;
         }
 
         // So is Mac OS X's webview logic
-        if ($this->device->advertised_device_os == "Mac OS X" && !WURFL_Handlers_Utils::checkIfContains($ua,"Safari")) {
+        if ($this->device->advertised_device_os == "Mac OS X" && !WURFL_Handlers_Utils::checkIfContains($ua, "Safari")) {
             return true;
         }
 
