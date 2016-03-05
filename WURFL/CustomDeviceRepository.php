@@ -18,7 +18,8 @@
 /**
  * WURFL Device Repository
  */
-class WURFL_CustomDeviceRepository implements WURFL_DeviceRepository
+class WURFL_CustomDeviceRepository
+    implements WURFL_DeviceRepository
 {
     const WURFL_USER_AGENTS_CLASSIFIED = 'WURFL_USER_AGENTS_CLASSIFIED';
 

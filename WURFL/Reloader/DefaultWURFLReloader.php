@@ -22,7 +22,8 @@
  *
  * @deprecated
  */
-class WURFL_Reloader_DefaultWURFLReloader implements WURFL_Reloader_Interface
+class WURFL_Reloader_DefaultWURFLReloader
+    implements WURFL_Reloader_Interface
 {
     public function reload($wurflConfigurationPath)
     {

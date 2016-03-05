@@ -19,7 +19,8 @@
 /**
  * User Agent Normalizer - removes locale information from user agent
  */
-class WURFL_Request_UserAgentNormalizer_Generic_TransferEncoding implements WURFL_Request_UserAgentNormalizer_Interface
+class WURFL_Request_UserAgentNormalizer_Generic_TransferEncoding
+    implements WURFL_Request_UserAgentNormalizer_Interface
 {
     public function normalize($userAgent)
     {

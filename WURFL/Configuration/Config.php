@@ -22,7 +22,7 @@
  *
  * @property string  $configFilePath
  * @property string  $configurationFileDir
- * @property bool $allowReload
+ * @property bool    $allowReload
  * @property array   $capabilityFilter
  * @property string  $wurflFile
  * @property array   $wurflPatches

@@ -45,8 +45,10 @@ class WURFL_Handlers_DesktopApplicationHandler extends WURFL_Handlers_Handler
             return false;
         }
 
-        return (WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent,
-            array('Thunderbird', 'Microsoft Outlook', 'MSOffice')));
+        return (WURFL_Handlers_Utils::checkIfContainsAnyOf(
+            $userAgent,
+            array('Thunderbird', 'Microsoft Outlook', 'MSOffice')
+        ));
     }
 
     public function applyConclusiveMatch($userAgent)

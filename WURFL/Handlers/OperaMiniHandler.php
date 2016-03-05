@@ -44,8 +44,10 @@ class WURFL_Handlers_OperaMiniHandler extends WURFL_Handlers_Handler
             return false;
         }
 
-        return WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent,
-            array('Opera Mini', 'OperaMini', 'Opera Mobi', 'OperaMobi'));
+        return WURFL_Handlers_Utils::checkIfContainsAnyOf(
+            $userAgent,
+            array('Opera Mini', 'OperaMini', 'Opera Mobi', 'OperaMobi')
+        );
     }
 
     public function applyConclusiveMatch($userAgent)

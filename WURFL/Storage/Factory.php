@@ -38,10 +38,9 @@ class WURFL_Storage_Factory
      */
     public static function create($configuration)
     {
-        $currentConfiguration = is_array($configuration) ?
-            array_merge(self::$defaultConfiguration, $configuration)
+        $currentConfiguration = is_array($configuration) ? array_merge(self::$defaultConfiguration, $configuration)
             : self::$defaultConfiguration;
-        $class = self::className($currentConfiguration);
+        $class                = self::className($currentConfiguration);
 
         return new $class($currentConfiguration['params']);
     }

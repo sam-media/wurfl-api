@@ -41,8 +41,10 @@ class WURFL_Handlers_FennecOnAndroidHandler extends WURFL_Handlers_Handler
             return false;
         }
 
-        return (WURFL_Handlers_Utils::checkIfContains($userAgent,
-                'Android') && WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array('Fennec', 'Firefox')));
+        return (WURFL_Handlers_Utils::checkIfContains(
+                $userAgent,
+                'Android'
+            ) && WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array('Fennec', 'Firefox')));
     }
 
     public function applyConclusiveMatch($userAgent)

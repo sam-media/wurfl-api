@@ -19,7 +19,8 @@
 /**
  * User Agent Normalizer - removes Novarra garbage from user agent
  */
-class WURFL_Request_UserAgentNormalizer_Generic_NovarraGoogleTranslator implements WURFL_Request_UserAgentNormalizer_Interface
+class WURFL_Request_UserAgentNormalizer_Generic_NovarraGoogleTranslator
+    implements WURFL_Request_UserAgentNormalizer_Interface
 {
     const NOVARRA_GOOGLE_TRANSLATOR_PATTERN = "/(\sNovarra-Vision.*)|(,gzip\(gfe\)\s+\(via translate.google.com\))/";
 

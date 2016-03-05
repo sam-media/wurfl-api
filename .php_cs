@@ -1,6 +1,6 @@
 <?php
 $header = <<<EOF
-This file is part of the Wurfl package.
+This file is part of the wurfl-api package.
 
 (c) Thomas Mueller <mimmi20@live.de>
 

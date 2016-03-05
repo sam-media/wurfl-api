@@ -151,7 +151,8 @@ class WURFL_VirtualCapabilityProvider
         // The value is null if it is not in the loaded WURFL, it's default if it is loaded and not overridden
         if ($control_value === null || $control_value === self::WURFL_CONTROL_DEFAULT) {
             // The control capability was not used, use the WURFL_VirtualCapability provider
-            return $this->getObject($name)->getValue();
+            return $this->getObject($name)
+                ->getValue();
         }
 
         // Forced capabilities
@@ -215,12 +216,16 @@ class WURFL_VirtualCapabilityProvider
     protected function getControlValue($name)
     {
         // Check if loaded WURFL contains control caps
-        if (!$this->device->getRootDevice()->isGroupDefined(self::WURFL_CONTROL_GROUP)) {
+        if (!$this->device->getRootDevice()
+            ->isGroupDefined(self::WURFL_CONTROL_GROUP)
+        ) {
             return;
         }
         $control_cap = self::PREFIX_CONTROL . $this->cleanCapabilityName($name);
         // Check if loaded WURFL contains the requested control cap
-        if (!$this->device->getRootDevice()->isCapabilityDefined($control_cap)) {
+        if (!$this->device->getRootDevice()
+            ->isCapabilityDefined($control_cap)
+        ) {
             return;
         }
 

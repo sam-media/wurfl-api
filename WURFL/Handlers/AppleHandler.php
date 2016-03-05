@@ -375,8 +375,10 @@ class WURFL_Handlers_AppleHandler extends WURFL_Handlers_Handler
             return false;
         }
 
-        return (WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent,
-            array('iPhone', 'iPod', 'iPad'))) && !WURFL_Handlers_Utils::checkIfContains($userAgent, 'Symbian');
+        return (WURFL_Handlers_Utils::checkIfContainsAnyOf(
+            $userAgent,
+            array('iPhone', 'iPod', 'iPad')
+        )) && !WURFL_Handlers_Utils::checkIfContains($userAgent, 'Symbian');
     }
 
     public function applyConclusiveMatch($userAgent)
@@ -385,10 +387,16 @@ class WURFL_Handlers_AppleHandler extends WURFL_Handlers_Handler
         //Normalize AFNetworking and server-bag UAs
         //Pippo/2.4.3 (iPad; iOS 8.0.2; Scale/2.00)
         //server-bag [iPhone OS,8.2,12D508,iPhone4,1]
-        //iPhone4,1/8.2 (12D508)		
-        if (preg_match('#^[^/]+?/[\d\.]+? \(i[A-Za-z]+; iOS ([\d\.]+); Scale/[\d\.]+\)#', $userAgent, $matches)
-            || preg_match('#^server-bag \[iPhone OS,([\d\.]+),#', $userAgent, $matches)
-            || preg_match('#^i(?:Phone|Pad|Pod)\d+?,\d+?/([\d\.]+)#', $userAgent, $matches)
+        //iPhone4,1/8.2 (12D508)
+        if (preg_match(
+                '#^[^/]+?/[\d\.]+? \(i[A-Za-z]+; iOS ([\d\.]+); Scale/[\d\.]+\)#',
+                $userAgent,
+                $matches
+            ) || preg_match('#^server-bag \[iPhone OS,([\d\.]+),#', $userAgent, $matches) || preg_match(
+                '#^i(?:Phone|Pad|Pod)\d+?,\d+?/([\d\.]+)#',
+                $userAgent,
+                $matches
+            )
         ) {
             $matches[1] = str_replace('.', '_', $matches[1]);
             if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'iPad')) {
@@ -414,8 +422,11 @@ class WURFL_Handlers_AppleHandler extends WURFL_Handlers_Handler
         // Normalize iOS {Ver} style UAs
         //Eg: Mozilla/5.0 (iPhone; U; CPU iOS 7.1.2 like Mac OS X; en-us) AppleWebKit/528.18 (KHTML, like Gecko) Safari/528.16
         if (preg_match("#CPU iOS \d+?\.\d+?#", $userAgent)) {
-            $ua = WURFL_Handlers_Utils::checkIfContains($userAgent, 'iPad') ? str_replace('CPU iOS', 'CPU OS',
-                $userAgent) : str_replace('CPU iOS', 'CPU iPhone OS', $userAgent);
+            $ua = WURFL_Handlers_Utils::checkIfContains($userAgent, 'iPad') ? str_replace(
+                'CPU iOS',
+                'CPU OS',
+                $userAgent
+            ) : str_replace('CPU iOS', 'CPU iPhone OS', $userAgent);
             if (preg_match("#(CPU(?: iPhone)? OS [\d\.]+ like)#", $ua, $matches)) {
                 $versionUnderscore = str_replace('.', '_', $matches[1]);
                 $ua                = str_replace(' U;', '', $ua);
@@ -430,20 +441,29 @@ class WURFL_Handlers_AppleHandler extends WURFL_Handlers_Handler
             // Check for iPod first since they contain 'iPhone'
             if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'iPod')) {
                 if (array_key_exists($matches[1], self::$ipodDeviceMap)) {
-                    $device_version = str_replace(array_keys(self::$ipodDeviceMap), array_values(self::$ipodDeviceMap),
-                        $matches[1]);
+                    $device_version = str_replace(
+                        array_keys(self::$ipodDeviceMap),
+                        array_values(self::$ipodDeviceMap),
+                        $matches[1]
+                    );
                 }
             } else {
                 if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'iPad')) {
                     if (array_key_exists($matches[1], self::$ipadDeviceMap)) {
-                        $device_version = str_replace(array_keys(self::$ipadDeviceMap),
-                            array_values(self::$ipadDeviceMap), $matches[1]);
+                        $device_version = str_replace(
+                            array_keys(self::$ipadDeviceMap),
+                            array_values(self::$ipadDeviceMap),
+                            $matches[1]
+                        );
                     }
                 } else {
                     if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'iPhone')) {
                         if (array_key_exists($matches[1], self::$iphoneDeviceMap)) {
-                            $device_version = str_replace(array_keys(self::$iphoneDeviceMap),
-                                array_values(self::$iphoneDeviceMap), $matches[1]);
+                            $device_version = str_replace(
+                                array_keys(self::$iphoneDeviceMap),
+                                array_values(self::$iphoneDeviceMap),
+                                $matches[1]
+                            );
                         }
                         // Set $device_version to null if UA contains unrecognized hardware version or does not satisfy any of the above 'if' statements
                     } else {

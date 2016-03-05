@@ -75,8 +75,10 @@ class WURFL_Handlers_AndroidHandler extends WURFL_Handlers_Handler
 
     public function canHandle($userAgent)
     {
-        return !WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent,
-            array('like Android', 'Symbian')) && WURFL_Handlers_Utils::checkIfContains($userAgent, 'Android');
+        return !WURFL_Handlers_Utils::checkIfContainsAnyOf(
+            $userAgent,
+            array('like Android', 'Symbian')
+        ) && WURFL_Handlers_Utils::checkIfContains($userAgent, 'Android');
     }
 
     public function applyConclusiveMatch($userAgent)
@@ -111,9 +113,10 @@ class WURFL_Handlers_AndroidHandler extends WURFL_Handlers_Handler
         if ($deviceID === 'generic_android_ver4_0') {
             $deviceID = 'generic_android_ver4';
         }
-        if (($android_version < 3.0 || $android_version >= 4.0)
-            && WURFL_Handlers_Utils::checkIfContains($userAgent, 'Safari')
-            && !WURFL_Handlers_Utils::checkIfContains($userAgent, 'Mobile')
+        if (($android_version < 3.0 || $android_version >= 4.0) && WURFL_Handlers_Utils::checkIfContains(
+                $userAgent,
+                'Safari'
+            ) && !WURFL_Handlers_Utils::checkIfContains($userAgent, 'Mobile')
         ) {
             // This is probably a tablet (Android 3.x is always a tablet, so it doesn't have a "_tablet" ID)
             if (in_array($deviceID . '_tablet', self::$constantIDs)) {
@@ -220,8 +223,11 @@ class WURFL_Handlers_AndroidHandler extends WURFL_Handlers_Handler
 
         // Different logic for Mozillite and non-Mozillite UAs to isolate model name
         // Non-Mozillite UAs get first preference
-        if (preg_match('#(^[A-Za-z0-9_\-\+ ]+)[/ ]?(?:[A-Za-z0-9_\-\+\.]+)? +Linux/[0-9\.]+ +Android[ /][0-9\.]+ +Release/[0-9\.]+#',
-            $ua, $matches)) {
+        if (preg_match(
+            '#(^[A-Za-z0-9_\-\+ ]+)[/ ]?(?:[A-Za-z0-9_\-\+\.]+)? +Linux/[0-9\.]+ +Android[ /][0-9\.]+ +Release/[0-9\.]+#',
+            $ua,
+            $matches
+        )) {
             // Trim off spaces and semicolons
             $model = rtrim($matches[1], ' ;');
             // Locales are optional for matching model name since UAs like Chrome Mobile do not contain them
@@ -231,8 +237,11 @@ class WURFL_Handlers_AndroidHandler extends WURFL_Handlers_Handler
                 $model = rtrim($matches[1], ' ;');
                 // Additional logic to capture model names in Amazon webview/appstore UAs
             } else {
-                if (preg_match('#^(?:AmazonWebView|Appstore|Amazon\.com)/.+Android[/ ][\d\.]+/(?:[\d]+/)?([A-Za-z0-9_\- ]+)\b#',
-                    $ua, $matches)) {
+                if (preg_match(
+                    '#^(?:AmazonWebView|Appstore|Amazon\.com)/.+Android[/ ][\d\.]+/(?:[\d]+/)?([A-Za-z0-9_\- ]+)\b#',
+                    $ua,
+                    $matches
+                )) {
                     $model = $matches[1];
                 } else {
                     return;

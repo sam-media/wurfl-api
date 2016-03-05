@@ -19,7 +19,8 @@
 /**
  * User Agent Normalizer - removes BabelFish garbage from user agent
  */
-class WURFL_Request_UserAgentNormalizer_Generic_BabelFish implements WURFL_Request_UserAgentNormalizer_Interface
+class WURFL_Request_UserAgentNormalizer_Generic_BabelFish
+    implements WURFL_Request_UserAgentNormalizer_Interface
 {
     const BABEL_FISH_REGEX = '/\\s*\\(via babelfish.yahoo.com\\)\\s*/';
 

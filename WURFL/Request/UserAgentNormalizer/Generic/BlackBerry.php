@@ -19,7 +19,8 @@
 /**
  * User Agent Normalizer - returns the substring starting from "BlackBerry"
  */
-class WURFL_Request_UserAgentNormalizer_Generic_BlackBerry implements WURFL_Request_UserAgentNormalizer_Interface
+class WURFL_Request_UserAgentNormalizer_Generic_BlackBerry
+    implements WURFL_Request_UserAgentNormalizer_Interface
 {
     public function normalize($userAgent)
     {

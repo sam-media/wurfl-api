@@ -19,7 +19,8 @@
 /**
  * User Agent Normalizer - Return the Chrome string with the major version
  */
-class WURFL_Request_UserAgentNormalizer_Specific_Chrome implements WURFL_Request_UserAgentNormalizer_Interface
+class WURFL_Request_UserAgentNormalizer_Specific_Chrome
+    implements WURFL_Request_UserAgentNormalizer_Interface
 {
     public function normalize($userAgent)
     {

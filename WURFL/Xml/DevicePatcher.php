@@ -33,11 +33,19 @@ class WURFL_Xml_DevicePatcher
         if (!$this->haveSameId($device, $patchingDevice)) {
             return $patchingDevice;
         }
-        $groupIdCapabilitiesMap = WURFL_WURFLUtils::array_merge_recursive_unique($device->getGroupIdCapabilitiesMap(),
-            $patchingDevice->getGroupIdCapabilitiesMap());
+        $groupIdCapabilitiesMap = WURFL_WURFLUtils::array_merge_recursive_unique(
+            $device->getGroupIdCapabilitiesMap(),
+            $patchingDevice->getGroupIdCapabilitiesMap()
+        );
 
-        return new WURFL_Xml_ModelDevice($device->id, $device->userAgent, $device->fallBack, $device->actualDeviceRoot,
-            $device->specific, $groupIdCapabilitiesMap);
+        return new WURFL_Xml_ModelDevice(
+            $device->id,
+            $device->userAgent,
+            $device->fallBack,
+            $device->actualDeviceRoot,
+            $device->specific,
+            $groupIdCapabilitiesMap
+        );
     }
 
     /**

@@ -56,7 +56,9 @@ class WURFL_Xml_Utils
     private static function getZippedFile($filename)
     {
         if (!self::zipModuleLoaded()) {
-            throw new WURFL_WURFLException('The ZipArchive extension is not loaded. Load the extension or use the flat wurfl.xml file');
+            throw new WURFL_WURFLException(
+                'The ZipArchive extension is not loaded. Load the extension or use the flat wurfl.xml file'
+            );
         }
         $tmpDir = WURFL_FileUtils::getTempDir();
         $zip    = new ZipArchive();

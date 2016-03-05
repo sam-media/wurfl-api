@@ -55,9 +55,13 @@ class WURFL_Handlers_BlackBerryHandler extends WURFL_Handlers_Handler
             return false;
         }
 
-        return (WURFL_Handlers_Utils::checkIfContainsCaseInsensitive($userAgent, 'blackberry')
-            || WURFL_Handlers_Utils::checkIfContains($userAgent, '(BB10;')
-            || WURFL_Handlers_Utils::checkIfContains($userAgent, '(PlayBook'));
+        return (WURFL_Handlers_Utils::checkIfContainsCaseInsensitive(
+                $userAgent,
+                'blackberry'
+            ) || WURFL_Handlers_Utils::checkIfContains($userAgent, '(BB10;') || WURFL_Handlers_Utils::checkIfContains(
+                $userAgent,
+                '(PlayBook'
+            ));
     }
 
     public function applyConclusiveMatch($userAgent)

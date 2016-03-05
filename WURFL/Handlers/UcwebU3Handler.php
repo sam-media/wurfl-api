@@ -63,8 +63,10 @@ class WURFL_Handlers_UcwebU3Handler extends WURFL_Handlers_Handler
             return false;
         }
 
-        return (WURFL_Handlers_Utils::checkIfStartsWith($userAgent,
-                'Mozilla') && WURFL_Handlers_Utils::checkIfContains($userAgent, 'UCBrowser'));
+        return (WURFL_Handlers_Utils::checkIfStartsWith(
+                $userAgent,
+                'Mozilla'
+            ) && WURFL_Handlers_Utils::checkIfContains($userAgent, 'UCBrowser'));
     }
 
     public function applyConclusiveMatch($userAgent)

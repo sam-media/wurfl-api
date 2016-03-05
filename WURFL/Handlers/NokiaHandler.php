@@ -41,8 +41,10 @@ class WURFL_Handlers_NokiaHandler extends WURFL_Handlers_Handler
             return false;
         }
 
-        return WURFL_Handlers_Utils::checkIfContains($userAgent,
-            'Nokia') && !WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array('Android', 'iPhone'));
+        return WURFL_Handlers_Utils::checkIfContains(
+            $userAgent,
+            'Nokia'
+        ) && !WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array('Android', 'iPhone'));
     }
 
     public function applyConclusiveMatch($userAgent)

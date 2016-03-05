@@ -44,8 +44,11 @@ class WURFL_Storage_Apc extends WURFL_Storage_Base
 
     public function save($objectId, $object, $expiration = null)
     {
-        $value = apc_store($this->encode($this->apcNameSpace(), $objectId), $object,
-            (($expiration === null) ? $this->expire() : $expiration));
+        $value = apc_store(
+            $this->encode($this->apcNameSpace(), $objectId),
+            $object,
+            (($expiration === null) ? $this->expire() : $expiration)
+        );
         if ($value === false) {
             throw new WURFL_Storage_Exception('Error saving variable in APC cache. Cache may be full.');
         }

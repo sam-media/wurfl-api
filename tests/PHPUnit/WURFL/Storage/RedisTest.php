@@ -96,8 +96,7 @@ class WURFL_Storage_RedisTest extends PHPUnit_Framework_TestCase
                 $this->assertInstanceOf('WURFL_Storage_Redis', $redisStorage);
             } catch (\Predis\Connection\ConnectionException $e) {
                 $this->markTestIncomplete(
-                    'Could not establish connection to Redis using Predis - This test only works' .
-                    'with the standard address of 127.0.0.1:6379 for the Redis server'
+                    'Could not establish connection to Redis using Predis - This test only works' . 'with the standard address of 127.0.0.1:6379 for the Redis server'
                 );
             }
         }
@@ -114,8 +113,7 @@ class WURFL_Storage_RedisTest extends PHPUnit_Framework_TestCase
                 $this->assertInstanceOf('WURFL_Storage_Redis', $redisStorage);
             } catch (\RedisException $e) {
                 $this->markTestIncomplete(
-                    'Could not establish connection to Redis using phpredis. This test only works' .
-                    'with the standard address of 127.0.0.1:6379 for the Redis server'
+                    'Could not establish connection to Redis using phpredis. This test only works' . 'with the standard address of 127.0.0.1:6379 for the Redis server'
                 );
             }
         }
@@ -126,8 +124,7 @@ class WURFL_Storage_RedisTest extends PHPUnit_Framework_TestCase
         $value        = new stdClass();
         $value->value = 1;
         $mockRedis    = $this->getMockRedisObject();
-        $mockRedis
-            ->expects($this->once())
+        $mockRedis->expects($this->once())
             ->method('hset')
             ->with(
                 $this->equalTo('FAKE'),
@@ -136,8 +133,7 @@ class WURFL_Storage_RedisTest extends PHPUnit_Framework_TestCase
             )
             ->willReturn(true);
 
-        $mockRedis
-            ->expects($this->once())
+        $mockRedis->expects($this->once())
             ->method('hget')
             ->with(
                 $this->equalTo('FAKE'),
@@ -159,8 +155,7 @@ class WURFL_Storage_RedisTest extends PHPUnit_Framework_TestCase
         $value     = 1;
         $object    = new StorageObject($value, 0);
         $mockRedis = $this->getMockRedisObject();
-        $mockRedis
-            ->expects($this->once())
+        $mockRedis->expects($this->once())
             ->method('hset')
             ->with(
                 $this->equalTo('FAKE'),
@@ -169,8 +164,7 @@ class WURFL_Storage_RedisTest extends PHPUnit_Framework_TestCase
             )
             ->willReturn(true);
 
-        $mockRedis
-            ->expects($this->once())
+        $mockRedis->expects($this->once())
             ->method('hget')
             ->with(
                 $this->equalTo('FAKE'),
@@ -197,8 +191,7 @@ class WURFL_Storage_RedisTest extends PHPUnit_Framework_TestCase
     public function testClear()
     {
         $mockRedis = $this->getMockRedisObject();
-        $mockRedis
-            ->expects($this->once())
+        $mockRedis->expects($this->once())
             ->method('del')
             ->with(
                 $this->equalTo('FAKE')

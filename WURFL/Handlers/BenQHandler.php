@@ -35,8 +35,10 @@ class WURFL_Handlers_BenQHandler extends WURFL_Handlers_Handler
             return false;
         }
 
-        return WURFL_Handlers_Utils::checkIfStartsWith($userAgent,
-            'BenQ') || WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'BENQ');
+        return WURFL_Handlers_Utils::checkIfStartsWith(
+            $userAgent,
+            'BenQ'
+        ) || WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'BENQ');
     }
 
     public function applyConclusiveMatch($userAgent)

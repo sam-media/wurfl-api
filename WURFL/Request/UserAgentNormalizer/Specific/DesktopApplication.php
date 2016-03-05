@@ -18,7 +18,8 @@
 /**
  * User Agent Normalizer - Returns the Thunderbird/{Version} sub-string
  */
-class WURFL_Request_UserAgentNormalizer_Specific_DesktopApplication implements WURFL_Request_UserAgentNormalizer_Interface
+class WURFL_Request_UserAgentNormalizer_Specific_DesktopApplication
+    implements WURFL_Request_UserAgentNormalizer_Interface
 {
     public function normalize($userAgent)
     {

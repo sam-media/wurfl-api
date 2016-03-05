@@ -74,7 +74,8 @@ class WURFL_VirtualCapability_UserAgentTool_Device
         } else {
             $this->device_ua             = $this->http_request->getOriginalHeader('HTTP_USER_AGENT');
             $this->browser_ua            = $this->device_ua;
-            $this->device_ua_normalized  = isset($this->http_request->userAgentNormalized) ? $this->http_request->userAgentNormalized : null;
+            $this->device_ua_normalized  = isset($this->http_request->userAgentNormalized)
+                ? $this->http_request->userAgentNormalized : null;
             $this->browser_ua_normalized = $this->device_ua_normalized;
         }
 
@@ -119,8 +120,10 @@ class WURFL_VirtualCapability_UserAgentTool_Device
         if (strpos($this->device_ua, 'Windows') !== false) {
             if (preg_match('/Windows NT ([0-9]+?\.[0-9])/', $this->os->name, $matches)) {
                 $this->os->name    = 'Windows';
-                $this->os->version = array_key_exists($matches[1],
-                    self::$windows_map) ? self::$windows_map[$matches[1]] : $matches[1];
+                $this->os->version = array_key_exists(
+                    $matches[1],
+                    self::$windows_map
+                ) ? self::$windows_map[$matches[1]] : $matches[1];
 
                 return;
             }

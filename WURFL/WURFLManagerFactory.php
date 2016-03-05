@@ -63,8 +63,16 @@ class WURFL_WURFLManagerFactory
     ) {
         $this->wurflConfig = $wurflConfig;
         WURFL_Configuration_ConfigHolder::setWURFLConfig($this->wurflConfig);
-        $this->persistenceStorage = $persistenceStorage ? $persistenceStorage : WURFL_Storage_Factory::create($this->wurflConfig->persistence);
-        $this->cacheStorage       = $cacheStorage ? $cacheStorage : WURFL_Storage_Factory::create($this->wurflConfig->cache);
+        $this->persistenceStorage = $persistenceStorage
+            ? $persistenceStorage
+            : WURFL_Storage_Factory::create(
+                $this->wurflConfig->persistence
+            );
+        $this->cacheStorage       = $cacheStorage
+            ? $cacheStorage
+            : WURFL_Storage_Factory::create(
+                $this->wurflConfig->cache
+            );
         if ($this->persistenceStorage->validSecondaryCache($this->cacheStorage)) {
             $this->persistenceStorage->setCacheStorage($this->cacheStorage);
         }
@@ -185,10 +193,14 @@ class WURFL_WURFLManagerFactory
     private function deviceRepository($persistenceStorage, $userAgentHandlerChain)
     {
         $devicePatcher           = new WURFL_Xml_DevicePatcher();
-        $deviceRepositoryBuilder = new WURFL_DeviceRepositoryBuilder($persistenceStorage, $userAgentHandlerChain,
-            $devicePatcher);
+        $deviceRepositoryBuilder = new WURFL_DeviceRepositoryBuilder(
+            $persistenceStorage, $userAgentHandlerChain, $devicePatcher
+        );
 
-        return $deviceRepositoryBuilder->build($this->wurflConfig->wurflFile, $this->wurflConfig->wurflPatches,
-            $this->wurflConfig->capabilityFilter);
+        return $deviceRepositoryBuilder->build(
+            $this->wurflConfig->wurflFile,
+            $this->wurflConfig->wurflPatches,
+            $this->wurflConfig->capabilityFilter
+        );
     }
 }

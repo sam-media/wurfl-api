@@ -18,7 +18,8 @@
 /**
  * Iterates over a WURFL/Patch XML file
  */
-abstract class WURFL_Xml_AbstractIterator implements Iterator
+abstract class WURFL_Xml_AbstractIterator
+    implements Iterator
 {
     /**
      * @var string filename with path to wurfl.xml or patch file

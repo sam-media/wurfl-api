@@ -36,8 +36,10 @@ class WURFL_Handlers_UbuntuTouchOSHandler extends WURFL_Handlers_Handler
 
     public function canHandle($userAgent)
     {
-        return (WURFL_Handlers_Utils::checkIfContains($userAgent,
-                'Ubuntu') && WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array('Mobile', 'Tablet')));
+        return (WURFL_Handlers_Utils::checkIfContains(
+                $userAgent,
+                'Ubuntu'
+            ) && WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array('Mobile', 'Tablet')));
     }
 
     public function applyConclusiveMatch($userAgent)

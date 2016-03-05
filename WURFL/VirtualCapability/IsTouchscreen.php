@@ -27,7 +27,9 @@ class WURFL_VirtualCapability_IsTouchscreen extends WURFL_VirtualCapability
     {
         $ua = $this->request->userAgent;
 
-        return ($this->device->pointing_method === 'touchscreen') || (WURFL_Handlers_Utils::checkIfContains($ua,
-                'Trident') && WURFL_Handlers_Utils::checkIfContains($ua, 'Touch'));
+        return ($this->device->pointing_method === 'touchscreen') || (WURFL_Handlers_Utils::checkIfContains(
+                $ua,
+                'Trident'
+            ) && WURFL_Handlers_Utils::checkIfContains($ua, 'Touch'));
     }
 }

@@ -20,8 +20,9 @@ class WURFL_DeviceRepositoryBuilderTest extends PHPUnit_Framework_TestCase
         $context                       = new WURFL_Context($persistenceProvider);
         $userAgentHandlerChain         = WURFL_UserAgentHandlerChainFactory::createFrom($context);
         $devicePatcher                 = new WURFL_Xml_DevicePatcher();
-        $this->deviceRepositoryBuilder = new WURFL_DeviceRepositoryBuilder($persistenceProvider, $userAgentHandlerChain,
-            $devicePatcher);
+        $this->deviceRepositoryBuilder = new WURFL_DeviceRepositoryBuilder(
+            $persistenceProvider, $userAgentHandlerChain, $devicePatcher
+        );
     }
 
     public function testShouldBuildARepositoryOfAllDevicesFromTheXmlFile()
@@ -70,8 +71,9 @@ class WURFL_DeviceRepositoryBuilderTest extends PHPUnit_Framework_TestCase
         $context                 = new WURFL_Context($persistenceProvider);
         $userAgentHandlerChain   = WURFL_UserAgentHandlerChainFactory::createFrom($context);
         $devicePatcher           = new WURFL_Xml_DevicePatcher();
-        $deviceRepositoryBuilder = new WURFL_DeviceRepositoryBuilder($persistenceProvider, $userAgentHandlerChain,
-            $devicePatcher);
+        $deviceRepositoryBuilder = new WURFL_DeviceRepositoryBuilder(
+            $persistenceProvider, $userAgentHandlerChain, $devicePatcher
+        );
         $this->assertNotNull($deviceRepositoryBuilder);
         $wurflFile = dirname(__FILE__) . DIRECTORY_SEPARATOR . self::WURFL_FILE;
 

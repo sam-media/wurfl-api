@@ -35,8 +35,10 @@ class WURFL_Handlers_AlcatelHandler extends WURFL_Handlers_Handler
             return false;
         }
 
-        return WURFL_Handlers_Utils::checkIfStartsWith($userAgent,
-            'Alcatel') || WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'ALCATEL');
+        return WURFL_Handlers_Utils::checkIfStartsWith(
+            $userAgent,
+            'Alcatel'
+        ) || WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'ALCATEL');
     }
 
     public function applyConclusiveMatch($userAgent)

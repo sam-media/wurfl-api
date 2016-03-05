@@ -42,8 +42,10 @@ class WURFL_Handlers_TizenHandler extends WURFL_Handlers_Handler
 
     public function canHandle($userAgent)
     {
-        return (WURFL_Handlers_Utils::checkIfStartsWith($userAgent,
-                'Mozilla') && WURFL_Handlers_Utils::checkIfContains($userAgent, 'Tizen'));
+        return (WURFL_Handlers_Utils::checkIfStartsWith(
+                $userAgent,
+                'Mozilla'
+            ) && WURFL_Handlers_Utils::checkIfContains($userAgent, 'Tizen'));
     }
 
     public function applyConclusiveMatch($userAgent)

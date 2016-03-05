@@ -35,8 +35,10 @@ class WURFL_Handlers_SamsungHandler extends WURFL_Handlers_Handler
             return false;
         }
 
-        return WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array('Samsung', 'SAMSUNG'))
-        || WURFL_Handlers_Utils::checkIfStartsWithAnyOf($userAgent, array('SEC-', 'SPH', 'SGH', 'SCH'));
+        return WURFL_Handlers_Utils::checkIfContainsAnyOf(
+            $userAgent,
+            array('Samsung', 'SAMSUNG')
+        ) || WURFL_Handlers_Utils::checkIfStartsWithAnyOf($userAgent, array('SEC-', 'SPH', 'SGH', 'SCH'));
     }
 
     public function applyConclusiveMatch($userAgent)

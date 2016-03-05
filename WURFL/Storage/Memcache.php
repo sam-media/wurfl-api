@@ -86,8 +86,12 @@ class WURFL_Storage_Memcache extends WURFL_Storage_Base
 
     public function save($objectId, $object, $expiration = null)
     {
-        return $this->memcache->set($this->encode($this->namespace, $objectId), $object, 0,
-            (($expiration === null) ? $this->expiration : $expiration));
+        return $this->memcache->set(
+            $this->encode($this->namespace, $objectId),
+            $object,
+            0,
+            (($expiration === null) ? $this->expiration : $expiration)
+        );
     }
 
     public function load($objectId)
@@ -115,7 +119,9 @@ class WURFL_Storage_Memcache extends WURFL_Storage_Base
     private function _ensureModuleExistence()
     {
         if (!extension_loaded(self::EXTENSION_MODULE_NAME)) {
-            throw new WURFL_Storage_Exception('The PHP extension memcache must be installed and loaded in order to use the Memcached.');
+            throw new WURFL_Storage_Exception(
+                'The PHP extension memcache must be installed and loaded in order to use the Memcached.'
+            );
         }
     }
 }

@@ -19,7 +19,8 @@
 /**
  * User Agent Normalizer - Return the firefox string with the major and minor version only
  */
-class WURFL_Request_UserAgentNormalizer_Specific_Firefox implements WURFL_Request_UserAgentNormalizer_Interface
+class WURFL_Request_UserAgentNormalizer_Specific_Firefox
+    implements WURFL_Request_UserAgentNormalizer_Interface
 {
     public function normalize($userAgent)
     {

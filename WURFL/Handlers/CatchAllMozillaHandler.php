@@ -50,7 +50,9 @@ class WURFL_Handlers_CatchAllMozillaHandler extends WURFL_Handlers_Handler
      */
     public function applyConclusiveMatch($userAgent)
     {
-        if (WURFL_Configuration_ConfigHolder::getWURFLConfig()->isHighPerformance()) {
+        if (WURFL_Configuration_ConfigHolder::getWURFLConfig()
+            ->isHighPerformance()
+        ) {
             //High performance mode
             $tolerance = WURFL_Handlers_Utils::firstCloseParen($userAgent);
 

@@ -26,7 +26,8 @@
  * @link       http://www.php.net/manual/en/function.levenshtein.php
  * @see        match()
  */
-class WURFL_Handlers_Matcher_LDMatcher implements WURFL_Handlers_Matcher_Interface
+class WURFL_Handlers_Matcher_LDMatcher
+    implements WURFL_Handlers_Matcher_Interface
 {
     /**
      * Instance of WURFL_Handlers_Matcher_LDMatcher

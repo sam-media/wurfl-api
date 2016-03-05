@@ -19,7 +19,8 @@
 /**
  * User Agent Normalizer - Trims the version number to two digits (e.g. 2.1.1 -> 2.1)
  */
-class WURFL_Request_UserAgentNormalizer_Generic_Android implements WURFL_Request_UserAgentNormalizer_Interface
+class WURFL_Request_UserAgentNormalizer_Generic_Android
+    implements WURFL_Request_UserAgentNormalizer_Interface
 {
     public function normalize($userAgent)
     {

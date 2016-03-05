@@ -56,9 +56,13 @@ class WURFL_Handlers_OperaMobiOrTabletOnAndroidHandler extends WURFL_Handlers_Ha
             return false;
         }
 
-        return (WURFL_Handlers_Utils::checkIfContains($userAgent,
-                'Android') && WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent,
-                array('Opera Mobi', 'Opera Tablet')));
+        return (WURFL_Handlers_Utils::checkIfContains(
+                $userAgent,
+                'Android'
+            ) && WURFL_Handlers_Utils::checkIfContainsAnyOf(
+                $userAgent,
+                array('Opera Mobi', 'Opera Tablet')
+            ));
     }
 
     public function applyConclusiveMatch($userAgent)

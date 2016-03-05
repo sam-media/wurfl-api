@@ -26,7 +26,8 @@
  * @author     Fantayeneh Asres Gizaw
  * @version    $id$
  */
-abstract class WURFL_Storage_Base implements WURFL_Storage
+abstract class WURFL_Storage_Base
+    implements WURFL_Storage
 {
     const APPLICATION_PREFIX = 'WURFL_';
     const WURFL_LOADED       = 'WURFL_WURFL_LOADED';
@@ -134,7 +135,9 @@ abstract class WURFL_Storage_Base implements WURFL_Storage
     public function setCacheStorage(WURFL_Storage_Base $cache)
     {
         if (!$this->supportsSecondaryCaching()) {
-            throw new WURFL_Storage_Exception('The storage provider ' . get_class($cache) . ' cannot be used as a cache for ' . get_class($this));
+            throw new WURFL_Storage_Exception(
+                'The storage provider ' . get_class($cache) . ' cannot be used as a cache for ' . get_class($this)
+            );
         }
         $this->cache = $cache;
     }

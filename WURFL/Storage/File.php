@@ -54,7 +54,9 @@ class WURFL_Storage_File extends WURFL_Storage_Base
         if (!is_dir($this->root)) {
             @mkdir($this->root, 0777, true);
             if (!is_dir($this->root)) {
-                throw new WURFL_Storage_Exception('The file storage directory does not exist and could not be created. Please make sure the directory is writeable: ' . $this->root);
+                throw new WURFL_Storage_Exception(
+                    'The file storage directory does not exist and could not be created. Please make sure the directory is writeable: ' . $this->root
+                );
             }
         }
         if (!$this->readonly && !is_writeable($this->root)) {

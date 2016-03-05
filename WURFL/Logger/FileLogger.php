@@ -18,7 +18,8 @@
 /**
  * WURFL File Logger
  */
-class WURFL_Logger_FileLogger implements WURFL_Logger_Interface
+class WURFL_Logger_FileLogger
+    implements WURFL_Logger_Interface
 {
     /**
      * @var string DEBUG Log level

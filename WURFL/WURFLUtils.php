@@ -98,9 +98,10 @@ class WURFL_WURFLUtils
 
         $accept = $request['accept'];
         if (isset($accept)) {
-            if ((strpos($accept, WURFL_Constants::ACCEPT_HEADER_VND_WAP_XHTML_XML) !== 0)
-                || (strpos($accept, WURFL_Constants::ACCEPT_HEADER_XHTML_XML) !== 0)
-                || (strpos($accept, WURFL_Constants::ACCEPT_HEADER_TEXT_HTML) !== 0)
+            if ((strpos($accept, WURFL_Constants::ACCEPT_HEADER_VND_WAP_XHTML_XML) !== 0) || (strpos(
+                        $accept,
+                        WURFL_Constants::ACCEPT_HEADER_XHTML_XML
+                    ) !== 0) || (strpos($accept, WURFL_Constants::ACCEPT_HEADER_TEXT_HTML) !== 0)
             ) {
                 return true;
             }

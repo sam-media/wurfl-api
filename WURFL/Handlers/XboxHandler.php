@@ -48,8 +48,10 @@ class WURFL_Handlers_XboxHandler extends WURFL_Handlers_Handler
 
     public function applyRecoveryMatch($userAgent)
     {
-        if (WURFL_Handlers_Utils::checkIfContains($userAgent,
-                'MSIE 10.0') && WURFL_Handlers_Utils::checkIfContains($userAgent, 'Xbox One')
+        if (WURFL_Handlers_Utils::checkIfContains(
+                $userAgent,
+                'MSIE 10.0'
+            ) && WURFL_Handlers_Utils::checkIfContains($userAgent, 'Xbox One')
         ) {
             return 'microsoft_xboxone_ver1';
         }

@@ -57,8 +57,10 @@ class WURFL_Handlers_WebOSHandler extends WURFL_Handlers_Handler
 
     public function applyRecoveryMatch($userAgent)
     {
-        return WURFL_Handlers_Utils::checkIfContains($userAgent,
-            'hpwOS/3') ? 'hp_tablet_webos_generic' : 'hp_webos_generic';
+        return WURFL_Handlers_Utils::checkIfContains(
+            $userAgent,
+            'hpwOS/3'
+        ) ? 'hp_tablet_webos_generic' : 'hp_webos_generic';
     }
 
     public static function getWebOSModelVersion($ua)

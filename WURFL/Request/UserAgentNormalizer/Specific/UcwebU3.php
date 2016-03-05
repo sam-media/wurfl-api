@@ -19,7 +19,8 @@
 /**
  * User Agent Normalizer
  */
-class WURFL_Request_UserAgentNormalizer_Specific_UcwebU3 implements WURFL_Request_UserAgentNormalizer_Interface
+class WURFL_Request_UserAgentNormalizer_Specific_UcwebU3
+    implements WURFL_Request_UserAgentNormalizer_Interface
 {
     public function normalize($userAgent)
     {
@@ -61,8 +62,11 @@ class WURFL_Request_UserAgentNormalizer_Specific_UcwebU3 implements WURFL_Reques
                 } //iPad U3K
                 else {
                     if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'iPad')) {
-                        if (preg_match('/CPU OS (\d)_?(\d)?.+like Mac.+; iPad([0-9,]+)\) AppleWebKit/', $userAgent,
-                            $matches)) {
+                        if (preg_match(
+                            '/CPU OS (\d)_?(\d)?.+like Mac.+; iPad([0-9,]+)\) AppleWebKit/',
+                            $userAgent,
+                            $matches
+                        )) {
                             $version = $matches[1] . '.' . $matches[2];
                             $model   = $matches[3];
                             $prefix  = "$version U3iPad $ucb_version $model" . WURFL_Constants::RIS_DELIMITER;

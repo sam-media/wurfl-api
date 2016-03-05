@@ -24,7 +24,8 @@
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-abstract class WURFL_Handlers_Handler implements WURFL_Handlers_Filter, WURFL_Handlers_Matcher
+abstract class WURFL_Handlers_Handler
+    implements WURFL_Handlers_Filter, WURFL_Handlers_Matcher
 {
     /**
      * The next User Agent Handler
@@ -458,8 +459,10 @@ abstract class WURFL_Handlers_Handler implements WURFL_Handlers_Filter, WURFL_Ha
         if (strpos($userAgent, 'Mozilla/') > 0) {
             return WURFL_Constants::GENERIC_XHTML;
         }
-        if (WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent,
-            array('Obigo', 'AU-MIC/2', 'AU-MIC-', 'AU-OBIGO/', 'Teleca Q03B1'))
+        if (WURFL_Handlers_Utils::checkIfContainsAnyOf(
+            $userAgent,
+            array('Obigo', 'AU-MIC/2', 'AU-MIC-', 'AU-OBIGO/', 'Teleca Q03B1')
+        )
         ) {
             return WURFL_Constants::GENERIC_XHTML;
         }

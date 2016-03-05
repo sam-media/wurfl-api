@@ -56,7 +56,9 @@ class WURFL_Storage_MemcacheTest extends PHPUnit_Framework_TestCase
     private function checkDeps()
     {
         if (!extension_loaded('memcache')) {
-            $this->markTestSkipped("PHP extension 'memcache' must be loaded and a local memcache server running to run this test.");
+            $this->markTestSkipped(
+                "PHP extension 'memcache' must be loaded and a local memcache server running to run this test."
+            );
         }
     }
 }

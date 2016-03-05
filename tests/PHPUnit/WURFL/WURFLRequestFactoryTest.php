@@ -22,8 +22,10 @@ class WURFLRequestFactoryTest extends PHPUnit_Framework_TestCase
         foreach ($this->_testData as $testData) {
             $request = $this->_genericRequestFactory->createRequest($testData ['_SERVER']);
             if ($request->userAgent !== $testData['EXPECTED_USER_AGENT']) {
-                echo "Actual: [$request->userAgent], Expected: [{$testData['EXPECTED_USER_AGENT']}]\n" . var_export($testData['_SERVER'],
-                        true) . "\n";
+                echo "Actual: [$request->userAgent], Expected: [{$testData['EXPECTED_USER_AGENT']}]\n" . var_export(
+                        $testData['_SERVER'],
+                        true
+                    ) . "\n";
             }
             $this->assertEquals($request->userAgent, $testData ['EXPECTED_USER_AGENT']);
         }
@@ -38,8 +40,8 @@ class WURFLRequestFactoryTest extends PHPUnit_Framework_TestCase
             while (!feof($handle)) {
                 $line = fgets($handle, 4096);
                 if (strpos($line, '#') === false && strcmp($line, "\n") !== 0) {
-                    $values = explode(':', trim($line));
-                    $keys   = array(
+                    $values     = explode(':', trim($line));
+                    $keys       = array(
                         'HTTP_USER_AGENT',
                         'HTTP_X_DEVICE_USER_AGENT',
                         'HTTP_X_SKYFIRE_VERSION',

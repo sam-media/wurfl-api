@@ -18,7 +18,8 @@
 /**
  * Class that is used to supress logging
  */
-class WURFL_Logger_NullLogger implements WURFL_Logger_Interface
+class WURFL_Logger_NullLogger
+    implements WURFL_Logger_Interface
 {
     public function log($message, $type = '')
     {

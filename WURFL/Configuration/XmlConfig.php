@@ -29,7 +29,9 @@ class WURFL_Configuration_XmlConfig extends WURFL_Configuration_Config
         $this->wurflFile        = $this->wurflFile($xmlConfig->xpath('/wurfl-config/wurfl/main-file'));
         $this->wurflPatches     = $this->wurflPatches($xmlConfig->xpath('/wurfl-config/wurfl/patches/patch'));
         $this->allowReload      = $this->allowReload($xmlConfig->xpath('/wurfl-config/allow-reload'));
-        $this->capabilityFilter = $this->capabilityFilter($xmlConfig->xpath('/wurfl-config/capability-filter/capability'));
+        $this->capabilityFilter = $this->capabilityFilter(
+            $xmlConfig->xpath('/wurfl-config/capability-filter/capability')
+        );
         $this->persistence      = $this->persistence($xmlConfig->xpath('/wurfl-config/persistence'));
         $this->cache            = $this->persistence($xmlConfig->xpath('/wurfl-config/cache'));
         $this->logDir           = $this->logDir($xmlConfig->xpath('/wurfl-config/logDir'));

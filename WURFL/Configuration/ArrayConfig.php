@@ -117,8 +117,10 @@ class WURFL_Configuration_ArrayConfig extends WURFL_Configuration_Config
             $this->setMatchMode($configuration[WURFL_Configuration_Config::MATCH_MODE]);
         }
 
-        $this->allowReload = array_key_exists(WURFL_Configuration_Config::ALLOW_RELOAD,
-            $configuration) ? $configuration[WURFL_Configuration_Config::ALLOW_RELOAD] : false;
+        $this->allowReload = array_key_exists(
+            WURFL_Configuration_Config::ALLOW_RELOAD,
+            $configuration
+        ) ? $configuration[WURFL_Configuration_Config::ALLOW_RELOAD] : false;
     }
 
     private function setWurflConfiguration(array $wurflConfig)
@@ -137,10 +139,14 @@ class WURFL_Configuration_ArrayConfig extends WURFL_Configuration_Config
     private function setPersistenceConfiguration(array $persistenceConfig)
     {
         $this->persistence = $persistenceConfig;
-        if (array_key_exists('params', $this->persistence) && array_key_exists(WURFL_Configuration_Config::DIR,
-                $this->persistence['params'])
+        if (array_key_exists('params', $this->persistence) && array_key_exists(
+                WURFL_Configuration_Config::DIR,
+                $this->persistence['params']
+            )
         ) {
-            $this->persistence['params'][WURFL_Configuration_Config::DIR] = parent::getFullPath($this->persistence['params'][WURFL_Configuration_Config::DIR]);
+            $this->persistence['params'][WURFL_Configuration_Config::DIR] = parent::getFullPath(
+                $this->persistence['params'][WURFL_Configuration_Config::DIR]
+            );
         }
     }
 

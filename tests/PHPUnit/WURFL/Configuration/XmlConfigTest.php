@@ -26,9 +26,13 @@ class WURFL_Configuration_XmlConfigTest extends PHPUnit_Framework_TestCase
 
         $cache = $config->cache;
         $this->assertEquals('file', $cache ['provider']);
-        $this->assertEquals(array(WURFL_Configuration_Config::DIR => $cacheDir,
-                                  WURFL_Configuration_Config::EXPIRATION => 36000,
-            ), $cache ['params']);
+        $this->assertEquals(
+            array(
+                WURFL_Configuration_Config::DIR => $cacheDir,
+                WURFL_Configuration_Config::EXPIRATION => 36000,
+            ),
+            $cache ['params']
+        );
     }
 
     public function testShouldCreateConfigurationWithAPCPersistence()
@@ -49,10 +53,13 @@ class WURFL_Configuration_XmlConfigTest extends PHPUnit_Framework_TestCase
 
         $cache = $config->cache;
         $this->assertEquals('apc', $cache ['provider']);
-        $this->assertEquals(array(
-            'namespace' => 'wurfl',
-            'expiration' => 86400,
-        ), $cache ['params']);
+        $this->assertEquals(
+            array(
+                'namespace' => 'wurfl',
+                'expiration' => 86400,
+            ),
+            $cache ['params']
+        );
     }
 
     public function testShouldAcceptEmptyOptionalElements()

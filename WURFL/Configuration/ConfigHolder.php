@@ -42,7 +42,9 @@ class WURFL_Configuration_ConfigHolder
     public static function getWURFLConfig()
     {
         if (self::$_wurflConfig === null) {
-            throw new WURFL_WURFLException('The Configuration Holder is not initialized with a valid WURFLConfig object');
+            throw new WURFL_WURFLException(
+                'The Configuration Holder is not initialized with a valid WURFLConfig object'
+            );
         }
 
         return self::$_wurflConfig;

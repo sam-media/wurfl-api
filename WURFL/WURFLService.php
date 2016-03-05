@@ -82,7 +82,9 @@ class WURFL_WURFLService
     {
         if ($request !== null) {
             if (!($request instanceof WURFL_Request_GenericRequest)) {
-                throw new InvalidArgumentException('Error: Request parameter must be null or instance of WURFL_Request_GenericRequest');
+                throw new InvalidArgumentException(
+                    'Error: Request parameter must be null or instance of WURFL_Request_GenericRequest'
+                );
             }
 
             // Normalization must be performed if request is passed so virtual capabilities can be
@@ -143,7 +145,11 @@ class WURFL_WURFLService
             $generic_normalizer           = WURFL_UserAgentHandlerChainFactory::createGenericNormalizers();
             $request->userAgentNormalized = $generic_normalizer->normalize($request->userAgent);
 
-            if (WURFL_Configuration_ConfigHolder::getWURFLConfig()->isHighPerformance() && WURFL_Handlers_Utils::isDesktopBrowserHeavyDutyAnalysis($request->userAgentNormalized)) {
+            if (WURFL_Configuration_ConfigHolder::getWURFLConfig()
+                    ->isHighPerformance() && WURFL_Handlers_Utils::isDesktopBrowserHeavyDutyAnalysis(
+                    $request->userAgentNormalized
+                )
+            ) {
                 // This device has been identified as a web browser programatically, so no call to WURFL is necessary
                 return WURFL_Constants::GENERIC_WEB_BROWSER;
             }

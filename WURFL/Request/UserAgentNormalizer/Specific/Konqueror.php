@@ -21,7 +21,8 @@
  * e.g
  *    Mozilla/5.0 (compatible; Konqueror/4.1; Linux) KHTML/4.1.2 (like Gecko) -> Konqueror/4
  */
-class WURFL_Request_UserAgentNormalizer_Specific_Konqueror implements WURFL_Request_UserAgentNormalizer_Interface
+class WURFL_Request_UserAgentNormalizer_Specific_Konqueror
+    implements WURFL_Request_UserAgentNormalizer_Interface
 {
     const KONQUEROR = 'Konqueror';
 

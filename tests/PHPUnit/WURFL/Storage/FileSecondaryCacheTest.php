@@ -7,9 +7,11 @@ class WURFL_Storage_FileSecondaryCacheTest extends WURFL_Storage_FileTest
     public function testMemcache()
     {
         $this->checkMemcacheDeps();
-        $cache = new WURFL_Storage_Memcache(array(
-            'host' => '127.0.0.1',
-        ));
+        $cache = new WURFL_Storage_Memcache(
+            array(
+                'host' => '127.0.0.1',
+            )
+        );
         $this->assertCacheAllowed($cache);
     }
 
@@ -56,14 +58,18 @@ class WURFL_Storage_FileSecondaryCacheTest extends WURFL_Storage_FileTest
     private function checkMemcacheDeps()
     {
         if (!extension_loaded('memcache')) {
-            $this->markTestSkipped("PHP extension 'memcache' must be loaded and a local memcache server running to run this test.");
+            $this->markTestSkipped(
+                "PHP extension 'memcache' must be loaded and a local memcache server running to run this test."
+            );
         }
     }
 
     private function checkApcDeps()
     {
         if (!extension_loaded('apc') || @apc_cache_info() === false) {
-            $this->markTestSkipped("PHP extension 'apc' must be loaded and enabled for CLI to run this test (http://www.php.net/manual/en/apc.configuration.php#ini.apc.enable-cli).");
+            $this->markTestSkipped(
+                "PHP extension 'apc' must be loaded and enabled for CLI to run this test (http://www.php.net/manual/en/apc.configuration.php#ini.apc.enable-cli)."
+            );
         }
     }
 }

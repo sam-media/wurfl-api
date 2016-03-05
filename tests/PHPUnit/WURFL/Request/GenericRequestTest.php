@@ -52,7 +52,7 @@ class WURFL_Request_GenericRequestTest extends PHPUnit_Framework_TestCase
             'argc' => 1,
             'THREAD_TYPE' => 'Web Request',
         );
-        $ua = 'Mozilla/5.0 (iPad; CPU OS 7_1_1 like Mac OS X)';
+        $ua      = 'Mozilla/5.0 (iPad; CPU OS 7_1_1 like Mac OS X)';
 
         $request_factory = new WURFL_Request_GenericRequestFactory();
         $request         = $request_factory->createRequest($headers);

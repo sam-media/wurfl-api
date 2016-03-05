@@ -324,8 +324,10 @@ class WURFL_DeviceRepositoryBuilder
     {
         foreach ($newPatchingDevices as $deviceId => $newPatchingDevice) {
             if (isset($currentPatchingDevices[$deviceId])) {
-                $currentPatchingDevices[$deviceId] = $this->patchDevice($currentPatchingDevices[$deviceId],
-                    $newPatchingDevice);
+                $currentPatchingDevices[$deviceId] = $this->patchDevice(
+                    $currentPatchingDevices[$deviceId],
+                    $newPatchingDevice
+                );
             } else {
                 $currentPatchingDevices[$deviceId] = $newPatchingDevice;
             }

@@ -55,8 +55,10 @@ class WURFL_Handlers_MSIEHandler extends WURFL_Handlers_Handler
         // Edge 12 signature
         $has_edge_mode = WURFL_Handlers_Utils::checkIfContains($userAgent, ' Edge/');
         // IE 11 signature
-        $has_trident_rv = (WURFL_Handlers_Utils::checkIfContains($userAgent,
-                'Trident') && WURFL_Handlers_Utils::checkIfContains($userAgent, 'rv:'));
+        $has_trident_rv = (WURFL_Handlers_Utils::checkIfContains(
+                $userAgent,
+                'Trident'
+            ) && WURFL_Handlers_Utils::checkIfContains($userAgent, 'rv:'));
         // IE < 11 signature
         $has_msie = WURFL_Handlers_Utils::checkIfContains($userAgent, 'MSIE');
 
@@ -67,9 +69,11 @@ class WURFL_Handlers_MSIEHandler extends WURFL_Handlers_Handler
     {
         $matches = array();
 
-        if (preg_match('#^Mozilla/5\.0 \(Windows NT.+? Edge/(\d+)\.(\d+)#', $userAgent, $matches)
-            || preg_match('#^Mozilla/5\.0 \(.+?Trident.+?; rv:(\d\d)\.(\d+)\)#', $userAgent, $matches)
-            || preg_match('#^Mozilla/[45]\.0 \(compatible; MSIE (\d+)\.(\d+);#', $userAgent, $matches)
+        if (preg_match('#^Mozilla/5\.0 \(Windows NT.+? Edge/(\d+)\.(\d+)#', $userAgent, $matches) || preg_match(
+                '#^Mozilla/5\.0 \(.+?Trident.+?; rv:(\d\d)\.(\d+)\)#',
+                $userAgent,
+                $matches
+            ) || preg_match('#^Mozilla/[45]\.0 \(compatible; MSIE (\d+)\.(\d+);#', $userAgent, $matches)
         ) {
             $major = (int) $matches[1];
             $minor = (int) $matches[2];
@@ -90,12 +94,15 @@ class WURFL_Handlers_MSIEHandler extends WURFL_Handlers_Handler
 
     public function applyRecoveryMatch($userAgent)
     {
-        if (WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array(
-            'SLCC1',
-            'Media Center PC',
-            '.NET CLR',
-            'OfficeLiveConnector',
-        ))
+        if (WURFL_Handlers_Utils::checkIfContainsAnyOf(
+            $userAgent,
+            array(
+                'SLCC1',
+                'Media Center PC',
+                '.NET CLR',
+                'OfficeLiveConnector',
+            )
+        )
         ) {
             return WURFL_Constants::GENERIC_WEB_BROWSER;
         }

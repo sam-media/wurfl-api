@@ -19,19 +19,26 @@
 /**
  * User Agent Normalizer
  */
-class WURFL_Request_UserAgentNormalizer_Specific_WindowsPhone implements WURFL_Request_UserAgentNormalizer_Interface
+class WURFL_Request_UserAgentNormalizer_Specific_WindowsPhone
+    implements WURFL_Request_UserAgentNormalizer_Interface
 {
     public function normalize($userAgent)
     {
-        if (WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array('WPDesktop', 'ZuneWP7'))
-            || WURFL_Handlers_Utils::checkIfContainsAll($userAgent,
-                array('Mozilla/5.0 (Windows NT ', ' ARM;', ' Edge/'))
+        if (WURFL_Handlers_Utils::checkIfContainsAnyOf(
+                $userAgent,
+                array('WPDesktop', 'ZuneWP7')
+            ) || WURFL_Handlers_Utils::checkIfContainsAll(
+                $userAgent,
+                array('Mozilla/5.0 (Windows NT ', ' ARM;', ' Edge/')
+            )
         ) {
             $model   = WURFL_Handlers_WindowsPhoneHandler::getWindowsPhoneDesktopModel($userAgent);
             $version = WURFL_Handlers_WindowsPhoneHandler::getWindowsPhoneDesktopVersion($userAgent);
         } else {
-            if (WURFL_Handlers_Utils::checkIfStartsWithAnyOf($userAgent,
-                array('Windows Phone Ad Client', 'WindowsPhoneAdClient'))
+            if (WURFL_Handlers_Utils::checkIfStartsWithAnyOf(
+                $userAgent,
+                array('Windows Phone Ad Client', 'WindowsPhoneAdClient')
+            )
             ) {
                 $model   = WURFL_Handlers_WindowsPhoneHandler::getWindowsPhoneAdClientModel($userAgent);
                 $version = WURFL_Handlers_WindowsPhoneHandler::getWindowsPhoneVersion($userAgent);

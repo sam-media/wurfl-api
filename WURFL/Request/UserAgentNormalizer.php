@@ -19,7 +19,8 @@
 /**
  * User Agent Normalizer
  */
-class WURFL_Request_UserAgentNormalizer implements WURFL_Request_UserAgentNormalizer_Interface
+class WURFL_Request_UserAgentNormalizer
+    implements WURFL_Request_UserAgentNormalizer_Interface
 {
     /**
      * UserAgentNormalizer chain - array of WURFL_Request_UserAgentNormalizer objects

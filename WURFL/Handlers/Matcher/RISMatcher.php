@@ -23,7 +23,8 @@
  *
  * @see        match()
  */
-class WURFL_Handlers_Matcher_RISMatcher implements WURFL_Handlers_Matcher_Interface
+class WURFL_Handlers_Matcher_RISMatcher
+    implements WURFL_Handlers_Matcher_Interface
 {
     /**
      * Instance of WURFL_Handlers_Matcher_LDMatcher
@@ -106,8 +107,10 @@ class WURFL_Handlers_Matcher_RISMatcher implements WURFL_Handlers_Matcher_Interf
      */
     private function firstOfTheBests($collection, $needle, $bestIndex, $bestDistance)
     {
-        while ($bestIndex > 0 && $this->longestCommonPrefixLength($collection[$bestIndex - 1],
-                $needle) === $bestDistance) {
+        while ($bestIndex > 0 && $this->longestCommonPrefixLength(
+                $collection[$bestIndex - 1],
+                $needle
+            ) === $bestDistance) {
             $bestIndex = $bestIndex - 1;
         }
 

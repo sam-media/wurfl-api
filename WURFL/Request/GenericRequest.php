@@ -24,7 +24,7 @@
  * @property string                  $userAgent
  * @property string                  $userAgentProfile
  * @property string                  $userAgentNormalized
- * @property bool                 $xhtmlDevice true if the device is known to be XHTML-MP compatible
+ * @property bool                    $xhtmlDevice true if the device is known to be XHTML-MP compatible
  * @property string                  $id          Unique ID used for caching: MD5($userAgent)
  * @property WURFL_Request_MatchInfo $matchInfo   Information about the match (available after matching)
  */

@@ -19,15 +19,18 @@
 /**
  * User Agent Normalizer
  */
-class WURFL_Request_UserAgentNormalizer_Specific_OperaMobiOrTabletOnAndroid implements WURFL_Request_UserAgentNormalizer_Interface
+class WURFL_Request_UserAgentNormalizer_Specific_OperaMobiOrTabletOnAndroid
+    implements WURFL_Request_UserAgentNormalizer_Interface
 {
     public function normalize($userAgent)
     {
         $is_opera_mobi   = WURFL_Handlers_Utils::checkIfContains($userAgent, 'Opera Mobi');
         $is_opera_tablet = WURFL_Handlers_Utils::checkIfContains($userAgent, 'Opera Tablet');
         if ($is_opera_mobi || $is_opera_tablet) {
-            $opera_version = WURFL_Handlers_OperaMobiOrTabletOnAndroidHandler::getOperaOnAndroidVersion($userAgent,
-                false);
+            $opera_version   = WURFL_Handlers_OperaMobiOrTabletOnAndroidHandler::getOperaOnAndroidVersion(
+                $userAgent,
+                false
+            );
             $android_version = WURFL_Handlers_AndroidHandler::getAndroidVersion($userAgent, false);
             if ($opera_version !== null && $android_version !== null) {
                 $opera_model = $is_opera_tablet ? 'Opera Tablet' : 'Opera Mobi';

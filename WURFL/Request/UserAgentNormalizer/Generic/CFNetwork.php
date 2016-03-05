@@ -19,7 +19,8 @@
 /**
  * User Agent Normalizer - CFNetwork UA Resolution
  */
-class WURFL_Request_UserAgentNormalizer_Generic_CFNetwork implements WURFL_Request_UserAgentNormalizer_Interface
+class WURFL_Request_UserAgentNormalizer_Generic_CFNetwork
+    implements WURFL_Request_UserAgentNormalizer_Interface
 {
     public function normalize($userAgent)
     {

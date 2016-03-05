@@ -149,7 +149,8 @@ class WURFL_Handlers_Utils
      */
     public static function risMatch($collection, $needle, $tolerance)
     {
-        return WURFL_Handlers_Matcher_RISMatcher::INSTANCE()->match($collection, $needle, $tolerance);
+        return WURFL_Handlers_Matcher_RISMatcher::INSTANCE()
+            ->match($collection, $needle, $tolerance);
     }
 
     /**
@@ -164,7 +165,8 @@ class WURFL_Handlers_Utils
      */
     public static function ldMatch($collection, $needle, $tolerance = 7)
     {
-        return WURFL_Handlers_Matcher_LDMatcher::INSTANCE()->match($collection, $needle, $tolerance);
+        return WURFL_Handlers_Matcher_LDMatcher::INSTANCE()
+            ->match($collection, $needle, $tolerance);
     }
 
     /**
@@ -326,8 +328,10 @@ class WURFL_Handlers_Utils
             return false;
         }
         // Chrome
-        if (self::checkIfContains($userAgent,
-                'Chrome') && !self::checkIfContainsAnyOf($userAgent, array('Android', 'Ventana'))
+        if (self::checkIfContains(
+                $userAgent,
+                'Chrome'
+            ) && !self::checkIfContainsAnyOf($userAgent, array('Android', 'Ventana'))
         ) {
             return true;
         }
@@ -340,14 +344,18 @@ class WURFL_Handlers_Utils
             return false;
         } // PowerPC; not always mobile, but we'll kick it out
         // Firefox;  fennec is already handled in the WURFL_Constants::$MOBILE_BROWSERS keywords
-        if (self::checkIfContains($userAgent,
-                'Firefox') && !self::checkIfContains($userAgent, 'Tablet')
+        if (self::checkIfContains(
+                $userAgent,
+                'Firefox'
+            ) && !self::checkIfContains($userAgent, 'Tablet')
         ) {
             return true;
         }
         // Safari
-        if (preg_match('#^Mozilla/5\.0 \((?:Macintosh|Windows)[^\)]+\) AppleWebKit/[\d\.]+ \(KHTML, like Gecko\) Version/[\d\.]+ Safari/[\d\.]+$#',
-            $userAgent)) {
+        if (preg_match(
+            '#^Mozilla/5\.0 \((?:Macintosh|Windows)[^\)]+\) AppleWebKit/[\d\.]+ \(KHTML, like Gecko\) Version/[\d\.]+ Safari/[\d\.]+$#',
+            $userAgent
+        )) {
             return true;
         }
         // Opera Desktop
@@ -676,6 +684,7 @@ class WURFL_Handlers_Utils
         if ($tolerance === false) {
             return false;
         }
+
         // Push the tolerance to the *end* of the RIS Delimiter
         return $tolerance + strlen(WURFL_Constants::RIS_DELIMITER);
     }

@@ -72,8 +72,11 @@ class WURFL_Utils_CLI
         //TODO: Add introspector support
         if ($this->arguments->introspector) {
             if ($this->arguments->username && $this->arguments->password) {
-                $centralTest->useIntrospector($this->arguments->introspector->value, $this->arguments->username->value,
-                    $this->arguments->password->value);
+                $centralTest->useIntrospector(
+                    $this->arguments->introspector->value,
+                    $this->arguments->username->value,
+                    $this->arguments->password->value
+                );
             } else {
                 $centralTest->useIntrospector($this->arguments->introspector->value);
             }
@@ -222,7 +225,8 @@ class WURFL_Utils_CLI_Argument
     }
 }
 
-class WURFL_Utils_CLI_Argument_Collection implements Iterator
+class WURFL_Utils_CLI_Argument_Collection
+    implements Iterator
 {
     private $arguments = array();
     private $position  = 0;
