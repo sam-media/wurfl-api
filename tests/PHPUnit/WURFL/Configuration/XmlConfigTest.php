@@ -42,33 +42,6 @@ class WURFL_Configuration_XmlConfigTest extends PHPUnit_Framework_TestCase
         );
     }
 
-    public function testShouldCreateConfigurationWithAPCPersistence()
-    {
-        $configPath = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'wurfl-config-apc-persistence.xml';
-        $config     = new WURFL_Configuration_XmlConfig($configPath);
-        $this->assertNotNull($config->persistence);
-
-        $this->assertEquals(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'wurfl.xml', $config->wurflFile);
-        $this->assertEquals(array(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'browsers.xml'), $config->wurflPatches);
-
-        $this->assertEquals(true, $config->allowReload);
-
-        $persistence = $config->persistence;
-
-        $this->assertEquals('apc', $persistence ['provider']);
-        $this->assertEquals(array('namespace' => 'wurflpersist'), $persistence ['params']);
-
-        $cache = $config->cache;
-        $this->assertEquals('apc', $cache ['provider']);
-        $this->assertEquals(
-            array(
-                'namespace' => 'wurfl',
-                'expiration' => 86400,
-            ),
-            $cache ['params']
-        );
-    }
-
     public function testShouldAcceptEmptyOptionalElements()
     {
         $configPath = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'wurfl-config-no-optional.xml';
