@@ -10,12 +10,12 @@ include_once './inc/wurfl_config_standard.php';
 $wurflInfo = $wurflManager->getWURFLInfo();
 
 if (isset($_GET['ua']) && trim($_GET['ua'])) {
-	$ua = $_GET['ua'];
-	$requestingDevice = $wurflManager->getDeviceForUserAgent($_GET['ua']);
+    $ua               = $_GET['ua'];
+    $requestingDevice = $wurflManager->getDeviceForUserAgent($_GET['ua']);
 } else {
-	$ua = $_SERVER['HTTP_USER_AGENT'];
-	// This line detects the visiting device by looking at its HTTP Request ($_SERVER)
-	$requestingDevice = $wurflManager->getDeviceForHttpRequest($_SERVER);
+    $ua = $_SERVER['HTTP_USER_AGENT'];
+    // This line detects the visiting device by looking at its HTTP Request ($_SERVER)
+    $requestingDevice = $wurflManager->getDeviceForHttpRequest($_SERVER);
 }
 ?>
 	<h3>WURFL XML INFO</h3>
@@ -35,7 +35,7 @@ if (isset($_GET['ua']) && trim($_GET['ua'])) {
 		</ul>
 		<p><b>Query WURFL by providing the user agent:</b></p>
 		<form method="get" action="index.php">
-			<div>User Agent: <input type="text" name="ua" size="100" value="<?php echo isset($_GET['ua'])? htmlspecialchars($_GET['ua']): ''; ?>" />
+			<div>User Agent: <input type="text" name="ua" size="100" value="<?php echo isset($_GET['ua']) ? htmlspecialchars($_GET['ua']) : ''; ?>" />
 			<input type="submit" /></div>
 		</form>
 	</div>

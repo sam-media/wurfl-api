@@ -32,5 +32,4 @@ class Tolerance extends PHPUnit_Framework_TestCase
         $this->assertEquals(9, WURFL_Handlers_Utils::firstCloseParen('Value(12)'));
         $this->assertNull(WURFL_Handlers_Utils::firstCloseParen('Value'));
     }
-
 }

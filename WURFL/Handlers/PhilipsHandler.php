@@ -11,33 +11,38 @@
  *
  *
  * @category   WURFL
- * @package	WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 
 /**
  * PhilipsUserAgentHandler
- * 
+ *
  *
  * @category   WURFL
- * @package	WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
-class WURFL_Handlers_PhilipsHandler extends WURFL_Handlers_Handler {
-	
-	protected $prefix = "PHILIPS";
-	
-	public function canHandle($userAgent) {
-		if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) return false;
-		return (WURFL_Handlers_Utils::checkIfStartsWith($userAgent, "Philips") || WURFL_Handlers_Utils::checkIfStartsWith($userAgent, "PHILIPS"));
-	}
+class WURFL_Handlers_PhilipsHandler extends WURFL_Handlers_Handler
+{
+    protected $prefix = 'PHILIPS';
 
-    public function applyConclusiveMatch($userAgent) {
+    public function canHandle($userAgent)
+    {
+        if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) {
+            return false;
+        }
+
+        return (WURFL_Handlers_Utils::checkIfStartsWith($userAgent,
+                'Philips') || WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'PHILIPS'));
+    }
+
+    public function applyConclusiveMatch($userAgent)
+    {
         $tolerance = WURFL_Handlers_Utils::firstSlash($userAgent);
+
         return $this->getDeviceIDFromRIS($userAgent, $tolerance);
     }
 }

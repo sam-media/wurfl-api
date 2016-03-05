@@ -6,8 +6,8 @@
 /**
  * test case.
  */
-class WURFL_Storage_RedisTest extends PHPUnit_Framework_TestCase {
-
+class WURFL_Storage_RedisTest extends PHPUnit_Framework_TestCase
+{
     public function setUp()
     {
         if (!extension_loaded('redis') && !class_exists('\Predis\Client')) {
@@ -20,10 +20,10 @@ class WURFL_Storage_RedisTest extends PHPUnit_Framework_TestCase {
         if (!extension_loaded('redis')) {
             $this->markTestSkipped('Redis extension not present');
         }
-        $params = array();
-        $mockRedis = $this->getMock('\Redis');
+        $params          = array();
+        $mockRedis       = $this->getMock('\Redis');
         $params['redis'] = $mockRedis;
-        $redisStorage = new WURFL_Storage_Redis($params);
+        $redisStorage    = new WURFL_Storage_Redis($params);
         $this->assertInstanceOf('WURFL_Storage_Redis', $redisStorage);
     }
 
@@ -35,9 +35,9 @@ class WURFL_Storage_RedisTest extends PHPUnit_Framework_TestCase {
         if (!class_exists('\Predis\Client')) {
             $this->markTestSkipped('Predis library not present');
         }
-        $mockRedis = $this->getMock('\Predis\Client');
+        $mockRedis       = $this->getMock('\Predis\Client');
         $params['redis'] = $mockRedis;
-        $redisStorage = new WURFL_Storage_Redis($params);
+        $redisStorage    = new WURFL_Storage_Redis($params);
         $this->assertInstanceOf('WURFL_Storage_Redis', $redisStorage);
     }
 
@@ -47,25 +47,23 @@ class WURFL_Storage_RedisTest extends PHPUnit_Framework_TestCase {
      */
     public function testInvalidRedisInstance()
     {
-        $params = array();
+        $params          = array();
         $params['redis'] = new stdClass();
-        $redisStorage = new WURFL_Storage_Redis($params);
+        $redisStorage    = new WURFL_Storage_Redis($params);
     }
-
 
     public function testParametersAreOverridden()
     {
-        $params = array();
-        $params['redis'] = $this->getMockRedisObject();
-        $params['host'] = '129.0.0.1';
-        $params['port'] = '7654';
-        $params['database'] = 2;
+        $params              = array();
+        $params['redis']     = $this->getMockRedisObject();
+        $params['host']      = '129.0.0.1';
+        $params['port']      = '7654';
+        $params['database']  = 2;
         $params['hash_name'] = 'WURFL_DATA_TEST';
-        $params['client'] = 'predis';
+        $params['client']    = 'predis';
 
         $redisStorage = new WURFL_Storage_Redis($params);
         $this->assertInstanceOf('WURFL_Storage_Redis', $redisStorage);
-
     }
 
     /**
@@ -73,12 +71,12 @@ class WURFL_Storage_RedisTest extends PHPUnit_Framework_TestCase {
      */
     public function testWrongClient()
     {
-        $params = array();
-        $params['host'] = '127.0.0.1';
-        $params['port'] = '6379';
-        $params['database'] = 2;
+        $params              = array();
+        $params['host']      = '127.0.0.1';
+        $params['port']      = '6379';
+        $params['database']  = 2;
         $params['hash_name'] = 'WURFL_DATA_TEST';
-        $params['client'] = 'FAIL';
+        $params['client']    = 'FAIL';
 
         $redisStorage = new WURFL_Storage_Redis($params);
     }
@@ -86,12 +84,12 @@ class WURFL_Storage_RedisTest extends PHPUnit_Framework_TestCase {
     public function testParametersAreLoaded()
     {
         if (class_exists('\Predis\Client')) {
-            $params = array();
-            $params['host'] = '127.0.0.1';
-            $params['port'] = '6379';
-            $params['database'] = 2;
+            $params              = array();
+            $params['host']      = '127.0.0.1';
+            $params['port']      = '6379';
+            $params['database']  = 2;
             $params['hash_name'] = 'WURFL_DATA_TEST';
-            $params['client'] = 'predis';
+            $params['client']    = 'predis';
 
             try {
                 $redisStorage = new WURFL_Storage_Redis($params);
@@ -104,12 +102,12 @@ class WURFL_Storage_RedisTest extends PHPUnit_Framework_TestCase {
             }
         }
         if (class_exists('\Redis')) {
-            $params = array();
-            $params['host'] = '127.0.0.1';
-            $params['port'] = '6379';
-            $params['database'] = 2;
+            $params              = array();
+            $params['host']      = '127.0.0.1';
+            $params['port']      = '6379';
+            $params['database']  = 2;
             $params['hash_name'] = 'WURFL_DATA_TEST';
-            $params['client'] = 'phpredis';
+            $params['client']    = 'phpredis';
 
             try {
                 $redisStorage = new WURFL_Storage_Redis($params);
@@ -125,9 +123,9 @@ class WURFL_Storage_RedisTest extends PHPUnit_Framework_TestCase {
 
     public function testSaveAndLoadObject()
     {
-        $value = new stdClass();
+        $value        = new stdClass();
         $value->value = 1;
-        $mockRedis = $this->getMockRedisObject();
+        $mockRedis    = $this->getMockRedisObject();
         $mockRedis
             ->expects($this->once())
             ->method('hset')
@@ -147,8 +145,8 @@ class WURFL_Storage_RedisTest extends PHPUnit_Framework_TestCase {
             )
             ->willReturn(serialize($value));
 
-        $params = array();
-        $params['redis'] = $mockRedis;
+        $params              = array();
+        $params['redis']     = $mockRedis;
         $params['hash_name'] = 'FAKE';
 
         $redisStorage = new WURFL_Storage_Redis($params);
@@ -158,8 +156,8 @@ class WURFL_Storage_RedisTest extends PHPUnit_Framework_TestCase {
 
     public function testSaveAndLoadValue()
     {
-        $value = 1;
-        $object = new StorageObject($value, 0);
+        $value     = 1;
+        $object    = new StorageObject($value, 0);
         $mockRedis = $this->getMockRedisObject();
         $mockRedis
             ->expects($this->once())
@@ -180,8 +178,8 @@ class WURFL_Storage_RedisTest extends PHPUnit_Framework_TestCase {
             )
             ->willReturn(serialize($object));
 
-        $params = array();
-        $params['redis'] = $mockRedis;
+        $params              = array();
+        $params['redis']     = $mockRedis;
         $params['hash_name'] = 'FAKE';
 
         $redisStorage = new WURFL_Storage_Redis($params);
@@ -207,14 +205,13 @@ class WURFL_Storage_RedisTest extends PHPUnit_Framework_TestCase {
             )
             ->willReturn(true);
 
-        $params = array();
-        $params['redis'] = $mockRedis;
+        $params              = array();
+        $params['redis']     = $mockRedis;
         $params['hash_name'] = 'FAKE';
 
         $redisStorage = new WURFL_Storage_Redis($params);
         $this->assertTrue($redisStorage->clear(), 'Clear failed');
     }
-
 
     /**
      * Returns a Predis\Client if predis is present, or Redis object if predis is absent

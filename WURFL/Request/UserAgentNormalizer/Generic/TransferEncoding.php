@@ -10,20 +10,19 @@
  * Refer to the COPYING.txt file distributed with this package.
  *
  * @category   WURFL
- * @package	WURFL_Request_UserAgentNormalizer_Generic
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @author Steve Kamerman
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @author     Steve Kamerman
+ * @version    $id$
  */
+
 /**
  * User Agent Normalizer - removes locale information from user agent
- * @package	WURFL_Request_UserAgentNormalizer_Generic
  */
-class WURFL_Request_UserAgentNormalizer_Generic_TransferEncoding implements WURFL_Request_UserAgentNormalizer_Interface  {
-
-	public function normalize($userAgent) {
-		return str_replace(',gzip(gfe)', '', $userAgent);
-	}
-
+class WURFL_Request_UserAgentNormalizer_Generic_TransferEncoding implements WURFL_Request_UserAgentNormalizer_Interface
+{
+    public function normalize($userAgent)
+    {
+        return str_replace(',gzip(gfe)', '', $userAgent);
+    }
 }

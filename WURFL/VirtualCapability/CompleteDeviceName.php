@@ -11,7 +11,6 @@
  *
  *
  * @category   WURFL
- * @package    WURFL_VirtualCapability
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  * @version    $id$
@@ -19,23 +18,24 @@
 
 /**
  * Virtual capability helper
- * @package    WURFL_VirtualCapability
  */
 class WURFL_VirtualCapability_CompleteDeviceName extends WURFL_VirtualCapability
 {
-
     protected $required_capabilities = array(
         'brand_name',
         'model_name',
         'marketing_name',
     );
 
-    protected function compute() {
+    protected function compute()
+    {
         $parts = array($this->device->brand_name);
-        if (strlen($this->device->model_name))
+        if (strlen($this->device->model_name)) {
             $parts[] = $this->device->model_name;
-        if (strlen($this->device->marketing_name))
+        }
+        if (strlen($this->device->marketing_name)) {
             $parts[] = "({$this->device->marketing_name})";
+        }
 
         return implode(' ', $parts);
     }

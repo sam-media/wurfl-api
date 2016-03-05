@@ -10,25 +10,27 @@
  * Refer to the COPYING.txt file distributed with this package.
  *
  * @category   WURFL
- * @package	WURFL_Logger
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
+
 /**
  * Class that is used to supress logging
- * @package	WURFL_Logger
  */
-class WURFL_Logger_NullLogger implements WURFL_Logger_Interface  {
-	
-	public function log($message, $type="") {
-		//echo $message . "\n";
-	}
-	
-	public function debug($message) {
-		//echo $message . "\n";		
-	}
-	
-	public function info($message){}
-}
+class WURFL_Logger_NullLogger implements WURFL_Logger_Interface
+{
+    public function log($message, $type = '')
+    {
+        //echo $message . "\n";
+    }
 
+    public function debug($message)
+    {
+        //echo $message . "\n";
+    }
+
+    public function info($message)
+    {
+    }
+}

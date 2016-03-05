@@ -11,44 +11,52 @@
  *
  *
  * @category   WURFL
- * @package	WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 
 /**
  * XboxUserAgentHandler
- * 
+ *
  *
  * @category   WURFL
- * @package	WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
-class WURFL_Handlers_XboxHandler extends WURFL_Handlers_Handler {
-	
-	protected $prefix = "XBOX";
-	
-	public static $constantIDs = array(
-		'microsoft_xbox360_ver1',
-		'microsoft_xbox360_ver1_subie10',
-		'microsoft_xboxone_ver1',
-	);
-	
-	public function canHandle($userAgent) {
-		return WURFL_Handlers_Utils::checkIfContains($userAgent, 'Xbox');
-	}
-	
-	public function applyConclusiveMatch($userAgent) {
-		// Exact and recovery matching only
-		return WURFL_Constants::NO_MATCH;
-	}
-	
-	public function applyRecoveryMatch($userAgent){
-		if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'MSIE 10.0') && WURFL_Handlers_Utils::checkIfContains($userAgent, 'Xbox One')) return 'microsoft_xboxone_ver1';
-		if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'MSIE 10.0')) return 'microsoft_xbox360_ver1_subie10';
-		return 'microsoft_xbox360_ver1';
-	}
+class WURFL_Handlers_XboxHandler extends WURFL_Handlers_Handler
+{
+    protected $prefix = 'XBOX';
+
+    public static $constantIDs = array(
+        'microsoft_xbox360_ver1',
+        'microsoft_xbox360_ver1_subie10',
+        'microsoft_xboxone_ver1',
+    );
+
+    public function canHandle($userAgent)
+    {
+        return WURFL_Handlers_Utils::checkIfContains($userAgent, 'Xbox');
+    }
+
+    public function applyConclusiveMatch($userAgent)
+    {
+        // Exact and recovery matching only
+        return WURFL_Constants::NO_MATCH;
+    }
+
+    public function applyRecoveryMatch($userAgent)
+    {
+        if (WURFL_Handlers_Utils::checkIfContains($userAgent,
+                'MSIE 10.0') && WURFL_Handlers_Utils::checkIfContains($userAgent, 'Xbox One')
+        ) {
+            return 'microsoft_xboxone_ver1';
+        }
+        if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'MSIE 10.0')) {
+            return 'microsoft_xbox360_ver1_subie10';
+        }
+
+        return 'microsoft_xbox360_ver1';
+    }
 }

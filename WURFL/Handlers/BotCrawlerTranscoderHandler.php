@@ -11,46 +11,46 @@
  *
  *
  * @category   WURFL
- * @package	WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 
 /**
  * BotCrawlerTranscoderUserAgentHandler
- * 
+ *
  *
  * @category   WURFL
- * @package	WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
-class WURFL_Handlers_BotCrawlerTranscoderHandler extends WURFL_Handlers_Handler {
-	
-	protected $prefix = 'BOT_CRAWLER_TRANSCODER';
-	
-	public function canHandle($userAgent) {
-		return WURFL_Handlers_Utils::isRobot($userAgent);
-	}
+class WURFL_Handlers_BotCrawlerTranscoderHandler extends WURFL_Handlers_Handler
+{
+    protected $prefix = 'BOT_CRAWLER_TRANSCODER';
 
-	public function applyConclusiveMatch($userAgent) {
+    public function canHandle($userAgent)
+    {
+        return WURFL_Handlers_Utils::isRobot($userAgent);
+    }
 
-        if (WURFL_Handlers_Utils::checkIfContains($userAgent, "GoogleImageProxy")) {
+    public function applyConclusiveMatch($userAgent)
+    {
+        if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'GoogleImageProxy')) {
             return 'google_image_proxy';
         }
 
-		if (WURFL_Handlers_Utils::checkIfStartsWith($userAgent, "Mozilla")) {
-			$tolerance = WURFL_Handlers_Utils::firstCloseParen($userAgent);
-		} else {
+        if (WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'Mozilla')) {
+            $tolerance = WURFL_Handlers_Utils::firstCloseParen($userAgent);
+        } else {
             $tolerance = WURFL_Handlers_Utils::firstSlash($userAgent);
         }
 
-		return $this->getDeviceIDFromRIS($userAgent, $tolerance);
-	}
+        return $this->getDeviceIDFromRIS($userAgent, $tolerance);
+    }
 
-	public function applyRecoveryMatch($userAgent) {
-		return WURFL_Constants::GENERIC_WEB_CRAWLER;
-	}
+    public function applyRecoveryMatch($userAgent)
+    {
+        return WURFL_Constants::GENERIC_WEB_CRAWLER;
+    }
 }
