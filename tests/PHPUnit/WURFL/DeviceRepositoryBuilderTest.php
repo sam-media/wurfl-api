@@ -33,38 +33,6 @@ class WURFL_DeviceRepositoryBuilderTest extends PHPUnit_Framework_TestCase
         unset($this->deviceRepositoryBuilder);
     }
 
-    public function testMissedRequiredDevices()
-    {
-        $wurflFile = dirname(__FILE__) . DIRECTORY_SEPARATOR . self::WURFL_INVALID_DEVICES;
-        $this->setExpectedException(
-            'WURFL_Exception_WURFLConsistencyException',
-            'wurfl.xml load error - you may need to update the wurfl.xml file to a more recent version'
-        );
-        $this->deviceRepositoryBuilder->build($wurflFile);
-    }
-
-    public function testMissedRequiredCapabilities()
-    {
-        $wurflFile = dirname(__FILE__) . DIRECTORY_SEPARATOR . self::WURFL_INVALID_CAPABILITIES;
-        $this->setExpectedException(
-            'WURFL_Exception_WURFLConsistencyException',
-            'Missing required WURFL Capabilities: ux_full_desktop, is_tablet, pointing_method, device_os_version, can_assign_phone_number, mobile_browser_version, marketing_name, is_smarttv'
-        );
-        $this->deviceRepositoryBuilder->build($wurflFile);
-    }
-
-    public function testInvalidFallback()
-    {
-        $wurflFile = dirname(__FILE__) . DIRECTORY_SEPARATOR . self::WURFL_FILE;
-        $patchFile = dirname(__FILE__) . DIRECTORY_SEPARATOR . self::PATCH_INVALID_FALLBACK;
-
-        $this->setExpectedException(
-            'WURFL_Exception_WURFLConsistencyException',
-            'Invalid Fallback invalid-fallback for the device invalid-id'
-        );
-        $this->deviceRepositoryBuilder->build($wurflFile, array($patchFile));
-    }
-
     public function testShouldBuildARepositoryOfAllDevicesFromTheXmlFile()
     {
         $wurflFile = dirname(__FILE__) . DIRECTORY_SEPARATOR . self::WURFL_FILE;
