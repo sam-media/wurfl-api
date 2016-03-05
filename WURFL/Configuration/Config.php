@@ -22,6 +22,18 @@
  *
  * @property string  $configFilePath
  * @property string  $configurationFileDir
+ * @property bool    $allowReload
+ * @property array   $capabilityFilter
+ * @property string  $wurflFile
+ * @property array   $wurflPatches
+ * @property array   $persistence
+ * @property array   $cache
+ * @property string  $logDir
+ * @property string  $matchMode
+ *
+ *
+ * @property string  $configFilePath
+ * @property string  $configurationFileDir
  * @property bool $allowReload
  * @property array   $capabilityFilter
  * @property string  $wurflFile
