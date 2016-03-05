@@ -2,12 +2,13 @@
 /**
  * test case
  */
+
 /**
  * test case.
  */
 class WURFL_Storage_FileTest extends PHPUnit_Framework_TestCase
 {
-    const STORAGE_DIR = "../../../resources/storage";
+    const STORAGE_DIR = '../../../resources/storage';
 
     public function setUp()
     {
@@ -21,9 +22,9 @@ class WURFL_Storage_FileTest extends PHPUnit_Framework_TestCase
 
     public function testShouldTryToCreateTheStorage()
     {
-        $cachepath = $this->realpath(self::STORAGE_DIR . "/cache");
-        $params = array(
-            "dir" => $cachepath
+        $cachepath = $this->realpath(self::STORAGE_DIR . '/cache');
+        $params    = array(
+            'dir' => $cachepath,
         );
         new WURFL_Storage_File($params);
         $this->assertStorageDirectoryIsCreated($cachepath);
@@ -43,28 +44,30 @@ class WURFL_Storage_FileTest extends PHPUnit_Framework_TestCase
     public function testNeverToExpireItems()
     {
         $params = array(
-            "dir" => self::storageDir(),
-            WURFL_Configuration_Config::EXPIRATION => 0);
+            'dir' => self::storageDir(),
+            WURFL_Configuration_Config::EXPIRATION => 0,
+        );
 
         $storage = new WURFL_Storage_File($params);
 
-        $storage->save("foo", "foo");
+        $storage->save('foo', 'foo');
         sleep(1);
-        $this->assertEquals("foo", $storage->load("foo"));
+        $this->assertEquals('foo', $storage->load('foo'));
     }
 
     public function testShouldRemoveTheExpiredItem()
     {
         $params = array(
-            "dir" => self::storageDir(),
-            WURFL_Configuration_Config::EXPIRATION => 1);
+            'dir' => self::storageDir(),
+            WURFL_Configuration_Config::EXPIRATION => 1,
+        );
 
         $storage = new WURFL_Storage_File($params);
 
-        $storage->save("item2", "item2");
-        $this->assertEquals("item2", $storage->load("item2"));
+        $storage->save('item2', 'item2');
+        $this->assertEquals('item2', $storage->load('item2'));
         sleep(2);
-        $this->assertEquals(null, $storage->load("item2"));
+        $this->assertEquals(null, $storage->load('item2'));
     }
 
     public static function storageDir()

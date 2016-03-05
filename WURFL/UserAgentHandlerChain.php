@@ -11,15 +11,15 @@
  *
  *
  * @category   WURFL
- * @package	WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
+
 /**
  * Handles the chain of WURFL_Handlers_Handler objects
- * @package	WURFL
- * @see WURFL_Handlers_Handler
+ *
+ * @see        WURFL_Handlers_Handler
  */
 class WURFL_UserAgentHandlerChain
 {
@@ -27,23 +27,25 @@ class WURFL_UserAgentHandlerChain
      * @var array of WURFL_Handlers_Handler objects
      */
     private $_userAgentHandlers = array();
-    
+
     /**
      * Adds a WURFL_Handlers_Handler to the chain
      *
      * @param WURFL_Handlers_Handler $handler
+     *
      * @return WURFL_UserAgentHandlerChain $this
      */
     public function addUserAgentHandler(WURFL_Handlers_Handler $handler)
     {
         $size = count($this->_userAgentHandlers);
         if ($size > 0) {
-            $this->_userAgentHandlers[$size-1]->setNextHandler($handler);
+            $this->_userAgentHandlers[$size - 1]->setNextHandler($handler);
         }
         $this->_userAgentHandlers[] = $handler;
+
         return $this;
     }
-    
+
     /**
      * @return array An array of all the WURFL_Handlers_Handler objects
      */
@@ -51,38 +53,40 @@ class WURFL_UserAgentHandlerChain
     {
         return $this->_userAgentHandlers;
     }
-    
+
     /**
      * Adds the pair $userAgent, $deviceID to the clusters they belong to.
      *
-     * @param String $userAgent
-     * @param String $deviceID
+     * @param string $userAgent
+     * @param string $deviceID
+     *
      * @see WURFL_Handlers_Handler::filter()
      */
     public function filter($userAgent, $deviceID)
     {
         WURFL_Handlers_Utils::reset();
         $generic_normalizer = WURFL_UserAgentHandlerChainFactory::createGenericNormalizers();
-        $userAgent = $generic_normalizer->normalize($userAgent);
+        $userAgent          = $generic_normalizer->normalize($userAgent);
         $this->_userAgentHandlers[0]->filter($userAgent, $deviceID);
     }
-    
-    
-    
+
     /**
-     * Return the the device id for the request 
+     * Return the the device id for the request
      *
      * @param WURFL_Request_GenericRequest $request
-     * @return String deviceID
+     *
+     * @return string deviceID
      */
     public function match(WURFL_Request_GenericRequest $request)
     {
         WURFL_Handlers_Utils::reset();
+
         return $this->_userAgentHandlers[0]->match($request);
     }
-    
+
     /**
      * Save the data from each WURFL_Handlers_Handler
+     *
      * @see WURFL_Handlers_Handler::persistData()
      */
     public function persistData()
@@ -91,9 +95,10 @@ class WURFL_UserAgentHandlerChain
             $userAgentHandler->persistData();
         }
     }
-    
+
     /**
      * Collect data
+     *
      * @return array data
      */
     public function collectData()
@@ -108,6 +113,7 @@ class WURFL_UserAgentHandlerChain
                 $userAgentsWithDeviceId = array_merge($userAgentsWithDeviceId, $current);
             }
         }
+
         return $userAgentsWithDeviceId;
     }
 }

@@ -11,37 +11,35 @@
  *
  *
  * @category   WURFL
- * @package	WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 
 /**
  * JavaMidletUserAgentHandler
- * 
+ *
  *
  * @category   WURFL
- * @package	WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 class WURFL_Handlers_JavaMidletHandler extends WURFL_Handlers_Handler
 {
     public static $constantIDs = array(
         'generic_midp_midlet',
     );
-    
+
     public function canHandle($userAgent)
     {
         return WURFL_Handlers_Utils::checkIfContains($userAgent, 'UNTRUSTED/1.0');
     }
-    
+
     public function applyConclusiveMatch($userAgent)
     {
         return 'generic_midp_midlet';
     }
-    
-    protected $prefix = "JAVAMIDLET";
+
+    protected $prefix = 'JAVAMIDLET';
 }

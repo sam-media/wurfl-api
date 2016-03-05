@@ -11,26 +11,24 @@
  *
  *
  * @category   WURFL
- * @package	WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 
 /**
  * KindleUserAgentHandler
- * 
+ *
  *
  * @category   WURFL
- * @package	WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 class WURFL_Handlers_KindleHandler extends WURFL_Handlers_Handler
 {
-    protected $prefix = "KINDLE";
-    
+    protected $prefix = 'KINDLE';
+
     public static $constantIDs = array(
         'amazon_kindle_ver1',
         'amazon_kindle2_ver1',
@@ -39,16 +37,20 @@ class WURFL_Handlers_KindleHandler extends WURFL_Handlers_Handler
         'generic_amazon_android_kindle',
         'generic_amazon_kindle',
     );
-    
+
     public function canHandle($userAgent)
     {
-        if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Android')
-          && WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array('/Kindle', 'Silk'))) {
+        if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Android') && WURFL_Handlers_Utils::checkIfContainsAnyOf(
+                $userAgent,
+                array('/Kindle', 'Silk')
+            )
+        ) {
             return false;
         }
+
         return WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array('Kindle', 'Silk'));
     }
-    
+
     public function applyConclusiveMatch($userAgent)
     {
 
@@ -59,31 +61,31 @@ class WURFL_Handlers_KindleHandler extends WURFL_Handlers_Handler
         if ($idx !== false) {
             return $this->getDeviceIDFromRIS($userAgent, $idx);
         }
-        
+
         // Kindle e-reader
         $search = 'Kindle/';
-        $idx = strpos($userAgent, $search);
+        $idx    = strpos($userAgent, $search);
         if ($idx !== false) {
             // Version/4.0 Kindle/3.0 (screen 600x800; rotate) Mozilla/5.0 (Linux; U; zh-cn.utf8) AppleWebKit/528.5+ (KHTML, like Gecko, Safari/528.5+)
             //		$idx ^	  ^ $tolerance
-            $tolerance = $idx + strlen($search) + 1;
+            $tolerance      = $idx + strlen($search) + 1;
             $kindle_version = $userAgent[$tolerance];
             // RIS match only Kindle/1-3
             if ($kindle_version >= 1 && $kindle_version <= 3) {
                 return $this->getDeviceIDFromRIS($userAgent, $tolerance);
             }
         }
-        
+
         // PlayStation Vita
         $search = 'PlayStation Vita';
-        $idx = strpos($userAgent, $search);
+        $idx    = strpos($userAgent, $search);
         if ($idx !== false) {
             return $this->getDeviceIDFromRIS($userAgent, $idx + strlen($search) + 1);
         }
-        
+
         return WURFL_Constants::NO_MATCH;
     }
-    
+
     public function applyRecoveryMatch($userAgent)
     {
         $map = array(
@@ -98,6 +100,7 @@ class WURFL_Handlers_KindleHandler extends WURFL_Handlers_Handler
                 return $id;
             }
         }
+
         return 'generic_amazon_kindle';
     }
 }

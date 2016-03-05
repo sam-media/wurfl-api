@@ -11,16 +11,14 @@
  *
  *
  * @category   WURFL
- * @package	WURFL_VirtualCapability
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
+
 /**
  * Virtual capability helper
- * @package	WURFL_VirtualCapability
  */
- 
 class WURFL_VirtualCapability_ManualGroupChild extends WURFL_VirtualCapability
 {
     protected $use_caching = false;
@@ -30,8 +28,12 @@ class WURFL_VirtualCapability_ManualGroupChild extends WURFL_VirtualCapability
      */
     protected $group;
 
-    public function __construct(WURFL_CustomDevice $device, WURFL_Request_GenericRequest $request, WURFL_VirtualCapability_Group $group, $value=null)
-    {
+    public function __construct(
+        WURFL_CustomDevice $device,
+        WURFL_Request_GenericRequest $request,
+        WURFL_VirtualCapability_Group $group,
+        $value = null
+    ) {
         $this->group = $group;
         parent::__construct($device, $request);
         $this->manual_value = $value;

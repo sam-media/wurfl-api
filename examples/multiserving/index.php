@@ -4,30 +4,30 @@
 ini_set('display_errors', 'on');
 error_reporting(E_ALL);
 
-$wurflDir = dirname(__FILE__) . '/../../WURFL';
+$wurflDir     = dirname(__FILE__) . '/../../WURFL';
 $resourcesDir = dirname(__FILE__) . '/../resources';
-require_once $wurflDir.'/Application.php';
+require_once $wurflDir . '/Application.php';
 
-$persistenceDir = $resourcesDir.'/storage/persistence';
-$cacheDir = $resourcesDir.'/storage/cache';
+$persistenceDir = $resourcesDir . '/storage/persistence';
+$cacheDir       = $resourcesDir . '/storage/cache';
 
 $wurflConfig = new WURFL_Configuration_InMemoryConfig();
-$wurflConfig->wurflFile($resourcesDir.'/wurfl.zip');
+$wurflConfig->wurflFile($resourcesDir . '/wurfl.zip');
 $wurflConfig->matchMode('performance');
 $wurflConfig->persistence('file', array('dir' => $persistenceDir));
 $wurflConfig->cache('file', array('dir' => $cacheDir, 'expiration' => 36000));
 $wurflManagerFactory = new WURFL_WURFLManagerFactory($wurflConfig);
-$wurflManager = $wurflManagerFactory->create();
+$wurflManager        = $wurflManagerFactory->create();
 
 $wurflInfo = $wurflManager->getWURFLInfo();
 
-define("XHTML_ADVANCED", "xhtml_advanced.php");
-define("XHTML_SIMPLE", "xhtml_simple.php");
-define("WML", "wml.php");
+define('XHTML_ADVANCED', 'xhtml_advanced.php');
+define('XHTML_SIMPLE', 'xhtml_simple.php');
+define('WML', 'wml.php');
 
 $device = $wurflManager->getDeviceForHttpRequest($_SERVER);
 
-$xhtml_lvl = $device->getCapability('xhtml_support_level');
+$xhtml_lvl   = $device->getCapability('xhtml_support_level');
 $contentType = $device->getCapability('xhtmlmp_preferred_mime_type');
 
 $page = getPageFromMarkup($xhtml_lvl);
@@ -49,13 +49,14 @@ function getPageFromMarkup($xhtml_lvl)
     if ($xhtml_lvl < 3) {
         return XHTML_SIMPLE;
     }
+
     return XHTML_ADVANCED;
 }
 
 function renderPage($page, $contentType)
 {
     header("Content-Type: $contentType");
-    header("Vary: User-Agent");
-    include dirname(__FILE__).'/'.$page;
+    header('Vary: User-Agent');
+    include dirname(__FILE__) . '/' . $page;
     exit;
 }

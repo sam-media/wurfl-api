@@ -11,21 +11,20 @@
  *
  *
  * @category   WURFL
- * @package	WURFL_VirtualCapability
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
+
 /**
  * Virtual capability helper
- * @package	WURFL_VirtualCapability
  */
 class WURFL_VirtualCapability_DeviceName extends WURFL_VirtualCapability
 {
     protected $required_capabilities = array(
-      'brand_name',
-      'model_name',
-      'marketing_name',
+        'brand_name',
+        'model_name',
+        'marketing_name',
     );
 
     protected function compute()

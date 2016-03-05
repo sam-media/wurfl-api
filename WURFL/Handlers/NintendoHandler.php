@@ -11,33 +11,31 @@
  *
  *
  * @category   WURFL
- * @package	WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 
 /**
  * NintendoUserAgentHandler
- * 
+ *
  *
  * @category   WURFL
- * @package	WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 class WURFL_Handlers_NintendoHandler extends WURFL_Handlers_Handler
 {
-    protected $prefix = "NINTENDO";
-    
+    protected $prefix = 'NINTENDO';
+
     public static $constantIDs = array(
         'nintendo_wii_u_ver1',
         'nintendo_wii_ver1',
         'nintendo_dsi_ver1',
         'nintendo_ds_ver1',
     );
-    
+
     public function canHandle($userAgent)
     {
         if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) {
@@ -46,9 +44,13 @@ class WURFL_Handlers_NintendoHandler extends WURFL_Handlers_Handler
         if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Nintendo')) {
             return true;
         }
-        return WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'Mozilla/') && WURFL_Handlers_Utils::checkIfContainsAll($userAgent, array('Nitro', 'Opera'));
+
+        return WURFL_Handlers_Utils::checkIfStartsWith(
+            $userAgent,
+            'Mozilla/'
+        ) && WURFL_Handlers_Utils::checkIfContainsAll($userAgent, array('Nitro', 'Opera'));
     }
-    
+
     public function applyConclusiveMatch($userAgent)
     {
         if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Nintendo WiiU')) {
@@ -60,9 +62,14 @@ class WURFL_Handlers_NintendoHandler extends WURFL_Handlers_Handler
         if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Nintendo DSi')) {
             return 'nintendo_dsi_ver1';
         }
-        if ((WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'Mozilla/') && WURFL_Handlers_Utils::checkIfContainsAll($userAgent, array('Nitro', 'Opera')))) {
+        if ((WURFL_Handlers_Utils::checkIfStartsWith(
+                $userAgent,
+                'Mozilla/'
+            ) && WURFL_Handlers_Utils::checkIfContainsAll($userAgent, array('Nitro', 'Opera')))
+        ) {
             return 'nintendo_ds_ver1';
         }
+
         return 'nintendo_wii_ver1';
     }
 }

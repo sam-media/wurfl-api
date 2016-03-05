@@ -11,26 +11,24 @@
  *
  *
  * @category   WURFL
- * @package	WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 
 /**
  * WindowsPhoneUserAgentHandler
- * 
+ *
  *
  * @category   WURFL
- * @package	WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 class WURFL_Handlers_WindowsPhoneHandler extends WURFL_Handlers_Handler
 {
-    protected $prefix = "WINDOWSPHONE";
-    
+    protected $prefix = 'WINDOWSPHONE';
+
     public static $constantIDs = array(
         'generic_ms_winmo6_5',
         'generic_ms_phone_os7',
@@ -44,21 +42,30 @@ class WURFL_Handlers_WindowsPhoneHandler extends WURFL_Handlers_Handler
         'generic_ms_phone_os8_desktopmode',
         'generic_ms_phone_os10_desktopmode',
     );
-    
+
     public function canHandle($userAgent)
     {
         if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) {
             return false;
         }
         // Capturing WP desktop mode UAs but not Windows RT UAs
-        if (WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array('WPDesktop', 'ZuneWP7'))
-          || WURFL_Handlers_Utils::checkIfContainsAll($userAgent, array('Mozilla/5.0 (Windows NT ', ' ARM;', ' Edge/'))) {
+        if (WURFL_Handlers_Utils::checkIfContainsAnyOf(
+                $userAgent,
+                array('WPDesktop', 'ZuneWP7')
+            ) || WURFL_Handlers_Utils::checkIfContainsAll(
+                $userAgent,
+                array('Mozilla/5.0 (Windows NT ', ' ARM;', ' Edge/')
+            )
+        ) {
             return true;
         }
 
-        return WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array('Windows Phone', 'WindowsPhone', 'NativeHost'));
+        return WURFL_Handlers_Utils::checkIfContainsAnyOf(
+            $userAgent,
+            array('Windows Phone', 'WindowsPhone', 'NativeHost')
+        );
     }
-    
+
     public function applyConclusiveMatch($userAgent)
     {
         $tolerance = WURFL_Handlers_Utils::toleranceToRisDelimeter($userAgent);
@@ -68,14 +75,25 @@ class WURFL_Handlers_WindowsPhoneHandler extends WURFL_Handlers_Handler
         if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'NativeHost')) {
             return 'generic_ms_phone_os7';
         }
+
         return WURFL_Constants::NO_MATCH;
     }
-    
+
     public function applyRecoveryMatch($userAgent)
     {
-        if (WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array('WPDesktop', 'ZuneWP7'))
-          || WURFL_Handlers_Utils::checkIfContainsAll($userAgent, array('Mozilla/5.0 (Windows NT ', ' ARM;', ' Edge/'))) {
-            if (WURFL_Handlers_Utils::checkIfContainsAll($userAgent, array('Mozilla/5.0 (Windows NT ', ' ARM;', ' Edge/'))) {
+        if (WURFL_Handlers_Utils::checkIfContainsAnyOf(
+                $userAgent,
+                array('WPDesktop', 'ZuneWP7')
+            ) || WURFL_Handlers_Utils::checkIfContainsAll(
+                $userAgent,
+                array('Mozilla/5.0 (Windows NT ', ' ARM;', ' Edge/')
+            )
+        ) {
+            if (WURFL_Handlers_Utils::checkIfContainsAll(
+                $userAgent,
+                array('Mozilla/5.0 (Windows NT ', ' ARM;', ' Edge/')
+            )
+            ) {
                 return 'generic_ms_phone_os10_desktopmode';
             }
             if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'WPDesktop')) {
@@ -84,36 +102,42 @@ class WURFL_Handlers_WindowsPhoneHandler extends WURFL_Handlers_Handler
             if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Trident/5.0')) {
                 return 'generic_ms_phone_os7_5_desktopmode';
             }
+
             return 'generic_ms_phone_os7_desktopmode';
         }
 
         $version = self::getWindowsPhoneVersion($userAgent);
 
-        if ($version == "10.0") {
+        if ($version === '10.0') {
             return 'generic_ms_phone_os10';
         }
-        if ($version == "8.1") {
+        if ($version === '8.1') {
             return 'generic_ms_phone_os8_1';
         }
-        if ($version == "8.0") {
+        if ($version === '8.0') {
             return 'generic_ms_phone_os8';
         }
-        if ($version == "7.8") {
+        if ($version === '7.8') {
             return 'generic_ms_phone_os7_8';
         }
-        if ($version == "7.5") {
+        if ($version === '7.5') {
             return 'generic_ms_phone_os7_5';
         }
-        if ($version == "7.0") {
+        if ($version === '7.0') {
             return 'generic_ms_phone_os7';
         }
-        if ($version == "6.5") {
+        if ($version === '6.5') {
             return 'generic_ms_winmo6_5';
         }
         //These are probably UAs of the type "Windows Phone Ad Client (Xna)/5.1.0.0 BMID/E67970D969"
-        if (WURFL_Handlers_Utils::checkIfStartsWithAnyOf($userAgent, array('Windows Phone Ad Client', 'WindowsPhoneAdClient'))) {
+        if (WURFL_Handlers_Utils::checkIfStartsWithAnyOf(
+            $userAgent,
+            array('Windows Phone Ad Client', 'WindowsPhoneAdClient')
+        )
+        ) {
             return 'generic_ms_phone_os7';
         }
+
         return WURFL_Constants::NO_MATCH;
     }
 
@@ -122,7 +146,12 @@ class WURFL_Handlers_WindowsPhoneHandler extends WURFL_Handlers_Handler
         // Normalize spaces in UA before capturing parts
         $ua = preg_replace('|;(?! )|', '; ', $ua);
         // This regex is relatively fast because there is not much backtracking, and almost all UAs will match
-        if (preg_match('|IEMobile/\d+\.\d+;(?: ARM;)?(?: Touch;)? ?([^;\)]+(; ?[^;\)]+)?)|', $ua, $matches) || preg_match('|Android [\d\.]+?; ([^;\)]+(; ?[^;\)]+)?).+?Edge/\d|', $ua, $matches)) {
+        if (preg_match(
+                '|IEMobile/\d+\.\d+;(?: ARM;)?(?: Touch;)? ?([^;\)]+(; ?[^;\)]+)?)|',
+                $ua,
+                $matches
+            ) || preg_match('|Android [\d\.]+?; ([^;\)]+(; ?[^;\)]+)?).+?Edge/\d|', $ua, $matches)
+        ) {
             $model = $matches[1];
 
             // Some UAs contain "_blocked" and that string causes matching errors:
@@ -150,71 +179,86 @@ class WURFL_Handlers_WindowsPhoneHandler extends WURFL_Handlers_Handler
 
             return $model;
         }
-        return null;
+
+        return;
     }
 
     public static function getWindowsPhoneAdClientModel($ua)
     {
         // Normalize spaces in UA before capturing parts
         $ua = preg_replace('|;(?! )|', '; ', $ua);
-        if (preg_match('|Windows ?Phone ?Ad ?Client/[0-9\.]+ ?\(.+; ?Windows ?Phone(?: ?OS)? ?[0-9\.]+; ?([^;\)]+(; ?[^;\)]+)?)|', $ua, $matches)) {
+        if (preg_match(
+            '|Windows ?Phone ?Ad ?Client/[0-9\.]+ ?\(.+; ?Windows ?Phone(?: ?OS)? ?[0-9\.]+; ?([^;\)]+(; ?[^;\)]+)?)|',
+            $ua,
+            $matches
+        )) {
             $model = $matches[1];
             $model = str_replace('_blocked', '', $model);
             $model = preg_replace('/(NOKIA; RM-.+?)_.*/', '$1', $model, 1);
             $model = preg_replace('/(Microsoft; RM-.+?)_.*/', '$1', $model, 1);
+
             return $model;
         }
-        return null;
-    }
 
+        return;
+    }
 
     public static function getWindowsPhoneVersion($ua)
     {
         if (preg_match('|Windows ?Phone(?: ?OS)? ?(\d+\.\d+)|', $ua, $matches)) {
-            if (strpos($matches[1], "10.0") !== false) {
+            if (strpos($matches[1], '10.0') !== false) {
                 return '10.0';
-            } elseif (strpos($matches[1], "6.3") !== false || strpos($matches[1], "8.1") !== false) {
+            } elseif (strpos($matches[1], '6.3') !== false || strpos($matches[1], '8.1') !== false) {
                 return '8.1';
-            } elseif (strpos($matches[1], "8.") !== false) {
+            } elseif (strpos($matches[1], '8.') !== false) {
                 return '8.0';
-            } elseif (strpos($matches[1], "7.8") !== false) {
+            } elseif (strpos($matches[1], '7.8') !== false) {
                 return '7.8';
-            } elseif (strpos($matches[1], "7.10") !== false || strpos($matches[1], "7.5") !== false) {
+            } elseif (strpos($matches[1], '7.10') !== false || strpos($matches[1], '7.5') !== false) {
                 return '7.5';
-            } elseif (strpos($matches[1], "6.5") !== false) {
+            } elseif (strpos($matches[1], '6.5') !== false) {
                 return '6.5';
             } else {
                 return '7.0';
             }
         }
-        return null;
+
+        return;
     }
 
     public static function getWindowsPhoneDesktopModel($ua)
     {
         // Normalize spaces in UA before capturing parts
         $ua = preg_replace('|;(?! )|', '; ', $ua);
-        if (preg_match('|\(Windows NT [\d\.]+?; ARM; ([^;\)]+(; ?[^;\)]+)?).+?Edge/\d|', $ua, $matches) || preg_match('|\(Windows NT [\d\.]+?; ARM;.+?; WPDesktop; ([^;\)]+(; ?[^;\)]+)?)\) like Gecko|', $ua, $matches)) {
+        if (preg_match('|\(Windows NT [\d\.]+?; ARM; ([^;\)]+(; ?[^;\)]+)?).+?Edge/\d|', $ua, $matches) || preg_match(
+                '|\(Windows NT [\d\.]+?; ARM;.+?; WPDesktop; ([^;\)]+(; ?[^;\)]+)?)\) like Gecko|',
+                $ua,
+                $matches
+            )
+        ) {
             $model = $matches[1];
             $model = str_replace('_blocked', '', $model);
             $model = preg_replace('/(NOKIA; RM-.+?)_.*/', '$1', $model, 1);
             $model = preg_replace('/(Microsoft; RM-.+?)_.*/', '$1', $model, 1);
+
             return $model;
         }
-        return null;
+
+        return;
     }
 
     public static function getWindowsPhoneDesktopVersion($ua)
     {
         if (preg_match('|Windows NT (\d+\.\d+)|', $ua, $matches)) {
-            if (strpos($matches[1], "10.0") !== false) {
+            if (strpos($matches[1], '10.0') !== false) {
                 return '10.0';
-            } elseif (strpos($matches[1], "6.3") !== false || strpos($matches[1], "8.1") !== false) {
+            } elseif (strpos($matches[1], '6.3') !== false || strpos($matches[1], '8.1') !== false) {
                 return '8.1';
             } else {
                 return '8.0';
             }
         }
-        return null;
+
+        return;
     }
 }

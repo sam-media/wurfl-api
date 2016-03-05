@@ -11,16 +11,14 @@
  *
  *
  * @category   WURFL
- * @package	WURFL_VirtualCapability
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
+
 /**
  * Virtual capability helper
- * @package	WURFL_VirtualCapability
  */
- 
 class WURFL_VirtualCapability_IsSmartphone extends WURFL_VirtualCapability
 {
     protected $use_caching = true;
@@ -37,22 +35,22 @@ class WURFL_VirtualCapability_IsSmartphone extends WURFL_VirtualCapability
 
     protected function compute()
     {
-        if ($this->device->is_wireless_device != "true") {
+        if ($this->device->is_wireless_device !== 'true') {
             return false;
         }
-        if ($this->device->is_tablet == "true") {
+        if ($this->device->is_tablet === 'true') {
             return false;
         }
-        if ($this->device->can_assign_phone_number == "false") {
+        if ($this->device->can_assign_phone_number === 'false') {
             return false;
         }
-        if ($this->device->pointing_method != 'touchscreen') {
+        if ($this->device->pointing_method !== 'touchscreen') {
             return false;
         }
         if ($this->device->resolution_width < 320) {
             return false;
         }
-        $os_ver = (float)$this->device->device_os_version;
+        $os_ver = (float) $this->device->device_os_version;
         switch ($this->device->device_os) {
             case 'iOS':
                 return ($os_ver >= 3.0);

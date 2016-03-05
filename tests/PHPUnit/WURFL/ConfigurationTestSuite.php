@@ -21,7 +21,7 @@ class WURFL_ConfigurationTestSuite extends PHPUnit_Framework_TestSuite
         $this->addTestSuite('WURFL_Configuration_ArrayConfigTest');
         $this->addTestSuite('WURFL_Configuration_InMemoryConfigTest');
     }
-    
+
     /**
      * Creates the suite.
      */

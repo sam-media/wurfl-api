@@ -11,55 +11,56 @@
  *
  *
  * @category   WURFL
- * @package	WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 
 /**
  * WebOSUserAgentHandler
- * 
+ *
  *
  * @category   WURFL
- * @package	WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 class WURFL_Handlers_WebOSHandler extends WURFL_Handlers_Handler
 {
-    protected $prefix = "WEBOS";
-    
+    protected $prefix = 'WEBOS';
+
     public static $constantIDs = array(
         'hp_tablet_webos_generic',
         'hp_webos_generic',
     );
-    
+
     public function canHandle($userAgent)
     {
         if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) {
             return false;
         }
+
         return WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array('webOS', 'hpwOS'));
     }
-    
+
     public function applyConclusiveMatch($userAgent)
     {
         $delimiter_idx = strpos($userAgent, WURFL_Constants::RIS_DELIMITER);
         if ($delimiter_idx !== false) {
             $tolerance = $delimiter_idx + strlen(WURFL_Constants::RIS_DELIMITER);
+
             return $this->getDeviceIDFromRIS($userAgent, $tolerance);
         }
-        
+
         return WURFL_Constants::NO_MATCH;
     }
-    
+
     public function applyRecoveryMatch($userAgent)
     {
-        return WURFL_Handlers_Utils::checkIfContains($userAgent, 'hpwOS/3')? 'hp_tablet_webos_generic': 'hp_webos_generic';
+        return WURFL_Handlers_Utils::checkIfContains($userAgent, 'hpwOS/3') ? 'hp_tablet_webos_generic'
+            : 'hp_webos_generic';
     }
-    
+
     public static function getWebOSModelVersion($ua)
     {
         /* Formats:
@@ -68,18 +69,18 @@ class WURFL_Handlers_WebOSHandler extends WURFL_Handlers_Handler
          * Mozilla/5.0 (webOS/1.4.0; U; en-US) AppleWebKit/532.2 (KHTML, like Gecko) Version/1.0 Safari/532.2 Pre/1.0
          */
         if (preg_match('# ([^/]+)/([\d\.]+)$#', $ua, $matches)) {
-            return $matches[1].' '.$matches[2];
+            return $matches[1] . ' ' . $matches[2];
         } else {
-            return null;
+            return;
         }
     }
-    
+
     public static function getWebOSVersion($ua)
     {
         if (preg_match('#(?:hpw|web)OS.(\d)\.#', $ua, $matches)) {
-            return 'webOS'.$matches[1];
+            return 'webOS' . $matches[1];
         } else {
-            return null;
+            return;
         }
     }
 }

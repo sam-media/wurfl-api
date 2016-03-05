@@ -11,35 +11,31 @@
  *
  *
  * @category   WURFL
- * @package	WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 
 /**
  * UcwebU3UserAgentHandler
- * 
+ *
  *
  * @category   WURFL
- * @package	WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 class WURFL_Handlers_UcwebU3Handler extends WURFL_Handlers_Handler
 {
-    protected $prefix = "UCWEBU3";
-    
+    protected $prefix = 'UCWEBU3';
+
     public static $constantIDs = array(
         'generic_ucweb',
-        
         'generic_ucweb_android_ver1',
         'generic_ucweb_android_ver2',
         'generic_ucweb_android_ver3',
         'generic_ucweb_android_ver4',
         'generic_ucweb_android_ver5',
-        
         'apple_iphone_ver1_subuaucweb',
         'apple_iphone_ver2_subuaucweb',
         'apple_iphone_ver3_subuaucweb',
@@ -49,7 +45,6 @@ class WURFL_Handlers_UcwebU3Handler extends WURFL_Handlers_Handler
         'apple_iphone_ver7_subuaucweb',
         'apple_iphone_ver8_subuaucweb',
         'apple_iphone_ver9_subuaucweb',
-
         'apple_ipad_ver1_subuaucweb',
         'apple_ipad_ver1_sub4_subuaucweb',
         'apple_ipad_ver1_sub5_subuaucweb',
@@ -57,82 +52,80 @@ class WURFL_Handlers_UcwebU3Handler extends WURFL_Handlers_Handler
         'apple_ipad_ver1_sub7_subuaucweb',
         'apple_ipad_ver1_sub8_subuaucweb',
         'apple_ipad_ver1_sub9_subuaucweb',
-
         'generic_ms_phone_os8_subuaucweb',
         'generic_ms_phone_os8_1_subuaucweb',
         'generic_ms_phone_os10_subuaucweb',
     );
-    
+
     public function canHandle($userAgent)
     {
         if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) {
             return false;
         }
-        return (WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'Mozilla') && WURFL_Handlers_Utils::checkIfContains($userAgent, 'UCBrowser'));
+
+        return (WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'Mozilla') && WURFL_Handlers_Utils::checkIfContains(
+                $userAgent,
+                'UCBrowser'
+            ));
     }
-    
+
     public function applyConclusiveMatch($userAgent)
     {
         $tolerance = WURFL_Handlers_Utils::toleranceToRisDelimeter($userAgent);
         if ($tolerance !== false) {
             return $this->getDeviceIDFromRIS($userAgent, $tolerance);
         }
+
         return WURFL_Constants::NO_MATCH;
     }
-    
+
     public function applyRecoveryMatch($userAgent)
     {
         // Windows Phone
         if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Windows Phone')) {
-            $version = WURFL_Handlers_WindowsPhoneHandler::getWindowsPhoneVersion($userAgent);
+            $version             = WURFL_Handlers_WindowsPhoneHandler::getWindowsPhoneVersion($userAgent);
             $significant_version = explode('.', $version);
             if ($significant_version[0] !== null) {
                 if ($significant_version[1] === 0) {
-                    $deviceID = 'generic_ms_phone_os'.$significant_version[0].'_subuaucweb';
+                    $deviceID = 'generic_ms_phone_os' . $significant_version[0] . '_subuaucweb';
                 } else {
-                    $deviceID = 'generic_ms_phone_os'.$significant_version[0].'_'.$significant_version[1].'_subuaucweb';
+                    $deviceID = 'generic_ms_phone_os' . $significant_version[0] . '_' . $significant_version[1] . '_subuaucweb';
                 }
 
                 if (in_array($deviceID, self::$constantIDs)) {
                     return $deviceID;
                 }
             }
-            return 'generic_ms_phone_os8_subuaucweb';
-        }
 
-        // Android U3K Mobile + Tablet. This will also handle UCWEB7 recovery and point it to the UCWEB generic IDs.
+            return 'generic_ms_phone_os8_subuaucweb';
+        } // Android U3K Mobile + Tablet. This will also handle UCWEB7 recovery and point it to the UCWEB generic IDs.
         elseif (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Android')) {
-            $version = WURFL_Handlers_AndroidHandler::getAndroidVersion($userAgent, false);
+            $version             = WURFL_Handlers_AndroidHandler::getAndroidVersion($userAgent, false);
             $significant_version = explode('.', $version);
             if ($significant_version[0] !== null) {
-                $deviceID = 'generic_ucweb_android_ver'.$significant_version[0];
+                $deviceID = 'generic_ucweb_android_ver' . $significant_version[0];
                 if (in_array($deviceID, self::$constantIDs)) {
                     return $deviceID;
                 }
             }
 
             return 'generic_ucweb_android_ver1';
-        }
-
-        // iPhone U3K
+        } // iPhone U3K
         elseif (WURFL_Handlers_Utils::checkIfContains($userAgent, 'iPhone;')) {
             if (preg_match('/iPhone OS (\d+)(?:_\d+)?.+ like/', $userAgent, $matches)) {
                 $significant_version = $matches[1];
-                $deviceID = 'apple_iphone_ver'.$significant_version.'_subuaucweb';
+                $deviceID            = 'apple_iphone_ver' . $significant_version . '_subuaucweb';
                 if (in_array($deviceID, self::$constantIDs)) {
                     return $deviceID;
                 }
             }
 
             return 'apple_iphone_ver1_subuaucweb';
-        }
-
-
-        // iPad U3K
+        } // iPad U3K
         elseif (WURFL_Handlers_Utils::checkIfContains($userAgent, 'iPad')) {
             if (preg_match('/CPU OS (\d+)(?:_\d+)?.+like Mac/', $userAgent, $matches)) {
                 $significant_version = $matches[1];
-                $deviceID = 'apple_ipad_ver1_sub'.$significant_version.'_subuaucweb';
+                $deviceID            = 'apple_ipad_ver1_sub' . $significant_version . '_subuaucweb';
                 if (in_array($deviceID, self::$constantIDs)) {
                     return $deviceID;
                 }
@@ -143,17 +136,19 @@ class WURFL_Handlers_UcwebU3Handler extends WURFL_Handlers_Handler
 
         return 'generic_ucweb';
     }
-    
-    public static function getUcBrowserVersion($ua, $use_default=true)
+
+    public static function getUcBrowserVersion($ua, $use_default = true)
     {
         if (preg_match('/UCBrowser\/(\d+)\.\d/', $ua, $matches)) {
             $uc_version = $matches[1];
+
             return $uc_version;
         }
-        return null;
+
+        return;
     }
-    
-    public static function getUcAndroidVersion($ua, $use_default=true)
+
+    public static function getUcAndroidVersion($ua, $use_default = true)
     {
         if (preg_match('/; Adr (\d+\.\d+)\.?/', $ua, $matches)) {
             $u2k_an_version = $matches[1];
@@ -161,19 +156,20 @@ class WURFL_Handlers_UcwebU3Handler extends WURFL_Handlers_Handler
                 return $u2k_an_version;
             }
         }
-        return $use_default? WURFL_Handlers_AndroidHandler::ANDROID_DEFAULT_VERSION: null;
+
+        return $use_default ? WURFL_Handlers_AndroidHandler::ANDROID_DEFAULT_VERSION : null;
     }
-    
+
     //Slightly modified from Android's get model function
-    public static function getUcAndroidModel($ua, $use_default=true)
+    public static function getUcAndroidModel($ua, $use_default = true)
     {
         // Locales are optional for matching model name since UAs like Chrome Mobile do not contain them
         if (!preg_match('#Adr [\d\.]+; [a-zA-Z]+-[a-zA-Z]+; (.*)\) U2#', $ua, $matches)) {
-            return null;
+            return;
         }
-    
+
         $model = $matches[1];
-    
+
         // HTC
         if (strpos($model, 'HTC') !== false) {
             // Normalize "HTC/"
@@ -190,8 +186,9 @@ class WURFL_Handlers_UcwebU3Handler extends WURFL_Handlers_Handler
         $model = preg_replace('#(LG-[A-Za-z0-9\-]+).*$#', '$1', $model);
         // Serial Number
         $model = preg_replace('#\[[\d]{10}\]#', '', $model);
-    
+
         $model = trim($model);
-        return (strlen($model) == 0)? null: $model;
+
+        return (strlen($model) === 0) ? null : $model;
     }
 }

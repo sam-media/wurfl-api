@@ -10,31 +10,32 @@
  * Refer to the COPYING.txt file distributed with this package.
  *
  * @category   WURFL
- * @package	WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
+
 /**
  * Helper to load PHP classes on demand
- * @package	WURFL
  */
 class WURFL_ClassLoader
 {
-    const CLASS_PREFIX = "WURFL_";
+    const CLASS_PREFIX = 'WURFL_';
     private static $classPath;
+
     /**
      * Loads a Class given the class name
      *
      * @param string $className
-     * @return boolean success
+     *
+     * @return bool success
      */
     public static function loadClass($className)
     {
         if ($className === null) {
-            throw new WURFL_WURFLException("Unable To Load Class : " . $className);
+            throw new WURFL_WURFLException('Unable To Load Class : ' . $className);
         }
-        if (substr($className, 0, 6) !== WURFL_ClassLoader::CLASS_PREFIX) {
+        if (substr($className, 0, 6) !== self::CLASS_PREFIX) {
             return false;
         }
         if (!class_exists($className, false)) {
@@ -42,8 +43,9 @@ class WURFL_ClassLoader
                 self::$classPath = dirname(__FILE__) . DIRECTORY_SEPARATOR;
             }
             $classFilePath = str_replace('_', DIRECTORY_SEPARATOR, substr($className, 6)) . '.php';
-            include self::$classPath.$classFilePath;
+            include self::$classPath . $classFilePath;
         }
+
         return false;
     }
 }

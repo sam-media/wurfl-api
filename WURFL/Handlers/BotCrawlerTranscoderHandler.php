@@ -11,26 +11,24 @@
  *
  *
  * @category   WURFL
- * @package	WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 
 /**
  * BotCrawlerTranscoderUserAgentHandler
- * 
+ *
  *
  * @category   WURFL
- * @package	WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 class WURFL_Handlers_BotCrawlerTranscoderHandler extends WURFL_Handlers_Handler
 {
     protected $prefix = 'BOT_CRAWLER_TRANSCODER';
-    
+
     public function canHandle($userAgent)
     {
         return WURFL_Handlers_Utils::isRobot($userAgent);
@@ -38,11 +36,11 @@ class WURFL_Handlers_BotCrawlerTranscoderHandler extends WURFL_Handlers_Handler
 
     public function applyConclusiveMatch($userAgent)
     {
-        if (WURFL_Handlers_Utils::checkIfContains($userAgent, "GoogleImageProxy")) {
+        if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'GoogleImageProxy')) {
             return 'google_image_proxy';
         }
 
-        if (WURFL_Handlers_Utils::checkIfStartsWith($userAgent, "Mozilla")) {
+        if (WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'Mozilla')) {
             $tolerance = WURFL_Handlers_Utils::firstCloseParen($userAgent);
         } else {
             $tolerance = WURFL_Handlers_Utils::firstSlash($userAgent);

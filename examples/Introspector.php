@@ -18,11 +18,11 @@ if (!isset($wurflConfig)) {
     // You must have a $wurflConfig variable with your WURFL API
     // configuration in this block so the Introspector can use it
     ///////////////////////////////////////////////////////////////
-    $resourcesDir = dirname(__FILE__) . '/resources';
-    $persistenceDir = $resourcesDir.'/storage/persistence';
-    $cacheDir = $resourcesDir.'/storage/cache';
-    $wurflConfig = new WURFL_Configuration_InMemoryConfig();
-    $wurflConfig->wurflFile($resourcesDir.'/wurfl.zip');
+    $resourcesDir   = dirname(__FILE__) . '/resources';
+    $persistenceDir = $resourcesDir . '/storage/persistence';
+    $cacheDir       = $resourcesDir . '/storage/cache';
+    $wurflConfig    = new WURFL_Configuration_InMemoryConfig();
+    $wurflConfig->wurflFile($resourcesDir . '/wurfl.zip');
     $wurflConfig->matchMode(WURFL_Configuration_Config::MATCH_MODE_PERFORMANCE);
     //$wurflConfig->matchMode(WURFL_Configuration_Config::MATCH_MODE_ACCURACY);
     $wurflConfig->persistence('file', array('dir' => $persistenceDir));
@@ -36,10 +36,10 @@ if (!isset($wurflConfig)) {
 class ScientiaMobileIntrospector_Controller
 {
     protected $action;
-    protected $http_headers = array();
-    protected $capabilities = array();
+    protected $http_headers    = array();
+    protected $capabilities    = array();
     protected $matcher_history = false;
-    protected $response = array(
+    protected $response        = array(
         'success' => false,
     );
     /**
@@ -66,29 +66,29 @@ class ScientiaMobileIntrospector_Controller
         $this->http_headers = $http_headers;
         $this->processRequestParams($request_params);
         $this->loadWurfl($this->config);
-        $this->page_renderer = new ScientiaMobileIntrospector_HtmlPageRenderer();
+        $this->page_renderer              = new ScientiaMobileIntrospector_HtmlPageRenderer();
         $this->page_renderer->api_version = WURFL_Constants::API_VERSION;
         // Execute action
         $this->{$this->action}();
     }
-    
+
     public function loadWurfl(WURFL_Configuration_Config $config)
     {
         if ($config instanceof WURFL_Configuration_InMemoryConfig) {
-            $config->cache("null");
+            $config->cache('null');
         }
         $wurfl_factory = new WURFL_WURFLManagerFactory($config);
-        $this->wurfl = $wurfl_factory->create();
+        $this->wurfl   = $wurfl_factory->create();
     }
 
     public function handleException(Exception $e)
     {
-        $type = ($e instanceof ErrorException)? 'PHP Error': 'PHP Exception';
-        $message = "$type in ".$e->getFile().' on line '.$e->getLine().': '.$e->getMessage();
+        $type    = ($e instanceof ErrorException) ? 'PHP Error' : 'PHP Exception';
+        $message = "$type in " . $e->getFile() . ' on line ' . $e->getLine() . ': ' . $e->getMessage();
         if ($prev_e = $e->getPrevious()) {
-            $e = $prev_e;
-            $type = ($e instanceof ErrorException)? 'PHP Error': 'PHP Exception';
-            $message .= ";  Previous $type in ".$e->getFile().' on line '.$e->getLine().': '.$e->getMessage();
+            $e    = $prev_e;
+            $type = ($e instanceof ErrorException) ? 'PHP Error' : 'PHP Exception';
+            $message .= ";  Previous $type in " . $e->getFile() . ' on line ' . $e->getLine() . ': ' . $e->getMessage();
         }
         $this->sendFailure($message);
     }
@@ -96,17 +96,17 @@ class ScientiaMobileIntrospector_Controller
     public function handleError($code, $message, $file, $line)
     {
         // If this error is not supposed to be shown, it also should not be caught
-        $is_enabled = (bool)($code & ini_get('error_reporting'));
+        $is_enabled = (bool) ($code & ini_get('error_reporting'));
         if (!$is_enabled) {
             return false;
         }
-        
+
         throw new ErrorException($message, 0, $code, $file, $line);
     }
 
     protected function sendFailure($message)
     {
-        $this->response['success'] = false;
+        $this->response['success']       = false;
         $this->response['error_message'] = $message;
         $this->sendResponse();
     }
@@ -123,14 +123,14 @@ class ScientiaMobileIntrospector_Controller
         foreach ($request_params as $param => $value) {
             $param = strtolower($param);
             $value = trim($value);
-            if (strlen($value) == 0) {
+            if (strlen($value) === 0) {
                 continue;
             }
             switch ($param) {
                 case 'action':
-                    $method_name = 'action'.ucfirst(strtolower($value));
+                    $method_name = 'action' . ucfirst(strtolower($value));
                     if (!method_exists($this, $method_name)) {
-                        throw new Exception("Inalid action specified ".htmlspecialchars($value));
+                        throw new Exception('Inalid action specified ' . htmlspecialchars($value));
                     }
                     $this->action = $method_name;
                     break;
@@ -147,8 +147,8 @@ class ScientiaMobileIntrospector_Controller
                     $this->processCapabilitiesString($value);
                     break;
                 case 'matcher_history':
-                    $value = strtolower($value);
-                    $this->matcher_history = ($value == 'true')? true: false;
+                    $value                 = strtolower($value);
+                    $this->matcher_history = ($value === 'true') ? true : false;
                     break;
             }
         }
@@ -160,14 +160,14 @@ class ScientiaMobileIntrospector_Controller
     protected function processHeadersString($http_headers_string)
     {
         $http_headers_string = preg_replace('/[\n\r]+/', '|', trim($http_headers_string));
-        $headers = explode('|', $http_headers_string);
+        $headers             = explode('|', $http_headers_string);
         foreach ($headers as $header) {
             if (strpos($header, ':') === false) {
                 continue;
             }
             list($key, $value) = explode(':', $header, 2);
             // Convert RFC headers (User-Agent) to PHP format (HTTP_USER_AGENT)
-            $key = 'HTTP_'.strtoupper(str_replace('-', '_', $key));
+            $key                      = 'HTTP_' . strtoupper(str_replace('-', '_', $key));
             $this->http_headers[$key] = trim($value);
         }
     }
@@ -175,7 +175,7 @@ class ScientiaMobileIntrospector_Controller
     protected function processCapabilitiesString($capabilities_string)
     {
         $capabilities_string = preg_replace('/[\n\r]+/', '|', trim($capabilities_string));
-        if (strlen($capabilities_string) == 0) {
+        if (strlen($capabilities_string) === 0) {
             return;
         }
         $this->capabilities = explode('|', $capabilities_string);
@@ -188,10 +188,10 @@ class ScientiaMobileIntrospector_Controller
 
     protected function actionRequest()
     {
-        $request_factory = new WURFL_Request_GenericRequestFactory();
-        $request = $request_factory->createRequest($this->http_headers);
-        $device = $this->wurfl->getDeviceForRequest($request);
-        $this->response['id'] = $device->id;
+        $request_factory              = new WURFL_Request_GenericRequestFactory();
+        $request                      = $request_factory->createRequest($this->http_headers);
+        $device                       = $this->wurfl->getDeviceForRequest($request);
+        $this->response['id']         = $device->id;
         $this->response['user_agent'] = $request->userAgent;
         if (!empty($this->capabilities)) {
             $this->response['capabilities'] = array();
@@ -213,15 +213,15 @@ class ScientiaMobileIntrospector_Controller
 
     protected function actionInfo()
     {
-        $info = $this->wurfl->getWURFLInfo();
-        $config = WURFL_Configuration_ConfigHolder::getWURFLConfig();
+        $info                   = $this->wurfl->getWURFLInfo();
+        $config                 = WURFL_Configuration_ConfigHolder::getWURFLConfig();
         $this->response['info'] = array(
             'api' => 'PHP API',
             'api_version' => WURFL_Constants::API_VERSION,
-            'mode' => 'high-'.$config->matchMode,
+            'mode' => 'high-' . $config->matchMode,
             'wurfl_version' => $info->version,
-            'loaded_patches' => is_array($config->wurflPatches)? implode(',', $config->wurflPatches): '',
-            'platform' => 'PHP '.PHP_VERSION,
+            'loaded_patches' => is_array($config->wurflPatches) ? implode(',', $config->wurflPatches) : '',
+            'platform' => 'PHP ' . PHP_VERSION,
             'app_server' => $_SERVER['SERVER_SOFTWARE'],
             'os' => php_uname(),
         );
@@ -236,7 +236,7 @@ class ScientiaMobileIntrospector_Controller
 
     /**
      * Indents a flat JSON string to make it more human-readable.
-     * @param string $json The original JSON string to process.
+     * @param  string $json The original JSON string to process.
      * @return string Indented version of the original JSON string.
      * @author Unknown: http://recursive-design.com/blog/2008/03/11/format-json-with-php/
      */
@@ -249,36 +249,37 @@ class ScientiaMobileIntrospector_Controller
         $newLine     = "\n";
         $prevChar    = '';
         $outOfQuotes = true;
-        for ($i=0; $i<=$strLen; $i++) {
+        for ($i = 0; $i <= $strLen; ++$i) {
             $char = substr($json, $i, 1);
-            if ($char == '"' && $prevChar != '\\') {
+            if ($char === '"' && $prevChar !== '\\') {
                 $outOfQuotes = !$outOfQuotes;
-            } elseif (($char == '}' || $char == ']') && $outOfQuotes) {
+            } elseif (($char === '}' || $char === ']') && $outOfQuotes) {
                 $result .= $newLine;
-                $pos --;
-                for ($j=0; $j<$pos; $j++) {
+                --$pos;
+                for ($j = 0; $j < $pos; ++$j) {
                     $result .= $indentStr;
                 }
             }
             $result .= $char;
-            if (($char == ',' || $char == '{' || $char == '[') && $outOfQuotes) {
+            if (($char === ',' || $char === '{' || $char === '[') && $outOfQuotes) {
                 $result .= $newLine;
-                if ($char == '{' || $char == '[') {
-                    $pos ++;
+                if ($char === '{' || $char === '[') {
+                    ++$pos;
                 }
-                for ($j = 0; $j < $pos; $j++) {
+                for ($j = 0; $j < $pos; ++$j) {
                     $result .= $indentStr;
                 }
             }
             $prevChar = $char;
         }
+
         return $result;
     }
 }
 
 class ScientiaMobileIntrospector_HtmlPageRenderer
 {
-    public $title = 'WURFL Introspector';
+    public $title       = 'WURFL Introspector';
     public $api_version = '';
     protected function sendHeader()
     {

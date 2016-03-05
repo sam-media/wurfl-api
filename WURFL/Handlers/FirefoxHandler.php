@@ -10,10 +10,9 @@
  * Refer to the COPYING.txt file distributed with this package.
  *
  * @category   WURFL
- * @package	WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 
 /**
@@ -21,19 +20,18 @@
  *
  *
  * @category   WURFL
- * @package	WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 class WURFL_Handlers_FirefoxHandler extends WURFL_Handlers_Handler
 {
-    protected $prefix = "FIREFOX";
-    
+    protected $prefix = 'FIREFOX';
+
     public static $constantIDs = array(
         'firefox',
     );
-    
+
     public function canHandle($userAgent)
     {
         if (WURFL_Handlers_Utils::isMobileBrowser($userAgent)) {
@@ -42,14 +40,15 @@ class WURFL_Handlers_FirefoxHandler extends WURFL_Handlers_Handler
         if (WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array('Tablet', 'Sony', 'Novarra', 'Opera'))) {
             return false;
         }
+
         return WURFL_Handlers_Utils::checkIfContains($userAgent, 'Firefox');
     }
-    
+
     public function applyConclusiveMatch($userAgent)
     {
         return $this->getDeviceIDFromRIS($userAgent, WURFL_Handlers_Utils::indexOfOrLength($userAgent, '.'));
     }
-    
+
     public function applyRecoveryMatch($userAgent)
     {
         return 'firefox';

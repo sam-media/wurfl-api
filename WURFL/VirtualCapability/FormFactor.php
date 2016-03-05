@@ -11,7 +11,6 @@
  *
  *
  * @category   WURFL
- * @package    WURFL_VirtualCapability
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  * @version    $id$
@@ -19,7 +18,6 @@
 
 /**
  * Virtual capability helper
- * @package    WURFL_VirtualCapability
  */
 class WURFL_VirtualCapability_FormFactor extends WURFL_VirtualCapability
 {
@@ -30,7 +28,7 @@ class WURFL_VirtualCapability_FormFactor extends WURFL_VirtualCapability
         'is_tablet',
         'can_assign_phone_number',
     );
-    
+
     public function compute()
     {
         $map = array(
@@ -44,7 +42,7 @@ class WURFL_VirtualCapability_FormFactor extends WURFL_VirtualCapability
         );
 
         foreach ($map as $type => $condition) {
-            if ($condition == "true") {
+            if ($condition === 'true') {
                 return $type;
             }
         }

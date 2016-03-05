@@ -11,38 +11,37 @@
  *
  *
  * @category   WURFL
- * @package	WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 
 /**
  * HTCUserAgentHandler
- * 
+ *
  *
  * @category   WURFL
- * @package	WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 class WURFL_Handlers_HTCHandler extends WURFL_Handlers_Handler
 {
-    protected $prefix = "HTC";
-    
+    protected $prefix = 'HTC';
+
     public static $constantIDs = array(
         'generic_ms_mobile',
     );
-    
+
     public function canHandle($userAgent)
     {
         if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) {
             return false;
         }
+
         return WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array('HTC', 'XV6875'));
     }
-    
+
     public function applyConclusiveMatch($userAgent)
     {
         if (preg_match('#^.*?HTC.+?[/ ;]#', $userAgent, $matches)) {
@@ -51,15 +50,16 @@ class WURFL_Handlers_HTCHandler extends WURFL_Handlers_Handler
         } else {
             $tolerance = strlen($userAgent);
         }
-    
+
         return $this->getDeviceIDFromRIS($userAgent, $tolerance);
     }
-    
+
     public function applyRecoveryMatch($userAgent)
     {
         if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Windows CE;')) {
             return 'generic_ms_mobile';
         }
+
         return WURFL_Constants::NO_MATCH;
     }
 }

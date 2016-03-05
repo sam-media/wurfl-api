@@ -11,13 +11,12 @@
  *
  *
  * @category   WURFL
- * @package	WURFL_VirtualCapability_UserAgentTool
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
+
 /**
- * @package WURFL_VirtualCapability_UserAgentTool
  */
 class WURFL_VirtualCapability_UserAgentTool_PropertyList
 {
@@ -25,10 +24,12 @@ class WURFL_VirtualCapability_UserAgentTool_PropertyList
      * @var WURFL_VirtualCapability_UserAgentTool_Device
      */
     protected $device;
+
     public function __construct($device)
     {
         $this->device = $device;
     }
+
     public function set()
     {
         return true;

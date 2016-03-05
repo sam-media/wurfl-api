@@ -19,7 +19,7 @@ class WURFL_XmlTestSuite extends PHPUnit_Framework_TestSuite
         $this->addTestSuite('WURFL_Xml_DeviceIteratorTest');
         $this->addTestSuite('WURFL_Xml_DevicePatcherTest');
     }
-    
+
     /**
      * Creates the suite.
      */

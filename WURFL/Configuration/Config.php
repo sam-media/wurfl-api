@@ -11,45 +11,45 @@
  *
  *
  * @category   WURFL
- * @package	WURFL_Configuration
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
+
 /**
  * Abstract base class for WURFL Configuration
- * @package	WURFL_Configuration
- * 
- * @property string $configFilePath
- * @property string $configurationFileDir
- * @property boolean $allowReload
- * @property array $capabilityFilter
- * @property string $wurflFile
- * @property array $wurflPatches
- * @property array $persistence 
- * @property array $cache 
- * @property string $logDir
- * @property string $matchMode
+ *
+ *
+ * @property string  $configFilePath
+ * @property string  $configurationFileDir
+ * @property bool $allowReload
+ * @property array   $capabilityFilter
+ * @property string  $wurflFile
+ * @property array   $wurflPatches
+ * @property array   $persistence
+ * @property array   $cache
+ * @property string  $logDir
+ * @property string  $matchMode
  */
 abstract class  WURFL_Configuration_Config
 {
-    const WURFL = "wurfl";
-    const MAIN_FILE = "main-file";
-    const PATCHES = "patches";
-    const PATCH = "patch";
-    const CACHE = "cache";
-    const PERSISTENCE = "persistence";
-    const PROVIDER = "provider";
-    const PARAMS = "params";
-    const LOG_DIR = "logDir";
-    const ALLOW_RELOAD = "allow-reload";
-    const CAPABILITY_FILTER = "capability-filter";
-    const DIR = "dir";
-    const EXPIRATION = "expiration";
-    const MATCH_MODE = "match-mode";
-    const MATCH_MODE_PERFORMANCE = "performance";
-    const MATCH_MODE_ACCURACY = "accuracy";
-    
+    const WURFL                  = 'wurfl';
+    const MAIN_FILE              = 'main-file';
+    const PATCHES                = 'patches';
+    const PATCH                  = 'patch';
+    const CACHE                  = 'cache';
+    const PERSISTENCE            = 'persistence';
+    const PROVIDER               = 'provider';
+    const PARAMS                 = 'params';
+    const LOG_DIR                = 'logDir';
+    const ALLOW_RELOAD           = 'allow-reload';
+    const CAPABILITY_FILTER      = 'capability-filter';
+    const DIR                    = 'dir';
+    const EXPIRATION             = 'expiration';
+    const MATCH_MODE             = 'match-mode';
+    const MATCH_MODE_PERFORMANCE = 'performance';
+    const MATCH_MODE_ACCURACY    = 'accuracy';
+
     /**
      * @var string Path to the configuration file
      */
@@ -88,20 +88,22 @@ abstract class  WURFL_Configuration_Config
     protected $logDir;
     /**
      * Mode of operation (performance or accuracy)
+     *
      * @var string
      */
     protected $matchMode = self::MATCH_MODE_ACCURACY;
-    
+
     /**
      * Creates a new WURFL Configuration object from $configFilePath
-     * @param string $configFilePath Complete filename of configuration file 
+     *
+     * @param string $configFilePath Complete filename of configuration file
      */
     public function __construct($configFilePath)
     {
         if (!file_exists($configFilePath)) {
-            throw new InvalidArgumentException("The configuration file " . $configFilePath . " does not exist.");
+            throw new InvalidArgumentException('The configuration file ' . $configFilePath . ' does not exist.');
         }
-        $this->configFilePath = $configFilePath;
+        $this->configFilePath       = $configFilePath;
         $this->configurationFileDir = dirname($this->configFilePath);
         $this->initialize();
     }
@@ -110,35 +112,38 @@ abstract class  WURFL_Configuration_Config
      * Initialize the Configuration object
      */
     abstract protected function initialize();
-    
+
     /**
-     * Magic Method 
+     * Magic Method
      *
      * @param string $name
+     *
      * @return mixed
      */
     public function __get($name)
     {
         return $this->$name;
     }
-    
+
     /**
      * True if the engine is in High Performance mode
-     * @return boolean
+     *
+     * @return bool
      */
     public function isHighPerformance()
     {
-        return ($this->matchMode == self::MATCH_MODE_PERFORMANCE);
+        return ($this->matchMode === self::MATCH_MODE_PERFORMANCE);
     }
-    
+
     public static function validMatchMode($mode)
     {
-        if ($mode == self::MATCH_MODE_PERFORMANCE || $mode == self::MATCH_MODE_ACCURACY) {
+        if ($mode === self::MATCH_MODE_PERFORMANCE || $mode === self::MATCH_MODE_ACCURACY) {
             return true;
         }
+
         return false;
     }
-    
+
     /**
      * @return string Config file including full path and filename
      */
@@ -146,7 +151,7 @@ abstract class  WURFL_Configuration_Config
     {
         return $this->configFilePath;
     }
-    
+
     /**
      * @return string Config file directory
      */
@@ -154,23 +159,26 @@ abstract class  WURFL_Configuration_Config
     {
         return $this->configurationFileDir;
     }
-    
+
     /**
      * @param string $confLocation
+     *
      * @return bool file exists
      */
     protected function fileExist($confLocation)
     {
         $fullFileLocation = $this->getFullPath($confLocation);
+
         return file_exists($fullFileLocation);
     }
-        
+
     /**
      * Return the full path
      *
      * @param string $fileName
+     *
      * @throws WURFL_WURFLException The configuration file does not exist
-     * @return string File name including full path
+     * @return string               File name including full path
      */
     protected function getFullPath($fileName)
     {
@@ -179,8 +187,8 @@ abstract class  WURFL_Configuration_Config
         if (realpath($fileName) && !(basename($fileName) === $fileName)) {
             return realpath($fileName);
         }
-        $fullName = join(DIRECTORY_SEPARATOR, array($this->configurationFileDir, $fileName));
-        
+        $fullName = implode(DIRECTORY_SEPARATOR, array($this->configurationFileDir, $fileName));
+
         if (file_exists($fullName)) {
             return $fullName;
         }

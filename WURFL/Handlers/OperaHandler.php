@@ -10,10 +10,9 @@
  * Refer to the COPYING.txt file distributed with this package.
  *
  * @category   WURFL
- * @package	WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 
 /**
@@ -21,14 +20,13 @@
  *
  *
  * @category   WURFL
- * @package	WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 class WURFL_Handlers_OperaHandler extends WURFL_Handlers_Handler
 {
-    protected $prefix = "OPERA";
+    protected $prefix = 'OPERA';
 
     public static $constantIDs = array(
         'opera',
@@ -55,23 +53,24 @@ class WURFL_Handlers_OperaHandler extends WURFL_Handlers_Handler
         'opera_29',
         'opera_30',
     );
-    
+
     public function canHandle($userAgent)
     {
         if (WURFL_Handlers_Utils::isMobileBrowser($userAgent)) {
             return false;
         }
+
         return WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array('Opera', 'OPR/'));
     }
-
 
     public function applyConclusiveMatch($userAgent)
     {
         $opera_idx = strpos($userAgent, 'Opera');
         $tolerance = WURFL_Handlers_Utils::indexOfOrLength($userAgent, '.', $opera_idx);
+
         return $this->getDeviceIDFromRIS($userAgent, $tolerance);
     }
-    
+
     public function applyRecoveryMatch($userAgent)
     {
         $opera_version = self::getOperaVersion($userAgent);
@@ -79,18 +78,20 @@ class WURFL_Handlers_OperaHandler extends WURFL_Handlers_Handler
             return 'opera';
         }
         $major_version = floor($opera_version);
-        $id = 'opera_' . $major_version;
+        $id            = 'opera_' . $major_version;
         if (in_array($id, self::$constantIDs)) {
             return $id;
         }
+
         return 'opera';
     }
 
     public static function getOperaVersion($userAgent)
     {
         if (preg_match('#Opera[ /]?(\d+\.\d+)#', $userAgent, $matches)) {
-            return($matches[1]);
+            return ($matches[1]);
         }
-        return null;
+
+        return;
     }
 }

@@ -11,37 +11,37 @@
  *
  *
  * @category   WURFL
- * @package	WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 
 /**
  * AlcatelUserAgentHandler
- * 
+ *
  *
  * @category   WURFL
- * @package	WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 class WURFL_Handlers_AlcatelHandler extends WURFL_Handlers_Handler
 {
-    protected $prefix = "ALCATEL";
-    
+    protected $prefix = 'ALCATEL';
+
     public function canHandle($userAgent)
     {
         if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) {
             return false;
         }
-        return WURFL_Handlers_Utils::checkIfStartsWithCaseInsensitive($userAgent, "alcatel");
+
+        return WURFL_Handlers_Utils::checkIfStartsWithCaseInsensitive($userAgent, 'alcatel');
     }
-    
+
     public function applyConclusiveMatch($userAgent)
     {
         $tolerance = WURFL_Handlers_Utils::firstSlash($userAgent);
+
         return $this->getDeviceIDFromRIS($userAgent, $tolerance);
     }
 }

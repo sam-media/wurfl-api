@@ -11,26 +11,24 @@
  *
  *
  * @category   WURFL
- * @package	WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 
 /**
  * FirefoxOSUserAgentHandler
- * 
+ *
  *
  * @category   WURFL
- * @package	WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 class WURFL_Handlers_FirefoxOSHandler extends WURFL_Handlers_Handler
 {
-    protected $prefix = "FIREFOXOS";
-    
+    protected $prefix = 'FIREFOXOS';
+
     public static $constantIDs = array(
         'generic_firefox_os',
         'firefox_os_ver1',
@@ -49,7 +47,7 @@ class WURFL_Handlers_FirefoxOSHandler extends WURFL_Handlers_Handler
         'firefox_os_ver2_5',
         'firefox_os_ver2_5_tablet',
     );
-    
+
     public static $firefoxOSMap = array(
         '18.0' => '1.0',
         '18.1' => '1.1',
@@ -62,25 +60,30 @@ class WURFL_Handlers_FirefoxOSHandler extends WURFL_Handlers_Handler
         '37.0' => '2.2',
         '43.0' => '2.5',
     );
-    
+
     public function canHandle($userAgent)
     {
-        return (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Firefox/') && WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array('Mobile', 'Tablet')));
+        return (WURFL_Handlers_Utils::checkIfContains(
+                $userAgent,
+                'Firefox/'
+            ) && WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array('Mobile', 'Tablet')));
     }
-    
+
     public function applyConclusiveMatch($userAgent)
     {
-        
+
         // Mozilla/5.0 (Mobile; rv:18.0) Gecko/18.0 Firefox/18.0
         // Mozilla/5.0 (Mobile; ZTEOPEN; rv:18.1) Gecko/18.1 Firefox/18.1
         // Mozilla/5.0 (Tablet; rv:26.0) Gecko/26.0 Firefox/26.0
         if (preg_match('#\brv:\d+\.\d+(.)#', $userAgent, $matches, PREG_OFFSET_CAPTURE)) {
             $tolerance = $matches[1][1] + 1;
+
             return $this->getDeviceIDFromRIS($userAgent, $tolerance);
         }
+
         return WURFL_Constants::NO_MATCH;
     }
-    
+
     public function applyRecoveryMatch($userAgent)
     {
         $version_string = str_replace('.', '_', self::getFirefoxOSVersion($userAgent));
@@ -89,13 +92,14 @@ class WURFL_Handlers_FirefoxOSHandler extends WURFL_Handlers_Handler
         $version_string = str_replace('_0', '', $version_string);
 
         // Calculate WURFL ID
-        $deviceID = 'firefox_os_ver'.$version_string;
+        $deviceID = 'firefox_os_ver' . $version_string;
 
         // Tablet specific recovery logic
         if (strpos($userAgent, 'Tablet') !== false) {
-            if (in_array($deviceID.'_tablet', self::$constantIDs)) {
-                return $deviceID.'_tablet';
+            if (in_array($deviceID . '_tablet', self::$constantIDs)) {
+                return $deviceID . '_tablet';
             }
+
             return 'firefox_os_ver1_3_tablet';
         }
 
@@ -117,9 +121,9 @@ class WURFL_Handlers_FirefoxOSHandler extends WURFL_Handlers_Handler
         // Set appropriate default values if not in OS mapping
         if (strpos($ua, 'Tablet') !== false) {
             // Firefox OS 1.3 is the lowest version of Firefox OS to have a tablet WURFL ID
-            return "1.3";
+            return '1.3';
         }
 
-        return "1.0";
+        return '1.0';
     }
 }

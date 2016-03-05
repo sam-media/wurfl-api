@@ -11,40 +11,39 @@
  *
  *
  * @category   WURFL
- * @package	WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 
 /**
  * OperaMiniOnAndroidUserAgentHandler
- * 
+ *
  *
  * @category   WURFL
- * @package	WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 class WURFL_Handlers_OperaMiniOnAndroidHandler extends WURFL_Handlers_Handler
 {
-    protected $prefix = "OPERAMINIONANDROID";
-    
+    protected $prefix = 'OPERAMINIONANDROID';
+
     public static $constantIDs = array(
         'uabait_opera_mini_android_v50',
         'uabait_opera_mini_android_v51',
         'generic_opera_mini_android_version5',
     );
-    
+
     public function canHandle($userAgent)
     {
         if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) {
             return false;
         }
+
         return WURFL_Handlers_Utils::checkIfContainsAll($userAgent, array('Android', 'Opera Mini'));
     }
-    
+
     public function applyConclusiveMatch($userAgent)
     {
         if (WURFL_Handlers_Utils::checkIfContains($userAgent, ' Build/')) {
@@ -59,18 +58,19 @@ class WURFL_Handlers_OperaMiniOnAndroidHandler extends WURFL_Handlers_Handler
             if (WURFL_Handlers_Utils::checkIfStartsWith($userAgent, $prefix)) {
                 // If RIS returns a non-generic match, return it, else, return the default
                 $tolerance = strlen($prefix);
-                $deviceID = $this->getDeviceIDFromRIS($userAgent, $tolerance);
-                
-                if ($deviceID == WURFL_Constants::NO_MATCH) {
+                $deviceID  = $this->getDeviceIDFromRIS($userAgent, $tolerance);
+
+                if ($deviceID === WURFL_Constants::NO_MATCH) {
                     return $defaultID;
                 }
+
                 return $deviceID;
             }
         }
-        
+
         return WURFL_Constants::NO_MATCH;
     }
-    
+
     public function applyRecoveryMatch($userAgent)
     {
         return 'generic_opera_mini_android_version5';

@@ -10,14 +10,13 @@
  * Refer to the COPYING.txt file distributed with this package.
  *
  * @category   WURFL
- * @package	WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
+
 /**
  * WURFL related utilities
- * @package	WURFL
  */
 class WURFL_WURFLUtils
 {
@@ -26,11 +25,12 @@ class WURFL_WURFLUtils
         'HTTP_X_OPERAMINI_PHONE_UA',
         'HTTP_USER_AGENT',
     );
-    
+
     /**
      * returns the User Agent From $request or empty string if not found
      *
      * @param array $request HTTP Request array (normally $_SERVER)
+     *
      * @return string
      */
     public static function getUserAgent($request, $override_sideloaded_browser_ua = true)
@@ -42,62 +42,67 @@ class WURFL_WURFLUtils
         if (isset($request[WURFL_Constants::UA])) {
             return $request[WURFL_Constants::UA];
         }
-        
+
         foreach (self::$userAgentSearchOrder as $header) {
             if (isset($request[$header])) {
                 return $request[$header];
             }
         }
-        
+
         return '';
     }
 
     /**
      * Returns the UA Profile from the $request
+     *
      * @param array $request HTTP Request array (normally $_SERVER)
+     *
      * @return string UAProf URL
      */
     public static function getUserAgentProfile($request)
     {
-        if (isset($request["HTTP_X_WAP_PROFILE"])) {
-            return $request["HTTP_X_WAP_PROFILE"];
+        if (isset($request['HTTP_X_WAP_PROFILE'])) {
+            return $request['HTTP_X_WAP_PROFILE'];
         }
-        if (isset($request["HTTP_PROFILE"])) {
-            return $request["HTTP_PROFILE"];
+        if (isset($request['HTTP_PROFILE'])) {
+            return $request['HTTP_PROFILE'];
         }
-        if (isset($request["Opt"])) {
-            $opt = $request["Opt"];
-            $regex = "/ns=\\d+/";
-            $matches = array();
+        if (isset($request['Opt'])) {
+            $opt              = $request['Opt'];
+            $regex            = '/ns=\\d+/';
+            $matches          = array();
             $namespaceProfile = null;
             if (preg_match($regex, $opt, $matches)) {
-                $namespaceProfile = substr($matches[0], 2) . "-Profile";
+                $namespaceProfile = substr($matches[0], 2) . '-Profile';
             }
             if ($namespaceProfile !== null && isset($request[$namespaceProfile])) {
                 return $request[$namespaceProfile];
             }
         }
 
-        return null;
+        return;
     }
 
     /**
      * Checks if the requester device is xhtml enabled
      *
      * @param array $request HTTP Request array (normally $_SERVER)
+     *
      * @return bool
      */
     public static function isXhtmlRequester($request)
     {
-        if (!isset($request["accept"])) {
+        if (!isset($request['accept'])) {
             return false;
         }
-        
-        $accept = $request["accept"];
+
+        $accept = $request['accept'];
         if (isset($accept)) {
-            if ((strpos($accept, WURFL_Constants::ACCEPT_HEADER_VND_WAP_XHTML_XML) !== 0)
-            || (strpos($accept, WURFL_Constants::ACCEPT_HEADER_XHTML_XML) !== 0)
-            || (strpos($accept, WURFL_Constants::ACCEPT_HEADER_TEXT_HTML) !== 0)) {
+            if ((strpos($accept, WURFL_Constants::ACCEPT_HEADER_VND_WAP_XHTML_XML) !== 0) || (strpos(
+                        $accept,
+                        WURFL_Constants::ACCEPT_HEADER_XHTML_XML
+                    ) !== 0) || (strpos($accept, WURFL_Constants::ACCEPT_HEADER_TEXT_HTML) !== 0)
+            ) {
                 return true;
             }
         }
@@ -107,7 +112,9 @@ class WURFL_WURFLUtils
 
     /**
      * Returns true if given $deviceID is the 'generic' WURFL device
+     *
      * @param string $deviceID
+     *
      * @return bool
      */
     public static function isGeneric($deviceID)
@@ -115,13 +122,16 @@ class WURFL_WURFLUtils
         if (strcmp($deviceID, WURFL_Constants::GENERIC) === 0) {
             return true;
         }
+
         return false;
     }
-    
+
     /**
      * Recursively merges $array1 with $array2, returning the result
+     *
      * @param array $array1
      * @param array $array2
+     *
      * @return array
      */
     public static function array_merge_recursive_unique($array1, $array2)
@@ -134,14 +144,14 @@ class WURFL_WURFLUtils
                 // IF VALUE EXISTS CHECK IF IT'S AN ARRAY OR A STRING
                 if (!is_array($array2[$k])) {
                     // OVERWRITE IF IT'S A STRING
-                    $array1[$k]=$array2[$k];
+                    $array1[$k] = $array2[$k];
                 } else {
                     // RECURSE IF IT'S AN ARRAY
                     $array1[$k] = self::array_merge_recursive_unique($array1[$k], $array2[$k]);
                 }
             } else {
                 // IF VALUE DOESN'T EXIST IN $array1 USE $array2 VALUE
-                $array1[$k]=$v;
+                $array1[$k] = $v;
             }
         }
         unset($k, $v);

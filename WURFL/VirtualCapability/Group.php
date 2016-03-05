@@ -11,19 +11,18 @@
  *
  *
  * @category   WURFL
- * @package	WURFL_VirtualCapability
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
+
 /**
- * @package WURFL_VirtualCapability
  */
 abstract class WURFL_VirtualCapability_Group
 {
     protected $required_capabilities = array();
-    protected $virtual_capabilities = array();
-    protected $storage = array();
+    protected $virtual_capabilities  = array();
+    protected $storage               = array();
 
     private static $loaded_capabilities;
 
@@ -31,19 +30,19 @@ abstract class WURFL_VirtualCapability_Group
      * @var WURFL_CustomDevice
      */
     protected $device;
-    
+
     /**
      * @var WURFL_Request_GenericRequest
      */
     protected $request;
-    
+
     /**
-     * @param WURFL_CustomDevice $device
+     * @param WURFL_CustomDevice           $device
      * @param WURFL_Request_GenericRequest $request
      */
-    public function __construct($device=null, $request=null)
+    public function __construct($device = null, $request = null)
     {
-        $this->device = $device;
+        $this->device  = $device;
         $this->request = $request;
     }
 
@@ -53,9 +52,11 @@ abstract class WURFL_VirtualCapability_Group
             return true;
         }
         if (self::$loaded_capabilities === null) {
-            self::$loaded_capabilities = $this->device->getRootDevice()->getCapabilityNames();
+            self::$loaded_capabilities = $this->device->getRootDevice()
+                ->getCapabilityNames();
         }
         $missing_caps = array_diff($this->required_capabilities, self::$loaded_capabilities);
+
         return empty($missing_caps);
     }
 

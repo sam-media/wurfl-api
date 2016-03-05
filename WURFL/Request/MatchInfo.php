@@ -10,20 +10,19 @@
  * Refer to the COPYING.txt file distributed with this package.
  *
  * @category   WURFL
- * @package	WURFL_Request
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @author	 Fantayeneh Asres Gizaw
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @author     Fantayeneh Asres Gizaw
+ * @version    $id$
  */
+
 /**
  * Information about the matching process
- * @package	WURFL_Request
  */
 class WURFL_Request_MatchInfo
 {
     /**
-     * @var boolean Response was returned from cache
+     * @var bool Response was returned from cache
      */
     public $from_cache = false;
     /**

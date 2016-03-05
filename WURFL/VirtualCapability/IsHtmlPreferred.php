@@ -11,16 +11,14 @@
  *
  *
  * @category   WURFL
- * @package	WURFL_VirtualCapability
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
+
 /**
  * Virtual capability helper
- * @package	WURFL_VirtualCapability
  */
- 
 class WURFL_VirtualCapability_IsHtmlPreferred extends WURFL_VirtualCapability
 {
     protected $required_capabilities = array('preferred_markup');

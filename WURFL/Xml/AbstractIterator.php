@@ -10,34 +10,34 @@
  * Refer to the COPYING.txt file distributed with this package.
  *
  * @category   WURFL
- * @package	WURFL_Xml
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
- *
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
+
 /**
  * Iterates over a WURFL/Patch XML file
- * @package	WURFL_Xml
  */
-abstract class WURFL_Xml_AbstractIterator implements Iterator
+abstract class WURFL_Xml_AbstractIterator
+    implements Iterator
 {
     /**
      * @var string filename with path to wurfl.xml or patch file
      */
     private $inputFile;
-    
+
     /**
      * @var XMLReader
      */
     protected $xmlReader;
-    
+
     protected $currentElement;
-    
+
     protected $currentElementId;
-    
+
     /**
      * Loads given XML $inputFile
+     *
      * @param string $inputFile
      */
     public function __construct($inputFile)
@@ -48,16 +48,17 @@ abstract class WURFL_Xml_AbstractIterator implements Iterator
         }
         $this->inputFile = WURFL_Xml_Utils::getXMLFile($inputFile);
     }
-    
+
     /**
      * Returns the current XML element
+     *
      * @return XMLReader Current XML element
      */
     public function current()
     {
         return $this->currentElement;
     }
-    
+
     /**
      * Prepare for next XML element
      */
@@ -65,18 +66,20 @@ abstract class WURFL_Xml_AbstractIterator implements Iterator
     {
         $this->currentElement = null;
     }
-    
+
     /**
      * Returns the current element id
+     *
      * @return string Current element id
      */
     public function key()
     {
         return $this->currentElementId;
     }
-    
+
     /**
      * Returns true if the current XML element is valid for processing
+     *
      * @return bool
      */
     public function valid()
@@ -84,31 +87,35 @@ abstract class WURFL_Xml_AbstractIterator implements Iterator
         if ($this->currentElement === null) {
             $this->readNextElement();
         }
-        return $this->currentElement != null;
+
+        return $this->currentElement !== null;
     }
-    
+
     /**
      * Open the input file and position cursor at the beginning
+     *
      * @see $inputFile
      */
     public function rewind()
     {
         $this->xmlReader = new XMLReader();
         $this->xmlReader->open($this->inputFile);
-        $this->currentElement = null;
+        $this->currentElement   = null;
         $this->currentElementId = null;
     }
-    
+
     /**
      * Gets the text value from the current node
+     *
      * @return string value
      */
     public function getTextValue()
     {
         $this->xmlReader->read();
-        return (string)$this->xmlReader->value;
+
+        return (string) $this->xmlReader->value;
     }
-    
+
     /**
      * Move the XMLReader pointer to the next element and read data
      */

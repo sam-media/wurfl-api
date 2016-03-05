@@ -7,7 +7,6 @@ require_once __DIR__ . '/../../CentralTest/CentralTestManager.php';
  */
 class WURFL_CutTest extends PHPUnit_Framework_TestCase
 {
-
     public function testCut()
     {
         $config = $this->makeConfig();
@@ -16,21 +15,21 @@ class WURFL_CutTest extends PHPUnit_Framework_TestCase
 
         $wurfl = $wurflManagerFactory->create();
 
-        $centralTest = new CentralTestManager($wurfl);
+        $centralTest               = new CentralTestManager($wurfl);
         $centralTest->show_success = false;
         ob_start();
         $centralTest->runBatchTest(CentralTestManager::TYPE_ALL);
         ob_end_clean();
 
         $this->assertEquals(
-          0,
-          $centralTest->num_failure,
-          sprintf('Central Unit Tests failed: %d', $centralTest->num_failure)
+            0,
+            $centralTest->num_failure,
+            sprintf('Central Unit Tests failed: %d', $centralTest->num_failure)
         );
     }
 
-
-    private function makeConfig() {
+    private function makeConfig()
+    {
         // Create WURFL Configuration
         $config = new WURFL_Configuration_InMemoryConfig();
 

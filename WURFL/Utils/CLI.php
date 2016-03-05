@@ -7,11 +7,11 @@ class WURFL_Utils_CLI
      */
     protected $arguments;
     /**
-     * @var $wurflManager WURFL_WURFLManager
+     * @var WURFL_WURFLManager
      */
     protected $wurfl;
-    
-    public function __construct($wurfl=null)
+
+    public function __construct($wurfl = null)
     {
         error_reporting(E_ALL);
         $this->arguments = WURFL_Utils_CLI_ArgumentFactory::createArgumentCollection();
@@ -22,14 +22,14 @@ class WURFL_Utils_CLI
             $this->createWurflClass();
         }
     }
-    
+
     public function processArguments()
     {
         if ($this->arguments->isEmpty()) {
             $this->arguments->add(new WURFL_Utils_CLI_Argument('help'));
         }
         foreach ($this->arguments as $arg) {
-            $action = 'action'.ucfirst($arg->command);
+            $action = 'action' . ucfirst($arg->command);
             if (!method_exists($this, $action)) {
                 continue;
             }
@@ -41,7 +41,7 @@ class WURFL_Utils_CLI
     {
         $wurfl_service = new ReflectionProperty('WURFL_WURFLManager', '_wurflService');
         $wurfl_service->setAccessible(true);
-        $service = $wurfl_service->getValue($this->wurfl);
+        $service        = $wurfl_service->getValue($this->wurfl);
         $wurfl_ua_chain = new ReflectionProperty('WURFL_WURFLService', '_userAgentHandlerChain');
         $wurfl_ua_chain->setAccessible(true);
         $ua_chain = $wurfl_ua_chain->getValue($service);
@@ -49,7 +49,7 @@ class WURFL_Utils_CLI
         echo 'PHP API v' . WURFL_Constants::API_VERSION . ' for ' . $this->wurfl->getWURFLInfo()->version . PHP_EOL;
         echo "Bucket\tDeviceId\tNormalizedUserAgent\tOriginaUserAgent" . PHP_EOL;
 
-        $ordered_buckets = [];
+        $ordered_buckets = array();
 
         foreach ($ua_chain->getHandlers() as $userAgentHandler) {
             $ordered_buckets[$this->formatBucketName($userAgentHandler->getName())] = $userAgentHandler;
@@ -76,7 +76,8 @@ class WURFL_Utils_CLI
         }
     }
 
-    private function formatBucketName($handler_name) {
+    private function formatBucketName($handler_name)
+    {
         $name = str_replace('_DEVICEIDS', '', $handler_name);
         $name = ucfirst(strtolower($name));
         switch ($name) {
@@ -168,6 +169,7 @@ class WURFL_Utils_CLI
                 $name = 'WindowsRT';
                 break;
         }
+
         return $name;
     }
 
@@ -179,7 +181,11 @@ class WURFL_Utils_CLI
         //TODO: Add introspector support
         if ($this->arguments->introspector) {
             if ($this->arguments->username && $this->arguments->password) {
-                $centralTest->useIntrospector($this->arguments->introspector->value, $this->arguments->username->value, $this->arguments->password->value);
+                $centralTest->useIntrospector(
+                    $this->arguments->introspector->value,
+                    $this->arguments->username->value,
+                    $this->arguments->password->value
+                );
             } else {
                 $centralTest->useIntrospector($this->arguments->introspector->value);
             }
@@ -195,23 +201,22 @@ class WURFL_Utils_CLI
     protected function actionTestUserAgent(WURFL_Utils_CLI_Argument $arg)
     {
         $device = $this->wurfl->getDeviceForUserAgent($arg->value);
-        echo "Device ID: " . $device->id . PHP_EOL;
-        echo "UA: " . $device->userAgent . PHP_EOL;
-        echo "Fallback: " . $device->fallBack . PHP_EOL;
-        echo "Match Info: " . PHP_EOL;
+        echo 'Device ID: ' . $device->id . PHP_EOL;
+        echo 'UA: ' . $device->userAgent . PHP_EOL;
+        echo 'Fallback: ' . $device->fallBack . PHP_EOL;
+        echo 'Match Info: ' . PHP_EOL;
         var_export($device->getMatchInfo());
         echo PHP_EOL;
-        echo "Virtual Capabilities:" . PHP_EOL;
+        echo 'Virtual Capabilities:' . PHP_EOL;
         var_export($device->getAllVirtualCapabilities());
     }
-    
 
     protected function actionHelp(WURFL_Utils_CLI_Argument $arg)
     {
-        $api_version = WURFL_Constants::API_VERSION;
+        $api_version   = WURFL_Constants::API_VERSION;
         $wurfl_version = $this->wurfl->getWURFLInfo()->version;
-        $last_updated = $this->wurfl->getWURFLInfo()->lastUpdated;
-        $usage =<<<EOL
+        $last_updated  = $this->wurfl->getWURFLInfo()->lastUpdated;
+        $usage         = <<<EOL
 
 ScientiaMobile WURFL PHP API $api_version
 Command Line Interface
@@ -231,7 +236,7 @@ Option                          Meaning
 EOL;
         echo $usage;
     }
-    
+
     protected function requireAdditionalClasses()
     {
         if (!$this->arguments->require) {
@@ -239,7 +244,7 @@ EOL;
         }
         require_once $this->arguments->require->value;
     }
-    
+
     protected function createWurflClass()
     {
         if ($this->arguments->altClass) {
@@ -250,8 +255,8 @@ EOL;
                 throw new WURFL_WURFLCLIInvalidArgumentException("Error: $class_name must extend WURFL_WURFLManager.");
             }
         } else {
-            $persistenceDir = RESOURCES_DIR.'/storage/persistence';
-            $cacheDir = RESOURCES_DIR.'/storage/cache';
+            $persistenceDir = RESOURCES_DIR . '/storage/persistence';
+            $cacheDir       = RESOURCES_DIR . '/storage/cache';
 
             // Create WURFL Configuration
             $wurflConfig = new WURFL_Configuration_InMemoryConfig();
@@ -279,6 +284,7 @@ EOL;
         }
     }
 }
+
 class WURFL_Utils_CLI_ArgumentFactory
 {
     /**
@@ -292,12 +298,15 @@ class WURFL_Utils_CLI_ArgumentFactory
         foreach ($argv as $raw_arg) {
             $collection->add(self::createArgument($raw_arg));
         }
+
         return $collection;
     }
+
     /**
      * @param string $text Raw argument from ARGV
-     * @return WURFL_Utils_CLI_Argument
+     *
      * @throws WURFLCLIInvalidArgumentException
+     * @return WURFL_Utils_CLI_Argument
      */
     public static function createArgument($text)
     {
@@ -310,61 +319,76 @@ class WURFL_Utils_CLI_ArgumentFactory
         }
     }
 }
+
 class WURFL_Utils_CLI_Argument
 {
     public $command;
     public $value;
-    public function __construct($command, $value=null)
+
+    public function __construct($command, $value = null)
     {
         $this->command = $command;
-        $this->value = $value;
+        $this->value   = $value;
     }
 }
-class WURFL_Utils_CLI_Argument_Collection implements Iterator
+
+class WURFL_Utils_CLI_Argument_Collection
+    implements Iterator
 {
     private $arguments = array();
-    private $position = 0;
+    private $position  = 0;
+
     public function __get($key)
     {
         foreach ($this->arguments as $arg) {
-            if ($arg->command == $key) {
+            if ($arg->command === $key) {
                 return $arg;
             }
         }
-        return null;
+
+        return;
     }
+
     public function exists($key)
     {
         return ($this->__get($key) !== null);
     }
+
     public function count()
     {
         return count($this->arguments);
     }
+
     public function isEmpty()
     {
         return ($this->count() === 0);
     }
+
     public function add(WURFL_Utils_CLI_Argument $arg)
     {
         $this->arguments[] = $arg;
     }
+
     public function rewind()
     {
         $this->position = 0;
     }
+
     public function current()
     {
         return $this->arguments[$this->position];
     }
+
     public function key()
     {
         return $this->position;
     }
+
     public function next()
     {
         ++$this->position;
     }
+
     public function valid()
     {
         return isset($this->arguments[$this->position]);

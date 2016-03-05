@@ -10,10 +10,9 @@
  * Refer to the COPYING.txt file distributed with this package.
  *
  * @category   WURFL
- * @package	WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 
 /**
@@ -21,15 +20,14 @@
  *
  *
  * @category   WURFL
- * @package	WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 class WURFL_Handlers_OperaMiniHandler extends WURFL_Handlers_Handler
 {
-    protected $prefix = "OPERA_MINI";
-    
+    protected $prefix = 'OPERA_MINI';
+
     public static $constantIDs = array(
         'Opera Mini/1' => 'generic_opera_mini_version1',
         'Opera Mini/2' => 'generic_opera_mini_version2',
@@ -45,15 +43,19 @@ class WURFL_Handlers_OperaMiniHandler extends WURFL_Handlers_Handler
         if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) {
             return false;
         }
-        return WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array('Opera Mini', 'OperaMini', 'Opera Mobi', 'OperaMobi'));
+
+        return WURFL_Handlers_Utils::checkIfContainsAnyOf(
+            $userAgent,
+            array('Opera Mini', 'OperaMini', 'Opera Mobi', 'OperaMobi')
+        );
     }
-    
+
     public function applyConclusiveMatch($userAgent)
     {
         $model = self::getOperaModel($userAgent, false);
 
         if ($model !== null) {
-            $prefix = $model . WURFL_Constants::RIS_DELIMITER;
+            $prefix    = $model . WURFL_Constants::RIS_DELIMITER;
             $userAgent = $prefix . $userAgent;
 
             return $this->getDeviceIDFromRIS($userAgent, strlen($prefix));
@@ -70,9 +72,10 @@ class WURFL_Handlers_OperaMiniHandler extends WURFL_Handlers_Handler
             }
         }
         $tolerance = WURFL_Handlers_Utils::firstSlash($userAgent);
+
         return $this->getDeviceIDFromRIS($userAgent, $tolerance);
     }
-    
+
     public function applyRecoveryMatch($userAgent)
     {
         foreach (self::$constantIDs as $keyword => $device_id) {
@@ -83,15 +86,18 @@ class WURFL_Handlers_OperaMiniHandler extends WURFL_Handlers_Handler
         if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Opera Mobi')) {
             return 'generic_opera_mini_version4';
         }
+
         return 'generic_opera_mini_version1';
     }
 
     /**
-    * Get the model name from the provided user agent or null if it cannot be determined
-    * @param string $ua
-    * @param bool $use_default
-    * @return false|string
-    */
+     * Get the model name from the provided user agent or null if it cannot be determined
+     *
+     * @param string $ua
+     * @param bool   $use_default
+     *
+     * @return false|string
+     */
     public static function getOperaModel($ua, $use_default = true)
     {
         if (preg_match('#^Opera/[\d\.]+ .+?\d{3}X\d{3} (.+)$#', $ua, $matches)) {

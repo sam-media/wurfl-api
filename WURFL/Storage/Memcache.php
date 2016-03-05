@@ -10,20 +10,19 @@
  * Refer to the COPYING.txt file distributed with this package.
  *
  * @category   WURFL
- * @package	WURFL_Storage
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @author	 Fantayeneh Asres Gizaw
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @author     Fantayeneh Asres Gizaw
+ * @version    $id$
  */
+
 /**
  * WURFL Storage
- * @package	WURFL_Storage
  */
 class WURFL_Storage_Memcache extends WURFL_Storage_Base
 {
-    const EXTENSION_MODULE_NAME = "memcache";
-    const DEFAULT_PORT = 11211;
+    const EXTENSION_MODULE_NAME = 'memcache';
+    const DEFAULT_PORT          = 11211;
 
     /**
      * @var memcache
@@ -35,15 +34,15 @@ class WURFL_Storage_Memcache extends WURFL_Storage_Base
     private $namespace;
 
     private $defaultParams = array(
-        "host" => "127.0.0.1",
-        "port" => "11211",
-        "namespace" => "wurfl",
-        "expiration" => 0
+        'host' => '127.0.0.1',
+        'port' => '11211',
+        'namespace' => 'wurfl',
+        'expiration' => 0,
     );
-    
+
     protected $is_volatile = true;
-    
-    public function __construct($params=array())
+
+    public function __construct($params = array())
     {
         $currentParams = is_array($params) ? array_merge($this->defaultParams, $params) : $this->defaultParams;
         $this->toFields($currentParams);
@@ -59,22 +58,21 @@ class WURFL_Storage_Memcache extends WURFL_Storage_Base
 
     /**
      * Initializes the Memcache Module
-     *
      */
     final public function initialize()
     {
         $this->_ensureModuleExistence();
         $this->memcache = new Memcache();
         // support multiple hosts using semicolon to separate hosts
-        $hosts = explode(";", $this->host);
+        $hosts = explode(';', $this->host);
         // different ports for each hosts the same way
-        $ports = explode(";", $this->port);
+        $ports = explode(';', $this->port);
         if (count($hosts) > 1) {
             if (count($ports) < 1) {
                 $ports = array_fill(0, count($hosts), self::DEFAULT_PORT);
-            } elseif (count($ports) == 1) {
+            } elseif (count($ports) === 1) {
                 // if we have just one port, use it for all hosts
-                $_p = $ports[0];
+                $_p    = $ports[0];
                 $ports = array_fill(0, count($hosts), $_p);
             }
             foreach ($hosts as $i => $host) {
@@ -86,17 +84,22 @@ class WURFL_Storage_Memcache extends WURFL_Storage_Base
         }
     }
 
-    public function save($objectId, $object, $expiration=null)
+    public function save($objectId, $object, $expiration = null)
     {
-        return $this->memcache->set($this->encode($this->namespace, $objectId), $object, 0, (($expiration === null)? $this->expiration: $expiration));
+        return $this->memcache->set(
+            $this->encode($this->namespace, $objectId),
+            $object,
+            0,
+            (($expiration === null) ? $this->expiration : $expiration)
+        );
     }
 
     public function load($objectId)
     {
         $value = $this->memcache->get($this->encode($this->namespace, $objectId));
-        return ($value !== false)? $value: null;
-    }
 
+        return ($value !== false) ? $value : null;
+    }
 
     public function clear()
     {
@@ -110,12 +113,15 @@ class WURFL_Storage_Memcache extends WURFL_Storage_Base
 
     /**
      * Ensures the existence of the the PHP Extension memcache
+     *
      * @throws WURFL_Storage_Exception required extension is unavailable
      */
     private function _ensureModuleExistence()
     {
         if (!extension_loaded(self::EXTENSION_MODULE_NAME)) {
-            throw new WURFL_Storage_Exception("The PHP extension memcache must be installed and loaded in order to use the Memcached.");
+            throw new WURFL_Storage_Exception(
+                'The PHP extension memcache must be installed and loaded in order to use the Memcached.'
+            );
         }
     }
 }

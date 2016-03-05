@@ -11,27 +11,24 @@
  *
  *
  * @category   WURFL
- * @package	WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 
 /**
  * BlackBerryUserAgentHandler
- * 
+ *
  *
  * @category   WURFL
- * @package	WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
-
 class WURFL_Handlers_BlackBerryHandler extends WURFL_Handlers_Handler
 {
-    protected $prefix = "BLACKBERRY";
-    
+    protected $prefix = 'BLACKBERRY';
+
     public static $constantIDs = array(
         '2.' => 'blackberry_generic_ver2',
         '3.2' => 'blackberry_generic_ver3_sub2',
@@ -48,21 +45,25 @@ class WURFL_Handlers_BlackBerryHandler extends WURFL_Handlers_Handler
         '4.' => 'blackberry_generic_ver4',
         '5.' => 'blackberry_generic_ver5',
         '6.' => 'blackberry_generic_ver6',
-    
         '10' => 'blackberry_generic_ver10',
         '10t' => 'blackberry_generic_ver10_tablet',
     );
-    
+
     public function canHandle($userAgent)
     {
         if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) {
             return false;
         }
-        return (WURFL_Handlers_Utils::checkIfContainsCaseInsensitive($userAgent, 'blackberry')
-            || WURFL_Handlers_Utils::checkIfContains($userAgent, '(BB10;')
-            || WURFL_Handlers_Utils::checkIfContains($userAgent, '(PlayBook'));
+
+        return (WURFL_Handlers_Utils::checkIfContainsCaseInsensitive(
+                $userAgent,
+                'blackberry'
+            ) || WURFL_Handlers_Utils::checkIfContains($userAgent, '(BB10;') || WURFL_Handlers_Utils::checkIfContains(
+                $userAgent,
+                '(PlayBook'
+            ));
     }
-        
+
     public function applyConclusiveMatch($userAgent)
     {
         if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'BB10')) {
@@ -76,9 +77,10 @@ class WURFL_Handlers_BlackBerryHandler extends WURFL_Handlers_Handler
         } else {
             $tolerance = WURFL_Handlers_Utils::firstSlash($userAgent);
         }
+
         return $this->getDeviceIDFromRIS($userAgent, $tolerance);
     }
-    
+
     public function applyRecoveryMatch($userAgent)
     {
         // BlackBerry 10
@@ -89,7 +91,7 @@ class WURFL_Handlers_BlackBerryHandler extends WURFL_Handlers_Handler
                 return 'blackberry_generic_ver10_tablet';
             }
         } elseif (WURFL_Handlers_Utils::checkIfContains($userAgent, 'PlayBook')) {
-            return "rim_playbook_ver1";
+            return 'rim_playbook_ver1';
         } elseif (preg_match('#Black[Bb]erry[^/\s]+/(\d.\d)#', $userAgent, $matches)) {
             $version = $matches[1];
             foreach (self::$constantIDs as $vercode => $deviceID) {
@@ -98,6 +100,7 @@ class WURFL_Handlers_BlackBerryHandler extends WURFL_Handlers_Handler
                 }
             }
         }
+
         return WURFL_Constants::NO_MATCH;
     }
 }

@@ -10,25 +10,27 @@
  * Refer to the COPYING.txt file distributed with this package.
  *
  * @category   WURFL
- * @package	WURFL_Request_UserAgentNormalizer_Generic
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @author	 Fantayeneh Asres Gizaw
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @author     Fantayeneh Asres Gizaw
+ * @version    $id$
  */
+
 /**
  * User Agent Normalizer - CFNetwork UA Resolution
- * @package	WURFL_Request_UserAgentNormalizer_Generic
  */
-class WURFL_Request_UserAgentNormalizer_Generic_CFNetwork implements WURFL_Request_UserAgentNormalizer_Interface
+class WURFL_Request_UserAgentNormalizer_Generic_CFNetwork
+    implements WURFL_Request_UserAgentNormalizer_Interface
 {
     public function normalize($userAgent)
     {
         //Match a CFNetwork UA
         if (preg_match("#CFNetwork/(\d+\.?[0-9]*)#", $userAgent, $matches)) {
-            $cfNetworkVersion = sprintf("%.2f", round($matches[1], 2, PHP_ROUND_HALF_DOWN));
+            $cfNetworkVersion = sprintf('%.2f', round($matches[1], 2, PHP_ROUND_HALF_DOWN));
+
             return "CFNetwork/{$cfNetworkVersion} " . $userAgent;
         }
+
         return $userAgent;
     }
 }

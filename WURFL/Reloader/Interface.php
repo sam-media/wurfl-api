@@ -11,15 +11,15 @@
  *
  *
  * @category   WURFL
- * @package	WURFL_Reloader
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  * @deprecated
  */
+
 /**
  * WURFL Reloader Interface
- * @package	WURFL_Reloader
+ *
  * @deprecated
  */
 interface WURFL_Reloader_Interface

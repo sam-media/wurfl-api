@@ -11,13 +11,12 @@
  *
  *
  * @category   WURFL
- * @package	WURFL_VirtualCapability
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
+
 /**
- * @package WURFL_VirtualCapability
  */
 class WURFL_VirtualCapability_DeviceBrowserGroup extends WURFL_VirtualCapability_Group
 {
@@ -36,7 +35,7 @@ class WURFL_VirtualCapability_DeviceBrowserGroup extends WURFL_VirtualCapability
 
     /**
      * @var WURFL_VirtualCapability_UserAgentTool
-    */
+     */
     protected static $ua_tool;
 
     public function compute()
@@ -46,9 +45,29 @@ class WURFL_VirtualCapability_DeviceBrowserGroup extends WURFL_VirtualCapability
         // Run the UserAgentTool to get the relevant details
         $device = self::$ua_tool->getDevice($this->request);
 
-        $this->storage['DeviceOs']            = new WURFL_VirtualCapability_ManualGroupChild($this->device, $this->request, $this, $device->os->name);
-        $this->storage['DeviceOsVersion']    = new WURFL_VirtualCapability_ManualGroupChild($this->device, $this->request, $this, $device->os->version);
-        $this->storage['Browser']            = new WURFL_VirtualCapability_ManualGroupChild($this->device, $this->request, $this, $device->browser->name);
-        $this->storage['BrowserVersion']    = new WURFL_VirtualCapability_ManualGroupChild($this->device, $this->request, $this, $device->browser->version);
+        $this->storage['DeviceOs']        = new WURFL_VirtualCapability_ManualGroupChild(
+            $this->device,
+            $this->request,
+            $this,
+            $device->os->name
+        );
+        $this->storage['DeviceOsVersion'] = new WURFL_VirtualCapability_ManualGroupChild(
+            $this->device,
+            $this->request,
+            $this,
+            $device->os->version
+        );
+        $this->storage['Browser']         = new WURFL_VirtualCapability_ManualGroupChild(
+            $this->device,
+            $this->request,
+            $this,
+            $device->browser->name
+        );
+        $this->storage['BrowserVersion']  = new WURFL_VirtualCapability_ManualGroupChild(
+            $this->device,
+            $this->request,
+            $this,
+            $device->browser->version
+        );
     }
 }

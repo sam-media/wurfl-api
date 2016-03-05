@@ -9,7 +9,6 @@
  *
  * Refer to the COPYING.txt file distributed with this package.
  *
- * @package    WURFL
  * @copyright  ScientiaMobile, Inc.
  * @author     Steve Kamerman <steve AT scientiamobile.com>
  * @author     Luca Corbo <luca.corbo AT scientiamobile.com>
@@ -20,11 +19,11 @@
  * Include required files
  */
 
-define("WURFL_DIR", dirname(__FILE__) . '/../WURFL/');
-define("WURFL_DB_DIR", dirname(__FILE__) . '/../examples/resources/');
-define("RESOURCES_DIR", "/tmp/api1-cli/");
+define('WURFL_DIR', dirname(__FILE__) . '/../WURFL/');
+define('WURFL_DB_DIR', dirname(__FILE__) . '/../examples/resources/');
+define('RESOURCES_DIR', '/tmp/api1-cli/');
 
-require_once WURFL_DIR.'/Application.php';
+require_once WURFL_DIR . '/Application.php';
 
 ini_set('display_errors', 'on');
 ini_set('memory_limit', '512M');

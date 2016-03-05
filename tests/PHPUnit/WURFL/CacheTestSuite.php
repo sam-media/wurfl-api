@@ -19,7 +19,7 @@ class WURFL_CacheTestSuite extends PHPUnit_Framework_TestSuite
         $this->addTestSuite('WURFL_Cache_APCCacheProviderTest');
         $this->addTestSuite('WURFL_Cache_FileCacheProviderTest');
     }
-    
+
     /**
      * Creates the suite.
      */

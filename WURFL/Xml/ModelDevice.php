@@ -11,14 +11,13 @@
  *
  *
  * @category   WURFL
- * @package	WURFL_Xml
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
+
 /**
  * Represents a device in the wurfl xml file
- * @package	WURFL_Xml
  */
 class WURFL_Xml_ModelDevice
 {
@@ -50,62 +49,75 @@ class WURFL_Xml_ModelDevice
      * @var array Mapping of group IDs to capability names
      */
     private $groupIdCapabilitiesNameMap = array();
-    
+
     /**
      * Creates a WURFL Device based on the provided parameters
-     * @param string $id WURFL device ID
+     *
+     * @param string $id                     WURFL device ID
      * @param string $userAgent
      * @param string $fallBack
-     * @param bool $actualDeviceRoot
-     * @param bool $specific
-     * @param array $groupIdCapabilitiesMap
+     * @param bool   $actualDeviceRoot
+     * @param bool   $specific
+     * @param array  $groupIdCapabilitiesMap
      */
-    public function __construct($id, $userAgent, $fallBack, $actualDeviceRoot=false, $specific=false, $groupIdCapabilitiesMap = null)
-    {
-        $this->id = $id;
-        $this->userAgent = $userAgent;
-        $this->fallBack = $fallBack;
-        $this->actualDeviceRoot = $actualDeviceRoot == true ? true : false;
-        $this->specific = $specific == true ? true : false;
+    public function __construct(
+        $id,
+        $userAgent,
+        $fallBack,
+        $actualDeviceRoot = false,
+        $specific = false,
+        $groupIdCapabilitiesMap = null
+    ) {
+        $this->id               = $id;
+        $this->userAgent        = $userAgent;
+        $this->fallBack         = $fallBack;
+        $this->actualDeviceRoot = $actualDeviceRoot === true ? true : false;
+        $this->specific         = $specific === true ? true : false;
         if (is_array($groupIdCapabilitiesMap)) {
             foreach ($groupIdCapabilitiesMap as $groupId => $capabilitiesNameValue) {
                 $this->groupIdCapabilitiesNameMap[$groupId] = array_keys($capabilitiesNameValue);
-                $this->capabilities = array_merge($this->capabilities, $capabilitiesNameValue);
+                $this->capabilities                         = array_merge($this->capabilities, $capabilitiesNameValue);
             }
         }
     }
- 
+
     /**
      * Magic getter method
+     *
      * @param string $name Name of property to get
+     *
      * @return mixed Value of property
      */
     public function __get($name)
     {
         return $this->$name;
     }
-    
+
     /**
      * Returns an array of the device capabilities
+     *
      * @return array Capabilities
      */
     public function getCapabilities()
     {
         return $this->capabilities;
     }
-    
+
     /**
      * Returns the group ID to capability name map
+     *
      * @return array Group ID to capability name map
      */
     public function getGroupIdCapabilitiesNameMap()
     {
         return $this->groupIdCapabilitiesNameMap;
     }
-    
+
     /**
      * Returns the value of the given $capabilityName
+     *
      * @param string $capabilityName
+     *
      * @return mixed Value
      */
     public function getCapability($capabilityName)
@@ -113,26 +125,30 @@ class WURFL_Xml_ModelDevice
         if ($this->isCapabilityDefined($capabilityName)) {
             return $this->capabilities[$capabilityName];
         }
-        return null;
+
+        return;
     }
-    
+
     public function getCapabilityNames()
     {
         return array_keys($this->capabilities);
     }
-    
+
     /**
      * Returns true if the capability exists
+     *
      * @param string $capabilityName
+     *
      * @return bool Defined
      */
     public function isCapabilityDefined($capabilityName)
     {
         return array_key_exists($capabilityName, $this->capabilities);
     }
-    
+
     /**
      * Returns the capabilities by group name
+     *
      * @return array capabilities
      */
     public function getGroupIdCapabilitiesMap()
@@ -143,18 +159,21 @@ class WURFL_Xml_ModelDevice
                 $groupIdCapabilitiesMap[$groupId][$capabilityName] = $this->capabilities[$capabilityName];
             }
         }
+
         return $groupIdCapabilitiesMap;
     }
-    
+
     public function getGroupNames()
     {
         return array_keys($this->groupIdCapabilitiesNameMap);
     }
-    
+
     /**
-     * Returns true if $groupId is defined 
+     * Returns true if $groupId is defined
+     *
      * @param string $groupId
-     * @return boolean
+     *
+     * @return bool
      */
     public function isGroupDefined($groupId)
     {

@@ -12,9 +12,9 @@ class WURFL_Storage_ApcTest extends PHPUnit_Framework_TestCase
     {
         $this->checkDeps();
         $storage = new WURFL_Storage_Apc();
-        $storage->save("foo", "foo");
+        $storage->save('foo', 'foo');
         sleep(2);
-        $this->assertEquals("foo", $storage->load("foo"));
+        $this->assertEquals('foo', $storage->load('foo'));
     }
 
     /*
@@ -36,11 +36,11 @@ class WURFL_Storage_ApcTest extends PHPUnit_Framework_TestCase
     {
         $this->checkDeps();
         $storage = new WURFL_Storage_Apc(array());
-        $storage->save("key1", "item1");
-        $storage->save("key2", "item2");
+        $storage->save('key1', 'item1');
+        $storage->save('key2', 'item2');
         $storage->clear();
 
-        $this->assertThanNoElementsAreInCache(array("key1", "key2"), $storage);
+        $this->assertThanNoElementsAreInCache(array('key1', 'key2'), $storage);
     }
 
     private function assertThanNoElementsAreInCache($keys = array(), WURFL_Storage_Apc $storage)
@@ -49,11 +49,13 @@ class WURFL_Storage_ApcTest extends PHPUnit_Framework_TestCase
             $this->assertNull($storage->load($key));
         }
     }
-    
+
     private function checkDeps()
     {
         if (!extension_loaded('apc') || boolval(ini_get('apc.enable_cli')) === false) {
-            $this->markTestSkipped("PHP extension 'apc' must be loaded and enabled for CLI to run this test (http://www.php.net/manual/en/apc.configuration.php#ini.apc.enable-cli).");
+            $this->markTestSkipped(
+                "PHP extension 'apc' must be loaded and enabled for CLI to run this test (http://www.php.net/manual/en/apc.configuration.php#ini.apc.enable-cli)."
+            );
         }
     }
 }

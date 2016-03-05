@@ -11,11 +11,11 @@
  *
  *
  * @category   WURFL
- * @package	WURFL_Exception
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
+
 /**
  * WURFL generic consistency exception.
  *

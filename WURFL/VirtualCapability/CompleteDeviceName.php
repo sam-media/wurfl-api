@@ -11,7 +11,6 @@
  *
  *
  * @category   WURFL
- * @package    WURFL_VirtualCapability
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  * @version    $id$
@@ -19,7 +18,6 @@
 
 /**
  * Virtual capability helper
- * @package    WURFL_VirtualCapability
  */
 class WURFL_VirtualCapability_CompleteDeviceName extends WURFL_VirtualCapability
 {

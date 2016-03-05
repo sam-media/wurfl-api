@@ -10,30 +10,31 @@
  * Refer to the COPYING.txt file distributed with this package.
  *
  * @category   WURFL
- * @package	WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
+
 /**
  * WURFL File Utilities
- * @package	WURFL
  */
 class WURFL_FileUtils
 {
     /**
      * Create a directory structure recursiveley
+     *
      * @param string $path
-     * @param int $mode
+     * @param int    $mode
      */
-    public static function mkdir($path, $mode=0755)
+    public static function mkdir($path, $mode = 0755)
     {
         @mkdir($path, $mode, true);
     }
-    
+
     /**
      * Recursiely remove all files from the given directory NOT including the
      * specified directory itself
+     *
      * @param string $path Directory to be cleaned out
      */
     public static function rmdirContents($path)
@@ -52,43 +53,49 @@ class WURFL_FileUtils
             }
         }
     }
-    
+
     /**
      * Alias to rmdirContents()
+     *
      * @param string $path Directory to be cleaned out
+     *
      * @see rmdirContents()
      */
     public static function rmdir($path)
     {
         self::rmdirContents($path);
     }
-    
+
     /**
      * Returns the unserialized contents of the given $file
+     *
      * @param string $file filename
+     *
      * @return mixed Unserialized data or null if file does not exist
      */
     public static function read($file)
     {
         if (!is_readable($file)) {
-            return null;
+            return;
         }
         $data = @file_get_contents($file);
         if ($data === false) {
-            return null;
+            return;
         }
         $value = @unserialize($data);
         if ($value === false) {
-            return null;
+            return;
         }
+
         return $value;
     }
-    
+
     /**
-     * Serializes and saves $data in the file $path and sets the last modified time to $mtime  
-     * @param string $path filename to save data in
-     * @param mixed $data data to be serialized and saved
-     * @param integer $mtime Last modified date in epoch time
+     * Serializes and saves $data in the file $path and sets the last modified time to $mtime
+     *
+     * @param string $path  filename to save data in
+     * @param mixed  $data  data to be serialized and saved
+     * @param int    $mtime Last modified date in epoch time
      */
     public static function write($path, $data, $mtime = 0)
     {
@@ -96,38 +103,44 @@ class WURFL_FileUtils
             self::mkdir(dirname($path), 0755, true);
         }
         if (file_put_contents($path, serialize($data), LOCK_EX)) {
-            $mtime = ($mtime > 0)? $mtime: time();
+            $mtime = ($mtime > 0) ? $mtime : time();
             @chmod($path, 0777);
             @touch($path, $mtime);
         }
     }
-    
+
     /**
      * Combines given array of $strings into a proper filesystem path
+     *
      * @param array $strings Array of (string)path members
-     * @return string Proper filesystem path 
+     *
+     * @return string Proper filesystem path
      */
     public static function join($strings = array())
     {
         return implode(DIRECTORY_SEPARATOR, $strings);
     }
-    
+
     /**
      * Returns a directory for storing temporary files
-     * @return string 
+     *
+     * @return string
      */
     public static function getTempDir()
     {
         $temp_dir = ini_get('upload_tmp_dir');
         if (!$temp_dir) {
-            $temp_dir = function_exists('sys_get_temp_dir')? sys_get_temp_dir(): '/tmp';
+            $temp_dir = function_exists('sys_get_temp_dir') ? sys_get_temp_dir() : '/tmp';
         }
+
         return realpath($temp_dir);
     }
-    
+
     /**
      * Cleans the filename by removing duplicate directory separators and normalizing them for the current OS
+     *
      * @param string $fileName
+     *
      * @return string
      */
     public static function cleanFilename($fileName)

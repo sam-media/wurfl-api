@@ -11,36 +11,37 @@
  *
  *
  * @category   WURFL
- * @package	WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 
 /**
  * UbuntuTouchOSUserAgentHandler
- * 
+ *
  *
  * @category   WURFL
- * @package	WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 class WURFL_Handlers_UbuntuTouchOSHandler extends WURFL_Handlers_Handler
 {
-    protected $prefix = "UbuntuTouchOS";
-    
+    protected $prefix = 'UbuntuTouchOS';
+
     public static $constantIDs = array(
         'generic_ubuntu_touch_os',
         'generic_ubuntu_touch_os_tablet',
     );
-    
+
     public function canHandle($userAgent)
     {
-        return (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Ubuntu') && WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array('Mobile', 'Tablet')));
+        return (WURFL_Handlers_Utils::checkIfContains(
+                $userAgent,
+                'Ubuntu'
+            ) && WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array('Mobile', 'Tablet')));
     }
-    
+
     public function applyConclusiveMatch($userAgent)
     {
         // Mozilla/5.0 (Ubuntu; Mobile) WebKit/537.21
@@ -57,8 +58,10 @@ class WURFL_Handlers_UbuntuTouchOSHandler extends WURFL_Handlers_Handler
         if ($idx !== false) {
             // Match to the end of the search string
             $tolerance = strlen($idx + strlen($search));
+
             return $this->getDeviceIDFromRIS($userAgent, $tolerance);
         }
+
         return WURFL_Constants::NO_MATCH;
     }
 

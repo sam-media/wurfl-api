@@ -23,7 +23,7 @@ class WURFL_HandlersTestSuite extends PHPUnit_Framework_TestSuite
         $this->addTestSuite('WURFL_Handlers_MSIEHandlerTest');
         $this->addTestSuite('WURFL_Handlers_UtilsTest');
     }
-    
+
     /**
      * Creates the suite.
      */

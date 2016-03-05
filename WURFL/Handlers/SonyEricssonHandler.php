@@ -11,10 +11,9 @@
  *
  *
  * @category   WURFL
- * @package	WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 
 /**
@@ -22,30 +21,32 @@
  *
  *
  * @category   WURFL
- * @package	WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 class WURFL_Handlers_SonyEricssonHandler extends WURFL_Handlers_Handler
 {
-    protected $prefix = "SONY_ERICSSON";
-    
+    protected $prefix = 'SONY_ERICSSON';
+
     public function canHandle($userAgent)
     {
         if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) {
             return false;
         }
+
         return WURFL_Handlers_Utils::checkIfContains($userAgent, 'Sony');
     }
-    
+
     public function applyConclusiveMatch($userAgent)
     {
         if (WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'SonyEricsson')) {
             $tolerance = WURFL_Handlers_Utils::firstSlash($userAgent) - 2;
+
             return $this->getDeviceIDFromRIS($userAgent, $tolerance);
         }
         $tolerance = WURFL_Handlers_Utils::secondSlash($userAgent);
+
         return $this->getDeviceIDFromRIS($userAgent, $tolerance);
     }
 }

@@ -11,28 +11,26 @@
  *
  *
  * @category   WURFL
- * @package	WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
- * @author Steve Kamerman <steve AT scientiamobile.com>
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @author     Steve Kamerman <steve AT scientiamobile.com>
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 
 /**
  * TizenUserAgentHandler
- * 
+ *
  *
  * @category   WURFL
- * @package	WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
- * @author Steve Kamerman <steve AT scientiamobile.com>
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @author     Steve Kamerman <steve AT scientiamobile.com>
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 class WURFL_Handlers_TizenHandler extends WURFL_Handlers_Handler
 {
-    protected $prefix = "Tizen";
-    
+    protected $prefix = 'Tizen';
+
     public static $constantIDs = array(
         'generic_tizen',
         'generic_tizen_ver1_0',
@@ -41,18 +39,21 @@ class WURFL_Handlers_TizenHandler extends WURFL_Handlers_Handler
         'generic_tizen_ver2_2',
         'generic_tizen_ver2_3',
     );
-    
+
     public function canHandle($userAgent)
     {
-        return (WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'Mozilla') && WURFL_Handlers_Utils::checkIfContains($userAgent, 'Tizen'));
+        return (WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'Mozilla') && WURFL_Handlers_Utils::checkIfContains(
+                $userAgent,
+                'Tizen'
+            ));
     }
-    
+
     public function applyConclusiveMatch($userAgent)
     {
         // Mozilla/5.0 (Linux; Tizen 2.2; SAMSUNG SM-Z910F) AppleWebKit/537.3 (KHTML, like Gecko) Version/2.2 Mobile Safari/537.3
         //                                                  ^ RIS tolerance
         $search = 'AppleWebKit/';
-        $idx = strpos($userAgent, $search);
+        $idx    = strpos($userAgent, $search);
         if ($idx !== false) {
             // Match to the end of the search string
             return $this->getDeviceIDFromRIS($userAgent, $idx + strlen($search));
@@ -64,11 +65,12 @@ class WURFL_Handlers_TizenHandler extends WURFL_Handlers_Handler
     public function applyRecoveryMatch($userAgent)
     {
         $version = self::getTizenVersion($userAgent);
-        $version = "generic_tizen_ver".str_replace(".", "_", $version);
+        $version = 'generic_tizen_ver' . str_replace('.', '_', $version);
         if (in_array($version, self::$constantIDs)) {
             return $version;
         }
-        return "generic_tizen";
+
+        return 'generic_tizen';
     }
 
     public static $validTizenVersions = array('1.0', '2.0', '2.1', '2.2', '2.3');
@@ -82,6 +84,6 @@ class WURFL_Handlers_TizenHandler extends WURFL_Handlers_Handler
         }
 
         //Default
-        return "1.0";
+        return '1.0';
     }
 }

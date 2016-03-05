@@ -7,19 +7,19 @@
 ini_set('display_errors', 'on');
 error_reporting(E_ALL);
 
-$wurflDir = dirname(__FILE__) . '/../../../WURFL';
+$wurflDir     = dirname(__FILE__) . '/../../../WURFL';
 $resourcesDir = dirname(__FILE__) . '/../../resources';
 
-require_once $wurflDir.'/Application.php';
+require_once $wurflDir . '/Application.php';
 
-$persistenceDir = $resourcesDir.'/storage/persistence';
-$cacheDir = $resourcesDir.'/storage/cache';
+$persistenceDir = $resourcesDir . '/storage/persistence';
+$cacheDir       = $resourcesDir . '/storage/cache';
 
 // Create WURFL Configuration
 $wurflConfig = new WURFL_Configuration_InMemoryConfig();
 
 // Set location of the WURFL File
-$wurflConfig->wurflFile($resourcesDir.'/wurfl.zip');
+$wurflConfig->wurflFile($resourcesDir . '/wurfl.zip');
 
 // Set the match mode for the API ('performance' or 'accuracy')
 $wurflConfig->matchMode('performance');

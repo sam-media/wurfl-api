@@ -1,4 +1,5 @@
 <?php
+
 /**
  * test case
  */
@@ -8,6 +9,7 @@ class WURFL_TestUtils
      * Load Test File containing user-agent -> deviceids associations
      *
      * @param string $fileName
+     *
      * @return array
      */
     public static function loadUserAgentsWithIdFromFile($filePath)
@@ -15,66 +17,62 @@ class WURFL_TestUtils
         if (!file_exists($filePath)) {
             throw new InvalidArgumentException("File path $filePath does not exist!!!");
         }
-                
-        $testData = array();
-        $file_handle = fopen($filePath, "r");
-        
-        while (! feof($file_handle)) {
+
+        $testData    = array();
+        $file_handle = fopen($filePath, 'r');
+
+        while (!feof($file_handle)) {
             $line = fgets($file_handle);
             self::updateTestData($testData, $line);
         }
         fclose($file_handle);
-        
+
         return $testData;
     }
-    
-    
+
     public static function loadUserAgentsAsArray($filePath)
     {
         if (!file_exists($filePath)) {
             throw new InvalidArgumentException("File path $filePath does not exist!!!");
         }
-        
-        $testData = array();
-        $file_handle = fopen($filePath, "r");
-        
-        while (! feof($file_handle)) {
-            $line = fgets($file_handle);
-            $isTestData = ((strpos($line, "#") === false) && strcmp($line, "\n") != 0);
-            if ($isTestData) {
-                $userAgentArray = array();
-                $userAgentArray[] = $line;
-                $testData[] = $userAgentArray;
-            }
-        }
-        fclose($file_handle);
-        
-        return $testData;
-    }
-    
-        
-    
-    public static function loadTestData($fileName)
-    {
-        $testData = array();
-        $file_handle = fopen($fileName, "r");
+
+        $testData    = array();
+        $file_handle = fopen($filePath, 'r');
+
         while (!feof($file_handle)) {
-            $line = fgets($file_handle);
-            if (strpos($line, "#") === false && strcmp($line, "\n") != 0) {
-                $testData[] = explode("=", trim($line));
+            $line       = fgets($file_handle);
+            $isTestData = ((strpos($line, '#') === false) && strcmp($line, "\n") !== 0);
+            if ($isTestData) {
+                $userAgentArray   = array();
+                $userAgentArray[] = $line;
+                $testData[]       = $userAgentArray;
             }
         }
         fclose($file_handle);
 
         return $testData;
     }
-    
-    
+
+    public static function loadTestData($fileName)
+    {
+        $testData    = array();
+        $file_handle = fopen($fileName, 'r');
+        while (!feof($file_handle)) {
+            $line = fgets($file_handle);
+            if (strpos($line, '#') === false && strcmp($line, "\n") !== 0) {
+                $testData[] = explode('=', trim($line));
+            }
+        }
+        fclose($file_handle);
+
+        return $testData;
+    }
+
     private static function updateTestData(&$testData, $line)
     {
-        $isTestData = ((strpos($line, "#") === false) && strcmp($line, "\n") != 0);
+        $isTestData = ((strpos($line, '#') === false) && strcmp($line, "\n") !== 0);
         if ($isTestData) {
-            $testData[] = explode("=", trim($line));
+            $testData[] = explode('=', trim($line));
         }
     }
 }

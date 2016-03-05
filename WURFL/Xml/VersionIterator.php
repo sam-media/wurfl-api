@@ -10,25 +10,23 @@
  * Refer to the COPYING.txt file distributed with this package.
  *
  * @category   WURFL
- * @package	WURFL_Xml
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
- *
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
+
 /**
  * Extracts version information from XML file
- * @package	WURFL_Xml
  */
 class WURFL_Xml_VersionIterator extends WURFL_Xml_AbstractIterator
 {
     private $found_version_info = false;
-    
+
     public function readNextElement()
     {
-        $version = "";
-        $lastUpdated = "";
-        $officialURL = "";
+        $version     = '';
+        $lastUpdated = '';
+        $officialURL = '';
         while ($this->xmlReader->read()) {
             $nodeName = $this->xmlReader->name;
             switch ($this->xmlReader->nodeType) {
@@ -49,15 +47,15 @@ class WURFL_Xml_VersionIterator extends WURFL_Xml_AbstractIterator
                     switch ($nodeName) {
                         case 'version':
                             $this->found_version_info = true;
-                            $this->currentElement = new WURFL_Xml_Info($version, $lastUpdated, $officialURL);
+                            $this->currentElement     = new WURFL_Xml_Info($version, $lastUpdated, $officialURL);
+
                             return;
                     }
                     break;
             }
         } // end of while
     }
-    
-    
+
     public function valid()
     {
         // We're finished with the version node, nothing else to do
@@ -67,6 +65,7 @@ class WURFL_Xml_VersionIterator extends WURFL_Xml_AbstractIterator
         if ($this->currentElement === null) {
             $this->readNextElement();
         }
-        return $this->currentElement != null;
+
+        return $this->currentElement !== null;
     }
 }

@@ -11,10 +11,9 @@
  *
  *
  * @category   WURFL
- * @package	WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 
 /**
@@ -22,15 +21,14 @@
  *
  *
  * @category   WURFL
- * @package	WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 class WURFL_Handlers_AppleHandler extends WURFL_Handlers_Handler
 {
-    protected $prefix = "APPLE";
-    
+    protected $prefix = 'APPLE';
+
     public static $constantIDs = array(
         'apple_ipod_touch_ver1',
         'apple_ipod_touch_ver2',
@@ -41,7 +39,6 @@ class WURFL_Handlers_AppleHandler extends WURFL_Handlers_Handler
         'apple_ipod_touch_ver7',
         'apple_ipod_touch_ver8',
         'apple_ipod_touch_ver9',
-
         'apple_ipad_ver1',
         'apple_ipad_ver1_subua32',
         'apple_ipad_ver1_sub42',
@@ -50,7 +47,6 @@ class WURFL_Handlers_AppleHandler extends WURFL_Handlers_Handler
         'apple_ipad_ver1_sub7',
         'apple_ipad_ver1_sub8',
         'apple_ipad_ver1_sub9',
-
         'apple_iphone_ver1',
         'apple_iphone_ver2',
         'apple_iphone_ver3',
@@ -60,7 +56,6 @@ class WURFL_Handlers_AppleHandler extends WURFL_Handlers_Handler
         'apple_iphone_ver7',
         'apple_iphone_ver8',
         'apple_iphone_ver9',
-
         //iOS HW IDs
         'apple_ipad_ver1_subhw1',
         'apple_ipad_ver1_sub42_subhw1',
@@ -169,7 +164,6 @@ class WURFL_Handlers_AppleHandler extends WURFL_Handlers_Handler
         'apple_ipad_ver1_sub9_3_subhwmini3',
         'apple_ipad_ver1_sub9_3_subhwmini4',
         'apple_ipad_ver1_sub9_3_subhwpro',
-
         'apple_iphone_ver1_subhw2g',
         'apple_iphone_ver2_subhw2g',
         'apple_iphone_ver2_subhw3g',
@@ -286,7 +280,6 @@ class WURFL_Handlers_AppleHandler extends WURFL_Handlers_Handler
         'apple_iphone_ver9_3_subhw6plus',
         'apple_iphone_ver9_3_subhw6s',
         'apple_iphone_ver9_3_subhw6splus',
-
         'apple_ipod_touch_ver1_subhw1',
         'apple_ipod_touch_ver2_subhw1',
         'apple_ipod_touch_ver2_1_subhw1',
@@ -333,100 +326,110 @@ class WURFL_Handlers_AppleHandler extends WURFL_Handlers_Handler
         'apple_ipod_touch_ver9_3_subhw5',
         'apple_ipod_touch_ver9_3_subhw6',
     );
-    
+
     // iOS hardware mappings
     public static $iphoneDeviceMap = array(
-            '1,1' => '2g',
-            '1,2' => '3g',
-            '2,1' => '3gs',
-            '3,1' => '4',
-            '3,2' => '4',
-            '3,3' => '4',
-            '4,1' => '4s',
-            '5,1' => '5',
-            '5,2' => '5',
-            '5,3' => '5c',
-            '5,4' => '5c',
-            '6,1' => '5s',
-            '6,2' => '5s',
-            '7,1' => '6plus',
-            '7,2' => '6',
-            '8,1' => '6s',
-            '8,2' => '6splus',
+        '1,1' => '2g',
+        '1,2' => '3g',
+        '2,1' => '3gs',
+        '3,1' => '4',
+        '3,2' => '4',
+        '3,3' => '4',
+        '4,1' => '4s',
+        '5,1' => '5',
+        '5,2' => '5',
+        '5,3' => '5c',
+        '5,4' => '5c',
+        '6,1' => '5s',
+        '6,2' => '5s',
+        '7,1' => '6plus',
+        '7,2' => '6',
+        '8,1' => '6s',
+        '8,2' => '6splus',
     );
-    
+
     public static $ipadDeviceMap = array(
-            '1,1' => '1',
-            '2,1' => '2',
-            '2,2' => '2',
-            '2,3' => '2',
-            '2,4' => '2',
-            '2,5' => 'mini1',
-            '2,6' => 'mini1',
-            '2,7' => 'mini1',
-            '3,1' => '3',
-            '3,2' => '3',
-            '3,3' => '3',
-            '3,4' => '4',
-            '3,5' => '4',
-            '3,6' => '4',
-            '4,1' => 'air',
-            '4,2' => 'air',
-            '4,3' => 'air',
-            '4,4' => 'mini2',
-            '4,5' => 'mini2',
-            '4,6' => 'mini2',
-            '4,7' => 'mini3',
-            '4,8' => 'mini3',
-            '4,9' => 'mini3',
-            '5,3' => 'air2',
-            '5,4' => 'air2',
-            '5,1' => 'mini4',
-            '5,2' => 'mini4',
-            '6,7' => 'pro',
-            '6,8' => 'pro',
+        '1,1' => '1',
+        '2,1' => '2',
+        '2,2' => '2',
+        '2,3' => '2',
+        '2,4' => '2',
+        '2,5' => 'mini1',
+        '2,6' => 'mini1',
+        '2,7' => 'mini1',
+        '3,1' => '3',
+        '3,2' => '3',
+        '3,3' => '3',
+        '3,4' => '4',
+        '3,5' => '4',
+        '3,6' => '4',
+        '4,1' => 'air',
+        '4,2' => 'air',
+        '4,3' => 'air',
+        '4,4' => 'mini2',
+        '4,5' => 'mini2',
+        '4,6' => 'mini2',
+        '4,7' => 'mini3',
+        '4,8' => 'mini3',
+        '4,9' => 'mini3',
+        '5,3' => 'air2',
+        '5,4' => 'air2',
+        '5,1' => 'mini4',
+        '5,2' => 'mini4',
+        '6,7' => 'pro',
+        '6,8' => 'pro',
     );
-    
+
     public static $ipodDeviceMap = array(
-            '1,1' => '1',
-            '2,1' => '2',
-            '3,1' => '3',
-            '4,1' => '4',
-            '5,1' => '5',
-            '7,1' => '6',
+        '1,1' => '1',
+        '2,1' => '2',
+        '3,1' => '3',
+        '4,1' => '4',
+        '5,1' => '5',
+        '7,1' => '6',
     );
-    
+
     public function canHandle($userAgent)
     {
         if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) {
             return false;
         }
-        return (WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array('iPhone', 'iPod', 'iPad'))) && !WURFL_Handlers_Utils::checkIfContains($userAgent, 'Symbian');
+
+        return (WURFL_Handlers_Utils::checkIfContainsAnyOf(
+            $userAgent,
+            array('iPhone', 'iPod', 'iPad')
+        )) && !WURFL_Handlers_Utils::checkIfContains($userAgent, 'Symbian');
     }
-    
+
     public function applyConclusiveMatch($userAgent)
     {
 
         //Normalize AFNetworking and server-bag UAs
         //Pippo/2.4.3 (iPad; iOS 8.0.2; Scale/2.00)
         //server-bag [iPhone OS,8.2,12D508,iPhone4,1]
-        //iPhone4,1/8.2 (12D508)		
-        if (preg_match('#^[^/]+?/[\d\.]+? \(i[A-Za-z]+; iOS ([\d\.]+); Scale/[\d\.]+\)#', $userAgent, $matches)
-          || preg_match('#^server-bag \[iPhone OS,([\d\.]+),#', $userAgent, $matches)
-          || preg_match('#^i(?:Phone|Pad|Pod)\d+?,\d+?/([\d\.]+)#', $userAgent, $matches)
+        //iPhone4,1/8.2 (12D508)
+        if (preg_match(
+                '#^[^/]+?/[\d\.]+? \(i[A-Za-z]+; iOS ([\d\.]+); Scale/[\d\.]+\)#',
+                $userAgent,
+                $matches
+            ) || preg_match('#^server-bag \[iPhone OS,([\d\.]+),#', $userAgent, $matches) || preg_match(
+                '#^i(?:Phone|Pad|Pod)\d+?,\d+?/([\d\.]+)#',
+                $userAgent,
+                $matches
+            )
         ) {
-            $matches[1] = str_replace(".", "_", $matches[1]);
-            if (WURFL_Handlers_Utils::checkIfContains($userAgent, "iPad")) {
+            $matches[1] = str_replace('.', '_', $matches[1]);
+            if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'iPad')) {
                 $userAgent = "Mozilla/5.0 (iPad; CPU OS {$matches[1]} like Mac OS X) AppleWebKit/538.39.2 (KHTML, like Gecko) Version/7.0 Mobile/12A4297e Safari/9537.53 " . $userAgent;
-            } elseif (WURFL_Handlers_Utils::checkIfContains($userAgent, "iPod touch")) {
+            } elseif (WURFL_Handlers_Utils::checkIfContains($userAgent, 'iPod touch')) {
                 $userAgent = "Mozilla/5.0 (iPod touch; CPU iPhone OS {$matches[1]} like Mac OS X) AppleWebKit/538.41 (KHTML, like Gecko) Version/7.0 Mobile/12A307 Safari/9537.53 " . $userAgent;
-            } elseif (WURFL_Handlers_Utils::checkIfContains($userAgent, "iPod")) {
+            } elseif (WURFL_Handlers_Utils::checkIfContains($userAgent, 'iPod')) {
                 $userAgent = "Mozilla/5.0 (iPod; CPU iPhone OS {$matches[1]} like Mac OS X) AppleWebKit/538.41 (KHTML, like Gecko) Version/7.0 Mobile/12A307 Safari/9537.53 " . $userAgent;
             } else {
                 $userAgent = "Mozilla/5.0 (iPhone; CPU iPhone OS {$matches[1]} like Mac OS X) AppleWebKit/601.1.10 (KHTML, like Gecko) Version/8.0 Mobile/12E155 Safari/600.1.4 " . $userAgent;
             }
         }
-        
+
         // Normalize Skype SDK UAs
         if (preg_match('#^iOSClientSDK/\d+\.+[0-9\.]+ +?\((Mozilla.+)\)$#', $userAgent, $matches)) {
             $userAgent = $matches[1];
@@ -435,12 +438,16 @@ class WURFL_Handlers_AppleHandler extends WURFL_Handlers_Handler
         // Normalize iOS {Ver} style UAs
         //Eg: Mozilla/5.0 (iPhone; U; CPU iOS 7.1.2 like Mac OS X; en-us) AppleWebKit/528.18 (KHTML, like Gecko) Safari/528.16
         if (preg_match("#CPU iOS \d+?\.\d+?#", $userAgent)) {
-            $ua = WURFL_Handlers_Utils::checkIfContains($userAgent, "iPad") ? str_replace("CPU iOS", "CPU OS", $userAgent): str_replace("CPU iOS", "CPU iPhone OS", $userAgent);
+            $ua = WURFL_Handlers_Utils::checkIfContains($userAgent, 'iPad') ? str_replace(
+                'CPU iOS',
+                'CPU OS',
+                $userAgent
+            ) : str_replace('CPU iOS', 'CPU iPhone OS', $userAgent);
             if (preg_match("#(CPU(?: iPhone)? OS [\d\.]+ like)#", $ua, $matches)) {
-                $versionUnderscore = str_replace(".", "_", $matches[1]);
-                $ua = str_replace(" U;", "", $ua);
-                $ua = preg_replace("#CPU(?: iPhone)? OS ([\d\.]+) like#", $versionUnderscore, $ua);
-                $userAgent = $ua;
+                $versionUnderscore = str_replace('.', '_', $matches[1]);
+                $ua                = str_replace(' U;', '', $ua);
+                $ua                = preg_replace("#CPU(?: iPhone)? OS ([\d\.]+) like#", $versionUnderscore, $ua);
+                $userAgent         = $ua;
             }
         }
 
@@ -450,26 +457,38 @@ class WURFL_Handlers_AppleHandler extends WURFL_Handlers_Handler
             // Check for iPod first since they contain 'iPhone'
             if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'iPod')) {
                 if (array_key_exists($matches[1], self::$ipodDeviceMap)) {
-                    $device_version = str_replace(array_keys(self::$ipodDeviceMap), array_values(self::$ipodDeviceMap), $matches[1]);
+                    $device_version = str_replace(
+                        array_keys(self::$ipodDeviceMap),
+                        array_values(self::$ipodDeviceMap),
+                        $matches[1]
+                    );
                 }
             } elseif (WURFL_Handlers_Utils::checkIfContains($userAgent, 'iPad')) {
                 if (array_key_exists($matches[1], self::$ipadDeviceMap)) {
-                    $device_version = str_replace(array_keys(self::$ipadDeviceMap), array_values(self::$ipadDeviceMap), $matches[1]);
+                    $device_version = str_replace(
+                        array_keys(self::$ipadDeviceMap),
+                        array_values(self::$ipadDeviceMap),
+                        $matches[1]
+                    );
                 }
             } elseif (WURFL_Handlers_Utils::checkIfContains($userAgent, 'iPhone')) {
                 if (array_key_exists($matches[1], self::$iphoneDeviceMap)) {
-                    $device_version = str_replace(array_keys(self::$iphoneDeviceMap), array_values(self::$iphoneDeviceMap), $matches[1]);
+                    $device_version = str_replace(
+                        array_keys(self::$iphoneDeviceMap),
+                        array_values(self::$iphoneDeviceMap),
+                        $matches[1]
+                    );
                 }
                 // Set $device_version to null if UA contains unrecognized hardware version or does not satisfy any of the above 'if' statements
             } else {
                 $device_version = null;
             }
         }
-        
+
         $tolerance = strpos($userAgent, '_');
         if ($tolerance !== false) {
             // The first char after the first underscore
-            $tolerance++;
+            ++$tolerance;
         } else {
             $index = strpos($userAgent, 'like Mac OS X;');
             if ($index !== false) {
@@ -481,24 +500,23 @@ class WURFL_Handlers_AppleHandler extends WURFL_Handlers_Handler
             }
         }
         $ris_id = $this->getDeviceIDFromRIS($userAgent, $tolerance);
-        
-        
+
         //Assemble and check iOS HW ID
         if ($device_version !== null) {
-            $test_id = $ris_id."_subhw".$device_version;
+            $test_id = $ris_id . '_subhw' . $device_version;
             if (in_array($test_id, self::$constantIDs)) {
                 return $test_id;
             }
         }
-        
+
         return $ris_id;
     }
-    
+
     public function applyRecoveryMatch($userAgent)
     {
         if (preg_match('/ (\d)_(\d)[ _]/', $userAgent, $matches)) {
-            $major_version = (int)$matches[1];
-            $minor_version = (int)$matches[2];
+            $major_version = (int) $matches[1];
+            $minor_version = (int) $matches[2];
         } else {
             $major_version = -1;
             $minor_version = -1;
@@ -511,38 +529,37 @@ class WURFL_Handlers_AppleHandler extends WURFL_Handlers_Handler
 
         // Check iPods first since they also contain 'iPhone'
         if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'iPod')) {
-            $deviceID = 'apple_ipod_touch_ver'.$major_version;
+            $deviceID = 'apple_ipod_touch_ver' . $major_version;
             if (in_array($deviceID, self::$constantIDs)) {
                 return $deviceID;
             } else {
                 return 'apple_ipod_touch_ver1';
             }
-        
-        // Now check for iPad
+            // Now check for iPad
         } elseif (WURFL_Handlers_Utils::checkIfContains($userAgent, 'iPad')) {
-            $deviceID = 'apple_ipad_ver1_sub'.$major_version;
-            
-            if ($major_version == 3) {
+            $deviceID = 'apple_ipad_ver1_sub' . $major_version;
+
+            if ($major_version === 3) {
                 return 'apple_ipad_ver1_subua32';
-            } elseif ($major_version == 4) {
+            } elseif ($major_version === 4) {
                 return 'apple_ipad_ver1_sub42';
             }
-            
+
             if (in_array($deviceID, self::$constantIDs)) {
                 return $deviceID;
             } else {
                 return 'apple_ipad_ver1';
             }
-        
-        // Check iPhone last
+            // Check iPhone last
         } elseif (WURFL_Handlers_Utils::checkIfContains($userAgent, 'iPhone')) {
-            $deviceID = 'apple_iphone_ver'.$major_version;
+            $deviceID = 'apple_iphone_ver' . $major_version;
             if (in_array($deviceID, self::$constantIDs)) {
                 return $deviceID;
             } else {
                 return 'apple_iphone_ver1';
             }
         }
+
         return WURFL_Constants::NO_MATCH;
     }
 }

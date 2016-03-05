@@ -22,6 +22,8 @@
         "predis/predis": "predis library allows to use the Redis storage"
     },
     "require-dev": {
-        "phpunit/phpunit": "*"
+        "phpunit/phpunit": "^4.8|^5.0",
+        "squizlabs/php_codesniffer": "^2.0",
+        "fabpot/php-cs-fixer": "^1.11"
     }
 }
