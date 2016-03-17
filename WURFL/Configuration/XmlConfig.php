@@ -41,7 +41,7 @@ class WURFL_Configuration_XmlConfig extends WURFL_Configuration_Config
     /**
      * Returns the full path to the WURFL file
      *
-     * @param array $mainFileElement array of SimpleXMLElement objects
+     * @param \SimpleXMLElement[] $mainFileElement array of SimpleXMLElement objects
      *
      * @return string full path
      */
@@ -53,7 +53,7 @@ class WURFL_Configuration_XmlConfig extends WURFL_Configuration_Config
     /**
      * Returns an array of full path WURFL patches
      *
-     * @param array $patchElements array of SimpleXMLElement objects
+     * @param \SimpleXMLElement[] $patchElements array of SimpleXMLElement objects
      *
      * @return array WURFL Patches
      */
@@ -72,7 +72,7 @@ class WURFL_Configuration_XmlConfig extends WURFL_Configuration_Config
     /**
      * Returns an array of WURFL Capabilities
      *
-     * @param array $capabilityFilter array of SimpleXMLElement objects
+     * @param \SimpleXMLElement[] $capabilityFilter array of SimpleXMLElement objects
      *
      * @return array WURFL Capabilities
      */
@@ -91,7 +91,7 @@ class WURFL_Configuration_XmlConfig extends WURFL_Configuration_Config
     /**
      * Returns true if reload is allowed, according to $allowReloadElement
      *
-     * @param array $allowReloadElement array of SimpleXMLElement objects
+     * @param \SimpleXMLElement[] $allowReloadElement array of SimpleXMLElement objects
      *
      * @return bool
      */
@@ -107,14 +107,15 @@ class WURFL_Configuration_XmlConfig extends WURFL_Configuration_Config
     /**
      * Returns the mode of operation if set, otherwise null
      *
-     * @param array $modeElement array of SimpleXMLElement objects
+     * @param \SimpleXMLElement[] $modeElement array of SimpleXMLElement objects
      *
      * @return bool
+     * @throws WURFL_WURFLException
      */
     private function matchMode($modeElement)
     {
         if (!empty($modeElement)) {
-            $mode = $modeElement[0];
+            $mode = (string) $modeElement[0];
             if (!$mode) {
                 return $this->matchMode;
             }
@@ -130,7 +131,7 @@ class WURFL_Configuration_XmlConfig extends WURFL_Configuration_Config
     /**
      * Returns log directory from XML config
      *
-     * @param array $logDirElement array of SimpleXMLElement objects
+     * @param \SimpleXMLElement[] $logDirElement array of SimpleXMLElement objects
      *
      * @return string Log directory
      */
@@ -146,7 +147,7 @@ class WURFL_Configuration_XmlConfig extends WURFL_Configuration_Config
     /**
      * Returns persistence provider info from XML config
      *
-     * @param array $persistenceElement array of SimpleXMLElement objects
+     * @param \SimpleXMLElement[] $persistenceElement array of SimpleXMLElement objects
      *
      * @return array Persistence info
      */
