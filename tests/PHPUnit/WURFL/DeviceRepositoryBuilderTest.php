@@ -8,7 +8,7 @@
  */
 class WURFL_DeviceRepositoryBuilderTest extends PHPUnit_Framework_TestCase
 {
-    const WURFL_FILE                 = '../../resources/wurfl_base.xml';
+    const WURFL_FILE                 = '../../resources/wurfl.xml';
     const WURFL_INVALID_DEVICES      = '../../resources/wurfl-test-required-devices.xml';
     const WURFL_INVALID_CAPABILITIES = '../../resources/wurfl-test-required-caps.xml';
     const PATCH_INVALID_FALLBACK     = '../../resources/patch-invalid-fallback.xml';

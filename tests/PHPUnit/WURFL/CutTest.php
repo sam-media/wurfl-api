@@ -58,7 +58,7 @@ class WURFL_CutTest extends PHPUnit_Framework_TestCase
         $config = new WURFL_Configuration_InMemoryConfig();
 
         // Set location of the WURFL File
-        $config->wurflFile(__DIR__ . '/../../../examples/resources/wurfl.zip');
+        $config->wurflFile(__DIR__ . '/../../../examples/resources/wurfl.xml');
 
         if (!empty($required_caps)) {
             $config->capabilityFilter($required_caps);

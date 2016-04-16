@@ -24,8 +24,8 @@ before_script:
 
 script:
 # xdebug is not installed on HHVM and PHP 7, so we are skipping the creation of code coverage data there
-  - if [ "`phpenv version-name`" == "5.3" ] || [ "`phpenv version-name`" == "5.4" ] || [ "`phpenv version-name`" == "5.5" ] || [ "`phpenv version-name`" == "5.6" ]; then vendor/bin/phpunit --no-configuration --coverage-text --coverage-clover=coverage.clover --colors --verbose --bootstrap tests/PHPUnit/bootstrap.php tests/PHPUnit/WURFLTestsSuite.php; fi
-  - if [ "`phpenv version-name`" != "5.3" ] && [ "`phpenv version-name`" != "5.4" ] && [ "`phpenv version-name`" != "5.5" ] && [ "`phpenv version-name`" != "5.6" ]; then vendor/bin/phpunit --no-configuration --colors --verbose --bootstrap tests/PHPUnit/bootstrap.php tests/PHPUnit/WURFLTestsSuite.php; fi
+  - if [ "`phpenv version-name`" == "5.3" ] || [ "`phpenv version-name`" == "5.4" ] || [ "`phpenv version-name`" == "5.5" ] || [ "`phpenv version-name`" == "5.6" ]; then vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover --colors --verbose; fi
+  - if [ "`phpenv version-name`" != "5.3" ] && [ "`phpenv version-name`" != "5.4" ] && [ "`phpenv version-name`" != "5.5" ] && [ "`phpenv version-name`" != "5.6" ]; then vendor/bin/phpunit --colors --verbose; fi
   - vendor/bin/phpcs --standard=psr2 -np docs examples tests tools WURFL
   - vendor/bin/php-cs-fixer fix --dry-run -vv
 

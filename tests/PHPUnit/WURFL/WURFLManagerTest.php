@@ -17,7 +17,7 @@ class WURFL_WURFLManagerTest extends PHPUnit_Framework_TestCase
         $wurflConfig = new WURFL_Configuration_InMemoryConfig();
 
         // Set location of the WURFL File
-        $wurflConfig->wurflFile(realpath(dirname(__FILE__) . DIRECTORY_SEPARATOR . '../../resources/wurfl_base.xml'));
+        $wurflConfig->wurflFile(realpath(dirname(__FILE__) . DIRECTORY_SEPARATOR . '../../resources/wurfl.xml'));
 
         // Setup WURFL Persistence
         $wurflConfig->persistence('memory');
