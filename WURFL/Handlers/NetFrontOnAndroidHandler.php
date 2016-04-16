@@ -12,8 +12,7 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @version    $id$
+ * @license     GNU Affero General Public License
  */
 
 /**
@@ -22,8 +21,7 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @version    $id$
+ * @license     GNU Affero General Public License
  */
 class WURFL_Handlers_NetFrontOnAndroidHandler extends WURFL_Handlers_Handler
 {
@@ -42,10 +40,7 @@ class WURFL_Handlers_NetFrontOnAndroidHandler extends WURFL_Handlers_Handler
             return false;
         }
 
-        return (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Android') && WURFL_Handlers_Utils::checkIfContains(
-                $userAgent,
-                'NetFrontLifeBrowser/2.2'
-            ));
+        return (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Android') && WURFL_Handlers_Utils::checkIfContains($userAgent, 'NetFrontLifeBrowser/2.2'));
     }
 
     public function applyConclusiveMatch($userAgent)

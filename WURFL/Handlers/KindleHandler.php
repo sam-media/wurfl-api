@@ -12,8 +12,7 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @version    $id$
+ * @license     GNU Affero General Public License
  */
 
 /**
@@ -22,8 +21,7 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @version    $id$
+ * @license     GNU Affero General Public License
  */
 class WURFL_Handlers_KindleHandler extends WURFL_Handlers_Handler
 {
@@ -40,11 +38,8 @@ class WURFL_Handlers_KindleHandler extends WURFL_Handlers_Handler
 
     public function canHandle($userAgent)
     {
-        if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Android') && WURFL_Handlers_Utils::checkIfContainsAnyOf(
-                $userAgent,
-                array('/Kindle', 'Silk')
-            )
-        ) {
+        if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Android')
+          && WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array('/Kindle', 'Silk'))) {
             return false;
         }
 
@@ -89,11 +84,11 @@ class WURFL_Handlers_KindleHandler extends WURFL_Handlers_Handler
     public function applyRecoveryMatch($userAgent)
     {
         $map = array(
-            'Kindle/1' => 'amazon_kindle_ver1',
-            'Kindle/2' => 'amazon_kindle2_ver1',
-            'Kindle/3' => 'amazon_kindle3_ver1',
+            'Kindle/1'    => 'amazon_kindle_ver1',
+            'Kindle/2'    => 'amazon_kindle2_ver1',
+            'Kindle/3'    => 'amazon_kindle3_ver1',
             'Kindle Fire' => 'amazon_kindle_fire_ver1',
-            'Silk' => 'amazon_kindle_fire_ver1',
+            'Silk'        => 'amazon_kindle_fire_ver1',
         );
         foreach ($map as $keyword => $id) {
             if (WURFL_Handlers_Utils::checkIfContains($userAgent, $keyword)) {

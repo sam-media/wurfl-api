@@ -1,8 +1,8 @@
 <?php
-
 /**
  * test case
  */
+
 class WURFL_Xml_DeviceIteratorTest extends PHPUnit_Framework_TestCase
 {
     const RESOURCES_DIR = '../../../resources/';
@@ -15,5 +15,33 @@ class WURFL_Xml_DeviceIteratorTest extends PHPUnit_Framework_TestCase
     {
         $wurflFile = '';
         new WURFL_Xml_DeviceIterator($wurflFile);
+    }
+
+    public function testShouldReadTheSpecificAttribute()
+    {
+        $wurflFile = dirname(__FILE__) . DIRECTORY_SEPARATOR . self::RESOURCES_DIR . 'wurfl-specific-attribute.xml';
+
+        $deviceIterator = new WURFL_Xml_DeviceIterator($wurflFile);
+        $devices        = $this->toList($deviceIterator);
+
+        $this->assertEquals('foo', $devices[0]->id);
+        $this->assertTrue($devices[0]->specific);
+
+        $this->assertFalse($devices[1]->specific);
+    }
+
+    private function toList($deviceIterator)
+    {
+        $deviceList = array();
+        foreach ($deviceIterator as $device) {
+            $deviceList[] = $device;
+        }
+
+        return $deviceList;
+    }
+
+    private function process($device)
+    {
+        $this->assertNotNull($device);
     }
 }

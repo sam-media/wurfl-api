@@ -11,8 +11,7 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @version    $id$
+ * @license     GNU Affero General Public License
  */
 
 /**
@@ -21,8 +20,7 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @version    $id$
+ * @license     GNU Affero General Public License
  */
 interface WURFL_Storage
 {
@@ -40,7 +38,6 @@ interface WURFL_Storage
     /**
      * Put the the computed data into the cache so that it can be
      * retrieved later.
-     *
      * @param string $key        key for accessing the data
      * @param mixed  $value      the actual data been stored
      * @param int    $expiration the expiration in seconds
@@ -49,10 +46,8 @@ interface WURFL_Storage
 
     /**
      * Get the previosly saved data.
-     *
-     * @param string $key key for accesing the data
-     *
-     * @return mixed the actual data been stored
+     * @param  string $key key for accesing the data
+     * @return mixed  the actual data been stored
      */
     public function load($key);
 

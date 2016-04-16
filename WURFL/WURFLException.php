@@ -12,17 +12,14 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @version    $id$
+ * @license     GNU Affero General Public License
  */
-
 /**
  * Base class for WURFL Exceptions
  */
 class WURFL_WURFLException extends Exception
 {
 }
-
 class WURFL_WURFLCLIInvalidArgumentException extends WURFL_WURFLException
 {
 }

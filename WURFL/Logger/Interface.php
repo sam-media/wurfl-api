@@ -11,10 +11,8 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @version    $id$
+ * @license     GNU Affero General Public License
  */
-
 /**
  * WURFL Logging interface
  */
@@ -22,22 +20,17 @@ interface WURFL_Logger_Interface
 {
     /**
      * Send specified $message to the log with INFO level
-     *
      * @param string $message
      */
     public function info($message);
-
     /**
      * Send specified $message to the log
-     *
      * @param string $message
      * @param string $type    The type or level of the $message
      */
     public function log($message, $type = '');
-
     /**
      * Send specified $message to the log with DEBUG level
-     *
      * @param string $message
      */
     public function debug($message);

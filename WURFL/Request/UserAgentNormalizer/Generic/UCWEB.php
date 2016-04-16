@@ -11,22 +11,18 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @author     Fantayeneh Asres Gizaw
- * @version    $id$
+ * @license     GNU Affero General Public License
+ * @author   Fantayeneh Asres Gizaw
  */
-
 /**
  * User Agent Normalizer - removes UCWEB garbage from user agent
  */
-class WURFL_Request_UserAgentNormalizer_Generic_UCWEB
-    implements WURFL_Request_UserAgentNormalizer_Interface
+class WURFL_Request_UserAgentNormalizer_Generic_UCWEB implements WURFL_Request_UserAgentNormalizer_Interface
 {
     /**
      * This method remove the "UP.Link" substring from user agent string.
      *
-     * @param string $userAgent
-     *
+     * @param  string $userAgent
      * @return string Normalized user agent
      */
     public function normalize($userAgent)

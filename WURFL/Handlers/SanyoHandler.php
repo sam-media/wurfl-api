@@ -12,8 +12,7 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @version    $id$
+ * @license     GNU Affero General Public License
  */
 
 /**
@@ -22,8 +21,7 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @version    $id$
+ * @license     GNU Affero General Public License
  */
 class WURFL_Handlers_SanyoHandler extends WURFL_Handlers_Handler
 {
@@ -35,10 +33,7 @@ class WURFL_Handlers_SanyoHandler extends WURFL_Handlers_Handler
             return false;
         }
 
-        return WURFL_Handlers_Utils::checkIfStartsWithAnyOf(
-            $userAgent,
-            array('Sanyo', 'SANYO')
-        ) || WURFL_Handlers_Utils::checkIfContains($userAgent, 'MobilePhone');
+        return WURFL_Handlers_Utils::checkIfStartsWithAnyOf($userAgent, array('Sanyo', 'SANYO')) || WURFL_Handlers_Utils::checkIfContains($userAgent, 'MobilePhone');
     }
 
     public function applyConclusiveMatch($userAgent)

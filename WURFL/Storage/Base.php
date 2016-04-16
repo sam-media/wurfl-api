@@ -11,8 +11,7 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @version    $id$
+ * @license     GNU Affero General Public License
  */
 
 /**
@@ -22,15 +21,12 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @author     Fantayeneh Asres Gizaw
- * @version    $id$
+ * @license     GNU Affero General Public License
+ * @author   Fantayeneh Asres Gizaw
  */
-abstract class WURFL_Storage_Base
-    implements WURFL_Storage
+abstract class WURFL_Storage_Base implements WURFL_Storage
 {
-    const APPLICATION_PREFIX = 'WURFL_';
-    const WURFL_LOADED       = 'WURFL_WURFL_LOADED';
+    const WURFL_LOADED = 'WURFL_WURFL_LOADED';
 
     /**
      * @var WURFL_Storage_Base
@@ -42,7 +38,6 @@ abstract class WURFL_Storage_Base
 
     /**
      * Creates a new WURFL_Storage_Base
-     *
      * @param array $params
      */
     public function __construct($params = array())
@@ -51,7 +46,6 @@ abstract class WURFL_Storage_Base
 
     /**
      * Saves the object
-     *
      * @param string $objectId
      * @param mixed  $object
      * @param int    $expiration If supported by the provider, this is used to specify the expiration
@@ -62,10 +56,8 @@ abstract class WURFL_Storage_Base
 
     /**
      * Returns the object identified by $objectId
-     *
-     * @param string $objectId
-     *
-     * @return mixed value
+     * @param  string $objectId
+     * @return mixed  value
      */
     public function load($objectId)
     {
@@ -73,7 +65,6 @@ abstract class WURFL_Storage_Base
 
     /**
      * Removes the object identified by $objectId from the persistence provider
-     *
      * @param string $objectId
      */
     public function remove($objectId)
@@ -90,7 +81,6 @@ abstract class WURFL_Storage_Base
     /**
      * Returns true if the cache is an in-memory volatile cache, like Memcache or APC, or false if
      * it is a persistent cache like Filesystem or MySQL
-     *
      * @return bool
      */
     public function isVolatile()
@@ -101,7 +91,6 @@ abstract class WURFL_Storage_Base
     /**
      * This storage provider supports a caching layer in front of it, for example, the File provider
      * supports a volatile cache like Memcache in front of it, whereas APC does not.
-     *
      * @return bool
      */
     public function supportsSecondaryCaching()
@@ -111,9 +100,7 @@ abstract class WURFL_Storage_Base
 
     /**
      * This storage provider can be used as a secondary cache
-     *
-     * @param WURFL_Storage_Base $cache
-     *
+     * @param  WURFL_Storage_Base $cache
      * @return bool
      */
     public function validSecondaryCache(WURFL_Storage_Base $cache)
@@ -135,9 +122,7 @@ abstract class WURFL_Storage_Base
     public function setCacheStorage(WURFL_Storage_Base $cache)
     {
         if (!$this->supportsSecondaryCaching()) {
-            throw new WURFL_Storage_Exception(
-                'The storage provider ' . get_class($cache) . ' cannot be used as a cache for ' . get_class($this)
-            );
+            throw new WURFL_Storage_Exception('The storage provider ' . get_class($cache) . ' cannot be used as a cache for ' . get_class($this));
         }
         $this->cache = $cache;
     }
@@ -153,7 +138,7 @@ abstract class WURFL_Storage_Base
     protected function cacheLoad($objectId)
     {
         if ($this->cache === null) {
-            return;
+            return null;
         }
 
         return $this->cache->load('FCACHE_' . $objectId);
@@ -177,7 +162,6 @@ abstract class WURFL_Storage_Base
 
     /**
      * Checks if WURFL is Loaded
-     *
      * @return bool
      */
     public function isWURFLLoaded()
@@ -187,7 +171,6 @@ abstract class WURFL_Storage_Base
 
     /**
      * Sets the WURFL Loaded flag
-     *
      * @param bool $loaded
      */
     public function setWURFLLoaded($loaded = true)
@@ -198,23 +181,19 @@ abstract class WURFL_Storage_Base
 
     /**
      * Encode the Object Id using the Persistence Identifier
-     *
-     * @param string $namespace
-     * @param string $input
-     *
+     * @param  string $namespace
+     * @param  string $input
      * @return string $input with the given $namespace as a prefix
      */
     protected function encode($namespace, $input)
     {
-        return implode(':', array(self::APPLICATION_PREFIX, $namespace, $input));
+        return implode(':', array(WURFL_Constants::API_NAMESPACE, $namespace, $input));
     }
 
     /**
      * Decode the Object Id
-     *
-     * @param string $namespace
-     * @param string $input
-     *
+     * @param  string $namespace
+     * @param  string $input
      * @return string value
      */
     protected function decode($namespace, $input)

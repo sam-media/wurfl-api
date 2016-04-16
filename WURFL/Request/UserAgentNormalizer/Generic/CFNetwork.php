@@ -11,16 +11,13 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @author     Fantayeneh Asres Gizaw
- * @version    $id$
+ * @license     GNU Affero General Public License
+ * @author   Fantayeneh Asres Gizaw
  */
-
 /**
  * User Agent Normalizer - CFNetwork UA Resolution
  */
-class WURFL_Request_UserAgentNormalizer_Generic_CFNetwork
-    implements WURFL_Request_UserAgentNormalizer_Interface
+class WURFL_Request_UserAgentNormalizer_Generic_CFNetwork implements WURFL_Request_UserAgentNormalizer_Interface
 {
     public function normalize($userAgent)
     {

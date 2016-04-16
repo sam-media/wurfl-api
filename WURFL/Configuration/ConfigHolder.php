@@ -12,10 +12,8 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @version    $id$
+ * @license     GNU Affero General Public License
  */
-
 /**
  * WURFL Configuration holder singleton
  */
@@ -29,22 +27,18 @@ class WURFL_Configuration_ConfigHolder
     private function __construct()
     {
     }
-
     private function __clone()
     {
     }
 
     /**
      * Returns a Configuration object
-     *
      * @return WURFL_Configuration_Config
      */
     public static function getWURFLConfig()
     {
         if (self::$_wurflConfig === null) {
-            throw new WURFL_WURFLException(
-                'The Configuration Holder is not initialized with a valid WURFLConfig object'
-            );
+            throw new WURFL_WURFLException('The Configuration Holder is not initialized with a valid WURFLConfig object');
         }
 
         return self::$_wurflConfig;
@@ -52,7 +46,6 @@ class WURFL_Configuration_ConfigHolder
 
     /**
      * Sets the Configuration object
-     *
      * @param WURFL_Configuration_Config $wurflConfig
      */
     public static function setWURFLConfig(WURFL_Configuration_Config $wurflConfig)

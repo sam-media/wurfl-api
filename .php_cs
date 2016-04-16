@@ -22,13 +22,12 @@ return Symfony\CS\Config\Config::create()
     ->level(\Symfony\CS\FixerInterface::NONE_LEVEL)
     ->fixers(
         array(
-            'unalign_double_arrow',
+            'align_double_arrow',
             'align_equals',
             'braces',
             'concat_with_spaces',
             'duplicate_semicolon',
             'elseif',
-            'empty_return',
             'encoding',
             'eof_ending',
             'extra_empty_lines',

@@ -11,21 +11,17 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @version    $id$
+ * @license     GNU Affero General Public License
  */
-
 /**
  * WURFL Device Repository
  */
-class WURFL_CustomDeviceRepository
-    implements WURFL_DeviceRepository
+class WURFL_CustomDeviceRepository implements WURFL_DeviceRepository
 {
     const WURFL_USER_AGENTS_CLASSIFIED = 'WURFL_USER_AGENTS_CLASSIFIED';
 
     /**
      * The persistence provider for this device repository
-     *
      * @var WURFL_Storage_Base
      */
     private $persistenceStorage;
@@ -36,7 +32,6 @@ class WURFL_CustomDeviceRepository
 
     /**
      * Map of groupID => array(capabilitiesNames)
-     *
      * @var array
      */
     private $_groupIDCapabilitiesMap = array();
@@ -51,10 +46,8 @@ class WURFL_CustomDeviceRepository
 
     /**
      * Creates a new Device Repository from the given $persistenceStorage and $deviceClassificationNames
-     *
-     * @param WURFL_Storage_Base $persistenceStorage
-     * @param array              $deviceClassificationNames
-     *
+     * @param  WURFL_Storage_Base       $persistenceStorage
+     * @param  array                    $deviceClassificationNames
      * @throws InvalidArgumentException
      */
     public function __construct($persistenceStorage, $deviceClassificationNames)
@@ -102,8 +95,7 @@ class WURFL_CustomDeviceRepository
     /**
      * Returns a device for the given device ID
      *
-     * @param string $deviceId
-     *
+     * @param  string             $deviceId
      * @throws WURFL_Exception    if $deviceID is not defined in wurfl devices repository
      * @return WURFL_CustomDevice
      */
@@ -122,7 +114,6 @@ class WURFL_CustomDeviceRepository
 
     /**
      * Returns all devices in the repository
-     *
      * @return array
      */
     public function getAllDevices()
@@ -138,7 +129,6 @@ class WURFL_CustomDeviceRepository
 
     /**
      * Returns an array of all the device ids
-     *
      * @return array
      */
     public function getAllDevicesID()
@@ -149,7 +139,13 @@ class WURFL_CustomDeviceRepository
             if (!is_array($currentMap)) {
                 $currentMap = array();
             }
-            $devicesId = array_merge($devicesId, array_values($currentMap));
+
+            $overwritten = $this->persistenceStorage->load($className . '_overwritten');
+            if (!is_array($overwritten)) {
+                $overwritten = array();
+            }
+
+            $devicesId = array_merge($devicesId, array_values($currentMap), $overwritten);
         }
 
         return $devicesId;
@@ -158,15 +154,14 @@ class WURFL_CustomDeviceRepository
     /**
      * Returns the value for the given $deviceId and $capabilityName
      *
-     * @param string $deviceId
-     * @param string $capabilityName
-     *
+     * @param  string               $deviceId
+     * @param  string               $capabilityName
      * @throws WURFL_WURFLException device ID or capability was not found
      * @return string               value
      */
     public function getCapabilityForDevice($deviceId, $capabilityName)
     {
-        if (!$this->isCapabilityDefined($capabilityName)) {
+        if (! $this->isCapabilityDefined($capabilityName)) {
             throw new WURFL_WURFLException('capability name: ' . $capabilityName . ' not found');
         }
         $capabilityValue = null;
@@ -189,8 +184,7 @@ class WURFL_CustomDeviceRepository
     /**
      * Checks if the capability name specified by $capability is defined in the repository
      *
-     * @param string $capability
-     *
+     * @param  string $capability
      * @return bool
      */
     private function isCapabilityDefined($capability)
@@ -201,9 +195,8 @@ class WURFL_CustomDeviceRepository
     /**
      * Returns an associative array of capabilityName => capabilityValue for the given $deviceID
      *
-     * @param string $deviceID
-     *
-     * @return array associative array of capabilityName, capabilityValue
+     * @param  string $deviceID
+     * @return array  associative array of capabilityName, capabilityValue
      */
     public function getAllCapabilitiesForDevice($deviceID)
     {
@@ -215,6 +208,7 @@ class WURFL_CustomDeviceRepository
                 $capabilities = array_merge($capabilities, $device->capabilities);
             }
         }
+        $capabilities = array_diff_key($capabilities, array_flip(WURFL_VirtualCapabilityProvider::getControlCapabilities()));
 
         return $capabilities;
     }
@@ -223,9 +217,8 @@ class WURFL_CustomDeviceRepository
      * Returns an array containing all devices from the root
      * device to the device of the given $deviceId
      *
-     * @param string $deviceId
-     *
-     * @return array All WURFL_Device objects in the fallback tree
+     * @param  string $deviceId
+     * @return array  All WURFL_Device objects in the fallback tree
      */
     public function getDeviceHierarchy($deviceId)
     {
@@ -253,8 +246,7 @@ class WURFL_CustomDeviceRepository
      * Returns an array of all capability names defined in
      * the given group ID
      *
-     * @param string $groupID
-     *
+     * @param  string               $groupID
      * @throws WURFL_WURFLException The given $groupID does not exist
      * @return array                of capability names
      */
@@ -270,8 +262,7 @@ class WURFL_CustomDeviceRepository
     /**
      * Returns the group id that contains the given $capability
      *
-     * @param string $capability
-     *
+     * @param  string                   $capability
      * @throws InvalidArgumentException an invalid $capability was specified
      * @return string
      */

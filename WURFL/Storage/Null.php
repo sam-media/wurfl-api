@@ -11,11 +11,9 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @author     Fantayeneh Asres Gizaw
- * @version    $id$
+ * @license     GNU Affero General Public License
+ * @author   Fantayeneh Asres Gizaw
  */
-
 /**
  * WURFL Storage
  */
@@ -23,13 +21,11 @@ class WURFL_Storage_Null extends WURFL_Storage_Base
 {
     public function load($key)
     {
-        return;
+        return null;
     }
-
     public function save($key, $value, $expire = 0)
     {
     }
-
     public function clear()
     {
     }

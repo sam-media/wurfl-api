@@ -12,8 +12,7 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @version    $id$
+ * @license     GNU Affero General Public License
  */
 
 /**
@@ -22,8 +21,7 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @version    $id$
+ * @license     GNU Affero General Public License
  */
 class WURFL_Handlers_WebOSHandler extends WURFL_Handlers_Handler
 {
@@ -57,8 +55,7 @@ class WURFL_Handlers_WebOSHandler extends WURFL_Handlers_Handler
 
     public function applyRecoveryMatch($userAgent)
     {
-        return WURFL_Handlers_Utils::checkIfContains($userAgent, 'hpwOS/3') ? 'hp_tablet_webos_generic'
-            : 'hp_webos_generic';
+        return WURFL_Handlers_Utils::checkIfContains($userAgent, 'hpwOS/3') ? 'hp_tablet_webos_generic' : 'hp_webos_generic';
     }
 
     public static function getWebOSModelVersion($ua)
@@ -71,7 +68,7 @@ class WURFL_Handlers_WebOSHandler extends WURFL_Handlers_Handler
         if (preg_match('# ([^/]+)/([\d\.]+)$#', $ua, $matches)) {
             return $matches[1] . ' ' . $matches[2];
         } else {
-            return;
+            return null;
         }
     }
 
@@ -80,7 +77,7 @@ class WURFL_Handlers_WebOSHandler extends WURFL_Handlers_Handler
         if (preg_match('#(?:hpw|web)OS.(\d)\.#', $ua, $matches)) {
             return 'webOS' . $matches[1];
         } else {
-            return;
+            return null;
         }
     }
 }

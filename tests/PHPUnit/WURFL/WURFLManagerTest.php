@@ -6,50 +6,52 @@ require_once 'TestUtils.php';
 
 class WURFL_WURFLManagerTest extends PHPUnit_Framework_TestCase
 {
-    protected $wurflManager;
+    /**
+     * @var WURFL_WURFLManager
+     */
+    protected static $wurfl;
 
-    protected $persistenceDir;
-
-    public function setUp()
+    public static function setUpBeforeClass()
     {
-        $resourcesDir = realpath(dirname(__FILE__) . DIRECTORY_SEPARATOR . '../../resources');
+        // Create WURFL Configuration
+        $wurflConfig = new WURFL_Configuration_InMemoryConfig();
 
-        $config = new WURFL_Configuration_InMemoryConfig();
-
-        $config->wurflFile($resourcesDir . '/wurfl_base.xml');
+        // Set location of the WURFL File
+        $wurflConfig->wurflFile(realpath(dirname(__FILE__) . DIRECTORY_SEPARATOR . '../../resources/wurfl_base.xml'));
 
         // Setup WURFL Persistence
-        $this->persistenceDir = sys_get_temp_dir() . '/api_test';
-        WURFL_FileUtils::mkdir($this->persistenceDir);
-        $config->persistence('file', array('dir' => $this->persistenceDir));
+        $wurflConfig->persistence('memory');
 
         // Setup Caching
-        $config->cache('null');
+        $wurflConfig->cache('null');
 
-        $wurflManagerFactory = new WURFL_WURFLManagerFactory($config);
-        $this->wurflManager  = $wurflManagerFactory->create();
+        // Create a WURFL Manager Factory from the WURFL Configuration
+        $wurflManagerFactory = new WURFL_WURFLManagerFactory($wurflConfig);
+
+        // Create a WURFL Manager
+        self::$wurfl = $wurflManagerFactory->create();
     }
 
-    public function tearDown()
+    public static function tearDownAfterClass()
     {
-        WURFL_FileUtils::rmdir($this->persistenceDir);
+        self::$wurfl = null;
     }
 
     public function testShouldReturnGenericForEmptyUserAgent()
     {
-        $deviceFound = $this->wurflManager->getDeviceForUserAgent('');
+        $deviceFound = self::$wurfl->getDeviceForUserAgent('');
         $this->assertEquals('generic', $deviceFound->id);
     }
 
     public function testShouldReturnGenericForNullUserAgent()
     {
-        $deviceFound = $this->wurflManager->getDeviceForUserAgent(null);
+        $deviceFound = self::$wurfl->getDeviceForUserAgent(null);
         $this->assertEquals('generic', $deviceFound->id);
     }
 
     public function testShouldReturnWurflVersionInfo()
     {
-        $wurflInfo = $this->wurflManager->getWURFLInfo();
+        $wurflInfo = self::$wurfl->getWURFLInfo();
         $this->assertEquals('www.wurflpro.com - 2010-06-03 11:55:51', $wurflInfo->version);
         $this->assertEquals('Thu Jun 03 12:01:14 -0500 2010', $wurflInfo->lastUpdated);
     }
@@ -57,7 +59,7 @@ class WURFL_WURFLManagerTest extends PHPUnit_Framework_TestCase
     public function testGetListOfGroups()
     {
         $actualGroups = array('product_info', 'wml_ui', 'chtml_ui', 'xhtml_ui', 'markup', 'display');
-        $listOfGroups = $this->wurflManager->getListOfGroups();
+        $listOfGroups = self::$wurfl->getListOfGroups();
         foreach ($actualGroups as $groupId) {
             $this->assertContains($groupId, $listOfGroups);
         }
@@ -68,25 +70,12 @@ class WURFL_WURFLManagerTest extends PHPUnit_Framework_TestCase
      */
     public function testGetCapabilitiesNameForGroup($groupId, $capabilitiesName)
     {
-        $capabilities = $this->wurflManager->getCapabilitiesNameForGroup($groupId);
+        $capabilities = self::$wurfl->getCapabilitiesNameForGroup($groupId);
         $this->assertEquals($capabilitiesName, $capabilities);
     }
 
     public function groupIdCapabilitiesNameProvider()
     {
-        return array(
-            array(
-                'chtml_ui',
-                array(
-                    'chtml_display_accesskey',
-                    'emoji',
-                    'chtml_can_display_images_and_text_on_same_line',
-                    'chtml_displays_image_in_center',
-                    'imode_region',
-                    'chtml_make_phone_call_string',
-                    'chtml_table_support',
-                ),
-            ),
-        );
+        return array(array('chtml_ui', array('chtml_display_accesskey', 'emoji', 'chtml_can_display_images_and_text_on_same_line', 'chtml_displays_image_in_center', 'imode_region', 'chtml_make_phone_call_string', 'chtml_table_support')));
     }
 }

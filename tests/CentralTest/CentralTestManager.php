@@ -18,14 +18,17 @@ class CentralTestManager
 
     protected $introspector;
 
+    protected $required_caps;
+
     /**
      * @var WURFL_WURFLManager
      */
     protected $wurflManager;
     protected $test_list = array();
 
-    public function __construct(WURFL_WURFLManager $wurflManager)
+    public function __construct(WURFL_WURFLManager $wurflManager, array $test_list)
     {
+        $this->test_list    = $test_list;
         $this->wurflManager = $wurflManager;
     }
 
@@ -46,19 +49,18 @@ class CentralTestManager
         $this->introspector = new IntrospectorClient($remote_url, $username, $password);
     }
 
-    public function runBatchTest($test_type)
+    public static function loadBatchTest($test_type)
     {
         if (!in_array($test_type, array(self::TYPE_REGRESSION, self::TYPE_UNIT, self::TYPE_ALL))) {
             throw new InvalidArgumentException('Invalid test type specified');
         }
-        $this->loadTestList(self::DOWNLOAD_URL . $test_type);
-        $this->run();
+
+        return self::loadTestList(self::DOWNLOAD_URL . $test_type);
     }
 
-    public function runSingleTest($test_name)
+    public static function loadSingleTest($test_name)
     {
-        $this->loadTestList(self::DOWNLOAD_URL . $test_name);
-        $this->run();
+        return self::loadTestList(self::DOWNLOAD_URL . $test_name);
     }
 
     public function run()
@@ -103,15 +105,12 @@ class CentralTestManager
         $total_tests = count($this->test_list);
         $total_time  = time() - $time_start;
         echo "\nTesting completed in $total_time seconds\nTotal Tests: $total_tests\nSuccess: {$this->num_success}\nFailures:  {$this->num_failure}\n";
-        if ($this->num_skipped > 0) {
-            echo "Skipped:  {$this->num_skipped}\n";
-        }
     }
 
-    public function loadTestList($url)
+    public static function loadTestList($url)
     {
-        $this->test_list = array();
-        $xmlstring       = file_get_contents($url);
+        $test_list = array();
+        $xmlstring = file_get_contents($url);
         libxml_use_internal_errors(true);
         $xml = simplexml_load_string($xmlstring);
         if (!$xml) {
@@ -124,7 +123,7 @@ class CentralTestManager
                 }
                 throw new Exception("Unable to process XML data:\n" . implode("\n", $errors));
             } else {
-                ++$this->num_skipped;
+                echo 'Skipping test' . PHP_EOL;
             }
         }
         foreach ($xml->test as $testxml) {
@@ -175,9 +174,12 @@ class CentralTestManager
                 $test->assertions[]        = $assertion;
             }
             // Add this test to the Test List
-            $this->test_list[] = $test;
+            $test_list[] = $test;
         }
+
+        return $test_list;
     }
+
     public static function compose_url($parsed_url)
     {
         $scheme   = isset($parsed_url['scheme']) ? $parsed_url['scheme'] . '://' : '';
@@ -191,5 +193,19 @@ class CentralTestManager
         $fragment = isset($parsed_url['fragment']) ? '#' . $parsed_url['fragment'] : '';
 
         return "$scheme$user$pass$host$port$path$query$fragment";
+    }
+
+    public static function getRequiredCapsFromTestList($test_list)
+    {
+        $required_caps = WURFL_VirtualCapabilityProvider::getRequiredCapabilities();
+        foreach ($test_list as $test) {
+            foreach ($test->assertions as $assertion) {
+                if ($assertion->assertion_type === CentralTestAssertion::TYPE_CAPABILITY) {
+                    $required_caps[] = $assertion->expected_id;
+                }
+            }
+        }
+
+        return array_unique($required_caps);
     }
 }

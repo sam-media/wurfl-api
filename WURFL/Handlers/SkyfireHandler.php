@@ -12,8 +12,7 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @version    $id$
+ * @license     GNU Affero General Public License
  */
 
 /**
@@ -22,8 +21,7 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @version    $id$
+ * @license     GNU Affero General Public License
  */
 class WURFL_Handlers_SkyfireHandler extends WURFL_Handlers_Handler
 {
@@ -42,12 +40,8 @@ class WURFL_Handlers_SkyfireHandler extends WURFL_Handlers_Handler
     public function applyConclusiveMatch($userAgent)
     {
         $skyfire_idx = strpos($userAgent, 'Skyfire');
-
         // Matches the first decimal point after the Skyfire keyword: Skyfire/2.0
-        return $this->getDeviceIDFromRIS(
-            $userAgent,
-            WURFL_Handlers_Utils::indexOfOrLength($userAgent, '.', $skyfire_idx)
-        );
+        return $this->getDeviceIDFromRIS($userAgent, WURFL_Handlers_Utils::indexOfOrLength($userAgent, '.', $skyfire_idx));
     }
 
     public function applyRecoveryMatch($userAgent)

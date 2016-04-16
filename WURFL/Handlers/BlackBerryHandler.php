@@ -12,8 +12,7 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @version    $id$
+ * @license     GNU Affero General Public License
  */
 
 /**
@@ -22,15 +21,15 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @version    $id$
+ * @license     GNU Affero General Public License
  */
+
 class WURFL_Handlers_BlackBerryHandler extends WURFL_Handlers_Handler
 {
     protected $prefix = 'BLACKBERRY';
 
     public static $constantIDs = array(
-        '2.' => 'blackberry_generic_ver2',
+        '2.'  => 'blackberry_generic_ver2',
         '3.2' => 'blackberry_generic_ver3_sub2',
         '3.3' => 'blackberry_generic_ver3_sub30',
         '3.5' => 'blackberry_generic_ver3_sub50',
@@ -42,10 +41,11 @@ class WURFL_Handlers_BlackBerryHandler extends WURFL_Handlers_Handler
         '4.5' => 'blackberry_generic_ver4_sub50',
         '4.6' => 'blackberry_generic_ver4_sub60',
         '4.7' => 'blackberry_generic_ver4_sub70',
-        '4.' => 'blackberry_generic_ver4',
-        '5.' => 'blackberry_generic_ver5',
-        '6.' => 'blackberry_generic_ver6',
-        '10' => 'blackberry_generic_ver10',
+        '4.'  => 'blackberry_generic_ver4',
+        '5.'  => 'blackberry_generic_ver5',
+        '6.'  => 'blackberry_generic_ver6',
+
+        '10'  => 'blackberry_generic_ver10',
         '10t' => 'blackberry_generic_ver10_tablet',
     );
 
@@ -55,13 +55,9 @@ class WURFL_Handlers_BlackBerryHandler extends WURFL_Handlers_Handler
             return false;
         }
 
-        return (WURFL_Handlers_Utils::checkIfContainsCaseInsensitive(
-                $userAgent,
-                'blackberry'
-            ) || WURFL_Handlers_Utils::checkIfContains($userAgent, '(BB10;') || WURFL_Handlers_Utils::checkIfContains(
-                $userAgent,
-                '(PlayBook'
-            ));
+        return (WURFL_Handlers_Utils::checkIfContainsCaseInsensitive($userAgent, 'blackberry')
+            || WURFL_Handlers_Utils::checkIfContains($userAgent, '(BB10;')
+            || WURFL_Handlers_Utils::checkIfContains($userAgent, '(PlayBook'));
     }
 
     public function applyConclusiveMatch($userAgent)

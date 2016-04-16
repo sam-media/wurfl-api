@@ -11,10 +11,8 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @version    $id$
+ * @license     GNU Affero General Public License
  */
-
 /**
  * WURFL Manager Class - serves as the core class that the developer uses to query
  * the API for device capabilities and WURFL information
@@ -32,7 +30,7 @@
  * $device = $wurflManager->getDeviceForUserAgent($userAgent);
  * </code>
  *
- * @see     getWURFLInfo(), getDeviceForHttpRequest(), getDeviceForUserAgent(), WURFL_WURFLManagerFactory::create()
+ * @see getWURFLInfo(), getDeviceForHttpRequest(), getDeviceForUserAgent(), WURFL_WURFLManagerFactory::create()
  */
 class WURFL_WURFLManager
 {
@@ -47,7 +45,6 @@ class WURFL_WURFLManager
 
     /**
      * Creates a new WURFL Manager object
-     *
      * @param WURFL_WURFLService                  $wurflService
      * @param WURFL_Request_GenericRequestFactory $requestFactory
      */
@@ -64,12 +61,11 @@ class WURFL_WURFLManager
      * <code>
      * $info = $wurflManager->getWURFLInfo();
      * printf('Version: %s, Updated: %s, OfficialURL: %s',
-     *    $info->version,
-     *    $info->lastUpdated,
-     *    $info->officialURL
+     *  $info->version,
+     *  $info->lastUpdated,
+     *  $info->officialURL
      * );
      * </code>
-     *
      * @return WURFL_Xml_Info WURFL Version info
      * @see WURFL_WURFLService::getWURFLInfo(), WURFL_DeviceRepository::getWURFLInfo()
      */
@@ -81,10 +77,9 @@ class WURFL_WURFLManager
     /**
      * Return a device the given WURFL_Request_GenericRequest request(user-agent..)
      *
-     * @param WURFL_Request_GenericRequest $request
-     *
-     * @throws Exception          if the $request parameter is not set
-     * @return WURFL_CustomDevice device
+     * @param  WURFL_Request_GenericRequest $request
+     * @throws Exception                    if the $request parameter is not set
+     * @return WURFL_CustomDevice           device
      */
     public function getDeviceForRequest(WURFL_Request_GenericRequest $request)
     {
@@ -99,9 +94,8 @@ class WURFL_WURFLManager
     /**
      * Return a device for the given http request(user-agent..)
      *
-     * @param array $httpRequest                    HTTP Request array (normally $_SERVER)
-     * @param bool  $override_sideloaded_browser_ua
-     *
+     * @param  array              $httpRequest                    HTTP Request array (normally $_SERVER)
+     * @param  bool               $override_sideloaded_browser_ua
      * @throws Exception          if $httpRequest is not set
      * @return WURFL_CustomDevice device
      */
@@ -118,8 +112,7 @@ class WURFL_WURFLManager
     /**
      * Returns a device for the given user-agent
      *
-     * @param string $userAgent
-     *
+     * @param  string             $userAgent
      * @throws Exception          if $userAgent is not set
      * @return WURFL_CustomDevice device
      */
@@ -138,9 +131,8 @@ class WURFL_WURFLManager
      * Return a device for the given device id.  If $request is included, it will
      * be used to resolve virtual capabilties.
      *
-     * @param string                       $deviceID
-     * @param WURFL_Request_GenericRequest $request
-     *
+     * @param  string                       $deviceID
+     * @param  WURFL_Request_GenericRequest $request
      * @return WURFL_CustomDevice
      */
     public function getDevice($deviceID, $request = null)
@@ -161,8 +153,7 @@ class WURFL_WURFLManager
     /**
      * Returns all capability names for the given $groupID
      *
-     * @param string $groupID
-     *
+     * @param  string $groupID
      * @return array
      */
     public function getCapabilitiesNameForGroup($groupID)
@@ -173,8 +164,7 @@ class WURFL_WURFLManager
     /**
      * Returns an array of all the fall back devices starting from the given device
      *
-     * @param string $deviceID
-     *
+     * @param  string $deviceID
      * @return array
      */
     public function getFallBackDevices($deviceID)

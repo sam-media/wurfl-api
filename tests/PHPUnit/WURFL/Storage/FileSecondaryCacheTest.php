@@ -7,11 +7,9 @@ class WURFL_Storage_FileSecondaryCacheTest extends WURFL_Storage_FileTest
     public function testMemcache()
     {
         $this->checkMemcacheDeps();
-        $cache = new WURFL_Storage_Memcache(
-            array(
+        $cache = new WURFL_Storage_Memcache(array(
                 'host' => '127.0.0.1',
-            )
-        );
+        ));
         $this->assertCacheAllowed($cache);
     }
 
@@ -25,7 +23,7 @@ class WURFL_Storage_FileSecondaryCacheTest extends WURFL_Storage_FileTest
     private function assertCacheAllowed(WURFL_Storage_Base $cache)
     {
         $config = array(
-            'dir' => self::storageDir(),
+            'dir'                                  => self::storageDir(),
             WURFL_Configuration_Config::EXPIRATION => 0,
         );
 
@@ -60,29 +58,21 @@ class WURFL_Storage_FileSecondaryCacheTest extends WURFL_Storage_FileTest
         try {
             $cache = new WURFL_Storage_Memcache();
             if (!$cache->isWURFLLoaded()) {
-                $this->markTestSkipped(
-                    "PHP extension 'memcache' must be loaded and a local memcache server running to run this test."
-                );
+                $this->markTestSkipped("PHP extension 'memcache' must be loaded and a local memcache server running to run this test.");
             }
         } catch (\Exception $e) {
-            $this->markTestSkipped(
-                "PHP extension 'memcache' must be loaded and a local memcache server running to run this test."
-            );
+            $this->markTestSkipped("PHP extension 'memcache' must be loaded and a local memcache server running to run this test.");
         }
 
         if (!extension_loaded('memcache')) {
-            $this->markTestSkipped(
-                "PHP extension 'memcache' must be loaded and a local memcache server running to run this test."
-            );
+            $this->markTestSkipped("PHP extension 'memcache' must be loaded and a local memcache server running to run this test.");
         }
     }
 
     private function checkApcDeps()
     {
-        if (!extension_loaded('apc') || boolval(ini_get('apc.enable_cli')) === false) {
-            $this->markTestSkipped(
-                "PHP extension 'apc' must be loaded and enabled for CLI to run this test (http://www.php.net/manual/en/apc.configuration.php#ini.apc.enable-cli)."
-            );
+        if (!extension_loaded('apc') || (ini_get('apc.enable_cli')) === false) {
+            $this->markTestSkipped("PHP extension 'apc' must be loaded and enabled for CLI to run this test (http://www.php.net/manual/en/apc.configuration.php#ini.apc.enable-cli).");
         }
     }
 }

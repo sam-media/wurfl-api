@@ -12,10 +12,8 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @version    $id$
+ * @license     GNU Affero General Public License
  */
-
 /**
  */
 class WURFL_VirtualCapability_UserAgentTool_NameVersionPair extends WURFL_VirtualCapability_UserAgentTool_PropertyList

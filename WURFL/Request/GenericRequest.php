@@ -11,22 +11,19 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @author     Fantayeneh Asres Gizaw
- * @version    $id$
+ * @license     GNU Affero General Public License
+ * @author   Fantayeneh Asres Gizaw
  */
-
 /**
  * Generic WURFL Request object containing User Agent, UAProf and xhtml device data; its id
  * property is the MD5 hash of the user agent
  *
- *
- * @property string                  $userAgent
- * @property string                  $userAgentProfile
- * @property string                  $userAgentNormalized
- * @property bool                    $xhtmlDevice true if the device is known to be XHTML-MP compatible
- * @property string                  $id          Unique ID used for caching: MD5($userAgent)
- * @property WURFL_Request_MatchInfo $matchInfo   Information about the match (available after matching)
+ * @property string $userAgent
+ * @property string $userAgentProfile
+ * @property string $userAgentNormalized
+ * @property bool $xhtmlDevice true if the device is known to be XHTML-MP compatible
+ * @property string $id Unique ID used for caching: MD5($userAgent)
+ * @property WURFL_Request_MatchInfo $matchInfo Information about the match (available after matching)
  */
 class WURFL_Request_GenericRequest
 {
@@ -95,9 +92,7 @@ class WURFL_Request_GenericRequest
 
     /**
      * Get the original HTTP header value from the request
-     *
-     * @param string $name
-     *
+     * @param  string $name
      * @return string
      */
     public function getOriginalHeader($name)

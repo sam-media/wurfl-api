@@ -11,8 +11,7 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @version    $id$
+ * @license     GNU Affero General Public License
  */
 
 /**
@@ -21,8 +20,7 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @version    $id$
+ * @license     GNU Affero General Public License
  */
 class WURFL_Handlers_OperaHandler extends WURFL_Handlers_Handler
 {
@@ -89,9 +87,9 @@ class WURFL_Handlers_OperaHandler extends WURFL_Handlers_Handler
     public static function getOperaVersion($userAgent)
     {
         if (preg_match('#Opera[ /]?(\d+\.\d+)#', $userAgent, $matches)) {
-            return ($matches[1]);
+            return($matches[1]);
         }
 
-        return;
+        return null;
     }
 }

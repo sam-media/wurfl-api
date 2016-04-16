@@ -16,10 +16,7 @@ class WURFL_Configuration_InMemoryConfigTest extends PHPUnit_Framework_TestCase
             ->wurflPatch('spv_patch.xml')
             ->allowReload(true)
             ->persistence('file', array('dir' => './cache'))
-            ->cache(
-                'file',
-                array(WURFL_Configuration_Config::DIR => './cache', WURFL_Configuration_Config::EXPIRATION => 3600)
-            );
+            ->cache('file', array(WURFL_Configuration_Config::DIR => './cache', WURFL_Configuration_Config::EXPIRATION => 3600));
 
         $this->assertNotNull($config->persistence);
 
@@ -36,14 +33,9 @@ class WURFL_Configuration_InMemoryConfigTest extends PHPUnit_Framework_TestCase
     {
         $config = new WURFL_Configuration_InMemoryConfig();
         $params = array('host' => '127.0.0.1');
-        $config->wurflFile('wurfl.xml')
-            ->wurflPatch('new_web_browsers_patch.xml')
-            ->wurflPatch('spv_patch.xml')
+        $config->wurflFile('wurfl.xml')->wurflPatch('new_web_browsers_patch.xml')->wurflPatch('spv_patch.xml')
             ->persistence('memcache', $params)
-            ->cache(
-                'file',
-                array(WURFL_Configuration_Config::DIR => './cache', WURFL_Configuration_Config::EXPIRATION => 3600)
-            );
+            ->cache('file', array(WURFL_Configuration_Config::DIR => './cache', WURFL_Configuration_Config::EXPIRATION => 3600));
 
         $this->assertNotNull($config->persistence);
 
@@ -56,10 +48,7 @@ class WURFL_Configuration_InMemoryConfigTest extends PHPUnit_Framework_TestCase
 
         $cache = $config->cache;
         $this->assertEquals('file', $cache ['provider']);
-        $this->assertEquals(
-            array(WURFL_Configuration_Config::DIR => './cache', WURFL_Configuration_Config::EXPIRATION => 3600),
-            $cache ['params']
-        );
+        $this->assertEquals(array(WURFL_Configuration_Config::DIR => './cache', WURFL_Configuration_Config::EXPIRATION => 3600), $cache ['params']);
     }
 
     public function testShouldCreateConfigurationWithAPCPersistenceProviderAndAPCCacheProvider()
@@ -67,10 +56,9 @@ class WURFL_Configuration_InMemoryConfigTest extends PHPUnit_Framework_TestCase
         $config = new WURFL_Configuration_InMemoryConfig();
         $params = array('host' => '127.0.0.1');
         $config->wurflFile('wurfl.xml')
-            ->wurflPatch('new_web_browsers_patch.xml')
-            ->wurflPatch('spv_patch.xml')
-            ->persistence(WURFL_Storage_Apc::EXTENSION_MODULE_NAME, $params)
-            ->cache(WURFL_Storage_Apc::EXTENSION_MODULE_NAME, $params);
+                ->wurflPatch('new_web_browsers_patch.xml')->wurflPatch('spv_patch.xml')
+                ->persistence(WURFL_Storage_Apc::EXTENSION_MODULE_NAME, $params)
+                ->cache(WURFL_Storage_Apc::EXTENSION_MODULE_NAME, $params);
 
         $this->assertNotNull($config->persistence);
 
@@ -89,14 +77,11 @@ class WURFL_Configuration_InMemoryConfigTest extends PHPUnit_Framework_TestCase
     public function testShouldCreateConfigurationForMultipleMemcacheBackend()
     {
         $config = new WURFL_Configuration_InMemoryConfig();
-        $params = array(
-            'host' => '10.211.55.10;10.211.55.2',
-            'port' => '11211',
-            'namespace' => 'wurfl',
-        );
+        $params = array('host'       => '10.211.55.10;10.211.55.2',
+                         'port'      => '11211',
+                         'namespace' => 'wurfl', );
         $config->wurflFile('wurfl.xml')
-            ->wurflPatch('new_web_browsers_patch.xml')
-            ->wurflPatch('spv_patch.xml')
-            ->persistence('memcache', $params);
+                ->wurflPatch('new_web_browsers_patch.xml')->wurflPatch('spv_patch.xml')
+                ->persistence('memcache', $params);
     }
 }

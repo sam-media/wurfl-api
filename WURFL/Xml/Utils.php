@@ -11,10 +11,8 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @version    $id$
+ * @license     GNU Affero General Public License
  */
-
 /**
  * WURFL XML Utilities Static Class
  */
@@ -24,16 +22,13 @@ class WURFL_Xml_Utils
     private function __construct()
     {
     }
-
     private function __clone()
     {
     }
 
     /**
      * Returns the file path of the $xmlResource; if the $xmlResource is zipped it is uncompressed first
-     *
-     * @param string $xmlResource XML Resource file
-     *
+     * @param  string $xmlResource XML Resource file
      * @return string XML Resource file
      */
     public static function getXMLFile($xmlResource)
@@ -47,18 +42,14 @@ class WURFL_Xml_Utils
 
     /**
      * Returns a XML Resource filename for the uncompressed contents of the provided zipped $filename
-     *
-     * @param string $filename of zipped XML data
-     *
+     * @param  string               $filename of zipped XML data
      * @throws WURFL_WURFLException ZipArchive extension is not loaded or the ZIP file is corrupt
      * @return string               Full filename and path of extracted XML file
      */
     private static function getZippedFile($filename)
     {
         if (!self::zipModuleLoaded()) {
-            throw new WURFL_WURFLException(
-                'The ZipArchive extension is not loaded. Load the extension or use the flat wurfl.xml file'
-            );
+            throw new WURFL_WURFLException('The ZipArchive extension is not loaded. Load the extension or use the flat wurfl.xml file');
         }
         $tmpDir = WURFL_FileUtils::getTempDir();
         $zip    = new ZipArchive();
@@ -81,9 +72,7 @@ class WURFL_Xml_Utils
 
     /**
      * Returns true if the $filename is that of a Zip file
-     *
-     * @param string $fileName
-     *
+     * @param  string $fileName
      * @return bool
      */
     private static function isZipFile($fileName)
@@ -93,7 +82,6 @@ class WURFL_Xml_Utils
 
     /**
      * Returns true if the ZipArchive extension is loaded
-     *
      * @return bool
      */
     private static function zipModuleLoaded()

@@ -11,21 +11,18 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @author     Fantayeneh Asres Gizaw
- * @version    $id$
+ * @license     GNU Affero General Public License
+ * @author   Fantayeneh Asres Gizaw
  */
-
 /**
  * User Agent Normalizer - removes BabelFish garbage from user agent
  */
-class WURFL_Request_UserAgentNormalizer_Generic_BabelFish
-    implements WURFL_Request_UserAgentNormalizer_Interface
+class WURFL_Request_UserAgentNormalizer_Generic_BabelFish implements WURFL_Request_UserAgentNormalizer_Interface
 {
     const BABEL_FISH_REGEX = '/\\s*\\(via babelfish.yahoo.com\\)\\s*/';
 
     public function normalize($userAgent)
     {
-        return preg_replace(self::BABEL_FISH_REGEX, '', $userAgent);
+        return  preg_replace(self::BABEL_FISH_REGEX, '', $userAgent);
     }
 }

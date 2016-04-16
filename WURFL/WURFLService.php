@@ -12,8 +12,7 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @version    $id$
+ * @license     GNU Affero General Public License
  */
 
 /**
@@ -34,11 +33,8 @@ class WURFL_WURFLService
      */
     private $_cacheProvider;
 
-    public function __construct(
-        WURFL_DeviceRepository $deviceRepository,
-        WURFL_UserAgentHandlerChain $userAgentHandlerChain,
-        WURFL_Storage $cacheProvider
-    ) {
+    public function __construct(WURFL_DeviceRepository $deviceRepository, WURFL_UserAgentHandlerChain $userAgentHandlerChain, WURFL_Storage $cacheProvider)
+    {
         $this->_deviceRepository      = $deviceRepository;
         $this->_userAgentHandlerChain = $userAgentHandlerChain;
         $this->_cacheProvider         = $cacheProvider;
@@ -46,7 +42,6 @@ class WURFL_WURFLService
 
     /**
      * Returns the version info about the loaded WURFL
-     *
      * @return WURFL_Xml_Info WURFL Version info
      * @see WURFL_DeviceRepository::getWURFLInfo()
      */
@@ -58,8 +53,7 @@ class WURFL_WURFLService
     /**
      * Returns the Device for the given WURFL_Request_GenericRequest
      *
-     * @param WURFL_Request_GenericRequest $request
-     *
+     * @param  WURFL_Request_GenericRequest $request
      * @return WURFL_CustomDevice
      */
     public function getDeviceForRequest(WURFL_Request_GenericRequest $request)
@@ -73,18 +67,15 @@ class WURFL_WURFLService
      * Retun a WURFL_Xml_ModelDevice for the given device id. If $request is included, it will
      * be used to resolve virtual capabilties.
      *
-     * @param string                       $deviceID
-     * @param WURFL_Request_GenericRequest $request
-     *
+     * @param  string                       $deviceID
+     * @param  WURFL_Request_GenericRequest $request
      * @return WURFL_Xml_ModelDevice
      */
     public function getDevice($deviceID, $request = null)
     {
         if ($request !== null) {
             if (!($request instanceof WURFL_Request_GenericRequest)) {
-                throw new InvalidArgumentException(
-                    'Error: Request parameter must be null or instance of WURFL_Request_GenericRequest'
-                );
+                throw new InvalidArgumentException('Error: Request parameter must be null or instance of WURFL_Request_GenericRequest');
             }
 
             // Normalization must be performed if request is passed so virtual capabilities can be
@@ -110,8 +101,7 @@ class WURFL_WURFLService
      * Returns an array of all the fall back devices starting from
      * the given device
      *
-     * @param string $deviceID
-     *
+     * @param  string $deviceID
      * @return array
      */
     public function getDeviceHierarchy($deviceID)
@@ -133,30 +123,25 @@ class WURFL_WURFLService
 
     /**
      * Returns the device id for the device that matches the $request
-     *
-     * @param WURFL_Request_GenericRequest $request WURFL Request object
-     *
-     * @return string WURFL device id
+     * @param  WURFL_Request_GenericRequest $request WURFL Request object
+     * @return string                       WURFL device id
      */
     private function deviceIdForRequest($request)
     {
-        $deviceId = $this->_cacheProvider->load($request->id);
+        $deviceId = $this->_cacheProvider->load($request->userAgent);
         if (empty($deviceId)) {
             $generic_normalizer           = WURFL_UserAgentHandlerChainFactory::createGenericNormalizers();
             $request->userAgentNormalized = $generic_normalizer->normalize($request->userAgent);
 
-            if (WURFL_Configuration_ConfigHolder::getWURFLConfig()
-                    ->isHighPerformance() && WURFL_Handlers_Utils::isDesktopBrowserHeavyDutyAnalysis(
-                    $request->userAgentNormalized
-                )
-            ) {
+            if (WURFL_Configuration_ConfigHolder::getWURFLConfig()->isHighPerformance() && WURFL_Handlers_Utils::isDesktopBrowserHeavyDutyAnalysis($request->userAgentNormalized)) {
                 // This device has been identified as a web browser programatically, so no call to WURFL is necessary
-                return WURFL_Constants::GENERIC_WEB_BROWSER;
+                $deviceId =  WURFL_Constants::GENERIC_WEB_BROWSER;
+            } else {
+                $deviceId = $this->_userAgentHandlerChain->match($request);
             }
 
-            $deviceId = $this->_userAgentHandlerChain->match($request);
             // save it in cache
-            $this->_cacheProvider->save($request->id, $deviceId);
+            $this->_cacheProvider->save($request->userAgent, $deviceId);
         } else {
             $request->matchInfo->from_cache  = true;
             $request->matchInfo->lookup_time = 0.0;
@@ -169,9 +154,8 @@ class WURFL_WURFLService
      * Wraps the model device with WURFL_Xml_ModelDevice.  This function takes the
      * Device ID and returns the WURFL_CustomDevice with all capabilities.
      *
-     * @param string                            $deviceID
-     * @param WURFL_Request_GenericRequest|null $request
-     *
+     * @param  string                            $deviceID
+     * @param  WURFL_Request_GenericRequest|null $request
      * @return WURFL_CustomDevice
      */
     private function getWrappedDevice($deviceID, $request = null)

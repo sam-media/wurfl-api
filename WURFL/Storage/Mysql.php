@@ -11,24 +11,22 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @author     Fantayeneh Asres Gizaw
- * @version    $id$
+ * @license     GNU Affero General Public License
+ * @author   Fantayeneh Asres Gizaw
  */
-
 /**
  * WURFL Storage
  */
 class WURFL_Storage_Mysql extends WURFL_Storage_Base
 {
     private $defaultParams = array(
-        'host' => 'localhost',
-        'port' => 3306,
-        'db' => 'wurfl_persistence_db',
-        'user' => '',
-        'pass' => '',
-        'table' => 'wurfl_object_cache',
-        'keycolumn' => 'key',
+        'host'        => 'localhost',
+        'port'        => 3306,
+        'db'          => 'wurfl_persistence_db',
+        'user'        => '',
+        'pass'        => '',
+        'table'       => 'wurfl_object_cache',
+        'keycolumn'   => 'key',
         'valuecolumn' => 'value',
     );
 
@@ -64,22 +62,18 @@ class WURFL_Storage_Mysql extends WURFL_Storage_Base
         /* Initializes link to database */
         $success = mysql_select_db($this->db, $this->link);
         if (!$success) {
-            throw new WURFL_Storage_Exception(
-                "Couldn't change to database $this->db (" . mysql_error($this->link) . ')'
-            );
+            throw new WURFL_Storage_Exception("Couldn't change to database $this->db (" . mysql_error($this->link) . ')');
         }
 
         /* Is Table there? */
         $test = mysql_query("SHOW TABLES FROM `$this->db` LIKE '$this->table'", $this->link);
         if (!is_resource($test)) {
-            throw new WURFL_Storage_Exception(
-                "Couldn't show tables from database $this->db (" . mysql_error($this->link) . ')'
-            );
+            throw new WURFL_Storage_Exception("Couldn't show tables from database $this->db (" . mysql_error($this->link) . ')');
         }
 
         // create table if it's not there.
         if (mysql_num_rows($test) === 0) {
-            $sql     = "CREATE TABLE `$this->db`.`$this->table` (
+            $sql = "CREATE TABLE `$this->db`.`$this->table` (
 					  `$this->keycolumn` varchar(255) collate latin1_general_ci NOT NULL,
 					  `$this->valuecolumn` mediumblob NOT NULL,
 					  `ts` timestamp NOT NULL default CURRENT_TIMESTAMP,
@@ -87,9 +81,7 @@ class WURFL_Storage_Mysql extends WURFL_Storage_Base
 					) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci";
             $success = mysql_query($sql, $this->link);
             if (!$success) {
-                throw new WURFL_Storage_Exception(
-                    "Table $this->table missing in $this->db (" . mysql_error($this->link) . ')'
-                );
+                throw new WURFL_Storage_Exception("Table $this->table missing in $this->db (" . mysql_error($this->link) . ')');
             }
         }
 
@@ -106,17 +98,13 @@ class WURFL_Storage_Mysql extends WURFL_Storage_Base
         $sql      = "delete from `$this->db`.`$this->table` where `$this->keycolumn`='$objectId'";
         $success  = mysql_query($sql, $this->link);
         if (!$success) {
-            throw new WURFL_Storage_Exception(
-                'MySql error ' . mysql_error($this->link) . "deleting $objectId in $this->db"
-            );
+            throw new WURFL_Storage_Exception('MySql error ' . mysql_error($this->link) . "deleting $objectId in $this->db");
         }
 
         $sql     = "insert into `$this->db`.`$this->table` (`$this->keycolumn`,`$this->valuecolumn`) VALUES ('$objectId','$object')";
         $success = mysql_query($sql, $this->link);
         if (!$success) {
-            throw new WURFL_Storage_Exception(
-                'MySQL error ' . mysql_error($this->link) . "setting $objectId in $this->db"
-            );
+            throw new WURFL_Storage_Exception('MySQL error ' . mysql_error($this->link) . "setting $objectId in $this->db");
         }
 
         return $success;
@@ -154,9 +142,7 @@ class WURFL_Storage_Mysql extends WURFL_Storage_Base
         $sql     = "truncate table `$this->db`.`$this->table`";
         $success = mysql_query($sql, $this->link);
         if (mysql_error($this->link)) {
-            throw new WURFL_Storage_Exception(
-                'MySql error ' . mysql_error($this->link) . " clearing $this->db.$this->table"
-            );
+            throw new WURFL_Storage_Exception('MySql error ' . mysql_error($this->link) . " clearing $this->db.$this->table");
         }
 
         return $success;
@@ -164,15 +150,12 @@ class WURFL_Storage_Mysql extends WURFL_Storage_Base
 
     /**
      * Ensures the existance of the the PHP Extension mysql
-     *
      * @throws WURFL_Storage_Exception required extension is unavailable
      */
     private function _ensureModuleExistance()
     {
         if (!extension_loaded('mysql')) {
-            throw new WURFL_Storage_Exception(
-                'The PHP extension mysql must be installed and loaded in order to use the mysql.'
-            );
+            throw new WURFL_Storage_Exception('The PHP extension mysql must be installed and loaded in order to use the mysql.');
         }
     }
 }

@@ -11,10 +11,8 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @version    $id$
+ * @license     GNU Affero General Public License
  */
-
 /**
  * Logging factory
  */
@@ -22,10 +20,8 @@ class WURFL_Logger_LoggerFactory
 {
     /**
      * Create Logger for undetected devices with filename undetected_devices.log
-     *
-     * @param WURFL_Configuration_Config $wurflConfig
-     *
-     * @return WURFL_Logger_Interface Logger object
+     * @param  WURFL_Configuration_Config $wurflConfig
+     * @return WURFL_Logger_Interface     Logger object
      */
     public static function createUndetectedDeviceLogger($wurflConfig = null)
     {
@@ -38,10 +34,8 @@ class WURFL_Logger_LoggerFactory
 
     /**
      * Creates Logger for general logging (not undetected devices)
-     *
-     * @param WURFL_Configuration_Config $wurflConfig
-     *
-     * @return WURFL_Logger_Interface Logger object
+     * @param  WURFL_Configuration_Config $wurflConfig
+     * @return WURFL_Logger_Interface     Logger object
      */
     public static function create($wurflConfig = null)
     {
@@ -49,16 +43,14 @@ class WURFL_Logger_LoggerFactory
             return self::createFileLogger($wurflConfig, 'wurfl.log');
         }
 
-        return new WURFL_Logger_NullLogger();
+        return $wurflConfig->getLogger();
     }
 
     /**
      * Creates a new file logger
-     *
-     * @param WURFL_Configuration_Config $wurflConfig
-     * @param string                     $fileName
-     *
-     * @return WURFL_Logger_FileLogger File logger
+     * @param  WURFL_Configuration_Config $wurflConfig
+     * @param  string                     $fileName
+     * @return WURFL_Logger_FileLogger    File logger
      */
     private static function createFileLogger($wurflConfig, $fileName)
     {
@@ -69,9 +61,7 @@ class WURFL_Logger_LoggerFactory
 
     /**
      * Returns true if $wurflConfig specifies a Logger
-     *
-     * @param WURFL_Configuration_Config $wurflConfig
-     *
+     * @param  WURFL_Configuration_Config $wurflConfig
      * @return bool
      */
     private static function isLoggingConfigured($wurflConfig)
@@ -85,10 +75,8 @@ class WURFL_Logger_LoggerFactory
 
     /**
      * Creates a new log file in given $logDir with given $fileName
-     *
-     * @param string $logDir
-     * @param string $fileName
-     *
+     * @param  string $logDir
+     * @param  string $fileName
      * @return string Complete filename to created logfile
      */
     private static function createLogFile($logDir, $fileName)

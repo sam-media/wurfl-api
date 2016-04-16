@@ -1,6 +1,6 @@
 <?php
 
-class Tolerance extends PHPUnit_Framework_TestCase
+class WURFL_ToleranceTest extends PHPUnit_Framework_TestCase
 {
     public function testFirstSlash()
     {

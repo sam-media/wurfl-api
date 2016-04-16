@@ -11,10 +11,8 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @version    $id$
+ * @license     GNU Affero General Public License
  */
-
 /**
  * Helper to load PHP classes on demand
  */
@@ -22,13 +20,11 @@ class WURFL_ClassLoader
 {
     const CLASS_PREFIX = 'WURFL_';
     private static $classPath;
-
     /**
      * Loads a Class given the class name
      *
-     * @param string $className
-     *
-     * @return bool success
+     * @param  string $className
+     * @return bool   success
      */
     public static function loadClass($className)
     {

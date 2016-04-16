@@ -12,8 +12,7 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @version    $id$
+ * @license     GNU Affero General Public License
  */
 
 /**
@@ -22,8 +21,7 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @version    $id$
+ * @license     GNU Affero General Public License
  */
 class WURFL_Handlers_PhilipsHandler extends WURFL_Handlers_Handler
 {
@@ -35,10 +33,7 @@ class WURFL_Handlers_PhilipsHandler extends WURFL_Handlers_Handler
             return false;
         }
 
-        return (WURFL_Handlers_Utils::checkIfStartsWith(
-                $userAgent,
-                'Philips'
-            ) || WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'PHILIPS'));
+        return (WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'Philips') || WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'PHILIPS'));
     }
 
     public function applyConclusiveMatch($userAgent)

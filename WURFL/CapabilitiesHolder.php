@@ -11,10 +11,8 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @version    $id$
+ * @license     GNU Affero General Public License
  */
-
 /**
  * Holds WURFL Device capabilities
  */
@@ -48,8 +46,7 @@ class WURFL_CapabilitiesHolder
     /**
      * Returns the value of a given capability name
      *
-     * @param string $capabilityName
-     *
+     * @param  string         $capabilityName
      * @throws WURFLException if the value of the $capability name is illegal
      * @return string         Capability value
      */
@@ -62,10 +59,7 @@ class WURFL_CapabilitiesHolder
         $key             = $this->_device->id . '_' . $capabilityName;
         $capabilityValue = $this->_cacheProvider->get($key);
         if (empty($capabilityValue)) {
-            $capabilityValue = $this->_deviceRepository->getCapabilityForDevice(
-                $this->_device->fallBack,
-                $capabilityName
-            );
+            $capabilityValue = $this->_deviceRepository->getCapabilityForDevice($this->_device->fallBack, $capabilityName);
             // save it in cache
             $this->_cacheProvider->put($key, $capabilityValue);
         }
@@ -78,11 +72,10 @@ class WURFL_CapabilitiesHolder
 
     /**
      * Returns all the capabilities value of the current device as <capabilityName, capabilityValue>
-     *
      * @return array All capabilities
      */
     public function getAllCapabilities()
     {
-        return $this->_deviceRepository->getAllCapabilitiesForDevice($this->_device->id);
+        return  $this->_deviceRepository->getAllCapabilitiesForDevice($this->_device->id);
     }
 }

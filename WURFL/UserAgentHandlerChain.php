@@ -12,14 +12,11 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @version    $id$
+ * @license     GNU Affero General Public License
  */
-
 /**
  * Handles the chain of WURFL_Handlers_Handler objects
- *
- * @see        WURFL_Handlers_Handler
+ * @see WURFL_Handlers_Handler
  */
 class WURFL_UserAgentHandlerChain
 {
@@ -31,8 +28,7 @@ class WURFL_UserAgentHandlerChain
     /**
      * Adds a WURFL_Handlers_Handler to the chain
      *
-     * @param WURFL_Handlers_Handler $handler
-     *
+     * @param  WURFL_Handlers_Handler      $handler
      * @return WURFL_UserAgentHandlerChain $this
      */
     public function addUserAgentHandler(WURFL_Handlers_Handler $handler)
@@ -59,7 +55,6 @@ class WURFL_UserAgentHandlerChain
      *
      * @param string $userAgent
      * @param string $deviceID
-     *
      * @see WURFL_Handlers_Handler::filter()
      */
     public function filter($userAgent, $deviceID)
@@ -73,9 +68,8 @@ class WURFL_UserAgentHandlerChain
     /**
      * Return the the device id for the request
      *
-     * @param WURFL_Request_GenericRequest $request
-     *
-     * @return string deviceID
+     * @param  WURFL_Request_GenericRequest $request
+     * @return string                       deviceID
      */
     public function match(WURFL_Request_GenericRequest $request)
     {
@@ -86,7 +80,6 @@ class WURFL_UserAgentHandlerChain
 
     /**
      * Save the data from each WURFL_Handlers_Handler
-     *
      * @see WURFL_Handlers_Handler::persistData()
      */
     public function persistData()
@@ -98,7 +91,6 @@ class WURFL_UserAgentHandlerChain
 
     /**
      * Collect data
-     *
      * @return array data
      */
     public function collectData()

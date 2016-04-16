@@ -12,8 +12,7 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @version    $id$
+ * @license     GNU Affero General Public License
  */
 
 /**
@@ -22,8 +21,7 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @version    $id$
+ * @license     GNU Affero General Public License
  */
 class WURFL_Handlers_UcwebU2Handler extends WURFL_Handlers_Handler
 {
@@ -39,10 +37,7 @@ class WURFL_Handlers_UcwebU2Handler extends WURFL_Handlers_Handler
             return false;
         }
 
-        return (WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'UCWEB') && WURFL_Handlers_Utils::checkIfContains(
-                $userAgent,
-                'UCBrowser'
-            ));
+        return (WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'UCWEB') && WURFL_Handlers_Utils::checkIfContains($userAgent, 'UCBrowser'));
     }
 
     public function applyConclusiveMatch($userAgent)

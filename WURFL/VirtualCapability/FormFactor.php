@@ -32,13 +32,13 @@ class WURFL_VirtualCapability_FormFactor extends WURFL_VirtualCapability
     public function compute()
     {
         $map = array(
-            'Robot' => $this->device->is_robot,
-            'Desktop' => $this->device->ux_full_desktop,
-            'Smart-TV' => $this->device->is_smarttv,
+            'Robot'            => $this->device->is_robot,
+            'Desktop'          => $this->device->ux_full_desktop,
+            'Smart-TV'         => $this->device->is_smarttv,
             'Other Non-Mobile' => !$this->device->is_wireless_device,
-            'Tablet' => $this->device->is_tablet,
-            'Smartphone' => $this->device->is_smartphone,
-            'Feature Phone' => $this->device->can_assign_phone_number,
+            'Tablet'           => $this->device->is_tablet,
+            'Smartphone'       => $this->device->is_smartphone,
+            'Feature Phone'    => $this->device->can_assign_phone_number,
         );
 
         foreach ($map as $type => $condition) {

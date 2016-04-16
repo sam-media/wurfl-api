@@ -11,10 +11,8 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @version    $id$
+ * @license     GNU Affero General Public License
  */
-
 /**
  * Extracts device capabilities from XML file
  */
@@ -47,25 +45,13 @@ class WURFL_Xml_DeviceIterator extends WURFL_Xml_AbstractIterator
                             $groupIDCapabilitiesMap = array();
 
                             $deviceId                   = $this->xmlReader->getAttribute(WURFL_Xml_Interface::ID);
-                            $userAgent                  = $this->xmlReader->getAttribute(
-                                WURFL_Xml_Interface::USER_AGENT
-                            );
-                            $fallBack                   = $this->xmlReader->getAttribute(
-                                WURFL_Xml_Interface::FALL_BACK
-                            );
-                            $actualDeviceRoot           = $this->xmlReader->getAttribute(
-                                WURFL_Xml_Interface::ACTUAL_DEVICE_ROOT
-                            );
+                            $userAgent                  = $this->xmlReader->getAttribute(WURFL_Xml_Interface::USER_AGENT);
+                            $fallBack                   = $this->xmlReader->getAttribute(WURFL_Xml_Interface::FALL_BACK);
+                            $actualDeviceRoot           = $this->xmlReader->getAttribute(WURFL_Xml_Interface::ACTUAL_DEVICE_ROOT);
                             $specific                   = $this->xmlReader->getAttribute(WURFL_Xml_Interface::SPECIFIC);
                             $currentCapabilityNameValue = array();
                             if ($this->xmlReader->isEmptyElement) {
-                                $this->currentElement = new WURFL_Xml_ModelDevice(
-                                    $deviceId,
-                                    $userAgent,
-                                    $fallBack,
-                                    $actualDeviceRoot,
-                                    $specific
-                                );
+                                $this->currentElement = new WURFL_Xml_ModelDevice($deviceId, $userAgent, $fallBack, $actualDeviceRoot, $specific);
                                 break 3;
                             }
                             break;
@@ -83,9 +69,7 @@ class WURFL_Xml_DeviceIterator extends WURFL_Xml_AbstractIterator
                             }
                             $capabilityName = $this->xmlReader->getAttribute(WURFL_Xml_Interface::CAPABILITY_NAME);
                             if ($this->needToReadCapability($capabilityName)) {
-                                $capabilityValue                                   = $this->xmlReader->getAttribute(
-                                    WURFL_Xml_Interface::CAPABILITY_VALUE
-                                );
+                                $capabilityValue                                   = $this->xmlReader->getAttribute(WURFL_Xml_Interface::CAPABILITY_VALUE);
                                 $currentCapabilityNameValue[$capabilityName]       = $capabilityValue;
                                 $groupIDCapabilitiesMap[$groupId][$capabilityName] = $capabilityValue;
                             }
@@ -96,14 +80,7 @@ class WURFL_Xml_DeviceIterator extends WURFL_Xml_AbstractIterator
                     break;
                 case XMLReader::END_ELEMENT:
                     if ($nodeName === WURFL_Xml_Interface::DEVICE) {
-                        $this->currentElement = new WURFL_Xml_ModelDevice(
-                            $deviceId,
-                            $userAgent,
-                            $fallBack,
-                            $actualDeviceRoot,
-                            $specific,
-                            $groupIDCapabilitiesMap
-                        );
+                        $this->currentElement = new WURFL_Xml_ModelDevice($deviceId, $userAgent, $fallBack, $actualDeviceRoot, $specific, $groupIDCapabilitiesMap);
                         break 2;
                     }
             }
@@ -112,9 +89,7 @@ class WURFL_Xml_DeviceIterator extends WURFL_Xml_AbstractIterator
 
     /**
      * Returns true if the given $capabilityName needs to be read
-     *
-     * @param string $capabilityName
-     *
+     * @param  string $capabilityName
      * @return bool
      */
     private function needToReadCapability($capabilityName)

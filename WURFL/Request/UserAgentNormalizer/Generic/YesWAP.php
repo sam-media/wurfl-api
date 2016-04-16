@@ -11,16 +11,13 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @author     Fantayeneh Asres Gizaw
- * @version    $id$
+ * @license     GNU Affero General Public License
+ * @author   Fantayeneh Asres Gizaw
  */
-
 /**
  * User Agent Normalizer - removes YesWAP garbage from user agent
  */
-class WURFL_Request_UserAgentNormalizer_Generic_YesWAP
-    implements WURFL_Request_UserAgentNormalizer_Interface
+class WURFL_Request_UserAgentNormalizer_Generic_YesWAP implements WURFL_Request_UserAgentNormalizer_Interface
 {
     const YES_WAP_REGEX = '/\\s*Mozilla\\/4\\.0 \\(YesWAP mobile phone proxy\\)/';
 

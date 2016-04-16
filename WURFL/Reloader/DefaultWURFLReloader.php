@@ -12,18 +12,15 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @version    $id$
- * @deprecated
- */
-
-/**
- * WURFL Reloader
+ * @license     GNU Affero General Public License
  *
  * @deprecated
  */
-class WURFL_Reloader_DefaultWURFLReloader
-    implements WURFL_Reloader_Interface
+/**
+ * WURFL Reloader
+ * @deprecated
+ */
+class WURFL_Reloader_DefaultWURFLReloader implements WURFL_Reloader_Interface
 {
     public function reload($wurflConfigurationPath)
     {

@@ -11,22 +11,19 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @author     Fantayeneh Asres Gizaw
- * @version    $id$
+ * @license     GNU Affero General Public License
+ * @author   Fantayeneh Asres Gizaw
  */
-
 /**
  * User Agent Normalizer
  * Return the safari user agent stripping out
- *    - all the chararcters between U; and Safari/xxx
+ *  - all the chararcters between U; and Safari/xxx
  *
  *  e.g Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_4_11; fr) AppleWebKit/525.18 (KHTML, like Gecko) Version/3.1.1 Safari/525.18
- *        becomes
- *        Mozilla/5.0 (Macintosh Safari/525
+ *      becomes
+ *      Mozilla/5.0 (Macintosh Safari/525
  */
-class WURFL_Request_UserAgentNormalizer_Specific_Safari
-    implements WURFL_Request_UserAgentNormalizer_Interface
+class WURFL_Request_UserAgentNormalizer_Specific_Safari implements WURFL_Request_UserAgentNormalizer_Interface
 {
     public function normalize($userAgent)
     {

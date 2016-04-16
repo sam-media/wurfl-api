@@ -12,10 +12,8 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @version    $id$
+ * @license     GNU Affero General Public License
  */
-
 /**
  * WURFL PHP API Constants
  */
@@ -25,7 +23,8 @@ class WURFL_Constants
     {
     }
 
-    const API_VERSION = '1.7.0.0';
+    const API_VERSION   = '1.7.1.0';
+    const API_NAMESPACE = 'wurfl_1710';
 
     const GENERIC             = 'generic';
     const GENERIC_XHTML       = 'generic_xhtml';

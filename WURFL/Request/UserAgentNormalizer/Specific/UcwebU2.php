@@ -11,16 +11,13 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @author     Fantayeneh Asres Gizaw
- * @version    $id$
+ * @license     GNU Affero General Public License
+ * @author   Fantayeneh Asres Gizaw
  */
-
 /**
  * User Agent Normalizer
  */
-class WURFL_Request_UserAgentNormalizer_Specific_UcwebU2
-    implements WURFL_Request_UserAgentNormalizer_Interface
+class WURFL_Request_UserAgentNormalizer_Specific_UcwebU2 implements WURFL_Request_UserAgentNormalizer_Interface
 {
     public function normalize($userAgent)
     {
@@ -51,11 +48,7 @@ class WURFL_Request_UserAgentNormalizer_Specific_UcwebU2
         elseif (WURFL_Handlers_Utils::checkIfContains($userAgent, 'wds')) {
             //Add spaces and normalize
             $userAgent = preg_replace('|;(?! )|', '; ', $userAgent);
-            if (preg_match(
-                '/^UCWEB.+; wds (\d+)\.([\d]+);.+; ([ A-Za-z0-9_-]+); ([ A-Za-z0-9_-]+)\) U2/',
-                $userAgent,
-                $matches
-            )) {
+            if (preg_match('/^UCWEB.+; wds (\d+)\.([\d]+);.+; ([ A-Za-z0-9_-]+); ([ A-Za-z0-9_-]+)\) U2/', $userAgent, $matches)) {
                 $version = $matches[1] . '.' . $matches[2];
                 $model   = $matches[3] . '.' . $matches[4];
                 //Standard normalization stuff from WP matcher

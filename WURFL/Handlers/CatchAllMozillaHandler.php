@@ -11,8 +11,7 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @version    $id$
+ * @license     GNU Affero General Public License
  */
 
 /**
@@ -21,20 +20,18 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @version    $id$
+ * @license     GNU Affero General Public License
  */
+
 class WURFL_Handlers_CatchAllMozillaHandler extends WURFL_Handlers_Handler
 {
     protected $prefix = 'CATCH_ALL_MOZILLA';
-
     /**
      * Final Interceptor: Intercept
      * Everything that has not been trapped by a previous handler
      *
-     * @param string $userAgent
-     *
-     * @return bool always true
+     * @param  string $userAgent
+     * @return bool   always true
      */
     public function canHandle($userAgent)
     {
@@ -44,22 +41,13 @@ class WURFL_Handlers_CatchAllMozillaHandler extends WURFL_Handlers_Handler
     /**
      * If UA starts with Mozilla, apply LD with tolerance 5.
      *
-     * @param string $userAgent
-     *
+     * @param  string $userAgent
      * @return string
      */
     public function applyConclusiveMatch($userAgent)
     {
-        if (WURFL_Configuration_ConfigHolder::getWURFLConfig()
-            ->isHighPerformance()
-        ) {
-            //High performance mode
-            $tolerance = WURFL_Handlers_Utils::firstCloseParen($userAgent);
+        $tolerance = WURFL_Handlers_Utils::firstCloseParen($userAgent);
 
-            return $this->getDeviceIDFromRIS($userAgent, $tolerance);
-        } else {
-            //High accuracy mode
-            return $this->getDeviceIDFromLD($userAgent, 5);
-        }
+        return $this->getDeviceIDFromRIS($userAgent, $tolerance);
     }
 }

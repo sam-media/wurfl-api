@@ -11,11 +11,9 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @author     Fantayeneh Asres Gizaw
- * @version    $id$
+ * @license     GNU Affero General Public License
+ * @author   Fantayeneh Asres Gizaw
  */
-
 /**
  * Creates a Generic WURFL Request from the raw HTTP Request
  */
@@ -23,10 +21,8 @@ class WURFL_Request_GenericRequestFactory
 {
     /**
      * Creates Generic Request from the given HTTP Request (normally $_SERVER)
-     *
-     * @param array $request                        HTTP Request
-     * @param bool  $override_sideloaded_browser_ua
-     *
+     * @param  array                        $request                        HTTP Request
+     * @param  bool                         $override_sideloaded_browser_ua
      * @return WURFL_Request_GenericRequest
      */
     public function createRequest($request, $override_sideloaded_browser_ua = true)
@@ -40,9 +36,7 @@ class WURFL_Request_GenericRequestFactory
 
     /**
      * Create a Generic Request from the given $userAgent
-     *
-     * @param string $userAgent
-     *
+     * @param  string                       $userAgent
      * @return WURFL_Request_GenericRequest
      */
     public function createRequestForUserAgent($userAgent)

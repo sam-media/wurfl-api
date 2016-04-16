@@ -12,14 +12,12 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @version    $id$
+ * @license     GNU Affero General Public License
+ *
  * @deprecated
  */
-
 /**
  * WURFL Reloader Interface
- *
  * @deprecated
  */
 interface WURFL_Reloader_Interface

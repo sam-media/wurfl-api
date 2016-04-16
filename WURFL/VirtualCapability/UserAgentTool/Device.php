@@ -12,10 +12,8 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @version    $id$
+ * @license     GNU Affero General Public License
  */
-
 /**
  */
 class WURFL_VirtualCapability_UserAgentTool_Device
@@ -36,28 +34,24 @@ class WURFL_VirtualCapability_UserAgentTool_Device
 
     /**
      * Device user agent string
-     *
      * @var string
      */
     public $device_ua;
 
     /**
      * Browser user agent string
-     *
      * @var string
      */
     public $browser_ua;
 
     /**
      * Device user agent string normalized
-     *
      * @var string
      */
     public $device_ua_normalized;
 
     /**
      * Browser user agent string normalized
-     *
      * @var string
      */
     public $browser_ua_normalized;
@@ -72,10 +66,9 @@ class WURFL_VirtualCapability_UserAgentTool_Device
             $this->device_ua_normalized  = $this->http_request->userAgentNormalized;
             $this->browser_ua_normalized = $this->device_ua_normalized;
         } else {
-            $this->device_ua             = $this->http_request->getOriginalHeader('HTTP_USER_AGENT');
+            $this->device_ua             = $this->http_request->userAgent;
             $this->browser_ua            = $this->device_ua;
-            $this->device_ua_normalized  = isset($this->http_request->userAgentNormalized)
-                ? $this->http_request->userAgentNormalized : null;
+            $this->device_ua_normalized  = isset($this->http_request->userAgentNormalized) ? $this->http_request->userAgentNormalized : null;
             $this->browser_ua_normalized = $this->device_ua_normalized;
         }
 
@@ -84,16 +77,16 @@ class WURFL_VirtualCapability_UserAgentTool_Device
     }
 
     protected static $windows_map = array(
-        '4.0' => 'NT 4.0',
-        '5.0' => '2000',
-        '5.1' => 'XP',
-        '5.2' => 'XP',
-        '6.0' => 'Vista',
-        '6.1' => '7',
-        '6.2' => '8',
-        '6.3' => '8.1',
-        '6.4' => '10',
-        '10.0' => '10',
+            '4.0'  => 'NT 4.0',
+            '5.0'  => '2000',
+            '5.1'  => 'XP',
+            '5.2'  => 'XP',
+            '6.0'  => 'Vista',
+            '6.1'  => '7',
+            '6.2'  => '8',
+            '6.3'  => '8.1',
+            '6.4'  => '10',
+            '10.0' => '10',
     );
 
     protected static $trident_map = array(
@@ -114,14 +107,12 @@ class WURFL_VirtualCapability_UserAgentTool_Device
         $this->normalizeOS();
         $this->normalizeBrowser();
     }
-
     protected function normalizeOS()
     {
         if (strpos($this->device_ua, 'Windows') !== false) {
             if (preg_match('/Windows NT ([0-9]+?\.[0-9])/', $this->os->name, $matches)) {
                 $this->os->name    = 'Windows';
-                $this->os->version = array_key_exists($matches[1], self::$windows_map) ? self::$windows_map[$matches[1]]
-                    : $matches[1];
+                $this->os->version = array_key_exists($matches[1], self::$windows_map) ? self::$windows_map[$matches[1]] : $matches[1];
 
                 return;
             }

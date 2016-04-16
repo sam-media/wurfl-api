@@ -11,19 +11,21 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @author     Fantayeneh Asres Gizaw
- * @version    $id$
+ * @license     GNU Affero General Public License
+ * @author   Fantayeneh Asres Gizaw
  */
-
 /**
  * APC Storage class
  */
 class WURFL_Storage_Apc extends WURFL_Storage_Base
 {
     const EXTENSION_MODULE_NAME = 'apc';
-    private $currentParams      = array(
-        'namespace' => 'wurfl',
+
+    private $expiration;
+    private $namespace;
+
+    private $defaultParams = array(
+        'namespace'  => 'wurfl',
         'expiration' => 0,
     );
 
@@ -31,10 +33,11 @@ class WURFL_Storage_Apc extends WURFL_Storage_Base
 
     public function __construct($params = array())
     {
-        if (is_array($params)) {
-            array_merge($this->currentParams, $params);
+        $currentParams = is_array($params) ? array_merge($this->defaultParams, $params) : $this->defaultParams;
+        foreach ($currentParams as $key => $value) {
+            $this->$key = $value;
         }
-        //$this->initialize();
+        $this->initialize();
     }
 
     public function initialize()
@@ -44,11 +47,7 @@ class WURFL_Storage_Apc extends WURFL_Storage_Base
 
     public function save($objectId, $object, $expiration = null)
     {
-        $value = apc_store(
-            $this->encode($this->apcNameSpace(), $objectId),
-            $object,
-            (($expiration === null) ? $this->expire() : $expiration)
-        );
+        $value = apc_store($this->encode($this->apcNameSpace(), $objectId), $object, (($expiration === null) ? $this->expire() : $expiration));
         if ($value === false) {
             throw new WURFL_Storage_Exception('Error saving variable in APC cache. Cache may be full.');
         }
@@ -76,17 +75,16 @@ class WURFL_Storage_Apc extends WURFL_Storage_Base
 
     private function apcNameSpace()
     {
-        return $this->currentParams['namespace'];
+        return $this->namespace;
     }
 
     private function expire()
     {
-        return $this->currentParams['expiration'];
+        return $this->expiration;
     }
 
     /**
      * Ensures the existence of the the PHP Extension apc
-     *
      * @throws WURFL_Storage_Exception required extension is unavailable
      */
     private function ensureModuleExistence()

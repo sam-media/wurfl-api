@@ -11,15 +11,12 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @version    $id$
+ * @license     GNU Affero General Public License
  */
-
 /**
  * Iterates over a WURFL/Patch XML file
  */
-abstract class WURFL_Xml_AbstractIterator
-    implements Iterator
+abstract class WURFL_Xml_AbstractIterator implements Iterator
 {
     /**
      * @var string filename with path to wurfl.xml or patch file
@@ -37,7 +34,6 @@ abstract class WURFL_Xml_AbstractIterator
 
     /**
      * Loads given XML $inputFile
-     *
      * @param string $inputFile
      */
     public function __construct($inputFile)
@@ -51,7 +47,6 @@ abstract class WURFL_Xml_AbstractIterator
 
     /**
      * Returns the current XML element
-     *
      * @return XMLReader Current XML element
      */
     public function current()
@@ -69,7 +64,6 @@ abstract class WURFL_Xml_AbstractIterator
 
     /**
      * Returns the current element id
-     *
      * @return string Current element id
      */
     public function key()
@@ -79,7 +73,6 @@ abstract class WURFL_Xml_AbstractIterator
 
     /**
      * Returns true if the current XML element is valid for processing
-     *
      * @return bool
      */
     public function valid()
@@ -93,7 +86,6 @@ abstract class WURFL_Xml_AbstractIterator
 
     /**
      * Open the input file and position cursor at the beginning
-     *
      * @see $inputFile
      */
     public function rewind()
@@ -106,7 +98,6 @@ abstract class WURFL_Xml_AbstractIterator
 
     /**
      * Gets the text value from the current node
-     *
      * @return string value
      */
     public function getTextValue()

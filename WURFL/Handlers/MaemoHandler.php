@@ -12,8 +12,7 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @version    $id$
+ * @license     GNU Affero General Public License
  */
 
 /**
@@ -22,8 +21,7 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @version    $id$
+ * @license     GNU Affero General Public License
  */
 class WURFL_Handlers_MaemoHandler extends WURFL_Handlers_Handler
 {
@@ -76,6 +74,6 @@ class WURFL_Handlers_MaemoHandler extends WURFL_Handlers_Handler
             return $model;
         }
 
-        return;
+        return null;
     }
 }

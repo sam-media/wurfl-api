@@ -24,7 +24,6 @@ class WURFL_VirtualCapability_IsAppWebview extends WURFL_VirtualCapability
     protected $required_capabilities = array('device_os');
     /**
      * Simple strings or regex patterns that indicate that the UA is from a built in browser that sends webview style UAs
-     *
      * @var array
      */
     protected $blacklist = array(
@@ -37,7 +36,6 @@ class WURFL_VirtualCapability_IsAppWebview extends WURFL_VirtualCapability
     );
     /**
      * Simple strings or regex patterns that indicate that the UA is from a app that sends webview UAs
-     *
      * @var array
      */
     protected $whitelist = array(
@@ -52,7 +50,6 @@ class WURFL_VirtualCapability_IsAppWebview extends WURFL_VirtualCapability
     );
     /**
      * Simple strings or regex patterns that indicate that the UA is from a third party browser
-     *
      * @var array
      */
     protected $third_party_browsers = array(
@@ -82,11 +79,7 @@ class WURFL_VirtualCapability_IsAppWebview extends WURFL_VirtualCapability
         }
 
         // Handling Chrome separately
-        if ($this->device->device_os === 'Android' && WURFL_Handlers_Utils::checkIfContains(
-                $ua,
-                'Chrome'
-            ) && !WURFL_Handlers_Utils::checkIfContains($ua, 'Version')
-        ) {
+        if ($this->device->device_os === 'Android' && WURFL_Handlers_Utils::checkIfContains($ua, 'Chrome') && !WURFL_Handlers_Utils::checkIfContains($ua, 'Version')) {
             return false;
         }
 
@@ -96,11 +89,7 @@ class WURFL_VirtualCapability_IsAppWebview extends WURFL_VirtualCapability
         }
 
         // So is Mac OS X's webview logic
-        if ($this->device->advertised_device_os === 'Mac OS X' && !WURFL_Handlers_Utils::checkIfContains(
-                $ua,
-                'Safari'
-            )
-        ) {
+        if ($this->device->advertised_device_os === 'Mac OS X' && !WURFL_Handlers_Utils::checkIfContains($ua, 'Safari')) {
             return true;
         }
 
@@ -122,10 +111,9 @@ class WURFL_VirtualCapability_IsAppWebview extends WURFL_VirtualCapability
             if (preg_match("#Mozilla/5.0 \(Linux;( U;)? Android.*AppleWebKit.*\(KHTML, like Gecko\)#", $ua_original)) {
                 // Among those UAs in here, we are interested in UAs from apps that contain a webview style UA and add stuff to the beginning or the end of the string(FB, Flipboard etc.)
                 // Android >= 4.4
-                if ((strpos($ua, 'Android 4.4') !== false || strpos($ua, 'Android 5.') !== false) && !preg_match(
-                        "#^Mozilla/5.0 \(Linux; Android [45]\.[\d\.]+; .+ Build/.+\) AppleWebKit/[\d\.+]+ \(KHTML, like Gecko\) Version/[\d\.]+ Chrome/([\d]+)\.[\d\.]+? (?:Mobile )?Safari/[\d\.+]+$#",
-                        $ua_original
-                    )
+                if ((strpos($ua, 'Android 4.4') !== false ||
+                     strpos($ua, 'Android 5.') !== false) &&
+                     !preg_match("#^Mozilla/5.0 \(Linux; Android [45]\.[\d\.]+; .+ Build/.+\) AppleWebKit/[\d\.+]+ \(KHTML, like Gecko\) Version/[\d\.]+ Chrome/([\d]+)\.[\d\.]+? (?:Mobile )?Safari/[\d\.+]+$#", $ua_original)
                 ) {
                     if (preg_match("#Chrome/(\d+)\.#", $ua, $matches)) {
                         if ($matches[1] < 30) {
@@ -136,10 +124,8 @@ class WURFL_VirtualCapability_IsAppWebview extends WURFL_VirtualCapability
                     return true;
                 }
                 // Android < 4.4
-                if (preg_match("#Android [1234]\.[123]#", $ua) && !preg_match(
-                        "#^Mozilla/5.0 \(Linux;( U;)? Android [1234]\.[\d\.]+(-update1)?; [a-zA-Z]+-[a-zA-Z]+; .+ Build/.+\) AppleWebKit/[\d\.+]+ \(KHTML, like Gecko\) Version/[\d\.]+ (Mobile )?Safari/[\d\.+]+$#",
-                        $ua_original
-                    )
+                if (preg_match("#Android [1234]\.[123]#", $ua) &&
+                    !preg_match("#^Mozilla/5.0 \(Linux;( U;)? Android [1234]\.[\d\.]+(-update1)?; [a-zA-Z]+-[a-zA-Z]+; .+ Build/.+\) AppleWebKit/[\d\.+]+ \(KHTML, like Gecko\) Version/[\d\.]+ (Mobile )?Safari/[\d\.+]+$#", $ua_original)
                 ) {
                     return true;
                 }
@@ -147,7 +133,6 @@ class WURFL_VirtualCapability_IsAppWebview extends WURFL_VirtualCapability
 
             return false;
         }
-
         // Return is_app_webview = false for everything else
         return false;
     }

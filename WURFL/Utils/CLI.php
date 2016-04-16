@@ -11,6 +11,8 @@ class WURFL_Utils_CLI
      */
     protected $wurfl;
 
+    protected static $enable_console_logger = false;
+
     public function __construct($wurfl = null)
     {
         error_reporting(E_ALL);
@@ -37,7 +39,36 @@ class WURFL_Utils_CLI
         }
     }
 
+    protected function actionBucketListOverwrite(WURFL_Utils_CLI_Argument $arg)
+    {
+        self::$enable_console_logger = true;
+        WURFL_FileUtils::rmdirContents(RESOURCES_DIR . '/storage/persistence');
+        $this->createWurflClass();
+    }
+
     protected function actionBucketList(WURFL_Utils_CLI_Argument $arg)
+    {
+        if ($arg->value) {
+            $devices = array($arg->value);
+        } else {
+            $devices = $this->wurfl->getAllDevicesID();
+            // Sort by device_id
+            sort($devices);
+        }
+
+        foreach ($devices as $device_id) {
+            $device      = $this->wurfl->getDevice($device_id);
+            $ua_original = $device->userAgent;
+            unset($device);
+            $device_enriched = $this->wurfl->getDeviceForUserAgent($ua_original);
+            $ua_normalized   = $device_enriched->getMatchInfo()->normalized_user_agent;
+            $bucket_name     = self::bucketNameFromMatcherClass($device_enriched->getMatchInfo()->matcher);
+            unset($device_enriched);
+            echo implode("\t", array($bucket_name, $device_id, $ua_normalized, $ua_original)) . PHP_EOL;
+        }
+    }
+
+    protected function actionBucketListFromHandlers(WURFL_Utils_CLI_Argument $arg)
     {
         $wurfl_service = new ReflectionProperty('WURFL_WURFLManager', '_wurflService');
         $wurfl_service->setAccessible(true);
@@ -46,37 +77,75 @@ class WURFL_Utils_CLI
         $wurfl_ua_chain->setAccessible(true);
         $ua_chain = $wurfl_ua_chain->getValue($service);
 
-        echo 'PHP API v' . WURFL_Constants::API_VERSION . ' for ' . $this->wurfl->getWURFLInfo()->version . PHP_EOL;
-        echo "Bucket\tDeviceId\tNormalizedUserAgent\tOriginaUserAgent" . PHP_EOL;
-
         $ordered_buckets = array();
 
         foreach ($ua_chain->getHandlers() as $userAgentHandler) {
-            $ordered_buckets[$this->formatBucketName($userAgentHandler->getName())] = $userAgentHandler;
+            $ordered_buckets[self:: formatBucketName($userAgentHandler->getName())] = $userAgentHandler;
         }
 
-        ksort($ordered_buckets);
+        $bucket_list = array();
 
         foreach ($ordered_buckets as $bucket => $userAgentHandler) {
             /**
              * @see WURFL_Handlers_Handler::getUserAgentsWithDeviceId()
              */
-            $current = $userAgentHandler->getUserAgentsWithDeviceId();
+            $ua_device_list = $userAgentHandler->getUserAgentsWithDeviceId();
 
-            if ($current) {
-                $sorted = array_flip($current);
-                ksort($sorted);
-                foreach ($sorted as $device_id => $normalized_ua) {
-                    $device = $this->wurfl->getDevice($device_id);
-                    echo $bucket . "\t" . $device_id . "\t" . $normalized_ua . "\t" . $device->userAgent . PHP_EOL;
+            if ($ua_device_list) {
+                $sorted = array_flip($ua_device_list);
+
+                foreach ($sorted as $device_id => $ua_normalized) {
+                    $device                   = $this->wurfl->getDevice($device_id);
+                    $bucket_list[$device->id] = array($bucket, $ua_normalized, $device->userAgent);
                 }
-            } else {
-                echo $bucket . "\t" . 'EMPTY' . "\t" . 'EMPTY' . "\t" . 'EMPTY' . PHP_EOL;
             }
+        }
+
+        // Sort by device_id
+        ksort($bucket_list);
+        echo 'PHP API v' . WURFL_Constants::API_VERSION . ' for ' . $this->wurfl->getWURFLInfo()->version . PHP_EOL;
+        echo "Bucket\tDeviceId\tNormalizedUserAgent\tOriginaUserAgent" . PHP_EOL;
+        foreach ($bucket_list as $device_id => $item) {
+            echo $item[0] . "\t";
+            echo $device_id . "\t";
+            echo $item[1] . "\t";
+            echo $item[2] . "\n";
         }
     }
 
-    private function formatBucketName($handler_name)
+    public static function bucketNameFromMatcherClass($matcher_class)
+    {
+        preg_match('/^WURFL_Handlers_(.+)Handler$/', $matcher_class, $matches);
+        $name = $matches[1];
+
+        switch ($name) {
+            case 'Sonyericsson':
+                $name = 'SonyEricsson';
+                break;
+            case 'Catchallris':
+                $name = 'CatchAllRis';
+                break;
+            case 'Botcrawlertranscoder':
+                $name = 'Bot';
+                break;
+            case 'Catchallmozilla':
+                $name = 'CatchAllMozilla';
+                break;
+            case 'Operamini':
+                $name = 'OperaMini';
+                break;
+            case 'BotCrawlerTranscoder':
+                $name = 'Bot';
+                break;
+            case 'KDDI':
+                $name = 'Kddi';
+                break;
+        }
+
+        return $name;
+    }
+
+    public static function formatBucketName($handler_name)
     {
         $name = str_replace('_DEVICEIDS', '', $handler_name);
         $name = ucfirst(strtolower($name));
@@ -177,25 +246,66 @@ class WURFL_Utils_CLI
     {
         $test_type = $arg->value;
         require_once dirname(__FILE__) . '/../../tests/CentralTest/CentralTestManager.php';
-        $centralTest = new CentralTestManager($this->wurfl);
+
+        if (preg_match('#(single/.*)$#', $test_type, $matches)) {
+            $test_list = CentralTestManager::loadSingleTest($matches[1]);
+        } else {
+            $test_list = CentralTestManager::loadBatchTest($test_type);
+        }
+
+        $centralTest = new CentralTestManager($this->wurfl, $test_list);
         //TODO: Add introspector support
         if ($this->arguments->introspector) {
             if ($this->arguments->username && $this->arguments->password) {
-                $centralTest->useIntrospector(
-                    $this->arguments->introspector->value,
-                    $this->arguments->username->value,
-                    $this->arguments->password->value
-                );
+                $centralTest->useIntrospector($this->arguments->introspector->value, $this->arguments->username->value, $this->arguments->password->value);
             } else {
                 $centralTest->useIntrospector($this->arguments->introspector->value);
             }
         }
         $centralTest->show_success = false;
+        $centralTest->run();
+    }
+
+    protected function actionCentralTestFiltered(WURFL_Utils_CLI_Argument $arg)
+    {
+        $test_type = $arg->value;
+        require_once dirname(__FILE__) . '/../../tests/CentralTest/CentralTestManager.php';
+
         if (preg_match('#(single/.*)$#', $test_type, $matches)) {
-            $centralTest->runSingleTest($matches[1]);
+            $test_list = CentralTestManager::loadSingleTest($matches[1]);
         } else {
-            $centralTest->runBatchTest($test_type);
+            $test_list = CentralTestManager::loadBatchTest($test_type);
         }
+
+        $required_caps = CentralTestManager::getRequiredCapsFromTestList($test_list);
+
+        $wurfl = $this->createWurflClassFiltered($required_caps);
+
+        $centralTest = new CentralTestManager($wurfl, $test_list);
+        //TODO: Add introspector support
+        if ($this->arguments->introspector) {
+            if ($this->arguments->username && $this->arguments->password) {
+                $centralTest->useIntrospector($this->arguments->introspector->value, $this->arguments->username->value, $this->arguments->password->value);
+            } else {
+                $centralTest->useIntrospector($this->arguments->introspector->value);
+            }
+        }
+        $centralTest->show_success = false;
+        $centralTest->run();
+    }
+
+    protected function actionTestDeviceId(WURFL_Utils_CLI_Argument $arg)
+    {
+        $device = $this->wurfl->getDevice($arg->value);
+        $device = $this->wurfl->getDeviceForUserAgent($device->userAgent);
+        echo 'Device ID: ' . $device->id . PHP_EOL;
+        echo 'UA: ' . $device->userAgent . PHP_EOL;
+        echo 'Fallback: ' . $device->fallBack . PHP_EOL;
+        echo 'Match Info: ' . PHP_EOL;
+        var_export($device->getMatchInfo());
+        echo PHP_EOL;
+        echo 'Virtual Capabilities:' . PHP_EOL;
+        var_export($device->getAllVirtualCapabilities());
     }
 
     protected function actionTestUserAgent(WURFL_Utils_CLI_Argument $arg)
@@ -265,7 +375,7 @@ EOL;
             $wurflConfig->wurflFile(WURFL_DB_DIR . '/wurfl.zip');
 
             // Set the match mode for the API ('performance' or 'accuracy')
-            $wurflConfig->matchMode('performance');
+            $wurflConfig->matchMode('accuracy');
 
             // Setup WURFL Persistence
             $wurflConfig->persistence('file', array('dir' => $persistenceDir));
@@ -275,6 +385,10 @@ EOL;
 
             $wurflConfig->allowReload(true);
 
+            if (self::$enable_console_logger) {
+                $wurflConfig->setLogger(new WURFL_Logger_ConsoleLogger());
+            }
+
             // Create a WURFL Manager Factory from the WURFL Configuration
             $wurflManagerFactory = new WURFL_WURFLManagerFactory($wurflConfig);
 
@@ -283,8 +397,69 @@ EOL;
             $this->wurfl = $wurflManagerFactory->create();
         }
     }
-}
 
+    protected function createWurflClassMemory()
+    {
+
+        // Create WURFL Configuration
+        $wurflConfig = new WURFL_Configuration_InMemoryConfig();
+
+        // Set location of the WURFL File
+        $wurflConfig->wurflFile(WURFL_DB_DIR . '/wurfl.zip');
+
+        // Set the match mode for the API ('performance' or 'accuracy')
+        $wurflConfig->matchMode('accuracy');
+
+        // Setup WURFL Persistence
+        $wurflConfig->persistence('memory');
+
+        // Setup Caching
+        $wurflConfig->cache('null');
+
+        // Create a WURFL Manager Factory from the WURFL Configuration
+        $wurflManagerFactory = new WURFL_WURFLManagerFactory($wurflConfig);
+
+        // Create a WURFL Manager
+
+        return $wurflManagerFactory->create();
+    }
+
+    protected function createWurflClassFiltered($required_caps)
+    {
+        if (empty($required_caps)) {
+            throw new WURFL_WURFLCLIInvalidArgumentException('Capability filter cannot be an empty array');
+        }
+
+        $persistenceDir = RESOURCES_DIR . '/storage/persistence_filtered';
+        $cacheDir       = RESOURCES_DIR . '/storage/cache_filtered';
+
+        // Create WURFL Configuration
+        $wurflConfig = new WURFL_Configuration_InMemoryConfig();
+
+        // Set location of the WURFL File
+        $wurflConfig->wurflFile(WURFL_DB_DIR . '/wurfl.zip');
+
+        // Set the match mode for the API ('performance' or 'accuracy')
+        $wurflConfig->matchMode('accuracy');
+
+        // Setup WURFL Persistence
+        $wurflConfig->persistence('file', array('dir' => $persistenceDir));
+
+        // Setup Caching
+        $wurflConfig->cache('null');
+
+        $wurflConfig->allowReload(true);
+
+        $wurflConfig->capabilityFilter($required_caps);
+
+        // Create a WURFL Manager Factory from the WURFL Configuration
+        $wurflManagerFactory = new WURFL_WURFLManagerFactory($wurflConfig);
+
+        // Create a WURFL Manager
+
+        return $wurflManagerFactory->create();
+    }
+}
 class WURFL_Utils_CLI_ArgumentFactory
 {
     /**
@@ -301,10 +476,8 @@ class WURFL_Utils_CLI_ArgumentFactory
 
         return $collection;
     }
-
     /**
-     * @param string $text Raw argument from ARGV
-     *
+     * @param  string                           $text Raw argument from ARGV
      * @throws WURFLCLIInvalidArgumentException
      * @return WURFL_Utils_CLI_Argument
      */
@@ -319,25 +492,20 @@ class WURFL_Utils_CLI_ArgumentFactory
         }
     }
 }
-
 class WURFL_Utils_CLI_Argument
 {
     public $command;
     public $value;
-
     public function __construct($command, $value = null)
     {
         $this->command = $command;
         $this->value   = $value;
     }
 }
-
-class WURFL_Utils_CLI_Argument_Collection
-    implements Iterator
+class WURFL_Utils_CLI_Argument_Collection implements Iterator
 {
     private $arguments = array();
     private $position  = 0;
-
     public function __get($key)
     {
         foreach ($this->arguments as $arg) {
@@ -346,49 +514,40 @@ class WURFL_Utils_CLI_Argument_Collection
             }
         }
 
-        return;
+        return null;
     }
-
     public function exists($key)
     {
         return ($this->__get($key) !== null);
     }
-
     public function count()
     {
         return count($this->arguments);
     }
-
     public function isEmpty()
     {
         return ($this->count() === 0);
     }
-
     public function add(WURFL_Utils_CLI_Argument $arg)
     {
         $this->arguments[] = $arg;
     }
-
     public function rewind()
     {
         $this->position = 0;
     }
-
     public function current()
     {
         return $this->arguments[$this->position];
     }
-
     public function key()
     {
         return $this->position;
     }
-
     public function next()
     {
         ++$this->position;
     }
-
     public function valid()
     {
         return isset($this->arguments[$this->position]);

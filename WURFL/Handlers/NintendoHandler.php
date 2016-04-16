@@ -12,8 +12,7 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @version    $id$
+ * @license     GNU Affero General Public License
  */
 
 /**
@@ -22,8 +21,7 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @version    $id$
+ * @license     GNU Affero General Public License
  */
 class WURFL_Handlers_NintendoHandler extends WURFL_Handlers_Handler
 {
@@ -45,10 +43,7 @@ class WURFL_Handlers_NintendoHandler extends WURFL_Handlers_Handler
             return true;
         }
 
-        return WURFL_Handlers_Utils::checkIfStartsWith(
-            $userAgent,
-            'Mozilla/'
-        ) && WURFL_Handlers_Utils::checkIfContainsAll($userAgent, array('Nitro', 'Opera'));
+        return WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'Mozilla/') && WURFL_Handlers_Utils::checkIfContainsAll($userAgent, array('Nitro', 'Opera'));
     }
 
     public function applyConclusiveMatch($userAgent)
@@ -62,11 +57,7 @@ class WURFL_Handlers_NintendoHandler extends WURFL_Handlers_Handler
         if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Nintendo DSi')) {
             return 'nintendo_dsi_ver1';
         }
-        if ((WURFL_Handlers_Utils::checkIfStartsWith(
-                $userAgent,
-                'Mozilla/'
-            ) && WURFL_Handlers_Utils::checkIfContainsAll($userAgent, array('Nitro', 'Opera')))
-        ) {
+        if ((WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'Mozilla/') && WURFL_Handlers_Utils::checkIfContainsAll($userAgent, array('Nitro', 'Opera')))) {
             return 'nintendo_ds_ver1';
         }
 

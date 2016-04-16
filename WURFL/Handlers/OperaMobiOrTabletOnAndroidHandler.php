@@ -12,8 +12,7 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @version    $id$
+ * @license     GNU Affero General Public License
  */
 
 /**
@@ -22,8 +21,7 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @version    $id$
+ * @license     GNU Affero General Public License
  */
 class WURFL_Handlers_OperaMobiOrTabletOnAndroidHandler extends WURFL_Handlers_Handler
 {
@@ -39,6 +37,7 @@ class WURFL_Handlers_OperaMobiOrTabletOnAndroidHandler extends WURFL_Handlers_Ha
         'generic_android_ver4_0_opera_mobi',
         'generic_android_ver4_1_opera_mobi',
         'generic_android_ver4_2_opera_mobi',
+
         'generic_android_ver2_1_opera_tablet',
         'generic_android_ver2_2_opera_tablet',
         'generic_android_ver2_3_opera_tablet',
@@ -56,10 +55,7 @@ class WURFL_Handlers_OperaMobiOrTabletOnAndroidHandler extends WURFL_Handlers_Ha
             return false;
         }
 
-        return (WURFL_Handlers_Utils::checkIfContains(
-                $userAgent,
-                'Android'
-            ) && WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array('Opera Mobi', 'Opera Tablet')));
+        return (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Android') && WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array('Opera Mobi', 'Opera Tablet')));
     }
 
     public function applyConclusiveMatch($userAgent)
@@ -94,13 +90,10 @@ class WURFL_Handlers_OperaMobiOrTabletOnAndroidHandler extends WURFL_Handlers_Ha
     const OPERA_DEFAULT_VERSION = '10';
 
     public static $validOperaVersions = array('10', '11', '12');
-
     /**
      * Get the Opera browser version from an Opera Android user agent
-     *
-     * @param string $ua          User Agent
-     * @param bool   $use_default Return the default version on fail, else return null
-     *
+     * @param  string $ua          User Agent
+     * @param  bool   $use_default Return the default version on fail, else return null
      * @return string Opera version
      * @see self::$defaultOperaVersion
      */

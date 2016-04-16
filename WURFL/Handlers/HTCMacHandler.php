@@ -12,8 +12,7 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @version    $id$
+ * @license     GNU Affero General Public License
  */
 
 /**
@@ -22,8 +21,7 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @version    $id$
+ * @license     GNU Affero General Public License
  */
 class WURFL_Handlers_HTCMacHandler extends WURFL_Handlers_Handler
 {
@@ -35,10 +33,7 @@ class WURFL_Handlers_HTCMacHandler extends WURFL_Handlers_Handler
 
     public function canHandle($userAgent)
     {
-        return WURFL_Handlers_Utils::checkIfStartsWith(
-            $userAgent,
-            'Mozilla/5.0 (Macintosh'
-        ) && WURFL_Handlers_Utils::checkIfContains($userAgent, 'HTC');
+        return WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'Mozilla/5.0 (Macintosh') && WURFL_Handlers_Utils::checkIfContains($userAgent, 'HTC');
     }
 
     public function applyConclusiveMatch($userAgent)
@@ -66,6 +61,6 @@ class WURFL_Handlers_HTCMacHandler extends WURFL_Handlers_Handler
             return $model;
         }
 
-        return;
+        return null;
     }
 }

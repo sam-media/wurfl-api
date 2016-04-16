@@ -11,10 +11,8 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @version    $id$
+ * @license     GNU Affero General Public License
  */
-
 /**
  * WURFL related utilities
  */
@@ -23,14 +21,14 @@ class WURFL_WURFLUtils
     private static $userAgentSearchOrder = array(
         'HTTP_DEVICE_STOCK_UA',
         'HTTP_X_OPERAMINI_PHONE_UA',
+        'HTTP_X_UCBROWSER_DEVICE_UA',
         'HTTP_USER_AGENT',
     );
 
     /**
      * returns the User Agent From $request or empty string if not found
      *
-     * @param array $request HTTP Request array (normally $_SERVER)
-     *
+     * @param  array  $request HTTP Request array (normally $_SERVER)
      * @return string
      */
     public static function getUserAgent($request, $override_sideloaded_browser_ua = true)
@@ -54,9 +52,7 @@ class WURFL_WURFLUtils
 
     /**
      * Returns the UA Profile from the $request
-     *
-     * @param array $request HTTP Request array (normally $_SERVER)
-     *
+     * @param  array  $request HTTP Request array (normally $_SERVER)
      * @return string UAProf URL
      */
     public static function getUserAgentProfile($request)
@@ -80,14 +76,13 @@ class WURFL_WURFLUtils
             }
         }
 
-        return;
+        return null;
     }
 
     /**
      * Checks if the requester device is xhtml enabled
      *
-     * @param array $request HTTP Request array (normally $_SERVER)
-     *
+     * @param  array $request HTTP Request array (normally $_SERVER)
      * @return bool
      */
     public static function isXhtmlRequester($request)
@@ -98,11 +93,9 @@ class WURFL_WURFLUtils
 
         $accept = $request['accept'];
         if (isset($accept)) {
-            if ((strpos($accept, WURFL_Constants::ACCEPT_HEADER_VND_WAP_XHTML_XML) !== 0) || (strpos(
-                        $accept,
-                        WURFL_Constants::ACCEPT_HEADER_XHTML_XML
-                    ) !== 0) || (strpos($accept, WURFL_Constants::ACCEPT_HEADER_TEXT_HTML) !== 0)
-            ) {
+            if ((strpos($accept, WURFL_Constants::ACCEPT_HEADER_VND_WAP_XHTML_XML) !== 0)
+            || (strpos($accept, WURFL_Constants::ACCEPT_HEADER_XHTML_XML) !== 0)
+            || (strpos($accept, WURFL_Constants::ACCEPT_HEADER_TEXT_HTML) !== 0)) {
                 return true;
             }
         }
@@ -112,9 +105,7 @@ class WURFL_WURFLUtils
 
     /**
      * Returns true if given $deviceID is the 'generic' WURFL device
-     *
-     * @param string $deviceID
-     *
+     * @param  string $deviceID
      * @return bool
      */
     public static function isGeneric($deviceID)
@@ -128,17 +119,14 @@ class WURFL_WURFLUtils
 
     /**
      * Recursively merges $array1 with $array2, returning the result
-     *
-     * @param array $array1
-     * @param array $array2
-     *
+     * @param  array $array1
+     * @param  array $array2
      * @return array
      */
     public static function array_merge_recursive_unique($array1, $array2)
     {
         // LOOP THROUGH $array2
         foreach ($array2 as $k => $v) {
-
             // CHECK IF VALUE EXISTS IN $array1
             if (!empty($array1[$k])) {
                 // IF VALUE EXISTS CHECK IF IT'S AN ARRAY OR A STRING

@@ -12,8 +12,7 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @version    $id$
+ * @license     GNU Affero General Public License
  */
 
 /**
@@ -22,8 +21,7 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @version    $id$
+ * @license     GNU Affero General Public License
  */
 class WURFL_Handlers_MotorolaHandler extends WURFL_Handlers_Handler
 {
@@ -39,10 +37,8 @@ class WURFL_Handlers_MotorolaHandler extends WURFL_Handlers_Handler
             return false;
         }
 
-        return (WURFL_Handlers_Utils::checkIfStartsWithAnyOf(
-                $userAgent,
-                array('Mot-', 'MOT-', 'MOTO', 'moto')
-            ) || WURFL_Handlers_Utils::checkIfContains($userAgent, 'Motorola'));
+        return (WURFL_Handlers_Utils::checkIfStartsWithAnyOf($userAgent, array('Mot-', 'MOT-', 'MOTO', 'moto')) ||
+            WURFL_Handlers_Utils::checkIfContains($userAgent, 'Motorola'));
     }
 
     public function applyConclusiveMatch($userAgent)

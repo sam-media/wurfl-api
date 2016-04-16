@@ -11,8 +11,7 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @version    $id$
+ * @license     GNU Affero General Public License
  */
 
 /**
@@ -21,8 +20,7 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @version    $id$
+ * @license     GNU Affero General Public License
  */
 class WURFL_Handlers_OperaMiniHandler extends WURFL_Handlers_Handler
 {
@@ -44,21 +42,14 @@ class WURFL_Handlers_OperaMiniHandler extends WURFL_Handlers_Handler
             return false;
         }
 
-        return WURFL_Handlers_Utils::checkIfContainsAnyOf(
-            $userAgent,
-            array('Opera Mini', 'OperaMini', 'Opera Mobi', 'OperaMobi')
-        );
+        return WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array('Opera Mini', 'OperaMini', 'Opera Mobi', 'OperaMobi'));
     }
 
     public function applyConclusiveMatch($userAgent)
     {
-        $model = self::getOperaModel($userAgent, false);
-
-        if ($model !== null) {
-            $prefix    = $model . WURFL_Constants::RIS_DELIMITER;
-            $userAgent = $prefix . $userAgent;
-
-            return $this->getDeviceIDFromRIS($userAgent, strlen($prefix));
+        $tolerance = WURFL_Handlers_Utils::toleranceToRisDelimeter($userAgent);
+        if ($tolerance !== false) {
+            return $this->getDeviceIDFromRIS($userAgent, $tolerance);
         }
 
         $opera_mini_idx = WURFL_Handlers_Utils::indexOfOrLength($userAgent, 'Opera Mini');
@@ -92,10 +83,8 @@ class WURFL_Handlers_OperaMiniHandler extends WURFL_Handlers_Handler
 
     /**
      * Get the model name from the provided user agent or null if it cannot be determined
-     *
-     * @param string $ua
-     * @param bool   $use_default
-     *
+     * @param  string       $ua
+     * @param  bool         $use_default
      * @return false|string
      */
     public static function getOperaModel($ua, $use_default = true)

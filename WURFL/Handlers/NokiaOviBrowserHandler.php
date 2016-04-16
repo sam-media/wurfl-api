@@ -12,8 +12,7 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @version    $id$
+ * @license     GNU Affero General Public License
  */
 
 /**
@@ -22,8 +21,7 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @version    $id$
+ * @license     GNU Affero General Public License
  */
 class WURFL_Handlers_NokiaOviBrowserHandler extends WURFL_Handlers_Handler
 {
@@ -45,10 +43,7 @@ class WURFL_Handlers_NokiaOviBrowserHandler extends WURFL_Handlers_Handler
 
     public function applyConclusiveMatch($userAgent)
     {
-        $idx = strpos($userAgent, 'Nokia');
-        if ($idx === false) {
-            return WURFL_Constants::NO_MATCH;
-        }
+        $idx       = strpos($userAgent, 'Nokia');
         $tolerance = WURFL_Handlers_Utils::indexOfAnyOrLength($userAgent, array('/', ' '), $idx);
 
         return $this->getDeviceIDFromRIS($userAgent, $tolerance);

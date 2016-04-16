@@ -1,8 +1,8 @@
 <?php
-
 /**
  * test case
  */
+
 class WURFL_Xml_DevicePatcherTest extends PHPUnit_Framework_TestCase
 {
     private $devicePatcher;
@@ -28,9 +28,7 @@ class WURFL_Xml_DevicePatcherTest extends PHPUnit_Framework_TestCase
         $groupIDCapabilitiesMap ['A'] ['cap1'] = 'cap1';
         $capabilities                          = array();
         $capabilities['cap1']                  = 'cap1';
-        $patchingDevice                        = new WURFL_Xml_ModelDevice(
-            'B', 'B', 'Z', true, false, $groupIDCapabilitiesMap
-        );
+        $patchingDevice                        = new WURFL_Xml_ModelDevice('B', 'B', 'Z', true, false, $groupIDCapabilitiesMap);
         $patchedDevice                         = $this->devicePatcher->patch($deviceToPatch, $patchingDevice);
 
         $this->assertEquals($capabilities, $patchedDevice->capabilities);

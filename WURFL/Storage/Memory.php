@@ -11,11 +11,9 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @author     Fantayeneh Asres Gizaw
- * @version    $id$
+ * @license     GNU Affero General Public License
+ * @author   Fantayeneh Asres Gizaw
  */
-
 /**
  * WURFL Storage
  */
@@ -46,7 +44,7 @@ class WURFL_Storage_Memory extends WURFL_Storage_Base
             return $this->map[$key[0]][$idx];
         }
 
-        return;
+        return null;
     }
 
     public function remove($objectId)
@@ -58,24 +56,7 @@ class WURFL_Storage_Memory extends WURFL_Storage_Base
         }
     }
 
-    private $tree_template = array(
-        '0' => array(),
-        '1' => array(),
-        '2' => array(),
-        '3' => array(),
-        '4' => array(),
-        '5' => array(),
-        '6' => array(),
-        '7' => array(),
-        '8' => array(),
-        '9' => array(),
-        'a' => array(),
-        'b' => array(),
-        'c' => array(),
-        'd' => array(),
-        'e' => array(),
-        'f' => array(),
-    );
+    private $tree_template = array('0' => array(), '1' => array(), '2' => array(), '3' => array(), '4' => array(), '5' => array(), '6' => array(), '7' => array(), '8' => array(), '9' => array(), 'a' => array(), 'b' => array(), 'c' => array(), 'd' => array(), 'e' => array(), 'f' => array());
 
     /**
      * Removes all entry from the Persistence Provier

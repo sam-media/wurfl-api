@@ -11,10 +11,8 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @version    $id$
+ * @license     GNU Affero General Public License
  */
-
 /**
  * WURFL Custom Device - this is the core class that is used by developers to access the
  * properties and capabilities of a mobile device
@@ -35,10 +33,10 @@
  * $wurflID = $device->id;
  * </code>
  *
- * @property-read string $id               WURFL Device ID
- * @property-read string $userAgent        User Agent
- * @property-read string $fallBack         Fallback Device ID
- * @property-read bool   $actualDeviceRoot true if device is an actual root device
+ * @property-read string $id WURFL Device ID
+ * @property-read string $userAgent User Agent
+ * @property-read string $fallBack Fallback Device ID
+ * @property-read bool $actualDeviceRoot true if device is an actual root device
  */
 class WURFL_CustomDevice
 {
@@ -58,14 +56,13 @@ class WURFL_CustomDevice
     private $virtualCapabilityProvider = null;
 
     /**
-     * @param array                        $modelDevices Array of WURFL_Xml_ModelDevice objects
-     * @param WURFL_Request_GenericRequest $request
-     *
-     * @throws InvalidArgumentException if $modelDevices is not an array of at least one WURFL_Xml_ModelDevice
+     * @param  array                        $modelDevices Array of WURFL_Xml_ModelDevice objects
+     * @param  WURFL_Request_GenericRequest $request
+     * @throws InvalidArgumentException     if $modelDevices is not an array of at least one WURFL_Xml_ModelDevice
      */
     public function __construct(array $modelDevices, $request = null)
     {
-        if (!is_array($modelDevices) || count($modelDevices) < 1) {
+        if (! is_array($modelDevices) || count($modelDevices) < 1) {
             throw new InvalidArgumentException('modelDevices must be an array of at least one ModelDevice.');
         }
         $this->modelDevices = $modelDevices;
@@ -80,8 +77,7 @@ class WURFL_CustomDevice
     /**
      * Magic Method
      *
-     * @param string $name
-     *
+     * @param  string $name
      * @return string
      */
     public function __get($name)
@@ -93,7 +89,7 @@ class WURFL_CustomDevice
             case 'actualDeviceRoot':
                 return $this->modelDevices[0]->$name;
                 break;
-            default :
+            default:
                 if (array_key_exists($name, WURFL_VirtualCapabilityProvider::$virtual_capabilities)) {
                     return $this->getVirtualCapability($name);
                 }
@@ -105,7 +101,6 @@ class WURFL_CustomDevice
 
     /**
      * Device is a specific or actual WURFL device as defined by its capabilities
-     *
      * @return bool
      */
     public function isSpecific()
@@ -123,8 +118,7 @@ class WURFL_CustomDevice
      * Returns the value of a given capability name
      * for the current device
      *
-     * @param string $capabilityName must be a valid capability name
-     *
+     * @param  string                   $capabilityName must be a valid capability name
      * @throws InvalidArgumentException The $capabilityName is is not defined in the loaded WURFL.
      * @return string                   Capability value
      * @see WURFL_Xml_ModelDevice::getCapability()
@@ -134,9 +128,7 @@ class WURFL_CustomDevice
         if (empty($capabilityName)) {
             throw new InvalidArgumentException('capability name must not be empty');
         }
-        if (!$this->getRootDevice()
-            ->isCapabilityDefined($capabilityName)
-        ) {
+        if (!$this->getRootDevice()->isCapabilityDefined($capabilityName)) {
             throw new InvalidArgumentException("no capability named [$capabilityName] is present in wurfl.");
         }
         foreach ($this->modelDevices as $modelDevice) {
@@ -169,12 +161,11 @@ class WURFL_CustomDevice
             }
         }
 
-        return;
+        return null;
     }
 
     /**
      * Returns the match info for this device
-     *
      * @return WURFL_Request_MatchInfo
      */
     public function getMatchInfo()
@@ -184,7 +175,6 @@ class WURFL_CustomDevice
 
     /**
      * Returns an array with all the fall back devices, from the matched device to the root device ('generic')
-     *
      * @return array
      */
     public function getFallBackDevices()
@@ -194,7 +184,6 @@ class WURFL_CustomDevice
 
     /**
      * Returns the top-most device.  This is the "generic" device.
-     *
      * @return WURFL_Xml_ModelDevice
      */
     public function getRootDevice()
@@ -204,7 +193,6 @@ class WURFL_CustomDevice
 
     /**
      * Returns capabilities and their values for the current device
-     *
      * @return array Device capabilities array
      * @see WURFL_Xml_ModelDevice::getCapabilities()
      */
@@ -214,6 +202,8 @@ class WURFL_CustomDevice
         foreach (array_reverse($this->modelDevices) as $modelDevice) {
             $capabilities = array_merge($capabilities, $modelDevice->getCapabilities());
         }
+
+        $capabilities = array_diff_key($capabilities, array_flip(WURFL_VirtualCapabilityProvider::getControlCapabilities()));
 
         return $capabilities;
     }

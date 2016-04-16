@@ -11,15 +11,12 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @version    $id$
+ * @license     GNU Affero General Public License
  */
-
 /**
  * Class that is used to supress logging
  */
-class WURFL_Logger_NullLogger
-    implements WURFL_Logger_Interface
+class WURFL_Logger_NullLogger implements WURFL_Logger_Interface
 {
     public function log($message, $type = '')
     {
@@ -32,6 +29,10 @@ class WURFL_Logger_NullLogger
     }
 
     public function info($message)
+    {
+    }
+
+    public function printMessage($message)
     {
     }
 }

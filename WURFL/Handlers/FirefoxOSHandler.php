@@ -12,8 +12,7 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @version    $id$
+ * @license     GNU Affero General Public License
  */
 
 /**
@@ -22,8 +21,7 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @version    $id$
+ * @license     GNU Affero General Public License
  */
 class WURFL_Handlers_FirefoxOSHandler extends WURFL_Handlers_Handler
 {
@@ -63,10 +61,7 @@ class WURFL_Handlers_FirefoxOSHandler extends WURFL_Handlers_Handler
 
     public function canHandle($userAgent)
     {
-        return (WURFL_Handlers_Utils::checkIfContains(
-                $userAgent,
-                'Firefox/'
-            ) && WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array('Mobile', 'Tablet')));
+        return (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Firefox/') && WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array('Mobile', 'Tablet')));
     }
 
     public function applyConclusiveMatch($userAgent)

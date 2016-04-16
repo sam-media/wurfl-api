@@ -24,6 +24,30 @@
             by Author
         -->
         <device fall_back="root" id="generic" user_agent="">
+            <group id="virtual">
+                <capability name="controlcap_is_smartphone" value="default"/>
+                <capability name="controlcap_is_ios" value="default"/>
+                <capability name="controlcap_is_android" value="default"/>
+                <capability name="controlcap_is_robot" value="default"/>
+                <capability name="controlcap_is_app" value="default"/>
+                <capability name="controlcap_advertised_device_os" value="default"/>
+                <capability name="controlcap_advertised_device_os_version" value="default"/>
+                <capability name="controlcap_advertised_browser" value="default"/>
+                <capability name="controlcap_advertised_browser_version" value="default"/>
+                <capability name="controlcap_is_windows_phone" value="default"/>
+                <capability name="controlcap_is_full_desktop" value="default"/>
+                <capability name="controlcap_is_largescreen" value="default"/>
+                <capability name="controlcap_is_mobile" value="default"/>
+                <capability name="controlcap_is_touchscreen" value="default"/>
+                <capability name="controlcap_is_wml_preferred" value="default"/>
+                <capability name="controlcap_is_xhtmlmp_preferred" value="default"/>
+                <capability name="controlcap_is_html_preferred" value="default"/>
+                <capability name="controlcap_form_factor" value="default"/>
+                <capability name="controlcap_complete_device_name" value="default"/>
+                <capability name="controlcap_is_phone" value="default"/>
+                <capability name="controlcap_is_app_webview" value="default"/>
+                <capability name="controlcap_device_name" value="default"/>
+            </group>
             <group id="product_info">
                 <capability name="brand_name" value="" />
                 <capability name="model_name" value="" />
@@ -724,6 +748,12 @@
         <device fall_back="generic" id="opera_30" user_agent="A"/>
         <device fall_back="generic" id="google_chrome" user_agent="A"/>
         <device fall_back="generic" id="firefox" user_agent="A"/>
+        <device fall_back="generic" id="apple_ipod_touch_ver10" user_agent="A"/>
+        <device fall_back="generic" id="apple_ipad_ver1_sub10" user_agent="A"/>
+        <device fall_back="generic" id="apple_iphone_ver10" user_agent="A"/>
+        <device fall_back="generic" id="apple_iphone_ver10" user_agent="A"/>
+        <device fall_back="generic" id="apple_ipad_ver1_sub9_3_subhwpro97" user_agent="A"/>
+        <device fall_back="generic" id="apple_iphone_ver9_3_subhwse" user_agent="A"/>
     </devices>
 </wurfl>
 

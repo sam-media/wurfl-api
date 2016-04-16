@@ -12,9 +12,8 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @author     Steve Kamerman <steve AT scientiamobile.com>
- * @license    GNU Affero General Public License
- * @version    $id$
+ * @author Steve Kamerman <steve AT scientiamobile.com>
+ * @license     GNU Affero General Public License
  */
 
 /**
@@ -23,9 +22,8 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @author     Steve Kamerman <steve AT scientiamobile.com>
- * @license    GNU Affero General Public License
- * @version    $id$
+ * @author Steve Kamerman <steve AT scientiamobile.com>
+ * @license     GNU Affero General Public License
  */
 class WURFL_Handlers_TizenHandler extends WURFL_Handlers_Handler
 {
@@ -42,10 +40,7 @@ class WURFL_Handlers_TizenHandler extends WURFL_Handlers_Handler
 
     public function canHandle($userAgent)
     {
-        return (WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'Mozilla') && WURFL_Handlers_Utils::checkIfContains(
-                $userAgent,
-                'Tizen'
-            ));
+        return (WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'Mozilla') && WURFL_Handlers_Utils::checkIfContains($userAgent, 'Tizen'));
     }
 
     public function applyConclusiveMatch($userAgent)

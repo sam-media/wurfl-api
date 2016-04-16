@@ -11,27 +11,21 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @author     Fantayeneh Asres Gizaw
- * @version    $id$
+ * @license     GNU Affero General Public License
+ * @author   Fantayeneh Asres Gizaw
  */
-
 /**
  * User Agent Normalizer - Return the firefox string with the major and minor version only
  */
-class WURFL_Request_UserAgentNormalizer_Specific_Firefox
-    implements WURFL_Request_UserAgentNormalizer_Interface
+class WURFL_Request_UserAgentNormalizer_Specific_Firefox implements WURFL_Request_UserAgentNormalizer_Interface
 {
     public function normalize($userAgent)
     {
         return $this->firefoxWithMajorAndMinorVersion($userAgent);
     }
-
     /**
      * Returns FireFox major and minor version numbers
-     *
-     * @param string $userAgent
-     *
+     * @param  string $userAgent
      * @return string Major and minor version
      */
     private function firefoxWithMajorAndMinorVersion($userAgent)

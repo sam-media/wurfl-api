@@ -11,10 +11,8 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @version    $id$
+ * @license     GNU Affero General Public License
  */
-
 /**
  * Device Patcher patches an existing device with a new device
  */
@@ -22,10 +20,8 @@ class WURFL_Xml_DevicePatcher
 {
     /**
      * Patch an existing $device with a $patchingDevice
-     *
-     * @param WURFL_Xml_ModelDevice $device
-     * @param WURFL_Xml_ModelDevice $patchingDevice
-     *
+     * @param  WURFL_Xml_ModelDevice $device
+     * @param  WURFL_Xml_ModelDevice $patchingDevice
      * @return WURFL_Xml_ModelDevice Patched device
      */
     public function patch($device, $patchingDevice)
@@ -33,27 +29,15 @@ class WURFL_Xml_DevicePatcher
         if (!$this->haveSameId($device, $patchingDevice)) {
             return $patchingDevice;
         }
-        $groupIdCapabilitiesMap = WURFL_WURFLUtils::array_merge_recursive_unique(
-            $device->getGroupIdCapabilitiesMap(),
-            $patchingDevice->getGroupIdCapabilitiesMap()
-        );
+        $groupIdCapabilitiesMap = WURFL_WURFLUtils::array_merge_recursive_unique($device->getGroupIdCapabilitiesMap(), $patchingDevice->getGroupIdCapabilitiesMap());
 
-        return new WURFL_Xml_ModelDevice(
-            $device->id,
-            $device->userAgent,
-            $device->fallBack,
-            $device->actualDeviceRoot,
-            $device->specific,
-            $groupIdCapabilitiesMap
-        );
+        return new WURFL_Xml_ModelDevice($device->id, $device->userAgent, $device->fallBack, $device->actualDeviceRoot, $device->specific, $groupIdCapabilitiesMap);
     }
 
     /**
      * Returns true if $device and $patchingDevice have the same device id
-     *
-     * @param WURFL_Xml_ModelDevice $device
-     * @param WURFL_Xml_ModelDevice $patchingDevice
-     *
+     * @param  WURFL_Xml_ModelDevice $device
+     * @param  WURFL_Xml_ModelDevice $patchingDevice
      * @return bool
      */
     private function haveSameId($device, $patchingDevice)
@@ -63,10 +47,8 @@ class WURFL_Xml_DevicePatcher
 
     /**
      * Returns true if a $patchingDevice can be used to patch $device
-     *
-     * @param WURFL_Xml_ModelDevice $device
-     * @param WURFL_Xml_ModelDevice $patchingDevice
-     *
+     * @param  WURFL_Xml_ModelDevice $device
+     * @param  WURFL_Xml_ModelDevice $patchingDevice
      * @throws WURFL_WURFLException
      * @return bool
      * @deprecated

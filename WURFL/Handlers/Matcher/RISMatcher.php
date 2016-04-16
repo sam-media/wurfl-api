@@ -11,31 +11,25 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @version    $id$
+ * @license     GNU Affero General Public License
  */
-
 /**
  * WURFL Reduction in String user agent matcher.
  * This User Agent Matcher uses its match() method to find a matching user agent by
  * removing characters from the right side of the User Agents one-by-one until either
  * a match is found, or the string length is lower than the specified tolerance.
- *
- * @see        match()
+ * @see match()
  */
-class WURFL_Handlers_Matcher_RISMatcher
-    implements WURFL_Handlers_Matcher_Interface
+class WURFL_Handlers_Matcher_RISMatcher implements WURFL_Handlers_Matcher_Interface
 {
     /**
-     * Instance of WURFL_Handlers_Matcher_LDMatcher
-     *
-     * @var WURFL_Handlers_Matcher_LDMatcher
+     * Instance of WURFL_Handlers_RISMatcher
+     * @var WURFL_Handlers_RISMatcher
      */
     private static $instance;
 
     /**
      * Returns an instance of the RISMatcher singleton
-     *
      * @return WURFL_Handlers_RISMatcher
      */
     public static function INSTANCE()
@@ -49,11 +43,9 @@ class WURFL_Handlers_Matcher_RISMatcher
 
     /**
      * Returns the closest match of $needle in $collection of user agents
-     *
      * @param $collection array Array of user agents
-     * @param $needle     string substring to look for in user agent
-     * @param $tolerance  integer Minimum required length of prefix match
-     *
+     * @param $needle string substring to look for in user agent
+     * @param $tolerance integer Minimum required length of prefix match
      * @return string Device ID that matches user agent or null if not found
      */
     public function match(&$collection, $needle, $tolerance)
@@ -84,7 +76,7 @@ class WURFL_Handlers_Matcher_RISMatcher
         }
 
         if ($bestDistance < $tolerance) {
-            return;
+            return null;
         }
         if ($bestIndex === 0) {
             return $match;
@@ -95,20 +87,15 @@ class WURFL_Handlers_Matcher_RISMatcher
 
     /**
      * Returns the most accurate match of $needle in $collection
-     *
-     * @param $collection   array Array of user agents
-     * @param $needle       string String to search for in user agents
-     * @param $bestIndex    integer
+     * @param $collection array Array of user agents
+     * @param $needle string String to search for in user agents
+     * @param $bestIndex integer
      * @param $bestDistance integer
-     *
      * @return string Device ID
      */
     private function firstOfTheBests($collection, $needle, $bestIndex, $bestDistance)
     {
-        while ($bestIndex > 0 && $this->longestCommonPrefixLength(
-                $collection[$bestIndex - 1],
-                $needle
-            ) === $bestDistance) {
+        while ($bestIndex > 0 && $this->longestCommonPrefixLength($collection[$bestIndex - 1], $needle) === $bestDistance) {
             $bestIndex = $bestIndex - 1;
         }
 
@@ -117,10 +104,8 @@ class WURFL_Handlers_Matcher_RISMatcher
 
     /**
      * Returns the largest number of matching characters between $s and $t
-     *
      * @param $s string String 1
      * @param $t string String 2
-     *
      * @return int Longest prefix length
      */
     private function longestCommonPrefixLength($s, $t)

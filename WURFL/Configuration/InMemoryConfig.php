@@ -12,10 +12,8 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @version    $id$
+ * @license     GNU Affero General Public License
  */
-
 /**
  * In-memory WURFL Configuration
  */
@@ -29,8 +27,7 @@ class WURFL_Configuration_InMemoryConfig extends WURFL_Configuration_Config
     }
 
     /**
-     * @param string $wurflFile
-     *
+     * @param  string                             $wurflFile
      * @return WURFL_Configuration_InMemoryConfig $this
      */
     public function wurflFile($wurflFile)
@@ -41,8 +38,7 @@ class WURFL_Configuration_InMemoryConfig extends WURFL_Configuration_Config
     }
 
     /**
-     * @param string $wurflPatch
-     *
+     * @param  string                             $wurflPatch
      * @return WURFL_Configuration_InMemoryConfig $this
      */
     public function wurflPatch($wurflPatch)
@@ -53,8 +49,7 @@ class WURFL_Configuration_InMemoryConfig extends WURFL_Configuration_Config
     }
 
     /**
-     * @param array $capabilityFilter
-     *
+     * @param  array                              $capabilityFilter
      * @return WURFL_Configuration_InMemoryConfig $this
      */
     public function capabilityFilter(array $capabilityFilter)
@@ -66,10 +61,8 @@ class WURFL_Configuration_InMemoryConfig extends WURFL_Configuration_Config
 
     /**
      * Set persistence provider
-     *
-     * @param string $provider
-     * @param array  $params
-     *
+     * @param  string                             $provider
+     * @param  array                              $params
      * @return WURFL_Configuration_InMemoryConfig $this
      */
     public function persistence($provider, $params = array())
@@ -78,13 +71,10 @@ class WURFL_Configuration_InMemoryConfig extends WURFL_Configuration_Config
 
         return $this;
     }
-
     /**
      * Set Cache provider
-     *
-     * @param string $provider
-     * @param array  $params
-     *
+     * @param  string                             $provider
+     * @param  array                              $params
      * @return WURFL_Configuration_InMemoryConfig $this
      */
     public function cache($provider, $params = array())
@@ -93,12 +83,9 @@ class WURFL_Configuration_InMemoryConfig extends WURFL_Configuration_Config
 
         return $this;
     }
-
     /**
      * Set logging directory
-     *
-     * @param string $dir
-     *
+     * @param  string                             $dir
      * @return WURFL_Configuration_InMemoryConfig $this
      */
     public function logDir($dir)
@@ -107,12 +94,9 @@ class WURFL_Configuration_InMemoryConfig extends WURFL_Configuration_Config
 
         return $this;
     }
-
     /**
      * Specifies whether reloading is allowed
-     *
-     * @param bool $reload
-     *
+     * @param  bool                               $reload
      * @return WURFL_Configuration_InMemoryConfig $this
      */
     public function allowReload($reload = true)
@@ -124,9 +108,7 @@ class WURFL_Configuration_InMemoryConfig extends WURFL_Configuration_Config
 
     /**
      * Sets the API match mode
-     *
-     * @param string $mode
-     *
+     * @param  string                             $mode
      * @return WURFL_Configuration_InMemoryConfig
      */
     public function matchMode($mode)

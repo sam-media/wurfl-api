@@ -11,10 +11,8 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @version    $id$
+ * @license     GNU Affero General Public License
  */
-
 /**
  * WURFL File Utilities
  */
@@ -22,7 +20,6 @@ class WURFL_FileUtils
 {
     /**
      * Create a directory structure recursiveley
-     *
      * @param string $path
      * @param int    $mode
      */
@@ -34,7 +31,6 @@ class WURFL_FileUtils
     /**
      * Recursiely remove all files from the given directory NOT including the
      * specified directory itself
-     *
      * @param string $path Directory to be cleaned out
      */
     public static function rmdirContents($path)
@@ -56,9 +52,7 @@ class WURFL_FileUtils
 
     /**
      * Alias to rmdirContents()
-     *
      * @param string $path Directory to be cleaned out
-     *
      * @see rmdirContents()
      */
     public static function rmdir($path)
@@ -68,23 +62,21 @@ class WURFL_FileUtils
 
     /**
      * Returns the unserialized contents of the given $file
-     *
-     * @param string $file filename
-     *
-     * @return mixed Unserialized data or null if file does not exist
+     * @param  string $file filename
+     * @return mixed  Unserialized data or null if file does not exist
      */
     public static function read($file)
     {
         if (!is_readable($file)) {
-            return;
+            return null;
         }
         $data = @file_get_contents($file);
         if ($data === false) {
-            return;
+            return null;
         }
         $value = @unserialize($data);
         if ($value === false) {
-            return;
+            return null;
         }
 
         return $value;
@@ -92,7 +84,6 @@ class WURFL_FileUtils
 
     /**
      * Serializes and saves $data in the file $path and sets the last modified time to $mtime
-     *
      * @param string $path  filename to save data in
      * @param mixed  $data  data to be serialized and saved
      * @param int    $mtime Last modified date in epoch time
@@ -111,9 +102,7 @@ class WURFL_FileUtils
 
     /**
      * Combines given array of $strings into a proper filesystem path
-     *
-     * @param array $strings Array of (string)path members
-     *
+     * @param  array  $strings Array of (string)path members
      * @return string Proper filesystem path
      */
     public static function join($strings = array())
@@ -123,7 +112,6 @@ class WURFL_FileUtils
 
     /**
      * Returns a directory for storing temporary files
-     *
      * @return string
      */
     public static function getTempDir()
@@ -138,9 +126,7 @@ class WURFL_FileUtils
 
     /**
      * Cleans the filename by removing duplicate directory separators and normalizing them for the current OS
-     *
-     * @param string $fileName
-     *
+     * @param  string $fileName
      * @return string
      */
     public static function cleanFilename($fileName)

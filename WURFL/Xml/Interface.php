@@ -12,10 +12,8 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @version    $id$
+ * @license     GNU Affero General Public License
  */
-
 /**
  * WURFL XML Parsing interface
  */
@@ -25,8 +23,7 @@ interface WURFL_Xml_Interface
      * Parses the given file and returns a WURFL_Xml_ParsingResult
      * object
      *
-     * @param string $fileName
-     *
+     * @param  string                  $fileName
      * @return WURFL_Xml_ParsingResult
      */
     public function parse($fileName);

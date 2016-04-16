@@ -12,8 +12,7 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @version    $id$
+ * @license     GNU Affero General Public License
  */
 
 /**
@@ -22,8 +21,7 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @version    $id$
+ * @license     GNU Affero General Public License
  */
 class WURFL_Handlers_WindowsPhoneHandler extends WURFL_Handlers_Handler
 {
@@ -49,21 +47,12 @@ class WURFL_Handlers_WindowsPhoneHandler extends WURFL_Handlers_Handler
             return false;
         }
         // Capturing WP desktop mode UAs but not Windows RT UAs
-        if (WURFL_Handlers_Utils::checkIfContainsAnyOf(
-                $userAgent,
-                array('WPDesktop', 'ZuneWP7')
-            ) || WURFL_Handlers_Utils::checkIfContainsAll(
-                $userAgent,
-                array('Mozilla/5.0 (Windows NT ', ' ARM;', ' Edge/')
-            )
-        ) {
+        if (WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array('WPDesktop', 'ZuneWP7'))
+          || WURFL_Handlers_Utils::checkIfContainsAll($userAgent, array('Mozilla/5.0 (Windows NT ', ' ARM;', ' Edge/'))) {
             return true;
         }
 
-        return WURFL_Handlers_Utils::checkIfContainsAnyOf(
-            $userAgent,
-            array('Windows Phone', 'WindowsPhone', 'NativeHost')
-        );
+        return WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array('Windows Phone', 'WindowsPhone', 'NativeHost'));
     }
 
     public function applyConclusiveMatch($userAgent)
@@ -81,19 +70,9 @@ class WURFL_Handlers_WindowsPhoneHandler extends WURFL_Handlers_Handler
 
     public function applyRecoveryMatch($userAgent)
     {
-        if (WURFL_Handlers_Utils::checkIfContainsAnyOf(
-                $userAgent,
-                array('WPDesktop', 'ZuneWP7')
-            ) || WURFL_Handlers_Utils::checkIfContainsAll(
-                $userAgent,
-                array('Mozilla/5.0 (Windows NT ', ' ARM;', ' Edge/')
-            )
-        ) {
-            if (WURFL_Handlers_Utils::checkIfContainsAll(
-                $userAgent,
-                array('Mozilla/5.0 (Windows NT ', ' ARM;', ' Edge/')
-            )
-            ) {
+        if (WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array('WPDesktop', 'ZuneWP7'))
+          || WURFL_Handlers_Utils::checkIfContainsAll($userAgent, array('Mozilla/5.0 (Windows NT ', ' ARM;', ' Edge/'))) {
+            if (WURFL_Handlers_Utils::checkIfContainsAll($userAgent, array('Mozilla/5.0 (Windows NT ', ' ARM;', ' Edge/'))) {
                 return 'generic_ms_phone_os10_desktopmode';
             }
             if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'WPDesktop')) {
@@ -130,11 +109,7 @@ class WURFL_Handlers_WindowsPhoneHandler extends WURFL_Handlers_Handler
             return 'generic_ms_winmo6_5';
         }
         //These are probably UAs of the type "Windows Phone Ad Client (Xna)/5.1.0.0 BMID/E67970D969"
-        if (WURFL_Handlers_Utils::checkIfStartsWithAnyOf(
-            $userAgent,
-            array('Windows Phone Ad Client', 'WindowsPhoneAdClient')
-        )
-        ) {
+        if (WURFL_Handlers_Utils::checkIfStartsWithAnyOf($userAgent, array('Windows Phone Ad Client', 'WindowsPhoneAdClient'))) {
             return 'generic_ms_phone_os7';
         }
 
@@ -146,12 +121,7 @@ class WURFL_Handlers_WindowsPhoneHandler extends WURFL_Handlers_Handler
         // Normalize spaces in UA before capturing parts
         $ua = preg_replace('|;(?! )|', '; ', $ua);
         // This regex is relatively fast because there is not much backtracking, and almost all UAs will match
-        if (preg_match(
-                '|IEMobile/\d+\.\d+;(?: ARM;)?(?: Touch;)? ?([^;\)]+(; ?[^;\)]+)?)|',
-                $ua,
-                $matches
-            ) || preg_match('|Android [\d\.]+?; ([^;\)]+(; ?[^;\)]+)?).+?Edge/\d|', $ua, $matches)
-        ) {
+        if (preg_match('|IEMobile/\d+\.\d+;(?: ARM;)?(?: Touch;)? ?([^;\)]+(; ?[^;\)]+)?)|', $ua, $matches) || preg_match('|Android [\d\.]+?; ([^;\)]+(; ?[^;\)]+)?).+?Edge/\d|', $ua, $matches)) {
             $model = $matches[1];
 
             // Some UAs contain "_blocked" and that string causes matching errors:
@@ -180,18 +150,14 @@ class WURFL_Handlers_WindowsPhoneHandler extends WURFL_Handlers_Handler
             return $model;
         }
 
-        return;
+        return null;
     }
 
     public static function getWindowsPhoneAdClientModel($ua)
     {
         // Normalize spaces in UA before capturing parts
         $ua = preg_replace('|;(?! )|', '; ', $ua);
-        if (preg_match(
-            '|Windows ?Phone ?Ad ?Client/[0-9\.]+ ?\(.+; ?Windows ?Phone(?: ?OS)? ?[0-9\.]+; ?([^;\)]+(; ?[^;\)]+)?)|',
-            $ua,
-            $matches
-        )) {
+        if (preg_match('|Windows ?Phone ?Ad ?Client/[0-9\.]+ ?\(.+; ?Windows ?Phone(?: ?OS)? ?[0-9\.]+; ?([^;\)]+(; ?[^;\)]+)?)|', $ua, $matches)) {
             $model = $matches[1];
             $model = str_replace('_blocked', '', $model);
             $model = preg_replace('/(NOKIA; RM-.+?)_.*/', '$1', $model, 1);
@@ -200,7 +166,7 @@ class WURFL_Handlers_WindowsPhoneHandler extends WURFL_Handlers_Handler
             return $model;
         }
 
-        return;
+        return null;
     }
 
     public static function getWindowsPhoneVersion($ua)
@@ -223,19 +189,14 @@ class WURFL_Handlers_WindowsPhoneHandler extends WURFL_Handlers_Handler
             }
         }
 
-        return;
+        return null;
     }
 
     public static function getWindowsPhoneDesktopModel($ua)
     {
         // Normalize spaces in UA before capturing parts
         $ua = preg_replace('|;(?! )|', '; ', $ua);
-        if (preg_match('|\(Windows NT [\d\.]+?; ARM; ([^;\)]+(; ?[^;\)]+)?).+?Edge/\d|', $ua, $matches) || preg_match(
-                '|\(Windows NT [\d\.]+?; ARM;.+?; WPDesktop; ([^;\)]+(; ?[^;\)]+)?)\) like Gecko|',
-                $ua,
-                $matches
-            )
-        ) {
+        if (preg_match('|\(Windows NT [\d\.]+?; ARM; ([^;\)]+(; ?[^;\)]+)?).+?Edge/\d|', $ua, $matches) || preg_match('|\(Windows NT [\d\.]+?; ARM;.+?; WPDesktop; ([^;\)]+(; ?[^;\)]+)?)\) like Gecko|', $ua, $matches)) {
             $model = $matches[1];
             $model = str_replace('_blocked', '', $model);
             $model = preg_replace('/(NOKIA; RM-.+?)_.*/', '$1', $model, 1);
@@ -244,7 +205,7 @@ class WURFL_Handlers_WindowsPhoneHandler extends WURFL_Handlers_Handler
             return $model;
         }
 
-        return;
+        return null;
     }
 
     public static function getWindowsPhoneDesktopVersion($ua)
@@ -259,6 +220,6 @@ class WURFL_Handlers_WindowsPhoneHandler extends WURFL_Handlers_Handler
             }
         }
 
-        return;
+        return null;
     }
 }

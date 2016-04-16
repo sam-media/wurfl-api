@@ -11,15 +11,12 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @version    $id$
+ * @license     GNU Affero General Public License
  */
-
 /**
  * WURFL File Logger
  */
-class WURFL_Logger_FileLogger
-    implements WURFL_Logger_Interface
+class WURFL_Logger_FileLogger implements WURFL_Logger_Interface
 {
     /**
      * @var string DEBUG Log level
@@ -37,9 +34,7 @@ class WURFL_Logger_FileLogger
 
     /**
      * Creates a new FileLogger object
-     *
-     * @param string $fileName
-     *
+     * @param  string                   $fileName
      * @throws InvalidArgumentException Log file specified is not writable
      * @throws WURFL_WURFLException     Unable to open log file
      */

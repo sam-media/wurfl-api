@@ -32,8 +32,16 @@ class WURFL_Request_UserAgentNormalizer_BlackBerryTest extends PHPUnit_Framework
                 'BlackBerry8800/4.2.1 Profile/MIDP-2.0 Configuration/CLDC-1.1 VendorID/134',
             ),
             array(
+                'blackberry',
+                'BlackBerry',
+            ),
+            array(
                 'BlackBerry',
                 'BlackBerry',
+            ),
+            array(
+                'DO_NOT_MATCH_BLACKBERRY_4_5',
+                'BlackBerry_4_5',
             ),
         );
     }

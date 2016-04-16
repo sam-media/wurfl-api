@@ -12,18 +12,15 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @version    $id$
+ * @license     GNU Affero General Public License
  */
-
 /**
  * Factory class for WURFL Configuration objects
  */
 class WURFL_Configuration_ConfigFactory
 {
     /**
-     * @param string $configFilePath
-     *
+     * @param  string                     $configFilePath
      * @throws InvalidArgumentException
      * @return WURFL_Configuration_Config
      */
@@ -41,9 +38,7 @@ class WURFL_Configuration_ConfigFactory
 
     /**
      * Returns true if the given $fileName is an XML Configuration
-     *
-     * @param string $fileName
-     *
+     * @param  string $fileName
      * @return bool
      */
     private static function isXmlConfiguration($fileName)

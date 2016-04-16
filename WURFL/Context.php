@@ -11,16 +11,13 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @version    $id$
+ * @license     GNU Affero General Public License
  */
-
 /**
  * WURFL Context stores the persistence provider, cache provider and logger objects
  *
- *
- * @property-read WURFL_Storage_Base     $persistenceProvider
- * @property-read WURFL_Storage_Base     $cacheProvider
+ * @property-read WURFL_Storage_Base $persistenceProvider
+ * @property-read WURFL_Storage_Base $cacheProvider
  * @property-read WURFL_Logger_Interface $logger
  */
 class WURFL_Context

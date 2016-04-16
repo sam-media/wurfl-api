@@ -11,20 +11,18 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @author     Fantayeneh Asres Gizaw
- * @version    $id$
+ * @license     GNU Affero General Public License
+ * @author   Fantayeneh Asres Gizaw
  */
-
 /**
  * WURFL Storage
  */
 class WURFL_Storage_File extends WURFL_Storage_Base
 {
     private $defaultParams = array(
-        'dir' => '/tmp',
+        'dir'        => '/tmp',
         'expiration' => 0,
-        'readonly' => 'false',
+        'readonly'   => 'false',
     );
 
     private $expire;
@@ -54,9 +52,7 @@ class WURFL_Storage_File extends WURFL_Storage_Base
         if (!is_dir($this->root)) {
             @mkdir($this->root, 0777, true);
             if (!is_dir($this->root)) {
-                throw new WURFL_Storage_Exception(
-                    'The file storage directory does not exist and could not be created. Please make sure the directory is writeable: ' . $this->root
-                );
+                throw new WURFL_Storage_Exception('The file storage directory does not exist and could not be created. Please make sure the directory is writeable: ' . $this->root);
             }
         }
         if (!$this->readonly && !is_writeable($this->root)) {
@@ -72,7 +68,7 @@ class WURFL_Storage_File extends WURFL_Storage_Base
             $path  = $this->keyPath($key);
             $value = WURFL_FileUtils::read($path);
             if ($value === null) {
-                return;
+                return null;
             }
             $this->cacheSave($key, $value);
 
@@ -85,7 +81,7 @@ class WURFL_Storage_File extends WURFL_Storage_Base
         if ($value->isExpired()) {
             @unlink($path);
 
-            return;
+            return null;
         }
 
         return $value->value();

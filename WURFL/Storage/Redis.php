@@ -24,12 +24,12 @@ class WURFL_Storage_Redis extends WURFL_Storage_Base
     const EXTENSION_MODULE_NAME = 'redis';
 
     private $defaultParams = array(
-        'host' => '127.0.0.1',
-        'port' => '6379',
+        'host'      => '127.0.0.1',
+        'port'      => '6379',
         'hash_name' => 'WURFL_DATA',
-        'redis' => null,
-        'database' => 0,
-        'client' => 'phpredis',
+        'redis'     => null,
+        'database'  => 0,
+        'client'    => 'phpredis',
     );
 
     private $database;

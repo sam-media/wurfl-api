@@ -12,10 +12,8 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @version    $id$
+ * @license     GNU Affero General Public License
  */
-
 /**
  * Provides access to virtual capabilities
  */
@@ -43,51 +41,47 @@ class WURFL_VirtualCapabilityProvider
 
     /**
      * Map of WURFL names to WURFL_VirtualCapability classes.
-     *
      * @var array
      */
     public static $virtual_capabilities = array(
-        'is_android' => 'IsAndroid',
-        'is_ios' => 'IsIos',
-        'is_windows_phone' => 'IsWindowsPhone',
-        'is_app' => 'IsApp',
-        'is_full_desktop' => 'IsFullDesktop',
-        'is_largescreen' => 'IsLargescreen',
-        'is_mobile' => 'IsMobile',
-        'is_robot' => 'IsRobot',
-        'is_smartphone' => 'IsSmartphone',
-        'is_touchscreen' => 'IsTouchscreen',
-        'is_wml_preferred' => 'IsWmlPreferred',
-        'is_xhtmlmp_preferred' => 'IsXhtmlmpPreferred',
-        'is_html_preferred' => 'IsHtmlPreferred',
-        'advertised_device_os' => 'DeviceBrowser.DeviceOs',
+        'is_android'                   => 'IsAndroid',
+        'is_ios'                       => 'IsIos',
+        'is_windows_phone'             => 'IsWindowsPhone',
+        'is_app'                       => 'IsApp',
+        'is_full_desktop'              => 'IsFullDesktop',
+        'is_largescreen'               => 'IsLargescreen',
+        'is_mobile'                    => 'IsMobile',
+        'is_robot'                     => 'IsRobot',
+        'is_smartphone'                => 'IsSmartphone',
+        'is_touchscreen'               => 'IsTouchscreen',
+        'is_wml_preferred'             => 'IsWmlPreferred',
+        'is_xhtmlmp_preferred'         => 'IsXhtmlmpPreferred',
+        'is_html_preferred'            => 'IsHtmlPreferred',
+        'advertised_device_os'         => 'DeviceBrowser.DeviceOs',
         'advertised_device_os_version' => 'DeviceBrowser.DeviceOsVersion',
-        'advertised_browser' => 'DeviceBrowser.Browser',
-        'advertised_browser_version' => 'DeviceBrowser.BrowserVersion',
-        'complete_device_name' => 'CompleteDeviceName',
-        'device_name' => 'DeviceName',
-        'form_factor' => 'FormFactor',
-        'is_phone' => 'IsPhone',
-        'is_app_webview' => 'IsAppWebview',
+        'advertised_browser'           => 'DeviceBrowser.Browser',
+        'advertised_browser_version'   => 'DeviceBrowser.BrowserVersion',
+        'complete_device_name'         => 'CompleteDeviceName',
+        'device_name'                  => 'DeviceName',
+        'form_factor'                  => 'FormFactor',
+        'is_phone'                     => 'IsPhone',
+        'is_app_webview'               => 'IsAppWebview',
     );
 
     /**
      * Storage for the WURFL_VirtualCapability objects
-     *
      * @var array
      */
     protected $cache = array();
 
     /**
      * Storage for the WURFL_VirtualCapabilityCache objects
-     *
      * @var array
      */
     protected $group_cache = array();
 
     /**
      * Returns the names of all the available virtual capabilities
-     *
      * @return array
      */
     public function getNames()
@@ -97,7 +91,6 @@ class WURFL_VirtualCapabilityProvider
 
     /**
      * Returns an array of all the required capabilities for all virtual capabilities
-     *
      * @return array
      */
     public static function getRequiredCapabilities()
@@ -115,7 +108,7 @@ class WURFL_VirtualCapabilityProvider
             }
 
             $model = new $class();
-            $caps  = array_unique(array_merge($caps, $model->getRequiredCapabilities()));
+            $caps  = array_unique(array_merge($caps, $model->getRequiredCapabilities(), array(self::PREFIX_CONTROL . $cap_name)));
             unset($model);
         }
 
@@ -123,8 +116,21 @@ class WURFL_VirtualCapabilityProvider
     }
 
     /**
+     * Returns an array of all the control capabilities
+     * @return array
+     */
+    public static function getControlCapabilities()
+    {
+        $caps = array();
+        foreach (self::$virtual_capabilities as $cap_name => $vc_name) {
+            $caps[] = self::PREFIX_CONTROL . $cap_name;
+        }
+
+        return $caps;
+    }
+
+    /**
      * Gets an array of all the virtual capabilities
-     *
      * @return array Virtual capabilities in format "name => value"
      */
     public function getAll()
@@ -139,9 +145,7 @@ class WURFL_VirtualCapabilityProvider
 
     /**
      * Returns the value of the virtual capability
-     *
-     * @param string $name
-     *
+     * @param  string                $name
      * @return string|bool|int|float
      */
     public function get($name)
@@ -151,8 +155,7 @@ class WURFL_VirtualCapabilityProvider
         // The value is null if it is not in the loaded WURFL, it's default if it is loaded and not overridden
         if ($control_value === null || $control_value === self::WURFL_CONTROL_DEFAULT) {
             // The control capability was not used, use the WURFL_VirtualCapability provider
-            return $this->getObject($name)
-                ->getValue();
+            return $this->getObject($name)->getValue();
         }
 
         // Forced capabilities
@@ -169,9 +172,7 @@ class WURFL_VirtualCapabilityProvider
 
     /**
      * Returns the WURFL_VirtualCapability object for the given $name.
-     *
-     * @param string $name
-     *
+     * @param  string                  $name
      * @return WURFL_VirtualCapability
      */
     public function getObject($name)
@@ -202,9 +203,7 @@ class WURFL_VirtualCapabilityProvider
 
     /**
      * True if the virtual capability exists
-     *
-     * @param string $name
-     *
+     * @param  string $name
      * @return bool
      */
     public function exists($name)
@@ -215,17 +214,13 @@ class WURFL_VirtualCapabilityProvider
     protected function getControlValue($name)
     {
         // Check if loaded WURFL contains control caps
-        if (!$this->device->getRootDevice()
-            ->isGroupDefined(self::WURFL_CONTROL_GROUP)
-        ) {
-            return;
+        if (!$this->device->getRootDevice()->isGroupDefined(self::WURFL_CONTROL_GROUP)) {
+            return null;
         }
         $control_cap = self::PREFIX_CONTROL . $name;
         // Check if loaded WURFL contains the requested control cap
-        if (!$this->device->getRootDevice()
-            ->isCapabilityDefined($control_cap)
-        ) {
-            return;
+        if (!$this->device->getRootDevice()->isCapabilityDefined($control_cap)) {
+            return null;
         }
 
         return $this->device->getCapability($control_cap);

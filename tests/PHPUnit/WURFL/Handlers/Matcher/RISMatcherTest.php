@@ -2,7 +2,6 @@
 /**
  * test case
  */
-
 /**
  * WURFL_Handlers_Matcher_RISMatcher test case.
  */

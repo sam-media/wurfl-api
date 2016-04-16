@@ -11,8 +11,7 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @version    $id$
+ * @license     GNU Affero General Public License
  */
 
 /**
@@ -21,8 +20,7 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @version    $id$
+ * @license     GNU Affero General Public License
  */
 class WURFL_Handlers_SafariHandler extends WURFL_Handlers_Handler
 {
@@ -34,13 +32,8 @@ class WURFL_Handlers_SafariHandler extends WURFL_Handlers_Handler
             return false;
         }
 
-        return WURFL_Handlers_Utils::checkIfContains(
-            $userAgent,
-            'Safari'
-        ) && WURFL_Handlers_Utils::checkIfStartsWithAnyOf(
-            $userAgent,
-            array('Mozilla/5.0 (Macintosh', 'Mozilla/5.0 (Windows')
-        );
+        return WURFL_Handlers_Utils::checkIfContains($userAgent, 'Safari')
+            && WURFL_Handlers_Utils::checkIfStartsWithAnyOf($userAgent, array('Mozilla/5.0 (Macintosh', 'Mozilla/5.0 (Windows'));
     }
 
     public function applyConclusiveMatch($userAgent)
@@ -67,12 +60,12 @@ class WURFL_Handlers_SafariHandler extends WURFL_Handlers_Handler
         $search = 'Version/';
         $idx    = strpos($ua, $search);
         if ($idx === false) {
-            return;
+            return null;
         }
         $idx += strlen($search);
         $end_idx = strpos($ua, '.', $idx);
         if ($end_idx === false) {
-            return;
+            return null;
         }
 
         return substr($ua, $idx, $end_idx - $idx);

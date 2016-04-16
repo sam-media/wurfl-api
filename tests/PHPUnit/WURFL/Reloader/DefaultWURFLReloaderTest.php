@@ -2,7 +2,6 @@
 /**
  * test case
  */
-
 /**
  *  test case.
  */
@@ -31,7 +30,7 @@ class WURFL_Reloader_DefaultWURFLReloaderTest extends PHPUnit_Framework_TestCase
      */
     public function shoudReloadTheWurfl()
     {
-        $configurationFilePath = dirname(__FILE__) . DIRECTORY_SEPARATOR . self::WURFL_CONFIG_FILE;
+        $configurationFilePath = dirname(__FILE__) . DIRECTORY_SEPARATOR .  self::WURFL_CONFIG_FILE;
         $wurflReloader         = new WURFL_Reloader_DefaultWURFLReloader();
         $wurflReloader->reload($configurationFilePath);
     }

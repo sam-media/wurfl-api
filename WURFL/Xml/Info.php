@@ -11,14 +11,11 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @version    $id$
+ * @license     GNU Affero General Public License
  */
-
 /**
  * Stores version and other info about the loaded WURFL
- *
- * @property-read string $version     Loaded WURFL Version
+ * @property-read string $version Loaded WURFL Version
  * @property-read string $lastUpdated Loaded WURFL Last Updated Date
  * @property-read string $officialURL Loaded WURFL Official URL
  */
@@ -26,7 +23,6 @@ class WURFL_Xml_Info
 {
     /**
      * Key used in persistence provider to store version-related information
-     *
      * @var string
      */
     const PERSISTENCE_KEY = 'WURFL_XML_INFO';
@@ -48,9 +44,7 @@ class WURFL_Xml_Info
 
     /**
      * Returns the value for the given key (version, lastUpdated, officialURL)
-     *
-     * @param string $name
-     *
+     * @param  string $name
      * @return string value
      */
     public function __get($name)

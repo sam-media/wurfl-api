@@ -12,7 +12,6 @@
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
- * @version    $id$
  */
 
 /**
@@ -109,8 +108,8 @@ class WURFL_Configuration_XmlConfig extends WURFL_Configuration_Config
      *
      * @param \SimpleXMLElement[] $modeElement array of SimpleXMLElement objects
      *
-     * @return bool
      * @throws WURFL_WURFLException
+     * @return bool
      */
     private function matchMode($modeElement)
     {
@@ -133,7 +132,7 @@ class WURFL_Configuration_XmlConfig extends WURFL_Configuration_Config
      *
      * @param \SimpleXMLElement[] $logDirElement array of SimpleXMLElement objects
      *
-     * @return string Log directory
+     * @return string|null Log directory
      */
     private function logDir($logDirElement)
     {
@@ -141,7 +140,7 @@ class WURFL_Configuration_XmlConfig extends WURFL_Configuration_Config
             return parent::getFullPath((string) $logDirElement[0]);
         }
 
-        return;
+        return null;
     }
 
     /**

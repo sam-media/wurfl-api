@@ -1,5 +1,4 @@
 <?php
-
 /**
  * test case
  */
@@ -8,8 +7,7 @@ class WURFL_TestUtils
     /**
      * Load Test File containing user-agent -> deviceids associations
      *
-     * @param string $fileName
-     *
+     * @param  string $fileName
      * @return array
      */
     public static function loadUserAgentsWithIdFromFile($filePath)
@@ -21,7 +19,7 @@ class WURFL_TestUtils
         $testData    = array();
         $file_handle = fopen($filePath, 'r');
 
-        while (!feof($file_handle)) {
+        while (! feof($file_handle)) {
             $line = fgets($file_handle);
             self::updateTestData($testData, $line);
         }
@@ -39,7 +37,7 @@ class WURFL_TestUtils
         $testData    = array();
         $file_handle = fopen($filePath, 'r');
 
-        while (!feof($file_handle)) {
+        while (! feof($file_handle)) {
             $line       = fgets($file_handle);
             $isTestData = ((strpos($line, '#') === false) && strcmp($line, "\n") !== 0);
             if ($isTestData) {

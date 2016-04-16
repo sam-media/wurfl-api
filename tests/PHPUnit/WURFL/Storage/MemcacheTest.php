@@ -13,9 +13,7 @@ class WURFL_Storage_MemcacheTest extends PHPUnit_Framework_TestCase
         try {
             new WURFL_Storage_Memcache();
         } catch (\Exception $e) {
-            $this->markTestSkipped(
-                "PHP extension 'memcache' must be loaded and a local memcache server running to run this test."
-            );
+            $this->markTestSkipped("PHP extension 'memcache' must be loaded and a local memcache server running to run this test.");
         }
     }
 
@@ -69,20 +67,14 @@ class WURFL_Storage_MemcacheTest extends PHPUnit_Framework_TestCase
         try {
             $cache = new WURFL_Storage_Memcache();
             if (!$cache->isWURFLLoaded()) {
-                $this->markTestSkipped(
-                    "PHP extension 'memcache' must be loaded and a local memcache server running to run this test."
-                );
+                $this->markTestSkipped("PHP extension 'memcache' must be loaded and a local memcache server running to run this test.");
             }
         } catch (\Exception $e) {
-            $this->markTestSkipped(
-                "PHP extension 'memcache' must be loaded and a local memcache server running to run this test."
-            );
+            $this->markTestSkipped("PHP extension 'memcache' must be loaded and a local memcache server running to run this test.");
         }
 
         if (!extension_loaded('memcache')) {
-            $this->markTestSkipped(
-                "PHP extension 'memcache' must be loaded and a local memcache server running to run this test."
-            );
+            $this->markTestSkipped("PHP extension 'memcache' must be loaded and a local memcache server running to run this test.");
         }
     }
 }

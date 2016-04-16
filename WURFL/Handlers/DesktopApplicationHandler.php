@@ -12,8 +12,7 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @version    $id$
+ * @license     GNU Affero General Public License
  */
 
 /**
@@ -22,9 +21,9 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @version    $id$
+ * @license     GNU Affero General Public License
  */
+
 class WURFL_Handlers_DesktopApplicationHandler extends WURFL_Handlers_Handler
 {
     protected $prefix = 'DESKTOPAPPLICATION';
@@ -47,10 +46,7 @@ class WURFL_Handlers_DesktopApplicationHandler extends WURFL_Handlers_Handler
             return false;
         }
 
-        return (WURFL_Handlers_Utils::checkIfContainsAnyOf(
-            $userAgent,
-            array('Thunderbird', 'Microsoft Outlook', 'MSOffice')
-        ));
+        return (WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array('Thunderbird', 'Microsoft Outlook', 'MSOffice', 'DesktopApp ')));
     }
 
     public function applyConclusiveMatch($userAgent)
@@ -86,6 +82,8 @@ class WURFL_Handlers_DesktopApplicationHandler extends WURFL_Handlers_Handler
             return 'ms_outlook';
         } elseif (WURFL_Handlers_Utils::checkIfContains($userAgent, 'MSOffice')) {
             return 'ms_office';
+        } elseif (WURFL_Handlers_Utils::checkIfContains($userAgent, 'DesktopApp ')) {
+            return 'generic_desktop_application';
         }
 
         return WURFL_Constants::GENERIC_WEB_BROWSER;

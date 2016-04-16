@@ -12,10 +12,8 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @version    $id$
+ * @license     GNU Affero General Public License
  */
-
 /**
  * Array-style WURFL configuration.  To use this method you must create a php file that contains
  * an array called $configuration with all of the required settings.  NOTE: every path that you
@@ -27,8 +25,8 @@
  * // config.php
  * $configuration = array(
  *   'wurfl' => array(
- *       'main-file' => "wurfl.xml",
- *       'patches' => array("web_browsers_patch.xml"),
+ *     'main-file' => "wurfl.xml",
+ *     'patches' => array("web_browsers_patch.xml"),
  *   ),
  *   'match-mode' => 'high-accuracy',
  *   'allow-reload' => true,
@@ -46,13 +44,13 @@
  *     'resolution_width',
  *   ),
  *   'persistence' => array(
- *       'provider' => "file",
- *       'params' => array(
- *         'dir' => "storage/persistence",
- *       ),
+ *     'provider' => "file",
+ *     'params' => array(
+ *       'dir' => "storage/persistence",
+ *     ),
  *   ),
  *   'cache' => array(
- *       'provider' => "null",
+ *     'provider' => "null",
  *   ),
  * );
  * ?>
@@ -71,14 +69,12 @@
  * );
  * ?>
  * </code>
- *
  * @deprecated
  */
 class WURFL_Configuration_ArrayConfig extends WURFL_Configuration_Config
 {
     /**
      * Initialize class - gets called from the parent constructor
-     *
      * @throws WURFL_WURFLException configuration not present
      */
     protected function initialize()
@@ -117,8 +113,7 @@ class WURFL_Configuration_ArrayConfig extends WURFL_Configuration_Config
             $this->setMatchMode($configuration[WURFL_Configuration_Config::MATCH_MODE]);
         }
 
-        $this->allowReload = array_key_exists(WURFL_Configuration_Config::ALLOW_RELOAD, $configuration)
-            ? $configuration[WURFL_Configuration_Config::ALLOW_RELOAD] : false;
+        $this->allowReload = array_key_exists(WURFL_Configuration_Config::ALLOW_RELOAD, $configuration) ? $configuration[WURFL_Configuration_Config::ALLOW_RELOAD] : false;
     }
 
     private function setWurflConfiguration(array $wurflConfig)
@@ -137,14 +132,8 @@ class WURFL_Configuration_ArrayConfig extends WURFL_Configuration_Config
     private function setPersistenceConfiguration(array $persistenceConfig)
     {
         $this->persistence = $persistenceConfig;
-        if (array_key_exists('params', $this->persistence) && array_key_exists(
-                WURFL_Configuration_Config::DIR,
-                $this->persistence['params']
-            )
-        ) {
-            $this->persistence['params'][WURFL_Configuration_Config::DIR] = parent::getFullPath(
-                $this->persistence['params'][WURFL_Configuration_Config::DIR]
-            );
+        if (array_key_exists('params', $this->persistence) && array_key_exists(WURFL_Configuration_Config::DIR, $this->persistence['params'])) {
+            $this->persistence['params'][WURFL_Configuration_Config::DIR] = parent::getFullPath($this->persistence['params'][WURFL_Configuration_Config::DIR]);
         }
     }
 

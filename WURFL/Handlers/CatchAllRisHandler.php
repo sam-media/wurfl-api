@@ -11,8 +11,7 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @version    $id$
+ * @license     GNU Affero General Public License
  */
 
 /**
@@ -21,20 +20,18 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @version    $id$
+ * @license     GNU Affero General Public License
  */
+
 class WURFL_Handlers_CatchAllRisHandler extends WURFL_Handlers_Handler
 {
     protected $prefix = 'CATCH_ALL_RIS';
-
     /**
      * Final Interceptor: Intercept
      * Everything that has not been trapped by a previous handler
      *
-     * @param string $userAgent
-     *
-     * @return bool always true
+     * @param  string $userAgent
+     * @return bool   always true
      */
     public function canHandle($userAgent)
     {
@@ -44,8 +41,7 @@ class WURFL_Handlers_CatchAllRisHandler extends WURFL_Handlers_Handler
     /**
      * Apply RIS on Firts slash
      *
-     * @param string $userAgent
-     *
+     * @param  string $userAgent
      * @return string
      */
     public function applyConclusiveMatch($userAgent)

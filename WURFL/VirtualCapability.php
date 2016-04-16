@@ -12,10 +12,8 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @version    $id$
+ * @license     GNU Affero General Public License
  */
-
 /**
  * Defines the virtual capabilities
  */
@@ -53,8 +51,7 @@ abstract class WURFL_VirtualCapability
             return true;
         }
         if (self::$loaded_capabilities === null) {
-            self::$loaded_capabilities = $this->device->getRootDevice()
-                ->getCapabilityNames();
+            self::$loaded_capabilities = $this->device->getRootDevice()->getCapabilityNames();
         }
         $missing_caps = array_diff($this->required_capabilities, self::$loaded_capabilities);
 

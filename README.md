@@ -17,6 +17,10 @@ complete text of the applicable GNU Affero General Public License.
 If you are not able to comply with the terms of the AGPL license, commercial
 licenses are available from ScientiaMobile, Inc at http://www.ScientiaMobile.com/
 
+# PHP Supported Versions #
+
+- PHP >= 5.3.2
+
 # Getting Started #
 Download a release archive from wurfl site and extract it to a directory 
 suitable for your application.

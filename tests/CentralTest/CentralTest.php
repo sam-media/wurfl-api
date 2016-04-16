@@ -18,7 +18,7 @@ class CentralTest
     public $http_method  = 'get';
     public $http_headers = array(
         'HTTP_USER_AGENT' => '',
-        'HTTP_ACCEPT' => '',
+        'HTTP_ACCEPT'     => '',
     );
     public $assertions    = array();
     public $failure_count = 0;

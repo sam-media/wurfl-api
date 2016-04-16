@@ -12,55 +12,53 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @version    $id$
+ * @license     GNU Affero General Public License
  */
-
 /**
  * Virtual capability helper
  */
+
 class WURFL_VirtualCapability_IsApp extends WURFL_VirtualCapability
 {
     protected $required_capabilities = array('device_os');
 
     /**
      * Simple strings or regex patterns that indicate a UA is from a native app
-     *
      * @var array
      */
     protected $patterns = array(
-        '^Dalvik',
-        'Darwin/',
-        'CFNetwork',
-        '^Windows Phone Ad Client',
-        '^NativeHost',
-        '^AndroidDownloadManager',
-        '-HttpClient',
-        '^AppCake',
-        'AppEngine-Google',
-        'AppleCoreMedia',
-        '^AppTrailers',
-        '^ChoiceFM',
-        '^ClassicFM',
-        '^Clipfish',
-        '^FaceFighter',
-        '^Flixster',
-        '^Gold/',
-        '^GoogleAnalytics/',
-        '^Heart/',
-        '^iBrowser/',
-        'iTunes-',
-        '^Java/',
-        '^LBC/3.',
-        'Twitter',
-        'Pinterest',
-        '^Instagram',
-        'FBAN',
-        '#iP(hone|od|ad)[\d],[\d]#',
-        // namespace notation (com.google.youtube)
-        '#[a-z]{3,}(?:\.[a-z]+){2,}#',
-        //Windows MSIE Webview
-        'WebView',
+            '^Dalvik',
+            'Darwin/',
+            'CFNetwork',
+            '^Windows Phone Ad Client',
+            '^NativeHost',
+            '^AndroidDownloadManager',
+            '-HttpClient',
+            '^AppCake',
+            'AppEngine-Google',
+            'AppleCoreMedia',
+            '^AppTrailers',
+            '^ChoiceFM',
+            '^ClassicFM',
+            '^Clipfish',
+            '^FaceFighter',
+            '^Flixster',
+            '^Gold/',
+            '^GoogleAnalytics/',
+            '^Heart/',
+            '^iBrowser/',
+            'iTunes-',
+            '^Java/',
+            '^LBC/3.',
+            'Twitter',
+            'Pinterest',
+            '^Instagram',
+            'FBAN',
+            '#iP(hone|od|ad)[\d],[\d]#',
+            // namespace notation (com.google.youtube)
+            '#[a-z]{3,}(?:\.[a-z]+){2,}#',
+            //Windows MSIE Webview
+            'WebView',
     );
 
     protected function compute()

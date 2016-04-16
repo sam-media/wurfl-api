@@ -12,13 +12,12 @@
  *
  * @category   WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @version    $id$
+ * @license     GNU Affero General Public License
  */
-
 /**
  * Virtual capability helper
  */
+
 class WURFL_VirtualCapability_IsPhone extends WURFL_VirtualCapability
 {
     protected $required_capabilities = array('can_assign_phone_number', 'is_tablet');
