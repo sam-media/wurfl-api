@@ -79,7 +79,7 @@ class WURFL_Storage_ApcTest extends PHPUnit_Framework_TestCase
 
     private function checkDeps()
     {
-        if (!extension_loaded('apc') || (ini_get('apc.enable_cli')) === false) {
+        if (!extension_loaded(WURFL_Storage_Apc::EXTENSION_MODULE_NAME) || ini_get('apc.enable_cli') === false) {
             $this->markTestSkipped("PHP extension 'apc' must be loaded and enabled for CLI to run this test (http://www.php.net/manual/en/apc.configuration.php#ini.apc.enable-cli).");
         }
     }
