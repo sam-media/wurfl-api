@@ -203,8 +203,8 @@ class WURFL_DeviceRepositoryBuilder
 
     /**
      * Returns an array of WURFL_Xml_DeviceIterator for the given $wurflPatches and $capabilityFilter
-     * @param  array $wurflPatches        Array of (string)filenames
-     * @param  array $capabilityFilter    Array of (string) WURFL capabilities
+     * @param  array                      $wurflPatches     Array of (string)filenames
+     * @param  array                      $capabilityFilter Array of (string) WURFL capabilities
      * @return WURFL_Xml_DeviceIterator[] Array of WURFL_Xml_DeviceIterator objects
      */
     private function toPatchIterators($wurflPatches, $capabilityFilter)
@@ -364,7 +364,7 @@ class WURFL_DeviceRepositoryBuilder
 
     /**
      * @param  WURFL_Xml_DeviceIterator[] $patchingDeviceIterators Array of WURFL_Xml_DeviceIterator
-     * @return array Merged array of current patch devices
+     * @return array                      Merged array of current patch devices
      */
     private function toListOfPatchingDevices($patchingDeviceIterators)
     {

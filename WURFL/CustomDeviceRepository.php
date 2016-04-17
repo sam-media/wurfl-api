@@ -95,10 +95,10 @@ class WURFL_CustomDeviceRepository implements WURFL_DeviceRepository
     /**
      * Returns a device for the given device ID
      *
-     * @param  string $deviceId
+     * @param string $deviceId
      *
-     * @return WURFL_CustomDevice if $deviceID is not defined in wurfl devices repository
      * @throws Exception
+     * @return WURFL_CustomDevice if $deviceID is not defined in wurfl devices repository
      */
     public function getDevice($deviceId)
     {
