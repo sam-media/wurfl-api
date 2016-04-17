@@ -11,10 +11,8 @@
  *
  *
  * @category   WURFL
- * @package	WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license     GNU Affero General Public License
  */
 
 /**
@@ -22,34 +20,40 @@
  *
  *
  * @category   WURFL
- * @package	WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license     GNU Affero General Public License
  */
-class WURFL_Handlers_MotorolaHandler extends WURFL_Handlers_Handler {
-	
-	protected $prefix = "MOTOROLA";
-	
-	public static $constantIDs = array(
-		'mot_mib22_generic',
-	);
-	
-	public function canHandle($userAgent) {
-		if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) return false;
-		return (WURFL_Handlers_Utils::checkIfStartsWithAnyOf($userAgent, array('Mot-', 'MOT-', 'MOTO', 'moto')) ||
-			WURFL_Handlers_Utils::checkIfContains($userAgent, 'Motorola'));	
-	}
-	
-	public function applyConclusiveMatch($userAgent) {
+class WURFL_Handlers_MotorolaHandler extends WURFL_Handlers_Handler
+{
+    protected $prefix = 'MOTOROLA';
+
+    public static $constantIDs = array(
+        'mot_mib22_generic',
+    );
+
+    public function canHandle($userAgent)
+    {
+        if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) {
+            return false;
+        }
+
+        return (WURFL_Handlers_Utils::checkIfStartsWithAnyOf($userAgent, array('Mot-', 'MOT-', 'MOTO', 'moto')) ||
+            WURFL_Handlers_Utils::checkIfContains($userAgent, 'Motorola'));
+    }
+
+    public function applyConclusiveMatch($userAgent)
+    {
         $tolerance = WURFL_Handlers_Utils::firstSlash($userAgent);
-		return $this->getDeviceIDFromRIS($userAgent, $tolerance);
-	}
-	
-	public function applyRecoveryMatch($userAgent) {
-		if (WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array('MIB/2.2', 'MIB/BER2.2'))) {
-			return "mot_mib22_generic";
-		}
-		return WURFL_Constants::NO_MATCH;
-	}
+
+        return $this->getDeviceIDFromRIS($userAgent, $tolerance);
+    }
+
+    public function applyRecoveryMatch($userAgent)
+    {
+        if (WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array('MIB/2.2', 'MIB/BER2.2'))) {
+            return 'mot_mib22_generic';
+        }
+
+        return WURFL_Constants::NO_MATCH;
+    }
 }

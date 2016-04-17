@@ -11,7 +11,6 @@
  *
  *
  * @category   WURFL
- * @package    WURFL_VirtualCapability
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  * @version    $id$
@@ -19,11 +18,9 @@
 
 /**
  * Virtual capability helper
- * @package    WURFL_VirtualCapability
  */
 class WURFL_VirtualCapability_FormFactor extends WURFL_VirtualCapability
 {
-
     protected $required_capabilities = array(
         'ux_full_desktop',
         'is_smarttv',
@@ -31,20 +28,21 @@ class WURFL_VirtualCapability_FormFactor extends WURFL_VirtualCapability
         'is_tablet',
         'can_assign_phone_number',
     );
-    
-    public function compute() {
+
+    public function compute()
+    {
         $map = array(
-            'Robot' => $this->device->is_robot,
-            'Desktop' => $this->device->ux_full_desktop,
-            'Smart-TV' => $this->device->is_smarttv,
+            'Robot'            => $this->device->is_robot,
+            'Desktop'          => $this->device->ux_full_desktop,
+            'Smart-TV'         => $this->device->is_smarttv,
             'Other Non-Mobile' => !$this->device->is_wireless_device,
-            'Tablet' => $this->device->is_tablet,
-            'Smartphone' => $this->device->is_smartphone,
-            'Feature Phone' => $this->device->can_assign_phone_number,
+            'Tablet'           => $this->device->is_tablet,
+            'Smartphone'       => $this->device->is_smartphone,
+            'Feature Phone'    => $this->device->can_assign_phone_number,
         );
 
         foreach ($map as $type => $condition) {
-            if ($condition == "true") {
+            if ($condition === 'true') {
                 return $type;
             }
         }

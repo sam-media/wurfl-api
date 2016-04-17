@@ -11,21 +11,19 @@
  *
  *
  * @category   WURFL
- * @package	WURFL_VirtualCapability
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license     GNU Affero General Public License
  */
 /**
  * Virtual capability helper
- * @package	WURFL_VirtualCapability
  */
- 
-class WURFL_VirtualCapability_IsMobile extends WURFL_VirtualCapability {
 
-	protected $required_capabilities = array('is_wireless_device');
+class WURFL_VirtualCapability_IsMobile extends WURFL_VirtualCapability
+{
+    protected $required_capabilities = array('is_wireless_device');
 
-	protected function compute() {
-		return $this->device->is_wireless_device;
-	}
+    protected function compute()
+    {
+        return $this->device->is_wireless_device;
+    }
 }

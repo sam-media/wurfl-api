@@ -10,19 +10,17 @@
  * Refer to the COPYING.txt file distributed with this package.
  *
  * @category   WURFL
- * @package	WURFL_Request_UserAgentNormalizer_Generic
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @author	 Fantayeneh Asres Gizaw
- * @version	$id$
+ * @license     GNU Affero General Public License
+ * @author   Fantayeneh Asres Gizaw
  */
 /**
  * User Agent Normalizer - Trims the version number to two digits (e.g. 2.1.1 -> 2.1)
- * @package	WURFL_Request_UserAgentNormalizer_Generic
  */
-class WURFL_Request_UserAgentNormalizer_Generic_Android implements WURFL_Request_UserAgentNormalizer_Interface  {
-
-	public function normalize($userAgent) {
+class WURFL_Request_UserAgentNormalizer_Generic_Android implements WURFL_Request_UserAgentNormalizer_Interface
+{
+    public function normalize($userAgent)
+    {
         return preg_replace('/(Android)[ \-\/](\d\.\d)([^; \/\)]+)/', '$1 $2', $userAgent);
-	}
+    }
 }

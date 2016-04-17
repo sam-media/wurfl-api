@@ -11,28 +11,28 @@
  *
  *
  * @category   WURFL
- * @package	WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license     GNU Affero General Public License
  */
 
 /**
  * SagemUserAgentHandler
- * 
+ *
  *
  * @category   WURFL
- * @package	WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license     GNU Affero General Public License
  */
-class WURFL_Handlers_SagemHandler extends WURFL_Handlers_Handler {
-	
-	protected $prefix = "SAGEM";
-	
-	public function canHandle($userAgent) {
-		if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) return false;
-		return WURFL_Handlers_Utils::checkIfStartsWithAnyOf($userAgent, array('Sagem', 'SAGEM'));
-	}
+class WURFL_Handlers_SagemHandler extends WURFL_Handlers_Handler
+{
+    protected $prefix = 'SAGEM';
+
+    public function canHandle($userAgent)
+    {
+        if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) {
+            return false;
+        }
+
+        return WURFL_Handlers_Utils::checkIfStartsWithAnyOf($userAgent, array('Sagem', 'SAGEM'));
+    }
 }

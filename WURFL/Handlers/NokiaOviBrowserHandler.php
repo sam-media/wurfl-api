@@ -11,48 +11,50 @@
  *
  *
  * @category   WURFL
- * @package	WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license     GNU Affero General Public License
  */
 
 /**
  * NokiaOviBrowserUserAgentHandler
- * 
+ *
  *
  * @category   WURFL
- * @package	WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license     GNU Affero General Public License
  */
-class WURFL_Handlers_NokiaOviBrowserHandler extends WURFL_Handlers_Handler {
-	
-	protected $prefix = "NOKIAOVIBROWSER";
-	
-	public static $constantIDs = array(
-		'nokia_generic_series30plus',
-		'nokia_generic_series40_ovibrosr',
-	);
-	
-	public function canHandle($userAgent) {
-		if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) return false;
-		return WURFL_Handlers_Utils::checkIfContains($userAgent, 'S40OviBrowser');
-	}
-	
-	public function applyConclusiveMatch($userAgent) {
-		$idx = strpos($userAgent, 'Nokia');
-		if ($idx === false) return WURFL_Constants::NO_MATCH;
-		$tolerance = WURFL_Handlers_Utils::indexOfAnyOrLength($userAgent, array('/', ' '), $idx);
-		return $this->getDeviceIDFromRIS($userAgent, $tolerance);
-	}
-	
-	public function applyRecoveryMatch($userAgent){
-	if (WURFL_Handlers_Utils::checkIfContains($userAgent, "Series30Plus")) {
-			return 'nokia_generic_series30plus';	
-		} else {
-			return 'nokia_generic_series40_ovibrosr';	
-		}
-	}
+class WURFL_Handlers_NokiaOviBrowserHandler extends WURFL_Handlers_Handler
+{
+    protected $prefix = 'NOKIAOVIBROWSER';
+
+    public static $constantIDs = array(
+        'nokia_generic_series30plus',
+        'nokia_generic_series40_ovibrosr',
+    );
+
+    public function canHandle($userAgent)
+    {
+        if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) {
+            return false;
+        }
+
+        return WURFL_Handlers_Utils::checkIfContains($userAgent, 'S40OviBrowser');
+    }
+
+    public function applyConclusiveMatch($userAgent)
+    {
+        $idx       = strpos($userAgent, 'Nokia');
+        $tolerance = WURFL_Handlers_Utils::indexOfAnyOrLength($userAgent, array('/', ' '), $idx);
+
+        return $this->getDeviceIDFromRIS($userAgent, $tolerance);
+    }
+
+    public function applyRecoveryMatch($userAgent)
+    {
+        if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Series30Plus')) {
+            return 'nokia_generic_series30plus';
+        } else {
+            return 'nokia_generic_series40_ovibrosr';
+        }
+    }
 }

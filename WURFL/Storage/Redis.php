@@ -10,27 +10,26 @@
  * Refer to the COPYING.txt file distributed with this package.
  *
  * @category   WURFL
- * @package	WURFL_Storage
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @author	 Fantayeneh Asres Gizaw
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @author     Fantayeneh Asres Gizaw
+ * @version    $id$
  */
+
 /**
  * WURFL Storage
- * @package	WURFL_Storage
  */
-class WURFL_Storage_Redis extends WURFL_Storage_Base {
-
-    const EXTENSION_MODULE_NAME = "redis";
+class WURFL_Storage_Redis extends WURFL_Storage_Base
+{
+    const EXTENSION_MODULE_NAME = 'redis';
 
     private $defaultParams = array(
-        "host" => "127.0.0.1",
-        "port" => "6379",
-        "hash_name" => 'WURFL_DATA',
-        "redis" => null,
-        "database" => 0,
-        "client" => "phpredis"
+        'host'      => '127.0.0.1',
+        'port'      => '6379',
+        'hash_name' => 'WURFL_DATA',
+        'redis'     => null,
+        'database'  => 0,
+        'client'    => 'phpredis',
     );
 
     private $database;
@@ -42,8 +41,9 @@ class WURFL_Storage_Redis extends WURFL_Storage_Base {
 
     protected $supports_secondary_caching = true;
 
-    public function __construct($params) {
-        $currentParams = is_array($params)? array_merge($this->defaultParams, $params): $this->defaultParams;
+    public function __construct($params)
+    {
+        $currentParams = is_array($params) ? array_merge($this->defaultParams, $params) : $this->defaultParams;
         $this->initialize($currentParams);
     }
 
@@ -60,7 +60,6 @@ class WURFL_Storage_Redis extends WURFL_Storage_Base {
         );
     }
 
-
     private function checkClient($client)
     {
         if (!in_array($client, array('phpredis', 'predis'))) {
@@ -74,12 +73,12 @@ class WURFL_Storage_Redis extends WURFL_Storage_Base {
 
     private function buildRedisObject($client, $host, $port, $database = 0)
     {
-        if ($client == 'phpredis') {
+        if ($client === 'phpredis') {
             $redis = new Redis();
             $redis->connect($host, $port);
-        } elseif ($client == 'predis') {
+        } elseif ($client === 'predis') {
             $redis = new Predis\Client(
-                array('scheme' => 'tcp', 'host'   => $host, 'port'   => $port)
+                array('scheme' => 'tcp', 'host' => $host, 'port' => $port)
             );
             $redis->connect();
         }
@@ -90,12 +89,13 @@ class WURFL_Storage_Redis extends WURFL_Storage_Base {
         return $redis;
     }
 
-    public function initialize($params) {
-        $this->host = $params['host'];
-        $this->port = $params['port'];
+    public function initialize($params)
+    {
+        $this->host     = $params['host'];
+        $this->port     = $params['port'];
         $this->hashName = $params['hash_name'];
         $this->database = $params['database'];
-        $this->client = $this->checkClient($params['client']);
+        $this->client   = $this->checkClient($params['client']);
         if ((null !== $params['redis']) && $this->checkRedisInstance($params['redis'])) {
             // when using this parameter, the Redis object has to be connected
             // and with the correct database selected
@@ -110,7 +110,8 @@ class WURFL_Storage_Redis extends WURFL_Storage_Base {
         }
     }
 
-    public function load($key) {
+    public function load($key)
+    {
         $value = $this->redis->hget($this->hashName, $key);
 
         $returnValue = null;
@@ -124,7 +125,8 @@ class WURFL_Storage_Redis extends WURFL_Storage_Base {
         return $returnValue;
     }
 
-    public function save($key, $value, $expiration = null) {
+    public function save($key, $value, $expiration = null)
+    {
         if (!is_object($value)) {
             $value = new StorageObject($value, 0);
         }
@@ -132,7 +134,8 @@ class WURFL_Storage_Redis extends WURFL_Storage_Base {
         return (bool) $this->redis->hset($this->hashName, $key, serialize($value));
     }
 
-    public function clear() {
+    public function clear()
+    {
         return (bool) $this->redis->del($this->hashName);
     }
 }

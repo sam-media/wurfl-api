@@ -11,10 +11,8 @@
  *
  *
  * @category   WURFL
- * @package	WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license     GNU Affero General Public License
  */
 
 /**
@@ -22,34 +20,40 @@
  *
  *
  * @category   WURFL
- * @package	WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license     GNU Affero General Public License
  */
-class WURFL_Handlers_SamsungHandler extends WURFL_Handlers_Handler {
+class WURFL_Handlers_SamsungHandler extends WURFL_Handlers_Handler
+{
+    protected $prefix = 'SAMSUNG';
 
-	protected $prefix = "SAMSUNG";
-	
-	public function canHandle($userAgent) {
-		if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) return false;
-		return WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array('Samsung', 'SAMSUNG'))
-			|| WURFL_Handlers_Utils::checkIfStartsWithAnyOf($userAgent, array('SEC-', 'SPH', 'SGH', 'SCH'));
-	}
-	
-	public function applyConclusiveMatch($userAgent) {
-		if (WURFL_Handlers_Utils::checkIfStartsWithAnyOf($userAgent, array("SEC-", "SAMSUNG-", "SCH"))) {
-			$tolerance = WURFL_Handlers_Utils::firstSlash($userAgent);
-		} else if (WURFL_Handlers_Utils::checkIfStartsWithAnyOf($userAgent, array("Samsung", "SPH", "SGH"))) {
-			$tolerance = WURFL_Handlers_Utils::firstSpace($userAgent);
-		} else {
-			$tolerance = WURFL_Handlers_Utils::secondSlash($userAgent);
-		}
-		return $this->getDeviceIDFromRIS($userAgent, $tolerance);
-	}
-	
-	public function applyRecoveryMatch($userAgent) {
-        $tolerance = WURFL_Handlers_Utils::indexOfOrLength($userAgent, '/', strpos($userAgent, 'Samsung'));
+    public function canHandle($userAgent)
+    {
+        if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) {
+            return false;
+        }
+
+        return WURFL_Handlers_Utils::checkIfContainsCaseInsensitive($userAgent, 'samsung')
+            || WURFL_Handlers_Utils::checkIfStartsWithAnyOf($userAgent, array('SEC-', 'SPH', 'SGH', 'SCH'));
+    }
+
+    public function applyConclusiveMatch($userAgent)
+    {
+        if (WURFL_Handlers_Utils::checkIfStartsWithAnyOf($userAgent, array('SEC-', 'SAMSUNG-', 'SCH'))) {
+            $tolerance = WURFL_Handlers_Utils::firstSlash($userAgent);
+        } elseif (WURFL_Handlers_Utils::checkIfStartsWithAnyOf($userAgent, array('Samsung', 'SPH', 'SGH'))) {
+            $tolerance = WURFL_Handlers_Utils::firstSpace($userAgent);
+        } else {
+            $tolerance = WURFL_Handlers_Utils::secondSlash($userAgent);
+        }
+
         return $this->getDeviceIDFromRIS($userAgent, $tolerance);
-	}
+    }
+
+    public function applyRecoveryMatch($userAgent)
+    {
+        $tolerance = WURFL_Handlers_Utils::indexOfOrLength($userAgent, '/', strpos($userAgent, 'Samsung'));
+
+        return $this->getDeviceIDFromRIS($userAgent, $tolerance);
+    }
 }

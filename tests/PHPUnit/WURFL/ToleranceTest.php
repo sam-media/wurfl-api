@@ -1,6 +1,6 @@
 <?php
 
-class Tolerance extends PHPUnit_Framework_TestCase
+class WURFL_ToleranceTest extends PHPUnit_Framework_TestCase
 {
     public function testFirstSlash()
     {
@@ -32,5 +32,4 @@ class Tolerance extends PHPUnit_Framework_TestCase
         $this->assertEquals(9, WURFL_Handlers_Utils::firstCloseParen('Value(12)'));
         $this->assertNull(WURFL_Handlers_Utils::firstCloseParen('Value'));
     }
-
 }

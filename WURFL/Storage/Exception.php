@@ -10,14 +10,13 @@
  * Refer to the COPYING.txt file distributed with this package.
  *
  * @category   WURFL
- * @package	WURFL_Storage
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @author	 Fantayeneh Asres Gizaw
- * @version	$id$
+ * @license     GNU Affero General Public License
+ * @author   Fantayeneh Asres Gizaw
  */
 /**
  * WURFL Storage
- * @package	WURFL_Storage
  */
-class WURFL_Storage_Exception extends Exception {}
+class WURFL_Storage_Exception extends Exception
+{
+}

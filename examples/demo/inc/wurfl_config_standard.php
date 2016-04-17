@@ -7,19 +7,19 @@
 ini_set('display_errors', 'on');
 error_reporting(E_ALL);
 
-$wurflDir = dirname(__FILE__) . '/../../../WURFL';
+$wurflDir     = dirname(__FILE__) . '/../../../WURFL';
 $resourcesDir = dirname(__FILE__) . '/../../resources';
 
-require_once $wurflDir.'/Application.php';
+require_once $wurflDir . '/Application.php';
 
-$persistenceDir = $resourcesDir.'/storage/persistence';
-$cacheDir = $resourcesDir.'/storage/cache';
+$persistenceDir = $resourcesDir . '/storage/persistence';
+$cacheDir       = $resourcesDir . '/storage/cache';
 
 // Create WURFL Configuration
 $wurflConfig = new WURFL_Configuration_InMemoryConfig();
 
 // Set location of the WURFL File
-$wurflConfig->wurflFile($resourcesDir.'/wurfl.zip');
+$wurflConfig->wurflFile($resourcesDir . '/wurfl.zip');
 
 // Set the match mode for the API ('performance' or 'accuracy')
 $wurflConfig->matchMode('performance');
@@ -32,17 +32,22 @@ $wurflConfig->allowReload(true);
 //  This is disabled by default as it would cause the demo/index.php
 //  page to fail due to missing capabilities
 $wurflConfig->capabilityFilter(array(
-	'is_wireless_device',
-	'preferred_markup',
-	'xhtml_support_level',
-	'xhtmlmp_preferred_mime_type',
-	'device_os',
-	'device_os_version',
-	'is_tablet',
-	'mobile_browser_version',
-	'pointing_method',
-	'mobile_browser',
-	'resolution_width',
+    'device_os',
+    'device_os_version',
+    'is_tablet',
+    'is_wireless_device',
+    'pointing_method',
+    'preferred_markup',
+    'resolution_height',
+    'resolution_width',
+    'ux_full_desktop',
+    'xhtml_support_level',
+    'is_smarttv',
+    'can_assign_phone_number',
+    'brand_name',
+    'model_name',
+    'marketing_name',
+    'mobile_browser_version',
 ));
 */
 

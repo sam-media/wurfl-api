@@ -11,30 +11,28 @@
  *
  *
  * @category   WURFL
- * @package	WURFL_VirtualCapability
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license     GNU Affero General Public License
  */
 /**
  * Virtual capability helper
- * @package	WURFL_VirtualCapability
  */
- 
-class WURFL_VirtualCapability_IsRobot extends WURFL_VirtualCapability {
 
-	protected $required_capabilities = array();
+class WURFL_VirtualCapability_IsRobot extends WURFL_VirtualCapability
+{
+    protected $required_capabilities = array();
 
-	protected function compute() {
+    protected function compute()
+    {
         $ua = $this->request->userAgent;
 
-		// Control cap, "controlcap_is_robot" is checked before this function is called
-        if ($this->request->originalHeaderExists("HTTP_ACCEPT_ENCODING")
-            && WURFL_Handlers_Utils::checkIfContains($ua, "Trident/")
-            && !WURFL_Handlers_Utils::checkIfContains($this->request->getOriginalHeader("HTTP_ACCEPT_ENCODING"), "deflate")) {
+        // Control cap, "controlcap_is_robot" is checked before this function is called
+        if ($this->request->originalHeaderExists('HTTP_ACCEPT_ENCODING')
+            && WURFL_Handlers_Utils::checkIfContains($ua, 'Trident/')
+            && !WURFL_Handlers_Utils::checkIfContains($this->request->getOriginalHeader('HTTP_ACCEPT_ENCODING'), 'deflate')) {
             return true;
         }
-		// Check against standard bot list
-		return WURFL_Handlers_Utils::isRobot($this->request->getOriginalHeader('HTTP_USER_AGENT'));
-	}
+        // Check against standard bot list
+        return WURFL_Handlers_Utils::isRobot($this->request->getOriginalHeader('HTTP_USER_AGENT'));
+    }
 }

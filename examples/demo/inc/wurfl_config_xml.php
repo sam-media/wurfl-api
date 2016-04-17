@@ -5,12 +5,12 @@
  *     examples/resources/wurfl-config.xml
  */
 
-$wurflDir = dirname(__FILE__) . '/../../../WURFL';
+$wurflDir     = dirname(__FILE__) . '/../../../WURFL';
 $resourcesDir = dirname(__FILE__) . '/../../resources';
 
-require_once $wurflDir.'/Application.php';
+require_once $wurflDir . '/Application.php';
 
-$wurflConfigFile = $resourcesDir.'/wurfl-config.xml';
+$wurflConfigFile = $resourcesDir . '/wurfl-config.xml';
 
 // Create WURFL Configuration from an XML config file
 $wurflConfig = new WURFL_Configuration_XmlConfig($wurflConfigFile);

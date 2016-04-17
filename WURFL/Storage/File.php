@@ -10,102 +10,109 @@
  * Refer to the COPYING.txt file distributed with this package.
  *
  * @category   WURFL
- * @package	WURFL_Storage
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @author	 Fantayeneh Asres Gizaw
- * @version	$id$
+ * @license     GNU Affero General Public License
+ * @author   Fantayeneh Asres Gizaw
  */
 /**
  * WURFL Storage
- * @package	WURFL_Storage
  */
-class WURFL_Storage_File extends WURFL_Storage_Base {
+class WURFL_Storage_File extends WURFL_Storage_Base
+{
+    private $defaultParams = array(
+        'dir'        => '/tmp',
+        'expiration' => 0,
+        'readonly'   => 'false',
+    );
 
-	private $defaultParams = array(
-		"dir" => "/tmp",
-		"expiration" => 0,
-		"readonly" => 'false',
-	);
+    private $expire;
+    private $root;
+    private $readonly;
 
-	private $expire;
-	private $root;
-	private $readonly;
-	
-	const DIR = "dir";
+    const DIR = 'dir';
 
-	protected $supports_secondary_caching = true;
-	
-	public function __construct($params) {
-		$currentParams = is_array($params)? array_merge($this->defaultParams, $params): $this->defaultParams;
-		$this->initialize($currentParams);
-	}
+    protected $supports_secondary_caching = true;
 
-	public function initialize($params) {
-		$this->root = $params[self::DIR];
-		$this->expire = $params['expiration'];
-		$this->readonly = ($params['readonly'] == 'true' || $params['readonly'] === true);
-		$this->createRootDirIfNotExist();
-	}
-	
-	private function createRootDirIfNotExist() {
-		if (!is_dir($this->root)) {
-			@mkdir ($this->root, 0777, true);
-			if(!is_dir($this->root)){
-				throw new WURFL_Storage_Exception("The file storage directory does not exist and could not be created. Please make sure the directory is writeable: ".$this->root);
-			}
-		}
-		if(!$this->readonly && !is_writeable($this->root)){
-			throw new WURFL_Storage_Exception("The file storage directory is not writeable: ".$this->root);
-		}
-	}
+    public function __construct($params)
+    {
+        $currentParams = is_array($params) ? array_merge($this->defaultParams, $params) : $this->defaultParams;
+        $this->initialize($currentParams);
+    }
 
-	public function load($key) {
-		if (($data = $this->cacheLoad($key)) !== null) {
-			return $data->value();
-		} else {
-			$path = $this->keyPath($key);
-			$value = WURFL_FileUtils::read($path);
-			if ($value === null) {
-				return null;
-			}
-			$this->cacheSave($key, $value);
-			return $this->unwrap($value, $path);
-		}
-	}
+    public function initialize($params)
+    {
+        $this->root     = $params[self::DIR];
+        $this->expire   = $params['expiration'];
+        $this->readonly = ($params['readonly'] === 'true' || $params['readonly'] === true);
+        $this->createRootDirIfNotExist();
+    }
 
-	private function unwrap($value, $path) {
-		if ($value->isExpired()) {
-			@unlink($path);
-			return null;
-		}
-		return $value->value();
-	}
+    private function createRootDirIfNotExist()
+    {
+        if (!is_dir($this->root)) {
+            @mkdir($this->root, 0777, true);
+            if (!is_dir($this->root)) {
+                throw new WURFL_Storage_Exception('The file storage directory does not exist and could not be created. Please make sure the directory is writeable: ' . $this->root);
+            }
+        }
+        if (!$this->readonly && !is_writeable($this->root)) {
+            throw new WURFL_Storage_Exception('The file storage directory is not writeable: ' . $this->root);
+        }
+    }
 
-	public function save($key, $value, $expiration=null) {
-		$value = new StorageObject($value, (($expiration === null)? $this->expire: $expiration));
-		$path = $this->keyPath($key);
-		WURFL_FileUtils::write($path, $value);
-	}
+    public function load($key)
+    {
+        if (($data = $this->cacheLoad($key)) !== null) {
+            return $data->value();
+        } else {
+            $path  = $this->keyPath($key);
+            $value = WURFL_FileUtils::read($path);
+            if ($value === null) {
+                return null;
+            }
+            $this->cacheSave($key, $value);
 
-	public function clear() {
-		$this->cacheClear();
-		WURFL_FileUtils::rmdirContents($this->root);
-	}
+            return $this->unwrap($value, $path);
+        }
+    }
 
+    private function unwrap($value, $path)
+    {
+        if ($value->isExpired()) {
+            @unlink($path);
 
-	private function keyPath($key) {
-		return WURFL_FileUtils::join(array($this->root, $this->spread(md5($key))));
-	}
+            return null;
+        }
 
-	function spread($md5, $n = 2) {
-		$path = "";
-		for ($i = 0; $i < $n; $i++) {
-			$path .= $md5 [$i] . DIRECTORY_SEPARATOR;
-		}
-		$path .= substr($md5, $n);
-		return $path;
-	}
+        return $value->value();
+    }
 
+    public function save($key, $value, $expiration = null)
+    {
+        $value = new StorageObject($value, (($expiration === null) ? $this->expire : $expiration));
+        $path  = $this->keyPath($key);
+        WURFL_FileUtils::write($path, $value);
+    }
 
+    public function clear()
+    {
+        $this->cacheClear();
+        WURFL_FileUtils::rmdirContents($this->root);
+    }
+
+    private function keyPath($key)
+    {
+        return WURFL_FileUtils::join(array($this->root, $this->spread(md5($key))));
+    }
+
+    public function spread($md5, $n = 2)
+    {
+        $path = '';
+        for ($i = 0; $i < $n; ++$i) {
+            $path .= $md5 [$i] . DIRECTORY_SEPARATOR;
+        }
+        $path .= substr($md5, $n);
+
+        return $path;
+    }
 }
