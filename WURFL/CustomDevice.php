@@ -56,7 +56,7 @@ class WURFL_CustomDevice
     private $virtualCapabilityProvider = null;
 
     /**
-     * @param  array                        $modelDevices Array of WURFL_Xml_ModelDevice objects
+     * @param  WURFL_Xml_ModelDevice[]      $modelDevices Array of WURFL_Xml_ModelDevice objects
      * @param  WURFL_Request_GenericRequest $request
      * @throws InvalidArgumentException     if $modelDevices is not an array of at least one WURFL_Xml_ModelDevice
      */

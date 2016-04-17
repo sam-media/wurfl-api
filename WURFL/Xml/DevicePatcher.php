@@ -24,7 +24,7 @@ class WURFL_Xml_DevicePatcher
      * @param  WURFL_Xml_ModelDevice $patchingDevice
      * @return WURFL_Xml_ModelDevice Patched device
      */
-    public function patch($device, $patchingDevice)
+    public function patch(WURFL_Xml_ModelDevice $device, WURFL_Xml_ModelDevice $patchingDevice)
     {
         if (!$this->haveSameId($device, $patchingDevice)) {
             return $patchingDevice;

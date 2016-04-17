@@ -27,7 +27,7 @@ class WURFL_Request_UserAgentNormalizer implements WURFL_Request_UserAgentNormal
 
     /**
      * Set the User Agent Normalizers
-     * @param array $normalizers Array of WURFL_Request_UserAgentNormalizer objects
+     * @param WURFL_Request_UserAgentNormalizer[] $normalizers Array of WURFL_Request_UserAgentNormalizer objects
      */
     public function __construct($normalizers = array())
     {

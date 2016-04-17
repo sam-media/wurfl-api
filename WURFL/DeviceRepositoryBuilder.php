@@ -203,9 +203,9 @@ class WURFL_DeviceRepositoryBuilder
 
     /**
      * Returns an array of WURFL_Xml_DeviceIterator for the given $wurflPatches and $capabilityFilter
-     * @param  array $wurflPatches     Array of (string)filenames
-     * @param  array $capabilityFilter Array of (string) WURFL capabilities
-     * @return array Array of WURFL_Xml_DeviceIterator objects
+     * @param  array $wurflPatches        Array of (string)filenames
+     * @param  array $capabilityFilter    Array of (string) WURFL capabilities
+     * @return WURFL_Xml_DeviceIterator[] Array of WURFL_Xml_DeviceIterator objects
      */
     private function toPatchIterators($wurflPatches, $capabilityFilter)
     {
@@ -295,7 +295,7 @@ class WURFL_DeviceRepositoryBuilder
 
     /**
      * Save all $newDevices in the persistence provider
-     * @param array $newDevices Array of WURFL_Device objects
+     * @param WURFL_Xml_ModelDevice[] $newDevices Array of WURFL_Xml_ModelDevice objects
      */
     private function classifyAndPersistNewDevices($newDevices)
     {
@@ -327,7 +327,7 @@ class WURFL_DeviceRepositoryBuilder
      * @param WURFL_Xml_ModelDevice $device
      * @see WURFL_UserAgentHandlerChain::filter(), WURFL_Storage_Base::save()
      */
-    private function classifyAndPersistDevice($device)
+    private function classifyAndPersistDevice(WURFL_Xml_ModelDevice $device)
     {
         if ($this->validateDevice($device) === false) {
             return;
@@ -351,13 +351,19 @@ class WURFL_DeviceRepositoryBuilder
         $this->userAgentHandlerChain->persistData();
     }
 
+    /**
+     * @param WURFL_Xml_ModelDevice $device
+     * @param WURFL_Xml_ModelDevice $patchingDevice
+     *
+     * @return WURFL_Xml_ModelDevice
+     */
     private function patchDevice($device, $patchingDevice)
     {
         return $this->devicePatcher->patch($device, $patchingDevice);
     }
 
     /**
-     * @param  array $patchingDeviceIterators Array of WURFL_Xml_DeviceIterators
+     * @param  WURFL_Xml_DeviceIterator[] $patchingDeviceIterators Array of WURFL_Xml_DeviceIterator
      * @return array Merged array of current patch devices
      */
     private function toListOfPatchingDevices($patchingDeviceIterators)
@@ -376,8 +382,8 @@ class WURFL_DeviceRepositoryBuilder
 
     /**
      * Adds the given $newPatchingDevices to the $currentPatchingDevices array
-     * @param array $currentPatchingDevices REFERENCE to array of current devices to be patches
-     * @param array $newPatchingDevices     Array of new devices to be patched in
+     * @param array                   $currentPatchingDevices REFERENCE to array of current devices to be patches
+     * @param WURFL_Xml_ModelDevice[] $newPatchingDevices     Array of new devices to be patched in
      */
     private function patchDevices(&$currentPatchingDevices, $newPatchingDevices)
     {
