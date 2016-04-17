@@ -41,7 +41,7 @@
 class WURFL_CustomDevice
 {
     /**
-     * @var array Array of WURFL_Xml_ModelDevice objects
+     * @var WURFL_Xml_ModelDevice[] Array of WURFL_Xml_ModelDevice objects
      */
     private $modelDevices;
 
@@ -200,6 +200,7 @@ class WURFL_CustomDevice
     {
         $capabilities = array();
         foreach (array_reverse($this->modelDevices) as $modelDevice) {
+            /** @var WURFL_Xml_ModelDevice $modelDevice */
             $capabilities = array_merge($capabilities, $modelDevice->getCapabilities());
         }
 

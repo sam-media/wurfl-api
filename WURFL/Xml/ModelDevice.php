@@ -16,6 +16,9 @@
  */
 /**
  * Represents a device in the wurfl xml file
+ *
+ * @property-read bool $actualDeviceRoot
+ * @property-read bool $specific
  */
 class WURFL_Xml_ModelDevice
 {

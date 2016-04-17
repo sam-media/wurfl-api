@@ -67,7 +67,7 @@ class WURFL_CustomDeviceRepository implements WURFL_DeviceRepository
     {
         $genericDevice = $this->getDevice(WURFL_Constants::GENERIC);
         if (!is_null($genericDevice)) {
-            $this->_capabilitiesName       = array_keys($genericDevice->getCapabilities());
+            $this->_capabilitiesName       = array_keys($genericDevice->getAllCapabilities());
             $this->_groupIDCapabilitiesMap = $genericDevice->getGroupIdCapabilitiesNameMap();
         }
     }
@@ -95,9 +95,10 @@ class WURFL_CustomDeviceRepository implements WURFL_DeviceRepository
     /**
      * Returns a device for the given device ID
      *
-     * @param  string             $deviceId
-     * @throws WURFL_Exception    if $deviceID is not defined in wurfl devices repository
-     * @return WURFL_CustomDevice
+     * @param  string $deviceId
+     *
+     * @return WURFL_CustomDevice if $deviceID is not defined in wurfl devices repository
+     * @throws Exception
      */
     public function getDevice($deviceId)
     {
