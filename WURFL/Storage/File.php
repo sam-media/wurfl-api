@@ -41,7 +41,7 @@ class WURFL_Storage_File extends WURFL_Storage_Base
 
     public function initialize($params)
     {
-        $this->root     = $params[self::DIR];
+        $this->root     = $params[self::DIR] . DIRECTORY_SEPARATOR . WURFL_Constants::API_NAMESPACE;
         $this->expire   = $params['expiration'];
         $this->readonly = ($params['readonly'] === 'true' || $params['readonly'] === true);
         $this->createRootDirIfNotExist();

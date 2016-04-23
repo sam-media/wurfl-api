@@ -89,7 +89,7 @@ class WURFL_Storage_Apc extends WURFL_Storage_Base
      */
     private function ensureModuleExistence()
     {
-        if (!extension_loaded(self::EXTENSION_MODULE_NAME) || ini_get('apc.enable_cli') === false) {
+        if (!(extension_loaded(self::EXTENSION_MODULE_NAME) && ini_get('apc.enabled') === true)) {
             throw new WURFL_Storage_Exception('The PHP extension apc must be installed, loaded and enabled.');
         }
     }

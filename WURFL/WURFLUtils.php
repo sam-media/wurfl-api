@@ -28,7 +28,9 @@ class WURFL_WURFLUtils
     /**
      * returns the User Agent From $request or empty string if not found
      *
-     * @param  array  $request HTTP Request array (normally $_SERVER)
+     * @param array $request                        HTTP Request array (normally $_SERVER)
+     * @param bool  $override_sideloaded_browser_ua
+     *
      * @return string
      */
     public static function getUserAgent($request, $override_sideloaded_browser_ua = true)

@@ -13,7 +13,6 @@
  * @author     Steve Kamerman <steve AT scientiamobile.com>
  * @author     Luca Corbo <luca.corbo AT scientiamobile.com>
  * @license    GNU Affero General Public License
- * @version    $id$
  */
 /**
  * Include required files

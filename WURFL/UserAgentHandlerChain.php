@@ -21,7 +21,7 @@
 class WURFL_UserAgentHandlerChain
 {
     /**
-     * @var array of WURFL_Handlers_Handler objects
+     * @var WURFL_Handlers_Handler[] array of WURFL_Handlers_Handler objects
      */
     private $_userAgentHandlers = array();
 
@@ -43,7 +43,7 @@ class WURFL_UserAgentHandlerChain
     }
 
     /**
-     * @return array An array of all the WURFL_Handlers_Handler objects
+     * @return WURFL_Handlers_Handler[] An array of all the WURFL_Handlers_Handler objects
      */
     public function getHandlers()
     {

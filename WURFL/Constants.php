@@ -23,8 +23,8 @@ class WURFL_Constants
     {
     }
 
-    const API_VERSION   = '1.7.1.0';
-    const API_NAMESPACE = 'wurfl_1710';
+    const API_VERSION   = '1.7.1.1';
+    const API_NAMESPACE = 'wurfl_1711';
 
     const GENERIC             = 'generic';
     const GENERIC_XHTML       = 'generic_xhtml';
