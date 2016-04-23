@@ -67,7 +67,7 @@ class WURFL_CustomDeviceRepository implements WURFL_DeviceRepository
     {
         $genericDevice = $this->getDevice(WURFL_Constants::GENERIC);
         if (!is_null($genericDevice)) {
-            $this->_capabilitiesName       = array_keys($genericDevice->getAllCapabilities());
+            $this->_capabilitiesName       = array_keys($genericDevice->getCapabilities());
             $this->_groupIDCapabilitiesMap = $genericDevice->getGroupIdCapabilitiesNameMap();
         }
     }
@@ -98,11 +98,12 @@ class WURFL_CustomDeviceRepository implements WURFL_DeviceRepository
      * @param string $deviceId
      *
      * @throws Exception
-     * @return WURFL_CustomDevice if $deviceID is not defined in wurfl devices repository
+     * @return WURFL_Xml_ModelDevice if $deviceID is not defined in wurfl devices repository
      */
     public function getDevice($deviceId)
     {
         if (!isset($this->_deviceCache[$deviceId])) {
+            /** @var WURFL_Xml_ModelDevice $device */
             $device = $this->persistenceStorage->load($deviceId);
             if (!$device) {
                 throw new Exception("There is no device with ID [$deviceId] in the loaded WURFL Data");
@@ -168,6 +169,7 @@ class WURFL_CustomDeviceRepository implements WURFL_DeviceRepository
         $capabilityValue = null;
         // TODO: Prevent infinite recursion
         while (strcmp($deviceId, 'root')) {
+            /** @var WURFL_Xml_ModelDevice $device */
             $device = $this->persistenceStorage->load($deviceId);
             if (!$device) {
                 throw new WURFL_WURFLException("the device with $deviceId is not found.");

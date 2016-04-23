@@ -25,7 +25,7 @@ class WURFL_Storage_Mysql extends WURFL_Storage_Base
         'db'          => 'wurfl_persistence_db',
         'user'        => '',
         'pass'        => '',
-        'table'       => 'wurfl_object_cache',
+        'table'       => WURFL_Constants::API_NAMESPACE,
         'keycolumn'   => 'key',
         'valuecolumn' => 'value',
     );

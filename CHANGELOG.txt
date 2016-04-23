@@ -1,5 +1,9 @@
 ScientiaMobile WURFL PHP API change log:
 
+[2016.04.19] 1.7.1.1
+- Improved performance detection
+- Improved build lock implementation with multiple api's
+
 [2016.04.13] 1.7.1.0
 - Added detection of:
     - Palemoon Browser

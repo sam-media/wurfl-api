@@ -18,6 +18,8 @@ $finder = Symfony\CS\Finder\DefaultFinder::create()
     ->in(__DIR__ . '/WURFL')
 ;
 
+ini_set('memory_limit', '-1');
+
 return Symfony\CS\Config\Config::create()
     ->level(\Symfony\CS\FixerInterface::NONE_LEVEL)
     ->fixers(

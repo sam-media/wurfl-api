@@ -13,7 +13,6 @@
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  * @author     Fantayeneh Asres Gizaw
- * @version    $id$
  */
 
 /**

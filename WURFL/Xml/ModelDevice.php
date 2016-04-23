@@ -19,6 +19,10 @@
  *
  * @property-read bool $actualDeviceRoot
  * @property-read bool $specific
+ * @property-read array $capabilities
+ * @property-read string $fallBack
+ * @property-read string $id
+ * @property-read string $userAgent
  */
 class WURFL_Xml_ModelDevice
 {
@@ -65,8 +69,8 @@ class WURFL_Xml_ModelDevice
         $this->id               = $id;
         $this->userAgent        = $userAgent;
         $this->fallBack         = $fallBack;
-        $this->actualDeviceRoot = $actualDeviceRoot === true ? true : false;
-        $this->specific         = $specific === true ? true : false;
+        $this->actualDeviceRoot = (($actualDeviceRoot === true || $actualDeviceRoot === 'true') ? true : false);
+        $this->specific         = (($specific === true || $specific === 'true') ? true : false);
         if (is_array($groupIdCapabilitiesMap)) {
             foreach ($groupIdCapabilitiesMap as $groupId => $capabilitiesNameValue) {
                 $this->groupIdCapabilitiesNameMap[$groupId] = array_keys($capabilitiesNameValue);

@@ -59,7 +59,7 @@ class WURFL_DeviceRepositoryBuilder
         $this->persistenceProvider   = $persistenceProvider;
         $this->userAgentHandlerChain = $userAgentHandlerChain;
         $this->devicePatcher         = $devicePatcher;
-        $this->lockFile              = WURFL_FileUtils::getTempDir() . '/wurfl_builder.lock';
+        $this->lockFile              = self::getFileLockPath();
     }
 
     /**
@@ -99,6 +99,11 @@ class WURFL_DeviceRepositoryBuilder
         return new WURFL_CustomDeviceRepository($this->persistenceProvider, $deviceClassificationNames);
     }
 
+    public static function getFileLockPath()
+    {
+        return WURFL_FileUtils::getTempDir() . '/wurfl_builder_' . md5(WURFL_Constants::API_VERSION . __DIR__) . '.lock';
+    }
+
     public function __destruct()
     {
         $this->releaseLock();
@@ -124,10 +129,12 @@ class WURFL_DeviceRepositoryBuilder
         /**
          * verify required capabilities
          */
-        $required_caps  = WURFL_VirtualCapabilityProvider::getRequiredCapabilities();
-        $generic_device = new WURFL_CustomDevice(array($this->persistenceProvider->load('generic')));
+        $required_caps = WURFL_VirtualCapabilityProvider::getRequiredCapabilities();
 
-        $loaded_caps = array_keys($generic_device->getAllCapabilities());
+        /** @var WURFL_Xml_ModelDevice $generic_device */
+        $generic_device = $this->persistenceProvider->load(WURFL_Constants::GENERIC);
+
+        $loaded_caps = array_keys($generic_device->getCapabilities());
 
         $missing_caps = array_diff($required_caps, $loaded_caps);
 
@@ -148,6 +155,7 @@ class WURFL_DeviceRepositoryBuilder
 
     /**
      * Acquires a lock so only this thread reloads the WURFL data, returns false if it cannot be acquired
+     * @throws Exception
      * @return bool
      */
     private function acquireLock()
@@ -156,7 +164,9 @@ class WURFL_DeviceRepositoryBuilder
             $stale_after = filemtime($this->lockFile) + $this->maxLockAge;
             if (time() > $stale_after) {
                 // The lockfile is stale, delete it and reacquire a lock
-                @rmdir($this->lockFile);
+                if (@rmdir($this->lockFile) === false) {
+                    throw new Exception('Unable to delete lock file [' . $this->lockFile . ']. Check and fix permissions or delete it manually');
+                }
             } else {
                 // The lockfile is valid, WURFL is probably being reloaded in another thread
                 return false;
@@ -304,9 +314,13 @@ class WURFL_DeviceRepositoryBuilder
         }
     }
 
-    private function validateDevice($device)
+    /**
+     * @param WURFL_Xml_ModelDevice $device
+     *
+     * @return bool
+     */
+    private function validateDevice(WURFL_Xml_ModelDevice $device)
     {
-
         // Must have a valid wurfl ID
         if (strlen($device->id) === 0) {
             echo "Skipping WURFL entry (invalid ID):\n" . var_export($device, true) . PHP_EOL;
@@ -319,6 +333,8 @@ class WURFL_DeviceRepositoryBuilder
 
             return false;
         }
+
+        return true;
     }
 
     /**
@@ -399,12 +415,13 @@ class WURFL_DeviceRepositoryBuilder
     /**
      * Returns an array of devices in the form "WURFL_Device::id => WURFL_Device"
      * @param  WURFL_Xml_DeviceIterator $deviceIterator
-     * @return array
+     * @return WURFL_Xml_ModelDevice[]
      */
-    private function toArray($deviceIterator)
+    private function toArray(WURFL_Xml_DeviceIterator $deviceIterator)
     {
         $patchingDevices = array();
         foreach ($deviceIterator as $device) {
+            /** @var WURFL_Xml_ModelDevice $device */
             $patchingDevices[$device->id] = $device;
         }
 
